@@ -6,9 +6,9 @@
       loop 
       muted 
       playsinline 
-      class="hero-bg-video"
+      class="hero-bg-video" 
     >
-      <source src="../assets/v.webm" type="video/webm">
+      <source src="../assets/a.webm" type="video/webm">
     </video>
 
     <div class="background-mesh"></div>
@@ -21,13 +21,13 @@
         <div class="text-column">
           <h1 class="hero-title">HERO</h1>
           <h2 class="headline">
-            Meet <br />
-            <span class="gradient-text">With Axonode</span>
+            Meet With <br />
+            <span class="gradient-text">Axonode</span>
           </h2>
 
           <p class="subtext">
-            We are a dev community uniting our skills to build and deploy projects collectively.
-            From ideation to launch, we dedicate our shared energy to creating together.
+            We are a welcoming community uniting our skills to share knowledge, create projects, and have fun together.
+            Join us to connect with like-minded individuals!
           </p>
 
           <div class="action-group">
@@ -41,13 +41,6 @@
       </div>
 
       <div class="right-column-placeholder"></div>
-    </div>
-
-    <!-- Intersection Card -->
-    <div class="intersection-card-wrapper">
-      <div class="intersection-card">
-        <div class="card-glow"></div>
-      </div>
     </div>
   </section>
 </template>

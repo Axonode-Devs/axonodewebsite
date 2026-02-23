@@ -20,7 +20,7 @@ onMounted(() => {
   setTimeout(() => {
     isLoading.value = false;
     console.log("Yükleme tamamlandı, HomeView gösteriliyor.");
-  }, 3000);
+  }, 400);
 });
 </script>
 

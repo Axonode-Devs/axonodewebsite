@@ -6,9 +6,6 @@
     <div class="container">
       <div class="header-content">
         <h2 class="title">Building the <span class="gradient-text">Future Together</span></h2>
-        <p class="description">
-          Axonode is more than just a community; it's a collaborative ecosystem where developers turn abstract ideas into deployed reality.
-        </p>
       </div>
 
       <div class="cards-grid">
@@ -16,53 +13,45 @@
           <div class="icon-wrapper blue">
             <i class="fa-solid fa-code"></i>
           </div>
-          <h3>Collaborative Coding</h3>
-          <p>We unite skills to build projects collectively, moving beyond solitary coding to team-based creation.</p>
+          <h3>Software</h3>
+          <p>We welcome all developers, from beginners to experts, to collaborate and share their knowledge and experiences!</p>
         </div>
 
         <div class="feature-card">
           <div class="icon-wrapper purple">
-            <i class="fa-solid fa-rocket"></i>
+            <i class="fa-solid fa-paint-brush"></i>
           </div>
-          <h3>From Zero to Deploy</h3>
-          <p>We handle the entire lifecycle. Ideation, design, development, and finally, launching to the world.</p>
+          <h3>Designers</h3>
+          <p>We welcome all designers, from illustrators to 3D artists, to collaborate and share their art and ideas!</p>
         </div>
 
         <div class="feature-card">
           <div class="icon-wrapper pink">
-            <i class="fa-solid fa-users-viewfinder"></i>
+            <i class="fa-solid fa-people-group"></i>
           </div>
-          <h3>Open Knowledge</h3>
-          <p>Sharing knowledge is our core. Every project is a learning opportunity for everyone involved.</p>
+          <h3>Entrepreneurs</h3>
+          <p>Meet with like-minded people and build meaningful connections within our community!</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon-wrapper orange">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <h3>And What Else?</h3>
+          <p>Whatever you're passionate about, join us in building a vibrant community of creators and innovators!</p>
         </div>
       </div>
     </div>
   </section>
 </template>
-<script setup>
-  import { onMounted, ref } from 'vue';
-import { Application } from '@splinetool/runtime';
 
-const canvasRef = ref(null);
-
-onMounted(() => {
-  if (canvasRef.value) {
-    const app = new Application(canvasRef.value);
-    
-    app.load('/scene-blurw.splinecode'); 
-  }
-});
-</script>
 <style scoped>
 *, *::before, *::after { box-sizing: border-box; }
 
 .about-section {
   position: relative;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 80px 0;
+  min-height: auto;
+  display: block;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
   width: 100%;
@@ -205,18 +194,19 @@ html.dark .feature-card {
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .icon-wrapper.blue { background: rgba(120, 222, 231, 0.15); color: #2ebbc5; }
 .icon-wrapper.purple { background: rgba(149, 176, 235, 0.15); color: #6b8cd4; }
 .icon-wrapper.pink { background: rgba(254, 120, 176, 0.15); color: #e04b8b; }
+.icon-wrapper.orange { background: rgba(255, 165, 0, 0.15); color: #ff8c00; }
 
 .feature-card h3 {
   font-size: 1.25rem;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 html.dark .feature-card h3 {

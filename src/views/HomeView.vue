@@ -4,8 +4,8 @@
     <HeroSection />
     <About />
     <Founders />
-    <InfoSection />
-    <ProjectsSection />
+    <!-- <InfoSection />  Disabled for now -->
+    <!-- <ProjectsSection /> Disabled -->
     
     <ContactSection />
   </div>

@@ -7,7 +7,7 @@ onMounted(() => {
   // Yükleme simülasyonu (2.5 saniye sonra kapanır)
   setTimeout(() => {
     isLoading.value = false;
-  }, 2500);
+  }, 800);
 });
 </script>
 

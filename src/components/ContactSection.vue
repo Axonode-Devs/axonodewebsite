@@ -7,21 +7,13 @@
         <div class="contact-info">
           <h2 class="title">Let's Build <br><span class="gradient-text">Something Great</span></h2>
           <p class="description">
-            Have an idea or want to join the Axonode core team? Drop us a line. We are always looking for new perspectives.
+            Have an idea or want to join the Axonode? Drop us a line. We are always looking for new perspectives.
           </p>
           
           <div class="contact-links">
             <a href="#" class="link-item">
               <div class="icon-box"><i class="fa-regular fa-envelope"></i></div>
               <span>info@axonode.org</span>
-            </a>
-            <a href="/form" class="link-item">
-              <div class="icon-box"><i class="fa-brands fa-discord"></i></div>
-              <span>Join Discord</span>
-            </a>
-            <a href="https://github.com/Axonode-Devs" class="link-item">
-              <div class="icon-box"><i class="fa-brands fa-github"></i></div>
-              <span>Axonode Devs</span>
             </a>
           </div>
         </div>
@@ -43,7 +35,7 @@
               <textarea id="message" rows="4" placeholder="Tell us about your project..." class="form-input"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" @click="onSubmit">
               <span>Send Message</span>
               <span class="arrow"><i class="fa-solid fa-paper-plane"></i></span>
             </button>
@@ -55,6 +47,10 @@
 </template>
 
 <script setup>
+function onSubmit() {
+  alert('Message sent! (not really, this is just a demo)');
+}
+
 </script>
 
 <style scoped>

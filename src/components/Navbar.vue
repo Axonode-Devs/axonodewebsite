@@ -39,7 +39,7 @@ import ThemeSwitcher from '../components/ThemeSwitcher.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const menuItems = ['Homepage', 'About', 'Info', 'Projects', 'Contact'];
+const menuItems = ['Home', 'About', 'Groups', 'Support'];
 const isScrolled = ref(false);
 
 const slug = (text) => {
@@ -179,6 +179,9 @@ html.dark .navbar.scrolled .nav-container {
 
 .nav-item {
   text-decoration: none;
+  padding: 8px;
+  border: solid 2px #94969a;
+  border-radius: 40px;
   color: #4B5563;
   font-weight: 500;
   font-size: 0.95rem;
