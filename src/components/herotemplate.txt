@@ -1,0 +1,53 @@
+<template>
+  <section id="homepage" class="hero-container">
+    
+    <canvas ref="canvasRef" class="spline-bg"></canvas>
+
+    <div class="background-mesh"></div>
+
+    <div class="content-wrapper">
+      
+      <div class="text-column">
+        <h1 class="headline">
+          Meet <br />
+          <span class="gradient-text">With Axonode</span>
+        </h1>
+
+        <p class="subtext">
+          We are a dev community uniting our skills to build and deploy projects collectively.
+          From ideation to launch, we dedicate our shared energy to creating together.
+        </p>
+
+        <div class="action-group">
+          <button class="btn btn-primary">About Us</button>
+          <button class="btn btn-secondary">
+            <span>Join Us</span>
+            <span class="arrow"><i class="fa-solid fa-angle-right"></i></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- <div class="visual-column">
+        <div class="video-card">
+          <div class="card-header">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+          </div>
+
+          <div class="video-container">
+            <video
+              class="app-video"
+              src="../assets/hero.mp4"
+              muted
+              autoplay
+              loop
+              playsinline
+            ></video>
+          </div>
+        </div> 
+        <div class="decoration-box"></div>
+      </div>-->
+    </div>
+  </section>
+</template>

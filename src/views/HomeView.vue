@@ -1,0 +1,34 @@
+<template>
+    <div id="app">
+    <Navbar />
+    <HeroSection />
+    <About />
+    <Founders />
+    <InfoSection />
+    <ProjectsSection />
+    
+    <ContactSection />
+  </div>
+</template>
+
+<script setup>
+import About from '../components/About.vue';
+import HeroSection from '../components/HeroSection.vue';
+import Navbar from '../components/Navbar.vue';
+import Founders from '../components/Founders.vue'
+import ProjectsSection from '../components/ProjectsSection.vue';
+import InfoSection from '../components/InfoSection.vue';
+import ContactSection from '../components/ContactSection.vue';
+
+</script>
+
+<style scoped>
+  .canvas-container {
+  width: 100%;
+  height: 100vh; /* Tam ekran olması için */
+}
+canvas {
+  width: 100%;
+  height: 100%;
+}
+</style>
