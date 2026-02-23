@@ -62,13 +62,13 @@ import FoundersImage from './FoundersImage.vue';
 const founders = ref([
   { 
     name: 'kaiross12',   
-    role: 'Fullstack Dev. & Designer',        
+    role: 'Head Community Director',        
     username: 'kaiross12',
     badges: ['Graphics', 'UI/UX', 'Full Stack'] 
   },
   { 
     name: 'BersisSe',   
-    role: 'Head of Development',  
+    role: 'Head of Executive',  
     username: 'bersisse',
     badges: ['Backend', 'Databases'] 
   },
