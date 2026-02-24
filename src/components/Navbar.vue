@@ -9,18 +9,16 @@
 
       <ul class="nav-links">
         <li v-for="item in menuItems" :key="item">
-          <a :href="`#${slug(item)}`" class="nav-item" @click.prevent="scrollTo(`#${slug(item)}`)">{{ item }}</a>
+          <a :href="`/${slug(item)}`" class="nav-item" @click.prevent="goTo(slug(item))">{{ item }}</a>
         </li>
       </ul>
 
       <div class="nav-actions">
-        <a href="https://github.com/Axonode-Devs" class="github-btn" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-          <i class="fa-brands fa-github" aria-hidden="true"></i>
-          <span class="github-text">Github</span>
-        </a>
-
         <button class="btn-nav" @click="goToApply">
           Join Us
+        </button>
+        <button class="btn-nav" @click="goToApply">
+          Login
         </button>
 
         <ThemeSwitcher />
@@ -33,7 +31,7 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import ThemeSwitcher from '../components/ThemeSwitcher.vue';
 import { useRouter } from 'vue-router';
@@ -51,6 +49,7 @@ const slug = (text) => {
 };
 
 const scrollTo = (selector) => {
+  // kept for potential future use but not used for navigation now
   const id = selector.startsWith('#') ? selector.slice(1) : selector;
   const el = document.getElementById(id) || document.querySelector(selector);
   if (el) {
@@ -58,6 +57,10 @@ const scrollTo = (selector) => {
   } else {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+};
+const goTo = (to: string) => {
+  const path = to.startsWith('/') ? to : `/${to}`;
+  router.push(path);
 };
 
 const handleScroll = () => {
@@ -213,38 +216,6 @@ html.dark .navbar.scrolled .nav-container {
   align-items: center;
 }
 
-.github-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #111827;
-  background: transparent;
-  transition: background 0.15s ease, transform 0.12s ease, color 0.12s ease;
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-right: 2rem;
-}
-
-html.dark .github-btn {
-  color: #e2e8f0;
-}
-
-.github-btn i {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
-.github-text {
-  display: inline-block;
-}
-
-.github-btn:hover {
-  background: rgba(0,0,0,0.06);
-  transform: translateY(-1px);
-}
 
 .btn-nav {
   padding: 10px 20px;
@@ -257,6 +228,11 @@ html.dark .github-btn {
   color: white;
   transition: all 0.2s ease;
   margin-right: 2rem;
+}
+
+html.dark .btn-nav {
+  background-color: #d5d5d5;
+  color: #111;
 }
 
 .btn-nav:hover {

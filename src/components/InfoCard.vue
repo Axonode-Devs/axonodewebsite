@@ -10,39 +10,38 @@
     <div class="info-content">
       <div class="header">
         <i class="fa-regular fa-lightbulb icon-glow"></i>
-        <h3>Good To Know</h3>
+        <h3>Before You Apply</h3>
       </div>
-      
-      <p class="intro-text">
-        A little warning before you proceed with your application:
-      </p>
-
       <ul class="info-list">
         <li>
-          <div class="icon-box"><i class="fa-solid fa-book"></i></div>
+          <div class="icon-box"><i class="fa-solid fa-users"></i></div>
           <div class="text">
-            <strong>Education Team</strong>
-            <span>Before you proceed with your application, we’d like to inform you about our Education Team. It is designed for beginners in group projects or software development, where participants learn core fundamentals and best practices before moving on to the Devs Team.</span>
+            <strong>What is this Community?</strong>
+            <span>
+              We’re building a talented, innovative team of creators, builders, and thinkers.
+              Whether you're into tech, design, strategy, or creative work collaboration and growth
+              are at the center of what we do.
+            </span>
           </div>
         </li>
         <li>
-          <div class="icon-box"><i class="fa-solid fa-question"></i></div>
+          <div class="icon-box"><i class="fa-solid fa-user-check"></i></div>
           <div class="text">
-            <strong>What I Need To Know</strong>
-            <span>Education Team invites are based to the reviews of your application form. So keep in mind that there is a possibility of being invited to the Education Team instead of the Devs Team directly.</span>
+            <strong>Application Review Process</strong>
+            <span>Every application is carefully reviewed. We look at mindset, commitment, and alignment not just experience level.</span>
           </div>
         </li>
         <li>
-          <div class="icon-box"><i class="fa-solid fa-envelope-circle-check"></i></div>
+          <div class="icon-box"><i class="fa-solid fa-rocket"></i></div>
           <div class="text">
-            <strong>Invitations</strong>
-            <span>We will let you know when your application has reviewed via your email address so please check your inbox regularly.</span>
+            <strong>What Happens Next</strong>
+            <span>If your application is accepted, you’ll receive an email with the next steps. Please make sure your contact information is correct and check your inbox regularly.</span>
           </div>
         </li>
       </ul>
 
       <div class="mini-footer">
-        <span>Good Luck! 🚀</span>
+        <span>See you on the inside 🚀</span>
       </div>
     </div>
   </div>

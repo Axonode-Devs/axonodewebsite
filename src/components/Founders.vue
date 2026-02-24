@@ -6,7 +6,7 @@
       </div>
     </header>
     <div class="container">
-      <h2 class="section-title">Founders</h2>
+      <h2 class="section-title">Co-Founders</h2>
       <div class="founders-grid">
         <div v-for="(founder, index) in founders" :key="index" class="founder-card-item">
           <div class="avatar-wrapper">
@@ -25,7 +25,7 @@
         
         
       </div>
-      <h2 class="section-title">Special Thanks</h2>
+      <h2 class="section-title">First Party Contributors</h2>
       <div class="founders-grid">
         <div v-for="(thanks, index) in thanks" :key="index" class="founder-card-item">
           <div class="avatar-wrapper">
@@ -102,7 +102,6 @@ const thanks = ref([
   font-size: 0.95rem;
 }
 
-/* Dark mode header overrides */
 html.dark .component-header {
   background: transparent;
 }
@@ -127,7 +126,7 @@ html.dark .founders-section {
   margin: 0 auto;
 }
 
-/* Align the component header with other sections (like About) */
+
 .component-header .container {
   max-width: 700px;
   margin: 0 auto 48px;
@@ -165,6 +164,7 @@ html.dark .section-title {
   min-width: 240px;
   flex: 1 1 260px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  transition: transform 0.2s ease;
 }
 
 html.dark .founder-card-item {
@@ -176,6 +176,11 @@ html.dark .founder-card-item {
 .founder-card-item .avatar-wrapper { width: 56px; height: 56px; }
 .founder-card-item .avatar { border-radius: 50%; }
 .founder-card-item .github-link { margin-left: auto; }
+
+
+.founder-card-item:hover {
+ transform: scale(1.03); 
+}
 
 .split-layout {
   display: grid;

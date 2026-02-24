@@ -13,7 +13,6 @@
 
     <div class="background-mesh"></div>
     
-    <!-- Grid Background -->
     <div class="grid-overlay"></div>
 
     <div class="content-wrapper">
@@ -92,9 +91,9 @@ const scrollToSection = (id) => {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  overflow: visible; /* Allow intersection card to spill into next section */
-  overflow-x: clip; /* Prevent horizontal scrollbars from background elements */
-  z-index: 10; /* Ensure this section stays above the one below it */
+  overflow: visible; 
+  overflow-x: clip; 
+  z-index: 10; 
   padding: 60px 40px;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
@@ -107,7 +106,7 @@ const scrollToSection = (id) => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 99; /* User explicitly set this in last turn */
+  z-index: 99; 
   will-change: transform;
 }
 
@@ -120,7 +119,7 @@ const scrollToSection = (id) => {
   background-image: 
     radial-gradient(at 100% 0%, rgba(144, 242, 255, 0.4) 0px, transparent 40%),
     radial-gradient(at 0% 100%, rgba(254, 120, 178, 0.4) 0px, transparent 40%);
-  filter: blur(60px); /* Slightly reduced blur for performance */
+  filter: blur(60px); 
   z-index: 1;
   pointer-events: none;
 }
@@ -303,7 +302,7 @@ html.dark .btn-secondary:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding-left: 8rem; /* Align with content-wrapper padding */
+  padding-left: 8rem; 
   box-sizing: border-box;
   transform: translateY(70%);
   z-index: 9999;

@@ -1,9 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// Sadece onAuthStateChanged'i buradan alıyoruz
 import { onAuthStateChanged } from 'firebase/auth' 
-
-// ÖNEMLİ DÜZELTME: Firebase ayar dosyasını ve auth nesnesini import et
-// (Dosya yolunun '../firebase' olduğundan emin ol, src/firebase.js ise doğrudur)
 import { auth } from '../firebase'
 
 import HomeView from '../views/HomeView.vue'
@@ -14,6 +10,21 @@ const routes = [
         path: '/',
         name: 'HomeView',
         component: HomeView
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: HomeView
+    },
+    {
+      path: '/groups',
+      name: 'Groups',
+      component: HomeView
+    },
+    {
+      path: '/support',
+      name: 'Support',
+      component: HomeView
     },
     {
         path: '/:pathMatch(.*)*',
@@ -43,11 +54,9 @@ const router = createRouter({
     routes
 })
 
-// --- GÜVENLİK KONTROLLERİ ---
 
 const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
-    // DÜZELTME: getAuth() yerine import ettiğimiz 'auth' değişkenini kullanıyoruz
     const removeListener = onAuthStateChanged(
       auth, 
       (user) => {
