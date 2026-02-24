@@ -110,6 +110,13 @@ const scrollToSection = (id) => {
   will-change: transform;
 }
 
+/* Remove video from mobile devices */
+@media (max-width: 800px) {
+  .hero-bg-video {
+    display: none;
+  }
+}
+
 .background-mesh {
   position: absolute;
   top: 0;

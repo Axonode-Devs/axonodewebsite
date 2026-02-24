@@ -40,7 +40,7 @@ const router = useRouter();
 const menuItems = ['Home', 'About', 'Groups', 'Support'];
 const isScrolled = ref(false);
 
-const slug = (text) => {
+const slug = (text: string) => {
   return String(text)
     .toLowerCase()
     .trim()
@@ -48,7 +48,7 @@ const slug = (text) => {
     .replace(/[^a-z0-9\-]/g, '');
 };
 
-const scrollTo = (selector) => {
+const scrollTo = (selector: string) => {
   // kept for potential future use but not used for navigation now
   const id = selector.startsWith('#') ? selector.slice(1) : selector;
   const el = document.getElementById(id) || document.querySelector(selector);

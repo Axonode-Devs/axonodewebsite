@@ -3,6 +3,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../firebase'
 
 import HomeView from '../views/HomeView.vue'
+import AboutView from '../views/AboutView.vue'
 import NotFound from '../views/NotFound.vue'
 
 const routes = [
@@ -12,9 +13,14 @@ const routes = [
         component: HomeView
     },
     {
+        path: '/home',
+        name: 'Home',
+        component: HomeView
+    },
+    {
       path: '/about',
       name: 'About',
-      component: HomeView
+      component: AboutView
     },
     {
       path: '/groups',
