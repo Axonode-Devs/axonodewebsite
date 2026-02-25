@@ -17,8 +17,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { admin } from '../libs/AxonConnector';
 
 const email = ref('');
 const password = ref('');
@@ -31,7 +30,7 @@ const handleLogin = async () => {
   errorMsg.value = '';
 
   try {
-    await signInWithEmailAndPassword(auth, email.value, password.value);
+    await admin.login(email.value, password.value);
     router.push('/admin');
   } catch (error) {
     errorMsg.value = 'Giriş başarısız. Bilgileri kontrol et.';

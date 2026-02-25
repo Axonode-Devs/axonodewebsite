@@ -60,8 +60,8 @@
                   <label>Primary Area of Interest <span class="req">*</span></label>
                   <div class="grid-options">
                     <label v-for="area in interestAreas" :key="area.id" 
-                      class="option-card" :class="{ active: form.mainInterest === area.id }">
-                      <input type="radio" :value="area.id" v-model="form.mainInterest" />
+                      class="option-card" :class="{ active: form.main_interest === area.id }">
+                      <input type="radio" :value="area.id" v-model="form.main_interest" />
                       <span>{{ area.label }}</span>
                     </label>
                   </div>
@@ -72,8 +72,8 @@
                     <label>Sub-Interests (Select all that apply) <span class="req">*</span></label>
                     <div class="grid-options">
                       <label v-for="sub in selectedInterest.sub" :key="sub.id" 
-                        class="option-card" :class="{ active: form.subInterest.includes(sub.id) }">
-                        <input type="checkbox" :value="sub.id" v-model="form.subInterest" />
+                        class="option-card" :class="{ active: form.sub_interest.includes(sub.id) }">
+                        <input type="checkbox" :value="sub.id" v-model="form.sub_interest" />
                         <span>{{ sub.label }}</span>
                       </label>
                     </div>
@@ -83,7 +83,7 @@
                 <div class="form-row two-col mt-input">
                   <div class="form-group">
                     <label>English Proficiency</label>
-                    <select v-model="form.englishLevel" required>
+                    <select v-model="form.english_level" required>
                       <option value="" disabled>Select Level</option>
                       <option value="B1-B2">Intermediate</option>
                       <option value="C1-C2">Advanced</option>
@@ -92,7 +92,7 @@
                   </div>
                   <div class="form-group">
                     <label>Experience Level</label>
-                    <select v-model="form.experienceLevel" required>
+                    <select v-model="form.experience_level" required>
                       <option value="newbie">Beginner</option>
                       <option value="junior">Junior</option>
                       <option value="mid">Mid-Level</option>
@@ -138,8 +138,7 @@ import { ref, reactive, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/Infocard.vue";
-import { db } from "../firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { submitApplication } from "../libs/AxonConnector";
 
 const router = useRouter();
 const currentStep = ref(1);
@@ -147,18 +146,17 @@ const isSubmitting = ref(false);
 const isSubmitted = ref(false);
 
 
-
 const form = reactive({
   fullname: "",
   email: "",
-  contactType: "phone",
-  contactValue: "",
-  englishLevel: "",
-  experienceLevel: "junior",
+  contact_type: "phone",
+  contact_value: "",
+  english_level: "",
+  experience_level: "junior",
   availability: "",
   reason: "",
-  mainInterest: "",
-  subInterest: [] as string[],
+  main_interest: "",
+  sub_interest: [] as string[],
 });
 
 const interestAreas = [
@@ -209,13 +207,13 @@ const interestAreas = [
     sub: [],
   },
 ];
-const selectedInterest = computed(() => interestAreas.find((i) => i.id === form.mainInterest));
+const selectedInterest = computed(() => interestAreas.find((i) => i.id === form.main_interest));
 
-watch(() => form.mainInterest, () => { form.subInterest = []; });
+watch(() => form.main_interest, () => { form.sub_interest = []; });
 
 function handleNextStep() {
   if (currentStep.value < 3) {
-    if (currentStep.value === 2 && !form.mainInterest) {
+    if (currentStep.value === 2 && !form.main_interest) {
       alert("Please select an area of interest");
       return;
     }
@@ -227,13 +225,13 @@ function handleNextStep() {
 
 
 const submitForm = async () => {
-  if (!form.mainInterest) {
+  if (!form.main_interest) {
     alert("Please select a main interest.");
     return;
   }
 
   if (selectedInterest.value?.sub?.length &&
-  form.subInterest.length === 0) {
+  form.sub_interest.length === 0) {
     alert("Please select a sub-interest.");
     return;
   }
@@ -241,11 +239,8 @@ const submitForm = async () => {
   isSubmitting.value = true;
 
   try {
-    await addDoc(collection(db, "applications"), {
-      ...form,
-      createdAt: serverTimestamp(),
-      status: "pending",
-    });
+    console.log("Submitting application with data:", JSON.stringify(form));
+    await submitApplication(form);
     isSubmitted.value = true;
   } catch (error) {
     console.error("Error adding document: ", error);

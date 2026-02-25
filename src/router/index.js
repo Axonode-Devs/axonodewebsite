@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { onAuthStateChanged } from 'firebase/auth' 
-import { auth } from '../firebase'
+import { admin } from '../libs/AxonConnector'
 
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
@@ -48,6 +47,11 @@ const routes = [
         component: () => import('../views/LoginView.vue')
     },
     {
+      path: '/set-password',
+      name: "SetPSW",
+      component: null
+    },
+    {
         path: '/admin',
         name: 'AdminDashboard',
         component: () => import('../views/AdminDashboard.vue'),
@@ -61,25 +65,13 @@ const router = createRouter({
 })
 
 
-const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const removeListener = onAuthStateChanged(
-      auth, 
-      (user) => {
-        removeListener();
-        resolve(user);
-      },
-      reject
-    );
-  });
-};
-
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const user = await getCurrentUser();
-    if (user) {
+    // Check if a token exists in LocalStorage via your lib
+    if (admin.currentUser) {
       next();
     } else {
+      // Not logged in, kick to login page
       next('/login');
     }
   } else {

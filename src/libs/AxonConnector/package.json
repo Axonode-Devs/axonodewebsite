@@ -1,0 +1,15 @@
+{
+  "name": "axonconnector",
+  "version": "1.0.0",
+  "description": "Convience Library for the Axonode Backend ",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.13.5"
+  },
+  "keywords": [
+    "Http"
+  ],
+  "author": "BersisSe",
+  "license": "ISC"
+}
