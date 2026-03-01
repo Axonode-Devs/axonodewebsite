@@ -30,8 +30,8 @@
           </p>
 
           <div class="action-group">
-            <button class="btn btn-primary" @click="scrollToSection('#about')">About Us</button>
-            <button class="btn btn-secondary">
+            <button class="btn btn-primary" @click="goToAbout">About Us</button>
+            <button class="btn btn-secondary" @click="goToApply">
               <span>Join Us</span>
               <span class="arrow"><i class="fa-solid fa-angle-right"></i></span>
             </button>
@@ -46,7 +46,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const heroSection = ref(null);
 const heroVideo = ref(null);
 let observer = null;
@@ -74,11 +76,11 @@ onUnmounted(() => {
   if (observer) observer.disconnect();
 });
 
-const scrollToSection = (id) => {
-  const element = document.querySelector(id);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+const goToApply = () => {
+  router.push('/join');
+};
+const goToAbout = () => {
+  router.push('/about');
 };
 </script>
 

@@ -2,40 +2,44 @@ import axios from 'axios';
 import { AuthModule } from './auth.js';
 import { AdminModule } from './admin.js';
 
-// The hidden internal client
 let client = axios.create({
   baseURL: 'http://127.0.0.1:5000/api',
   headers: { 'Content-Type': 'application/json' }
 });
 
-// Request Interceptor for JWT
+// Auto-inject JWT tokens
 client.interceptors.request.use(config => {
-  const token = localStorage.getItem('axon_token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (config.url.includes('/admin') || config.url.includes('/applications')) {
+    const token = localStorage.getItem('axon_admintoken');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    const token = localStorage.getItem('axon_token');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 
-// Error Formatter
 const _handleError = (err) => ({
   msg: err.response?.data?.msg || 'Request failed',
   errors: err.response?.data?.errors || [],
   status: err.response?.status
 });
 
-// Initialize modules with the shared client
 export const auth = new AuthModule(client, _handleError);
 export const admin = new AdminModule(client, _handleError);
 
 /**
- * Public function to initilize the internal HTTP Client and settings.
- * Similiar to Firebase's initializeApp
+ * Initialize Axon - call this once at app startup
  */
-export const initializeAxon = (config) => {
-  if (config.baseURL) client.defaults.baseURL = config.baseURL;
+export const initializeAxon = (config = {}) => {
+  if (config.baseURL) {
+    client.defaults.baseURL = config.baseURL;
+  }
 };
 
+
 /**
- * Submit a new Application, Data is not checked in this function so the parameter
+ * Submit an application to join
  */
 export const submitApplication = async (data) => {
   try {

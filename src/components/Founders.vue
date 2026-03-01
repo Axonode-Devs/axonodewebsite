@@ -6,7 +6,7 @@
       </div>
     </header>
     <div class="container">
-      <h2 class="section-title">Co-Founders</h2>
+      <h2 class="section-title">Founders</h2>
       <div class="founders-grid">
         <div v-for="(founder, index) in founders" :key="index" class="founder-card-item">
           <div class="avatar-wrapper">
@@ -25,7 +25,7 @@
         
         
       </div>
-      <h2 class="section-title">First Party Contributors</h2>
+      <h2 class="section-title">Core Team</h2>
       <div class="founders-grid">
         <div v-for="(thanks, index) in thanks" :key="index" class="founder-card-item">
           <div class="avatar-wrapper">
@@ -57,7 +57,7 @@ const founders = ref([
   },
   { 
     name: 'BersisSe',   
-    role: 'Head of Executive',  
+    role: 'Head Executive',  
     username: 'bersisse',
   },
   
@@ -66,12 +66,12 @@ const founders = ref([
 const thanks = ref([
   { 
     name: 'lofnyy',  
-    role: 'Planning & Strategy Support',    
+    role: 'Deputy Community Director',    
     username: 'lofnyy',
   },
   { 
     name: 'Kaan610',   
-    role: 'Design Support & Marketing',     
+    role: 'Head of Media',     
     username: 'Kaan610',
   },
 ])

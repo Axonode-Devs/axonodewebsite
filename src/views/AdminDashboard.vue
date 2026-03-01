@@ -3,12 +3,18 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Navbar from '../components/Navbar.vue';
 import { admin, auth } from '../libs/AxonConnector';
+import LoginView from './LoginView.vue';
 
 const apps = ref([]);
 const loading = ref(true);
 const activeTab = ref('pending'); 
 const selectedApp = ref(null);
 const showRoleSelection = ref(false);
+const showInviteModal = ref(false);
+const inviteName = ref('');
+const inviteLoading = ref(false);
+const inviteSuccess = ref(null);
+const copySuccess = ref(false);
 const router = useRouter();
 
 // --- HELPERS ---
@@ -22,6 +28,13 @@ const formatDate = (dateStr) => {
   return new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'short' }).format(date);
 };
 
+const formatStatus = (status) => {
+  if (status === 'pending') return 'Beklemede';
+  if (status === 'approved') return 'Onaylandı';
+  if (status === 'rejected') return 'Reddedildi';
+  if (status === 'invited') return 'Davet Edildi ✦';
+};
+
 const formatExperience = (val) => {
   const map = { newbie: 'Beginner', junior: 'Junior', mid: 'Mid', senior: 'Senior' };
   return map[val] || val;
@@ -29,9 +42,16 @@ const formatExperience = (val) => {
 
 // --- DATA FETCHING ---
 const fetchApps = async () => {
+  if (admin.isTokenExpired) {
+      alert('Session expired. Please log in again.');
+     
+      router.push('/login');
+      return;
+    }
   loading.value = true;
   try {
     const data = await admin.listApplications();
+    
     console.log("Fetched applications:", data);
     apps.value = data.items 
   } catch (error) {
@@ -42,12 +62,12 @@ const fetchApps = async () => {
 };
 
 // --- ACTIONS ---
-const updateStatus = async (id, newStatus, team = null) => {
+const updateStatus = async (id, newStatus) => {
   try {
     if (newStatus === 'approved') {
-      await admin.approve(id, { team: team });
+      await admin.approveApplication(id, );
     } else {
-      await admin.reject(id);
+      await admin.rejectApplication(id);
     }
     await fetchApps();
     closeDetail();
@@ -62,12 +82,43 @@ const openDetail = (app) => {
 };
 const closeDetail = () => { selectedApp.value = null; };
 
-const logout = () => { auth.signOut(); router.push('/login'); };
+
+const generateInvite = async () => {
+  if (!inviteName.value.trim()) {
+    alert('Lütfen bir ad girin.');
+    return;
+  }
+  inviteLoading.value = true;
+  try {
+    const result = await admin.createInvite(inviteName.value);
+    inviteSuccess.value = result;
+    inviteName.value = '';
+  } catch (error) {
+    alert('Hata: ' + (error.msg || 'Davet oluşturulamadı.'));
+  } finally {
+    inviteLoading.value = false;
+  }
+};
+
+const copyInviteLink = async () => {
+  if (inviteSuccess.value?.invite_link) {
+    try {
+      await navigator.clipboard.writeText(inviteSuccess.value.invite_link);
+      copySuccess.value = true;
+      setTimeout(() => {
+        copySuccess.value = false;
+      }, 2000);
+    } catch (err) {
+      alert('Bağlantı kopyalanamadı.');
+    }
+  }
+};
 
 // --- COMPUTED ---
-const pendingApps = computed(() => apps.value.filter(a => a.status === 'pending'));
-const historyApps = computed(() => apps.value.filter(a => a.status !== 'pending'));
-const filteredApps = computed(() => activeTab.value === 'pending' ? pendingApps.value : historyApps.value);
+// Pending = invited & pending
+const notacceptedApps = computed(() => apps.value.filter(a => a.status === 'pending' || a.status === 'invited'));
+const historyApps = computed(() => apps.value.filter(a => a.status !== 'pending' && a.status !== 'invited'));
+const filteredApps = computed(() => activeTab.value === 'pending' ? notacceptedApps.value : historyApps.value);
 
 onMounted(fetchApps);
 </script>
@@ -80,16 +131,23 @@ onMounted(fetchApps);
       
       <div class="tabs">
         <button :class="['tab-btn', { active: activeTab === 'pending' }]" @click="activeTab = 'pending'">
-          Bekleyenler <span v-if="pendingApps.length" class="count-badge">{{ pendingApps.length }}</span>
+          Bekleyenler <span v-if="notacceptedApps.length" class="count-badge">{{ notacceptedApps.length }}</span>
         </button>
         <button :class="['tab-btn', { active: activeTab === 'history' }]" @click="activeTab = 'history'">Geçmiş</button>
+        
+        <button class="btn-end" @click="showInviteModal = true">Davet Oluştur</button>
       </div>
 
       <div v-if="!loading" class="apps-grid">
+        <div v-if="filteredApps.length === 0" class="empty-state">
+          <p class="empty-message">
+            {{ activeTab === 'pending' ? 'Bekleyen başvurular yok.' : 'Geçmiş başvurular yok.' }}
+          </p>
+        </div>
         <div v-for="app in filteredApps" :key="app.id" class="app-card" @click="openDetail(app)">
           <div class="card-header-top">
             <div class="avatar-placeholder">{{ getInitials(app.fullname) }}</div>
-            <span :class="['status-badge', app.status]">{{ app.status }}</span>
+            <span :class="['status-badge', app.status]">{{ formatStatus(app.status) }}</span>
           </div>
           <h3 class="applicant-name">{{ app.fullname }}</h3>
           
@@ -144,6 +202,60 @@ onMounted(fetchApps);
               <button @click="updateStatus(selectedApp.id, 'rejected')" class="btn btn-rejected">Reddet</button>
               <button @click="updateStatus(selectedApp.id, 'approved')" class="btn btn-approved">Onayla</button>
            </template>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="showInviteModal" class="modal-overlay" @click.self="showInviteModal = false">
+      <div class="modal-container">
+        <div class="modal-card">
+          <div class="modal-body">
+            <h2>Davet Oluştur</h2>
+            <p class="modal-subtitle">Yeni bir davetiye oluşturun</p>
+            
+            <div v-if="!inviteSuccess" class="invite-form">
+              <div class="form-group">
+                <label for="invite-name">Ad/Not</label>
+                <input 
+                  id="invite-name"
+                  v-model="inviteName" 
+                  type="text" 
+                  placeholder="Örn: John Doe"
+                  class="form-input"
+                  @keyup.enter="generateInvite"
+                >
+              </div>
+            </div>
+
+            <div v-else class="invite-success">
+              <div class="success-content">
+                <p class="success-message">Davetiye başarıyla oluşturuldu!</p>
+                <div class="invite-link-container">
+                  <input 
+                    type="text" 
+                    :value="inviteSuccess?.invite_link" 
+                    readonly 
+                    class="invite-link-input"
+                  >
+                  <button @click="copyInviteLink" :class="['btn-copy', { copied: copySuccess }]">
+                    {{ copySuccess ? '✓ Kopyalandı' : 'Kopyala' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-overlay-actions">
+          <template v-if="!inviteSuccess">
+            <button @click="showInviteModal = false" class="btn btn-secondary">İptal</button>
+            <button @click="generateInvite" class="btn btn-approved" :disabled="inviteLoading">
+              {{ inviteLoading ? 'Oluşturuluyor...' : 'Oluştur' }}
+            </button>
+          </template>
+          <template v-else>
+            <button @click="showInviteModal = false" class="btn btn-approved">Kapat</button>
+          </template>
         </div>
       </div>
     </div>
@@ -229,6 +341,7 @@ html.dark .background-mesh {
 .gradient-text {
   background: linear-gradient(90deg, #95b0eb 0%, #fe78b0 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .subtext {
@@ -257,6 +370,12 @@ html.dark .background-mesh {
   align-items: center;
   gap: 8px;
 }
+.btn-end {
+  margin-left: auto;
+  background: var(--accent-color);
+  color: #000;
+  padding: 10px 15px;
+}
 .tab-btn:hover {
   color: var(--text-main);
   background: rgba(0, 0, 0, 0.03);
@@ -278,6 +397,20 @@ html.dark .background-mesh {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
+}
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+.empty-message {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
 }
 .app-card {
   background: var(--card-bg);
@@ -376,6 +509,10 @@ html.dark .background-mesh {
   background: rgba(255, 189, 46, 0.15);
   color: #ffbd2e;
 }
+.status-badge.invited {
+  background: rgba(120, 222, 231, 0.15);
+  color: #78dee7;
+}
 .status-badge.approved {
   background: rgba(39, 201, 63, 0.15);
   color: var(--success-color);
@@ -459,6 +596,119 @@ html.dark .modal-card {
 
 .modal-body {
   padding: 30px;
+}
+
+.modal-subtitle {
+  color: var(--text-muted);
+  margin: 5px 0 20px 0;
+  font-size: 0.95rem;
+}
+
+.invite-form {
+  animation: modalPop 0.2s ease-out;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input {
+  padding: 12px 14px;
+  border: 1px solid rgba(150, 150, 150, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(0, 0, 0, 0.02);
+  color: var(--text-main);
+  transition: all 0.2s;
+  font-family: "Inter", sans-serif;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #95b0eb;
+  background: rgba(149, 176, 235, 0.05);
+  box-shadow: 0 0 0 3px rgba(149, 176, 235, 0.1);
+}
+
+html.dark .form-input {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.invite-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  animation: modalPop 0.3s ease-out;
+}
+
+.success-content {
+  width: 100%;
+  text-align: center;
+}
+
+.success-message {
+  color: var(--success-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+.invite-link-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.invite-link-input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid rgba(120, 222, 231, 0.3);
+  border-radius: 8px;
+  background: rgba(120, 222, 231, 0.05);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-family: "Courier New", monospace;
+  transition: all 0.2s;
+}
+
+.invite-link-input:focus {
+  outline: none;
+  border-color: #78dee7;
+  background: rgba(120, 222, 231, 0.1);
+}
+
+.btn-copy {
+  padding: 12px 18px;
+  background: #78dee7;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-copy:hover:not(.copied) {
+  background: #5cc8d8;
+  transform: translateY(-2px);
+}
+
+.btn-copy.copied {
+  background: var(--success-color);
+  color: white;
 }
 
 .applicant-header {

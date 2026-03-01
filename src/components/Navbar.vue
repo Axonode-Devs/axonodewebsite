@@ -17,8 +17,8 @@
         <button class="btn-nav" @click="goToApply">
           Join Us
         </button>
-        <button class="btn-nav" @click="goToApply">
-          Login
+        <button class="btn-nav" @click="handleLoginClick">
+          {{ isLoogedIn ? 'Dashboard' : 'Login' }}
         </button>
 
         <ThemeSwitcher />
@@ -35,10 +35,13 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import ThemeSwitcher from '../components/ThemeSwitcher.vue';
 import { useRouter } from 'vue-router';
+import { admin } from '../libs/AxonConnector';
+import e from 'cors';
 
 const router = useRouter();
 const menuItems = ['Home', 'About', 'Groups', 'Support'];
 const isScrolled = ref(false);
+const isLoogedIn = ref(false);
 
 const slug = (text: string) => {
   return String(text)
@@ -48,16 +51,7 @@ const slug = (text: string) => {
     .replace(/[^a-z0-9\-]/g, '');
 };
 
-const scrollTo = (selector: string) => {
-  // kept for potential future use but not used for navigation now
-  const id = selector.startsWith('#') ? selector.slice(1) : selector;
-  const el = document.getElementById(id) || document.querySelector(selector);
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-};
+
 const goTo = (to: string) => {
   const path = to.startsWith('/') ? to : `/${to}`;
   router.push(path);
@@ -69,14 +63,28 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  if (!admin.tokenExpired){
+    isLoogedIn.value = true;
+  }
+  else{
+    isLoogedIn.value = false;
+  }
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 
+const handleLoginClick = () => {
+  if (isLoogedIn.value) {
+    router.push('/admin');
+  } else {
+    router.push('/login');
+  }
+};
+
 const goToApply = () => {
-  router.push('/form');
+  router.push('/join'); 
 };
 
 const goToHome = () => {

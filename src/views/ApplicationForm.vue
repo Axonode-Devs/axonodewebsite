@@ -17,6 +17,11 @@
 
           <template v-else>
             <div class="form-header">
+              <Transition name="fade-slide">
+                <div v-if="inviteToken" class="invited-badge">
+                  ✦ Personal Invitation
+                </div>
+              </Transition>
               <h2 class="title">Join the <span class="gradient-text">Team</span></h2>
               <div class="stepper">
                 <div v-for="step in 3" :key="step" :class="['step', { active: currentStep >= step }]">
@@ -42,8 +47,8 @@
                 <div class="form-row single-col">
                   <label for="contact"><i class="fa-solid fa-phone"></i> Primary Contact</label>
                   <div class="form-group-row">
-                  <input type="text" id="contact" v-model="form.contact" placeholder="username#0000" style="flex: 1;" />
-                  <select v-model="form.contactType" style="flex: 0 0 35%;">
+                  <input type="text" id="contact" v-model="form.contact_value" placeholder="username#0000" style="flex: 1;" />
+                  <select v-model="form.contact_type" style="flex: 0 0 35%;">
                     <option value="" disabled>Contact Platform</option>
                     <option value="discord">Discord</option>
                     <option value="phone">Phone</option>
@@ -134,17 +139,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch } from "vue";
-import { useRouter } from "vue-router";
+import { ref, reactive, computed, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/Infocard.vue";
-import { submitApplication } from "../libs/AxonConnector";
+import { submitApplication, admin } from "../libs/AxonConnector";
 
 const router = useRouter();
+const route = useRoute();
+
 const currentStep = ref(1);
 const isSubmitting = ref(false);
 const isSubmitted = ref(false);
-
+const inviteToken = ref(null); // 3. Store the token
 
 const form = reactive({
   fullname: "",
@@ -157,6 +164,7 @@ const form = reactive({
   reason: "",
   main_interest: "",
   sub_interest: [] as string[],
+  invite_token: null as string | null,
 });
 
 const interestAreas = [
@@ -207,6 +215,27 @@ const interestAreas = [
     sub: [],
   },
 ];
+
+onMounted(async () => {
+  const token = route.query.invite as string;
+  
+  if (token) {
+    try {
+      // Validate the token first
+      const data = await admin.checkInvite(token);
+      if (data.valid) {
+        inviteToken.value = token;
+        form.invite_token = token;
+      } else {
+        console.error("Invalid invite token");
+        // Optionally router.push to just the form without the query param
+      }
+    } catch (error) {
+      console.error("Error checking token", error);
+    }
+  }
+});
+
 const selectedInterest = computed(() => interestAreas.find((i) => i.id === form.main_interest));
 
 watch(() => form.main_interest, () => { form.sub_interest = []; });
@@ -550,6 +579,17 @@ html.dark .option-card.active {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
+}
+.invited-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #78dee7 0%, #bb85df 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(187, 133, 223, 0.3);
 }
 
 .fade-slide-enter-active,

@@ -3,7 +3,9 @@ import { admin } from '../libs/AxonConnector'
 
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
+import AdminDashboard from '../views/AdminDashboard.vue'
 import NotFound from '../views/NotFound.vue'
+import SetPassword from '../views/SetPassword.vue'
 
 const routes = [
     {
@@ -37,7 +39,7 @@ const routes = [
         component: NotFound
     },
     {
-        path: '/form',
+        path: '/join',
         name: 'ApplicationForm',
         component: () => import('../views/ApplicationForm.vue')
     },
@@ -49,12 +51,17 @@ const routes = [
     {
       path: '/set-password',
       name: "SetPSW",
-      component: null
+      component: SetPassword
+    },
+    {
+      path: '/invited',
+      name: "Invited",
+      component: () => import('../views/InvitedView.vue')
     },
     {
         path: '/admin',
         name: 'AdminDashboard',
-        component: () => import('../views/AdminDashboard.vue'),
+        component: AdminDashboard,
         meta: { requiresAuth: true }
     },
 ]
