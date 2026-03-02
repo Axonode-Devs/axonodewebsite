@@ -15,6 +15,9 @@
   --text-color: #2c3e50;
   --border-color: #e2e8f0;
   --hover-bg: #f1f5f9;
+  --accent-color: #8dedf5;
+  --accent-secondary: #fe78b2;
+  --error-color: #ff6b6b;
 }
 
 html.dark {
@@ -23,6 +26,9 @@ html.dark {
   --text-color: #e2e8f0;
   --border-color: #4b5563;
   --hover-bg: #2d3748;
+  --accent-color: #78dee7;
+  --accent-secondary: #fe78b2;
+  --error-color: #ff6b6b;
 }
 
 body {

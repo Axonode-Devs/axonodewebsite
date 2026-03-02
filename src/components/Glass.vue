@@ -1,5 +1,4 @@
 <script setup>
-// LeftOrbGlass.vue
 </script>
 
 <template>
@@ -31,25 +30,22 @@
 
 .scene-wrapper {
   position: relative;
-  width: 380px; /* Genişliği biraz artırdım */
+  width: 380px; 
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* --- ORB AYARLARI --- */
 .sharp-orb {
   position: absolute;
   
-  /* DEĞİŞİKLİK BURADA: SOLA ALDIK */
-  top: -20px;    /* Hafif yukarıda */
-  left: -40px;   /* Soldan dışarı taşır */
+  top: -20px;   
+  left: -40px; 
   
   width: 150px;
   height: 150px;
   border-radius: 50%;
   
-  /* Biraz daha sıcak bir renk seçelim (Turuncu/Pembe) */
   background: linear-gradient(135deg, #ff9966, #ff5e62);
   
   z-index: 0;
@@ -57,7 +53,6 @@
   box-shadow: 0 0 30px rgba(255, 94, 98, 0.4);
 }
 
-/* --- CAM KART AYARLARI --- */
 .glass-card {
   position: relative;
   z-index: 1;
@@ -65,26 +60,22 @@
   padding: 40px;
   border-radius: 24px;
   
-  /* Cam Zemin */
   background: rgba(255, 255, 255, 0.03); 
-  backdrop-filter: blur(18px); /* Bulanıklık miktarı */
+  backdrop-filter: blur(18px); 
   -webkit-backdrop-filter: blur(18px);
 
-  /* Kristal Kenar Efektleri */
   border-top: 1px solid rgba(255, 255, 255, 0.5);
-  border-left: 1px solid rgba(255, 255, 255, 0.5); /* Işık soldan vurduğu için burası parlak */
+  border-left: 1px solid rgba(255, 255, 255, 0.5); 
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   border-right: 1px solid rgba(255, 255, 255, 0.05);
 
-  /* Derinlik ve Kalınlık */
   box-shadow: 
     0 25px 45px rgba(0, 0, 0, 0.4),
-    inset 1px 1px 0px rgba(255, 255, 255, 0.15); /* İç parlaklık */
+    inset 1px 1px 0px rgba(255, 255, 255, 0.15);
 }
 
 .content {
   color: white;
-  /* Yazıları sağa yaslayabiliriz çünkü orb solda, ama orta da güzel durur */
   text-align: center; 
   position: relative;
   z-index: 2;

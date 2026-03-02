@@ -4,103 +4,109 @@
     <div class="login-content">
       <div class="login-box">
         <div class="login-header">
-          <h1>Welcome Back</h1>
-          <p class="subtitle">{{ isAdmin ? 'Admin Portal' : 'Sign in to your account' }}</p>
+          <h1>Welcome to Axonode</h1>
+          <p class="subtitle">Lets set your password for your account</p>
         </div>
 
-        <form @submit.prevent="handleLogin" class="login-form">
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input 
-              id="email"
-              type="email" 
-              v-model="email" 
-              placeholder="Enter your email" 
-              required 
-            />
-          </div>
-
+        <form @submit.prevent="handleSetup" class="login-form">
           <div class="form-group">
             <label for="password">Password</label>
             <input 
               id="password"
               type="password" 
               v-model="password" 
-              placeholder="Enter your password" 
+              placeholder="Min 8 characters" 
+              required 
+            />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input 
+              id="confirmPassword"
+              type="password" 
+              v-model="confirmPassword" 
+              placeholder="Repeat your password" 
               required 
             />
           </div>
 
           <button type="submit" class="login-btn" :disabled="loading">
-            <span v-if="!loading">Sign In</span>
+            <span v-if="!loading">Set Password</span>
             <span v-else class="loading-spinner">
               <svg viewBox="0 0 24 24" width="20" height="20">
                 <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
               </svg>
-              Signing in...
+              Setting password...
             </span>
           </button>
         </form>
 
         <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
 
-        <div class="divider">
-          <span>or</span>
-        </div>
-
-        <button 
-          type="button" 
-          class="admin-btn" 
-          @click="toggleAdminMode"
-        >
-          {{ isAdmin ? '← Back to User Login' : 'Admin Access →' }}
-        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { admin, auth } from '../libs/AxonConnector';
 
 import Navbar from '../components/Navbar.vue';
+const route = useRoute();
+const router = useRouter();
+
 
 const email = ref('');
 const password = ref('');
+const confirmPassword = ref(''); 
 const loading = ref(false);
 const errorMsg = ref('');
-const isAdmin = ref(false);
-const router = useRouter();
+const token = ref('');
 
-const handleLogin = async () => {
+
+onMounted(() => {
+  const urlToken = route.query.token;
+  if (!urlToken) {
+    errorMsg.value = 'Invalid or missing activation link.';
+    router.push('/'); // Redirect to home or login page
+  } else {
+    token.value = urlToken;
+  }
+});
+
+const handleSetup = async () => {
+  if (!token.value) {
+    errorMsg.value = 'Cannot proceed without a valid token.';
+    return;
+  }
+
+  if (password.value.length < 8) {
+    errorMsg.value = 'Password must be at least 8 characters long.';
+    return;
+  }
+
   loading.value = true;
   errorMsg.value = '';
+
   try {
-    if (isAdmin.value){
-      await admin.login(email.value, password.value);
-      router.push('/admin');
-      console.log("Admin login successful, redirecting to /admin");
-    }
-    else{
-      await auth.login(email.value, password.value);
-      router.push('/dashboard');
-    }
+    const response = await auth.setPassword(token.value, password.value);
+    
+    // If your backend returns an access_token, the connector already saved it.
+    // We can now teleport them to the home page or a "success" state.
+    alert("Password set successfully! Welcome to Axonode.");
+    router.push('/'); 
+    
   } catch (error) {
-    errorMsg.value = 'Login failed. Please check your credentials.';
-    console.error(error.code);
+    // This will catch expired tokens, weak passwords, or server errors
+    errorMsg.value = error.msg || 'Failed to set password. The link may have expired.';
+    console.error('Setup Error:', error);
   } finally {
     loading.value = false;
   }
 };
 
-const toggleAdminMode = () => {
-  isAdmin.value = !isAdmin.value;
-  errorMsg.value = '';
-  email.value = '';
-  password.value = '';
-};
 </script>
 
 <style scoped>
@@ -148,7 +154,7 @@ const toggleAdminMode = () => {
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 8px 0;
-  background: linear-gradient(to left, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

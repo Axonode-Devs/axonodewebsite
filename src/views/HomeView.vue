@@ -4,8 +4,8 @@
     <HeroSection />
     <About />
     <Founders />
-    <InfoSection />
-    <ProjectsSection />
+    <!-- <InfoSection />  Disabled for now -->
+    <!-- <ProjectsSection /> Disabled -->
     
     <ContactSection />
   </div>
@@ -25,7 +25,7 @@ import ContactSection from '../components/ContactSection.vue';
 <style scoped>
   .canvas-container {
   width: 100%;
-  height: 100vh; /* Tam ekran olması için */
+  height: 100vh;
 }
 canvas {
   width: 100%;

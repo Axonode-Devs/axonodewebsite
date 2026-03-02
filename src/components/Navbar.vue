@@ -9,18 +9,16 @@
 
       <ul class="nav-links">
         <li v-for="item in menuItems" :key="item">
-          <a :href="`#${slug(item)}`" class="nav-item" @click.prevent="scrollTo(`#${slug(item)}`)">{{ item }}</a>
+          <a :href="`/${slug(item)}`" class="nav-item" @click.prevent="goTo(slug(item))">{{ item }}</a>
         </li>
       </ul>
 
       <div class="nav-actions">
-        <a href="https://github.com/Axonode-Devs" class="github-btn" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-          <i class="fa-brands fa-github" aria-hidden="true"></i>
-          <span class="github-text">Github</span>
-        </a>
-
         <button class="btn-nav" @click="goToApply">
           Join Us
+        </button>
+        <button class="btn-nav" @click="handleLoginClick">
+          {{ isLoogedIn ? 'Dashboard' : 'Login' }}
         </button>
 
         <ThemeSwitcher />
@@ -33,16 +31,19 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import ThemeSwitcher from '../components/ThemeSwitcher.vue';
 import { useRouter } from 'vue-router';
+import { admin } from '../libs/AxonConnector';
+import e from 'cors';
 
 const router = useRouter();
-const menuItems = ['Homepage', 'About', 'Info', 'Projects', 'Contact'];
+const menuItems = ['Home', 'About', 'Groups', 'Support'];
 const isScrolled = ref(false);
+const isLoogedIn = ref(false);
 
-const slug = (text) => {
+const slug = (text: string) => {
   return String(text)
     .toLowerCase()
     .trim()
@@ -50,14 +51,10 @@ const slug = (text) => {
     .replace(/[^a-z0-9\-]/g, '');
 };
 
-const scrollTo = (selector) => {
-  const id = selector.startsWith('#') ? selector.slice(1) : selector;
-  const el = document.getElementById(id) || document.querySelector(selector);
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+
+const goTo = (to: string) => {
+  const path = to.startsWith('/') ? to : `/${to}`;
+  router.push(path);
 };
 
 const handleScroll = () => {
@@ -66,14 +63,28 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  if (!admin.tokenExpired){
+    isLoogedIn.value = true;
+  }
+  else{
+    isLoogedIn.value = false;
+  }
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 
+const handleLoginClick = () => {
+  if (isLoogedIn.value) {
+    router.push('/admin');
+  } else {
+    router.push('/login');
+  }
+};
+
 const goToApply = () => {
-  router.push('/form');
+  router.push('/join'); 
 };
 
 const goToHome = () => {
@@ -179,6 +190,9 @@ html.dark .navbar.scrolled .nav-container {
 
 .nav-item {
   text-decoration: none;
+  padding: 8px;
+  border: solid 2px #94969a;
+  border-radius: 40px;
   color: #4B5563;
   font-weight: 500;
   font-size: 0.95rem;
@@ -210,38 +224,6 @@ html.dark .navbar.scrolled .nav-container {
   align-items: center;
 }
 
-.github-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #111827;
-  background: transparent;
-  transition: background 0.15s ease, transform 0.12s ease, color 0.12s ease;
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-right: 2rem;
-}
-
-html.dark .github-btn {
-  color: #e2e8f0;
-}
-
-.github-btn i {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
-.github-text {
-  display: inline-block;
-}
-
-.github-btn:hover {
-  background: rgba(0,0,0,0.06);
-  transform: translateY(-1px);
-}
 
 .btn-nav {
   padding: 10px 20px;
@@ -254,6 +236,11 @@ html.dark .github-btn {
   color: white;
   transition: all 0.2s ease;
   margin-right: 2rem;
+}
+
+html.dark .btn-nav {
+  background-color: #d5d5d5;
+  color: #111;
 }
 
 .btn-nav:hover {

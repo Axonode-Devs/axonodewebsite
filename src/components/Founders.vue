@@ -1,90 +1,81 @@
 <template>
   <section class="founders-section">
-    <div class="container">
-      
-      <div class="split-layout">
-        
-        <div class="left-column">
-  <div class="video-wrapper">
-    <FoundersImage :founders="founders" />
-  </div>
-</div>
-
-        <div class="right-column">
-          <div class="founders-card">
-            <div class="star-decoration">
-              <i class="fa-solid fa-star"></i>
-            </div>
-
-            <div class="founders-list">
-              <div v-for="(founder, index) in founders" :key="index" class="founder-row">
-                
-                <div class="founder-info-group">
-                  <div class="avatar-wrapper">
-                    <img :src="`https://github.com/${founder.username}.png`" :alt="founder.name" class="avatar">
-                  </div>
-                  
-                  <div class="text-group">
-                    
-                    <div class="name-badge-row">
-                      <h4 class="founder-name">{{ founder.name }}</h4>
-                      
-                      <div class="badges-container" v-if="founder.badges && founder.badges.length">
-                        <span v-for="badge in founder.badges" :key="badge" class="custom-badge">
-                          {{ badge }}
-                        </span>
-                      </div>
-                    </div>
-
-                    <span class="founder-role">{{ founder.role }}</span>
-                  </div>
-                </div>
-
-                <a :href="`https://github.com/${founder.username}`" target="_blank" class="github-link">
-                  <i class="fa-brands fa-github"></i>
-                </a>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
+    <header class="component-header">
+      <div class="container">
+        <h1 class="component-title">Our Team</h1>
       </div>
+    </header>
+    <div class="container">
+      <h2 class="section-title">Founders</h2>
+      <div class="founders-grid">
+        <div v-for="(founder, index) in founders" :key="index" class="founder-card-item">
+          <div class="avatar-wrapper">
+            <img :src="`https://github.com/${founder.username}.png`" :alt="founder.name" class="avatar">
+          </div>
 
+          <div class="text-group info">
+            <h4 class="founder-name">{{ founder.name }}</h4>
+            <span :class="founder.role === 'Head Community Director' ? 'founder-director-role' : 'founder-executive-role'">{{ founder.role }}</span>
+          </div>
+
+          <a :href="`https://github.com/${founder.username}`" target="_blank" class="github-link">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+        
+        
+      </div>
+      <h2 class="section-title">Core Team</h2>
+      <div class="founders-grid">
+        <div v-for="(thanks, index) in thanks" :key="index" class="founder-card-item">
+          <div class="avatar-wrapper">
+            <img :src="`https://github.com/${thanks.username}.png`" :alt="thanks.name" class="avatar">
+          </div>
+
+          <div class="text-group info">
+            <h4 class="founder-name">{{ thanks.name }}</h4>
+            <span class="thanks-role">{{ thanks.role }}</span>
+          </div>
+
+          <a :href="`https://github.com/${thanks.username}`" target="_blank" class="github-link">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import FoundersImage from './FoundersImage.vue';
 
 const founders = ref([
   { 
     name: 'kaiross12',   
     role: 'Head Community Director',        
     username: 'kaiross12',
-    badges: ['Graphics', 'UI/UX', 'Full Stack'] 
   },
   { 
     name: 'BersisSe',   
-    role: 'Head of Executive',  
+    role: 'Head Executive',  
     username: 'bersisse',
-    badges: ['Backend', 'Databases'] 
   },
+  
+]);
+
+const thanks = ref([
   { 
     name: 'lofnyy',  
-    role: 'Head of AI & Community Admin',    
+    role: 'Deputy Community Director',    
     username: 'lofnyy',
-    badges: ['AI Research', 'Python', 'Analysis']
   },
   { 
     name: 'Kaan610',   
-    role: 'Head of Planning & PR',     
+    role: 'Head of Media',     
     username: 'Kaan610',
-    badges: ['Management', 'Strategy']
   },
-]);
+])
+
 </script>
 
 <style scoped>
@@ -94,6 +85,38 @@ const founders = ref([
   padding-bottom: 5rem;
 }
 
+.component-header {
+  padding: 0;
+  text-align: center;
+}
+.component-title {
+  font-size: 3rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+.component-subtitle {
+  margin: 0.35rem 0 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+html.dark .component-header {
+  background: transparent;
+}
+html.dark .component-title {
+  color: #e6eef8;
+}
+html.dark .component-subtitle {
+  color: #cbd5e1;
+}
+
+@media (max-width: 600px) {
+  .component-title { font-size: 2.25rem; }
+}
+
+
 html.dark .founders-section {
   background-color: var(--bg-color);
 }
@@ -101,6 +124,62 @@ html.dark .founders-section {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+
+.component-header .container {
+  max-width: 700px;
+  margin: 0 auto 48px;
+}
+
+.component-title { letter-spacing: -0.02em; }
+
+.section-title {
+  font-size: 2rem;
+  text-align: center;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+html.dark .section-title {
+  color: #e2e8f0;
+}
+.founders-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px 0 40px;
+}
+
+.founder-card-item {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 240px;
+  flex: 1 1 260px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  transition: transform 0.2s ease;
+}
+
+html.dark .founder-card-item {
+  background: var(--sc-color);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.founder-card-item .info { flex-direction: column; align-items: flex-start; }
+.founder-card-item .avatar-wrapper { width: 56px; height: 56px; }
+.founder-card-item .avatar { border-radius: 50%; }
+.founder-card-item .github-link { margin-left: auto; }
+
+
+.founder-card-item:hover {
+ transform: scale(1.03); 
 }
 
 .split-layout {
@@ -230,7 +309,7 @@ html.dark .founder-name {
 }
 
 .founder-name {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #111827;
   margin: 0;
@@ -244,29 +323,42 @@ html.dark .founder-name {
   flex-wrap: wrap;
 }
 
-html.dark .custom-badge {
-  background-color: rgba(149, 176, 235, 0.2); 
-  color: #d0d7ee;   
-}
-
 .custom-badge {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-family: Arial, Helvetica, sans-serif;
-  
-  background-color: rgba(149, 176, 235, 0.1);
-  color: #5b7bb2;
-  border: 1px solid rgba(149, 176, 235, 0.2);
-  
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+
+  background-color: rgba(15, 23, 42, 0.04);
+  color: #334155;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+
   white-space: nowrap;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
-.founder-role {
-  font-size: 0.85rem;
-  color: #6B7280;
+html.dark .custom-badge {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #d0d7ee;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.founder-executive-role {
+  font-size: 1rem;
+  color: #d5400a;
+  font-weight: 500;
+  display: block;
+}
+.founder-director-role {
+  font-size: 1rem;
+  color: #19e09a;
+  font-weight: 500;
+  display: block;
+}
+.thanks-role {
+  font-size: 1rem;
+  color: #78bfda;
   font-weight: 500;
   display: block;
 }

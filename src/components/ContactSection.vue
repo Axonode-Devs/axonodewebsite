@@ -7,21 +7,13 @@
         <div class="contact-info">
           <h2 class="title">Let's Build <br><span class="gradient-text">Something Great</span></h2>
           <p class="description">
-            Have an idea or want to join the Axonode core team? Drop us a line. We are always looking for new perspectives.
+            Have an idea or want to join the Axonode? Drop us a line. We are always looking for new perspectives.
           </p>
           
           <div class="contact-links">
             <a href="#" class="link-item">
               <div class="icon-box"><i class="fa-regular fa-envelope"></i></div>
               <span>info@axonode.org</span>
-            </a>
-            <a href="/form" class="link-item">
-              <div class="icon-box"><i class="fa-brands fa-discord"></i></div>
-              <span>Join Discord</span>
-            </a>
-            <a href="https://github.com/Axonode-Devs" class="link-item">
-              <div class="icon-box"><i class="fa-brands fa-github"></i></div>
-              <span>Axonode Devs</span>
             </a>
           </div>
         </div>
@@ -43,7 +35,7 @@
               <textarea id="message" rows="4" placeholder="Tell us about your project..." class="form-input"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" @click="onSubmit">
               <span>Send Message</span>
               <span class="arrow"><i class="fa-solid fa-paper-plane"></i></span>
             </button>
@@ -55,14 +47,18 @@
 </template>
 
 <script setup>
+function onSubmit() {
+  alert('Message sent! (not really, this is just a demo)');
+}
+
 </script>
 
 <style scoped>
 .contact-section {
   position: relative;
-  padding: 100px 20px;
+  padding: 80px 20px;
   background-color: #F9FAFB;
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,6 +95,10 @@ html.dark .contact-section {
   grid-template-columns: 1fr 1.2fr;
   gap: 60px;
   align-items: center;
+}
+
+.contact-info {
+  min-width: 0;
 }
 
 .title {
@@ -168,6 +168,7 @@ html.dark .link-item:hover { color: #fff; }
   justify-content: center;
   color: #111827;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 html.dark .icon-box {
@@ -208,13 +209,14 @@ html.dark .glass-form {
   font-weight: 600;
   color: #374151;
   margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 html.dark .form-group label { color: #d1d5db; }
 
 .form-input {
   width: 100%;
-  max-width: 450px;
   padding: 14px 16px;
   border-radius: 12px;
   border: 1px solid rgba(0,0,0,0.1);
@@ -224,6 +226,7 @@ html.dark .form-group label { color: #d1d5db; }
   font-size: 1rem;
   transition: all 0.2s ease;
   outline: none;
+  box-sizing: border-box;
 }
 
 html.dark .form-input {
@@ -240,12 +243,12 @@ html.dark .form-input {
 
 html.dark .form-input:focus {
   background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 4px rgba(149, 176, 235, 0.2);
 }
 
 textarea.form-input {
   resize: vertical;
   min-height: 120px;
-  width: 450px;
 }
 
 .btn {
@@ -260,29 +263,54 @@ textarea.form-input {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  border: none;
 }
 
 .btn-primary {
-  border: none;
-  background-color: #111;
-  color: white;
+  background: linear-gradient(135deg, #78dee7, #95b0eb);
+  color: #000;
+  box-shadow: 0 10px 25px rgba(120, 222, 231, 0.2);
 }
 
 .btn-primary:hover {
-  background-color: #333;
   transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(120, 222, 231, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 html.dark .btn-primary {
-  background-color: #fff;
-  color: #111;
+  background: linear-gradient(135deg, #78dee7, #95b0eb);
+  color: #000;
 }
 
-html.dark .btn-primary:hover {
-  background-color: #e5e7eb;
+/* RESPONSIVE DESIGNS */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .contact-wrapper {
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .glass-form {
+    padding: 35px;
+  }
 }
 
-@media (max-width: 850px) {
+/* Small Tablets & Large Mobile */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 60px 20px;
+    min-height: auto;
+  }
+
   .contact-wrapper {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -292,18 +320,153 @@ html.dark .btn-primary:hover {
     text-align: center;
   }
   
+  .title {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+  
   .description {
-    margin: 0 auto 40px auto;
+    font-size: 1rem;
+    margin: 0 auto 30px auto;
+    max-width: 100%;
   }
   
   .contact-links {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
   }
   
   .glass-form {
-    padding: 25px;
+    padding: 30px 25px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+  }
+
+  .form-input {
+    padding: 12px 14px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  textarea.form-input {
+    min-height: 100px;
+  }
+
+  .btn {
+    padding: 14px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 40px 16px;
+  }
+
+  .background-mesh {
+    filter: blur(60px);
+  }
+
+  .title {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .contact-links {
+    gap: 12px;
+  }
+
+  .link-item {
+    font-size: 0.9rem;
+    gap: 12px;
+  }
+
+  .icon-box {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .glass-form {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .form-input {
+    padding: 11px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  textarea.form-input {
+    min-height: 90px;
+  }
+
+  .btn {
+    padding: 12px;
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+/* Very Small Mobile */
+@media (max-width: 360px) {
+  .contact-section {
+    padding: 30px 12px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .description {
+    font-size: 0.85rem;
+  }
+
+  .glass-form {
+    padding: 20px 12px;
+  }
+
+  .btn {
+    padding: 11px;
+    font-size: 0.85rem;
+  }
+}
+
+@supports (backdrop-filter: blur(20px)) {
+  .glass-form {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  html.dark .glass-form {
+    background: rgba(30, 30, 30, 0.3);
   }
 }
 </style>

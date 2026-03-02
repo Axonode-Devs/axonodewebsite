@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// Sadece onAuthStateChanged'i buradan alıyoruz
-import { onAuthStateChanged } from 'firebase/auth' 
-
-// ÖNEMLİ DÜZELTME: Firebase ayar dosyasını ve auth nesnesini import et
-// (Dosya yolunun '../firebase' olduğundan emin ol, src/firebase.js ise doğrudur)
-import { auth } from '../firebase'
+import { admin } from '../libs/AxonConnector'
 
 import HomeView from '../views/HomeView.vue'
+import AboutView from '../views/AboutView.vue'
+import AdminDashboard from '../views/AdminDashboard.vue'
 import NotFound from '../views/NotFound.vue'
+import SetPassword from '../views/SetPassword.vue'
 
 const routes = [
     {
@@ -16,12 +14,32 @@ const routes = [
         component: HomeView
     },
     {
+        path: '/home',
+        name: 'Home',
+        component: HomeView
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: AboutView
+    },
+    {
+      path: '/groups',
+      name: 'Groups',
+      component: HomeView
+    },
+    {
+      path: '/support',
+      name: 'Support',
+      component: HomeView
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound
     },
     {
-        path: '/form',
+        path: '/join',
         name: 'ApplicationForm',
         component: () => import('../views/ApplicationForm.vue')
     },
@@ -31,9 +49,19 @@ const routes = [
         component: () => import('../views/LoginView.vue')
     },
     {
+      path: '/set-password',
+      name: "SetPSW",
+      component: SetPassword
+    },
+    {
+      path: '/invited',
+      name: "Invited",
+      component: () => import('../views/InvitedView.vue')
+    },
+    {
         path: '/admin',
         name: 'AdminDashboard',
-        component: () => import('../views/AdminDashboard.vue'),
+        component: AdminDashboard,
         meta: { requiresAuth: true }
     },
 ]
@@ -43,28 +71,14 @@ const router = createRouter({
     routes
 })
 
-// --- GÜVENLİK KONTROLLERİ ---
 
-const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    // DÜZELTME: getAuth() yerine import ettiğimiz 'auth' değişkenini kullanıyoruz
-    const removeListener = onAuthStateChanged(
-      auth, 
-      (user) => {
-        removeListener();
-        resolve(user);
-      },
-      reject
-    );
-  });
-};
-
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const user = await getCurrentUser();
-    if (user) {
+    // Check if a token exists in LocalStorage via your lib
+    if (admin.currentUser) {
       next();
     } else {
+      // Not logged in, kick to login page
       next('/login');
     }
   } else {

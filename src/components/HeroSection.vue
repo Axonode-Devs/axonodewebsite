@@ -6,14 +6,13 @@
       loop 
       muted 
       playsinline 
-      class="hero-bg-video"
+      class="hero-bg-video" 
     >
-      <source src="../assets/v.webm" type="video/webm">
+      <source src="../assets/a.webm" type="video/webm">
     </video>
 
     <div class="background-mesh"></div>
     
-    <!-- Grid Background -->
     <div class="grid-overlay"></div>
 
     <div class="content-wrapper">
@@ -21,18 +20,18 @@
         <div class="text-column">
           <h1 class="hero-title">HERO</h1>
           <h2 class="headline">
-            Meet <br />
-            <span class="gradient-text">With Axonode</span>
+            Meet With <br />
+            <span class="gradient-text">Axonode</span>
           </h2>
 
           <p class="subtext">
-            We are a dev community uniting our skills to build and deploy projects collectively.
-            From ideation to launch, we dedicate our shared energy to creating together.
+            We are a welcoming community uniting our skills to share knowledge, create projects, and have fun together.
+            Join us to connect with like-minded individuals!
           </p>
 
           <div class="action-group">
-            <button class="btn btn-primary" @click="scrollToSection('#about')">About Us</button>
-            <button class="btn btn-secondary">
+            <button class="btn btn-primary" @click="goToAbout">About Us</button>
+            <button class="btn btn-secondary" @click="goToApply">
               <span>Join Us</span>
               <span class="arrow"><i class="fa-solid fa-angle-right"></i></span>
             </button>
@@ -42,19 +41,14 @@
 
       <div class="right-column-placeholder"></div>
     </div>
-
-    <!-- Intersection Card -->
-    <div class="intersection-card-wrapper">
-      <div class="intersection-card">
-        <div class="card-glow"></div>
-      </div>
-    </div>
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const heroSection = ref(null);
 const heroVideo = ref(null);
 let observer = null;
@@ -82,11 +76,11 @@ onUnmounted(() => {
   if (observer) observer.disconnect();
 });
 
-const scrollToSection = (id) => {
-  const element = document.querySelector(id);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+const goToApply = () => {
+  router.push('/join');
+};
+const goToAbout = () => {
+  router.push('/about');
 };
 </script>
 
@@ -99,9 +93,9 @@ const scrollToSection = (id) => {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  overflow: visible; /* Allow intersection card to spill into next section */
-  overflow-x: clip; /* Prevent horizontal scrollbars from background elements */
-  z-index: 10; /* Ensure this section stays above the one below it */
+  overflow: visible; 
+  overflow-x: clip; 
+  z-index: 10; 
   padding: 60px 40px;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
@@ -114,8 +108,15 @@ const scrollToSection = (id) => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 99; /* User explicitly set this in last turn */
+  z-index: 99; 
   will-change: transform;
+}
+
+/* Remove video from mobile devices */
+@media (max-width: 800px) {
+  .hero-bg-video {
+    display: none;
+  }
 }
 
 .background-mesh {
@@ -127,7 +128,7 @@ const scrollToSection = (id) => {
   background-image: 
     radial-gradient(at 100% 0%, rgba(144, 242, 255, 0.4) 0px, transparent 40%),
     radial-gradient(at 0% 100%, rgba(254, 120, 178, 0.4) 0px, transparent 40%);
-  filter: blur(60px); /* Slightly reduced blur for performance */
+  filter: blur(60px); 
   z-index: 1;
   pointer-events: none;
 }
@@ -310,7 +311,7 @@ html.dark .btn-secondary:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding-left: 8rem; /* Align with content-wrapper padding */
+  padding-left: 8rem; 
   box-sizing: border-box;
   transform: translateY(70%);
   z-index: 9999;
