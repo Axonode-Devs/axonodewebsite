@@ -171,7 +171,7 @@ export class AdminModule {
    */
   async checkInvite(id) {
     try {
-      const { data } = await this.client.get(`/admin/check-invite/${id}`);
+      const { data } = await this.client.post(`/admin/check-invite`, {token : id});
       return data
     } catch (err) {
       throw this._handleError(err);
