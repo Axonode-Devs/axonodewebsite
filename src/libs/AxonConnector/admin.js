@@ -14,6 +14,12 @@ export class AdminModule {
       if (data.access_token) {
         localStorage.setItem('axon_admintoken', data.access_token);
       }
+      
+      // CRITICAL: Must match the key in your Axios interceptor
+      if (data.refresh_token) {
+        localStorage.setItem('axon_admin_refresh', data.refresh_token);
+      }
+
       if (data.user) {
         localStorage.setItem('axon_admin_user', JSON.stringify(data.user));
         this._user = data.user;
@@ -29,6 +35,7 @@ export class AdminModule {
    */
   logout() {
     localStorage.removeItem('axon_admintoken');
+    localStorage.removeItem('axon_admin_refresh');
     localStorage.removeItem('axon_admin_user');
   }
 
@@ -36,8 +43,7 @@ export class AdminModule {
    * Check if admin is signed in
    */
   get isSignedIn() {
-    const token = localStorage.getItem('axon_admintoken');
-    return !!token && !this._isTokenExpired(token);
+    return !!localStorage.getItem('axon_admin_refresh');
   }
 
   /**
@@ -63,29 +69,8 @@ export class AdminModule {
   }
 
   /**
-   * Get current admin user data (alias)
-   */
-  getCurrentUser() {
-    return this.currentUser;
-  }
-
-  /**
    * Decode and check if token is expired
    */
-  _isTokenExpired(token) {
-    try {
-      const parts = token.split('.');
-      if (parts.length !== 3) return true;
-      
-      const decoded = JSON.parse(atob(parts[1]));
-      if (!decoded.exp) return false;
-      
-      const expirationTime = decoded.exp * 1000;
-      return Date.now() > expirationTime;
-    } catch {
-      return true;
-    }
-  }
 
   // ============ Applications ============
 
