@@ -35,5 +35,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         # Vue build sonrası dosyalar 'dist' klasörüne çıkar.
         local-dir: ./dist/ 
-        # CPanel'de sitenin durduğu klasör (genelde public_html)
-        server-dir: ./public_html/
+        
