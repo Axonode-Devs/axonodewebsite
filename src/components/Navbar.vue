@@ -111,7 +111,7 @@ const goToHome = () => {
   padding: 15px 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', sans-serif;
-  pointer-events: none; /* Let clicks pass through the full-width wrapper */
+  pointer-events: none; 
 }
 
 .nav-container {
@@ -121,9 +121,8 @@ const goToHome = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  pointer-events: auto; /* Re-enable clicks for the content */
+  pointer-events: auto; 
   
-  /* Glass Effect */
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -141,7 +140,7 @@ const goToHome = () => {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  max-width: 1100px; /* Slight shrink effect on scroll */
+  max-width: 1100px; 
 }
 
 html.dark .nav-container {
@@ -191,8 +190,6 @@ html.dark .navbar.scrolled .nav-container {
 .nav-item {
   text-decoration: none;
   padding: 8px;
-  border: solid 2px #94969a;
-  border-radius: 40px;
   color: #4B5563;
   font-weight: 500;
   font-size: 0.95rem;

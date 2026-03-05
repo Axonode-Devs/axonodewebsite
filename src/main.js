@@ -11,12 +11,10 @@ import { faCoffee, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 library.add(faCoffee, faChevronRight, faGithub)
 
-// 1. Import the initializer from your connector folder
-import { initializeAxon } from "./libs/AxonConnector" 
+import { initializeAxon } from "./libs/AxonConnector"
 
-// 2. Configure the library for production
-initializeAxon({ 
-  baseURL: 'https://axonode.org/api' 
+initializeAxon({
+  baseURL: 'https://axonode.org/api'
 })
 
 const app = createApp(App)

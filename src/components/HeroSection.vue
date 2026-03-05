@@ -1,16 +1,5 @@
 <template>
   <section id="homepage" ref="heroSection" class="hero-container">
-    <video 
-      ref="heroVideo"
-      autoplay 
-      loop 
-      muted 
-      playsinline 
-      class="hero-bg-video" 
-    >
-      <source src="../assets/a.webm" type="video/webm">
-    </video>
-
     <div class="background-mesh"></div>
     
     <div class="grid-overlay"></div>
@@ -39,42 +28,21 @@
         </div>
       </div>
 
-      <div class="right-column-placeholder"></div>
+      <div class="visual-column">
+        <div class="video-placeholder-card">
+          <img src="/vpreview.jpeg" alt="Video Preview" class="preview-image">
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const heroSection = ref(null);
-const heroVideo = ref(null);
-let observer = null;
-
-onMounted(() => {
-  // Intersection Observer to pause video when not visible
-  observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (heroVideo.value) {
-        if (entry.isIntersecting) {
-          heroVideo.value.play();
-        } else {
-          heroVideo.value.pause();
-        }
-      }
-    });
-  }, { threshold: 0.1 });
-
-  if (heroSection.value) {
-    observer.observe(heroSection.value);
-  }
-});
-
-onUnmounted(() => {
-  if (observer) observer.disconnect();
-});
 
 const goToApply = () => {
   router.push('/join');
@@ -101,24 +69,6 @@ const goToAbout = () => {
   font-family: 'Inter', sans-serif;
 }
 
-.hero-bg-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 99; 
-  will-change: transform;
-}
-
-/* Remove video from mobile devices */
-@media (max-width: 800px) {
-  .hero-bg-video {
-    display: none;
-  }
-}
-
 .background-mesh {
   position: absolute;
   top: 0;
@@ -140,8 +90,8 @@ const goToAbout = () => {
   width: 100%;
   height: 100%;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(18, 18, 18, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(18, 18, 18, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
   z-index: 2;
   pointer-events: none;
@@ -156,14 +106,18 @@ html.dark .grid-overlay {
 .content-wrapper {
   position: relative;
   z-index: 10;
-  max-width: 1280px;
+  max-width: 1530px; 
   width: 100%;
   padding-left: 8rem;
-  pointer-events: none;
+  padding-right: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
 }
 
 .hero-content {
-  pointer-events: auto;
+  flex: 1.2; 
 }
 
 .hero-title {
@@ -273,10 +227,58 @@ html.dark .btn-secondary:hover {
   border-color: #fff;
 }
 
+.visual-column {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  position: relative;
+}
+
+.video-placeholder-card {
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: 16 / 9;
+  background: transparent; 
+  border: 1.5px solid #ffffff; 
+  border-radius: 24px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-placeholder-card:hover {
+  transform: scale(1.02); 
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-placeholder-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(254, 120, 178, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
 
 @media (max-width: 1024px) {
   .content-wrapper {
     padding-left: 2rem;
+    padding-right: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 100px;
   }
   .hero-title {
     font-size: 6rem;
@@ -284,6 +286,14 @@ html.dark .btn-secondary:hover {
   }
   .headline {
     font-size: 3rem;
+  }
+  .visual-column {
+    width: 100%;
+    margin-top: 40px;
+    justify-content: center; 
+  }
+  .video-placeholder-card {
+    max-width: 100%;
   }
 }
 
@@ -304,68 +314,6 @@ html.dark .btn-secondary:hover {
   .btn {
     width: 100%;
     justify-content: center;
-  }
-}
-.intersection-card-wrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding-left: 8rem; 
-  box-sizing: border-box;
-  transform: translateY(70%);
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.intersection-card {
-  width: 600px;
-  aspect-ratio: 16 / 9;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 2px solid #bb85df;
-  border-radius: 20px;
-  pointer-events: auto;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
-
-.card-glow {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at center, rgba(187, 133, 223, 0.1) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-html.dark .intersection-card {
-  background: rgba(17, 24, 39, 0.4);
-  border-color: rgba(187, 133, 223, 0.6);
-}
-
-@media (max-width: 1024px) {
-  .intersection-card-wrapper {
-    padding-left: 2rem;
-  }
-  .intersection-card {
-    width: 80%;
-    max-width: 400px;
-  }
-}
-
-@media (max-width: 640px) {
-  .intersection-card-wrapper {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    display: flex;
-    justify-content: center;
-  }
-  .intersection-card {
-    width: 100%;
   }
 }
 </style>

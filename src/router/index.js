@@ -8,77 +8,75 @@ import NotFound from '../views/NotFound.vue'
 import SetPassword from '../views/SetPassword.vue'
 
 const routes = [
-    {
-        path: '/',
-        name: 'HomeView',
-        component: HomeView
-    },
-    {
-        path: '/home',
-        name: 'Home',
-        component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'About',
-      component: AboutView
-    },
-    {
-      path: '/groups',
-      name: 'Groups',
-      component: HomeView
-    },
-    {
-      path: '/support',
-      name: 'Support',
-      component: HomeView
-    },
-    {
-        path: '/:pathMatch(.*)*',
-        name: 'NotFound',
-        component: NotFound
-    },
-    {
-        path: '/join',
-        name: 'ApplicationForm',
-        component: () => import('../views/ApplicationForm.vue')
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../views/LoginView.vue')
-    },
-    {
-      path: '/set-password',
-      name: "SetPSW",
-      component: SetPassword
-    },
-    {
-      path: '/invited',
-      name: "Invited",
-      component: () => import('../views/InvitedView.vue')
-    },
-    {
-        path: '/admin',
-        name: 'AdminDashboard',
-        component: AdminDashboard,
-        meta: { requiresAuth: true }
-    },
+  {
+    path: '/',
+    name: 'HomeView',
+    component: HomeView
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: HomeView
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: AboutView
+  },
+  {
+    path: '/groups',
+    name: 'Groups',
+    component: HomeView
+  },
+  {
+    path: '/support',
+    name: 'Support',
+    component: HomeView
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound
+  },
+  {
+    path: '/join',
+    name: 'ApplicationForm',
+    component: () => import('../views/ApplicationForm.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/LoginView.vue')
+  },
+  {
+    path: '/set-password',
+    name: "SetPSW",
+    component: SetPassword
+  },
+  {
+    path: '/invited',
+    name: "Invited",
+    component: () => import('../views/InvitedView.vue')
+  },
+  {
+    path: '/admin',
+    name: 'AdminDashboard',
+    component: AdminDashboard,
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes
 })
 
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    // Check if a token exists in LocalStorage via your lib
     if (admin.currentUser) {
       next();
     } else {
-      // Not logged in, kick to login page
       next('/login');
     }
   } else {
