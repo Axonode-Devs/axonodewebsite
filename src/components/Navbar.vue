@@ -200,7 +200,6 @@ const goToHome = () => {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  max-width: 1100px;
 }
 
 html.dark .nav-container {
@@ -209,7 +208,7 @@ html.dark .nav-container {
 }
 
 html.dark .navbar.scrolled .nav-container {
-  background: rgba(17, 24, 39, 0.8);
+  background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
 }
 

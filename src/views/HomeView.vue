@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="home-container">
     <Navbar />
     <HeroSection />
     <TeamMarquee />
