@@ -13,6 +13,7 @@ library.add(faCoffee, faChevronRight, faGithub)
 
 import { initializeAxon } from "./libs/AxonConnector"
 
+// 2. Configure the library for production
 initializeAxon({
   baseURL: 'https://axonode.org/api'
 })

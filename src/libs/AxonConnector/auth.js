@@ -13,12 +13,7 @@ export class AuthModule {
         { password }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      if (data.access_token) {
-        localStorage.setItem('axon_token', data.access_token);
-      }
-      if (data.user) {
-        localStorage.setItem('axon_user', JSON.stringify(data.user));
-      }
+      this._saveSession(data)
       return data; 
     } catch (err) {
       throw this._handleError(err);
@@ -31,15 +26,26 @@ export class AuthModule {
   async signInWithEmailPassword(email, password) {
     try {
       const { data } = await this.client.post('/auth/login', { email, password });
-      if (data.access_token) {
-        localStorage.setItem('axon_token', data.access_token);
-      }
-      if (data.user) {
-        localStorage.setItem('axon_user', JSON.stringify(data.user));
-      }
+      this._saveSession(data)
       return data;
     } catch (err) {
       throw this._handleError(err);
+    }
+  }
+
+  /**
+   * Internal helper to save tokens and user data
+   */
+  _saveSession(data) {
+    if (data.access_token) {
+      localStorage.setItem('axon_token', data.access_token);
+    }
+    if (data.refresh_token) {
+      // THIS IS CRITICAL: The interceptor needs this key
+      localStorage.setItem('axon_refresh', data.refresh_token);
+    }
+    if (data.user) {
+      localStorage.setItem('axon_user', JSON.stringify(data.user));
     }
   }
 
@@ -48,6 +54,7 @@ export class AuthModule {
    */
   signOut() {
     localStorage.removeItem('axon_token');
+    localStorage.removeItem('axon_refresh');
     localStorage.removeItem('axon_user');
   }
 
@@ -55,7 +62,7 @@ export class AuthModule {
    * Check if user is signed in
    */
   get isSignedIn() {
-    return !!localStorage.getItem('axon_token');
+    return !!localStorage.getItem('axon_token') || !!localStorage.getItem('axon_refresh');
   }
 
   /**

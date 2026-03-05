@@ -78,34 +78,35 @@ const userName = ref("You"); // Default name
 const loading = ref(true);
 
 onMounted(async () => {
-  // 1. Get token from URL: /invited?invite=xyz...
   inviteToken.value = route.query.invite;
 
-  if (inviteToken.value) {
-    try {
-      admin
-        .checkInvite(inviteToken.value)
-        .then((data) => {
-          if (data.valid) {
-            userName.value = data.for;
-            isValid.value = true;
-          } else {
-            isValid.value = false;
-          }
-          loading.value = false;
-        })
-        .catch(() => {
-          isValid.value = false;
-          loading.value = false;
-        });
-    } catch (err) {
+  if (!inviteToken.value) {
+    loading.value = false;
+    return;
+  }
+
+  try {
+    // Await the response so the code pauses here until the API answers
+    const data = await admin.checkInvite(inviteToken.value);
+    
+    if (data && data.valid) {
+      userName.value = data.for;
+      isValid.value = true;
+    } else {
       isValid.value = false;
     }
+  } catch (err) {
+    console.error("Invite check failed:", err);
+   
+    isValid.value = false;
+  } finally {
+    // This runs after success OR failure
+    loading.value = false;
+    console.log("Final isValid state:", isValid.value);
+    if(isValid === false){
+       router.push({ name: 'Home', query: { error: 'invalid-invite' } });
+    }
   }
-  if (!isValid.value){
-    router.push('/');
-  }
-  loading.value = false;
 });
 
 const goToApply = () => {
