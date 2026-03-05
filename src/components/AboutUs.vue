@@ -24,7 +24,8 @@
               </svg>
             </div>
             <h3>Vision</h3>
-            <p>To remove the weight of the networking and enhance the efficency of multi-person projects.</p>
+            <p>To redefine the architecture of multi-participant projects and professional networking.
+We envision a future where the weight of "finding the right team" is put away. Our goal is to create a high-efficiency environment with collective power of a hyper-connected community.</p>
           </div>
         </div>
 
@@ -39,7 +40,8 @@
               </svg>
             </div>
             <h3>Mission</h3>
-            <p>Helping people to network easier in buisness measures and giving everyone a chance to participate in voluntary projects.</p>
+            <p>To enhance professional growth by simplifying the way people connect.
+At Axonode, we connect the subjects of career and giving the people a network they don't have to worry about, making business networking intuitive and accessible. By creating a global ecosystem for voluntary project participation, we give every developer, designer, and entrepreneur a platform to contribute their skills and build their portfolio.</p>
           </div>
         </div>
 
