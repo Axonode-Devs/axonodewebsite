@@ -77,13 +77,25 @@ const menuItems: NavItem[] = [
 const NAV_OFFSET = 90;
 
 const scrollToSection = (id: string) => {
+  console.log(`[Navbar] Attempting to scroll to #${id}`);
   const el = document.getElementById(id);
   if (!el) {
     console.warn(`[Navbar] No element found with id="${id}"`);
     return;
   }
   const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
-  window.scrollTo({ top, behavior: 'smooth' });
+  console.log(`[Navbar] Calculated target top: ${top} (current scrollY: ${window.scrollY})`);
+  
+  // Use document.documentElement.scrollTo as a fallback
+  try {
+    document.documentElement.scrollTo({ top, behavior: 'smooth' });
+    // Also try window.scrollTo just in case
+    window.scrollTo({ top, behavior: 'smooth' });
+  } catch (e) {
+    console.error(`[Navbar] Scroll error:`, e);
+    // Hard jump as ultimate fallback
+    window.scrollTo(0, top);
+  }
 };
 
 

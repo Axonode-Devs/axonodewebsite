@@ -1,5 +1,5 @@
 <template>
-  <section class="about-section" id="about">
+  <section class="about-section">
     <div class="container">
 
       <!-- Header -->

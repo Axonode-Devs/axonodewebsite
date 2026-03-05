@@ -1,5 +1,5 @@
 <template>
-  <section id="homepage" ref="heroSection" class="hero-container">
+  <section id="hero" ref="heroSection" class="hero-container">
     <div class="background-mesh"></div>
     
     <div class="grid-overlay"></div>
