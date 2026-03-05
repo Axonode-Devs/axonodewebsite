@@ -142,7 +142,7 @@
 import { ref, reactive, computed, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Navbar from "../components/Navbar.vue";
-import Infocard from "../components/Infocard.vue";
+import Infocard from "../components/InfoCard.vue";
 import { submitApplication, admin } from "../libs/AxonConnector";
 
 const router = useRouter();
