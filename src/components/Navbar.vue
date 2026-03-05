@@ -1,32 +1,56 @@
 <template>
   <nav class="navbar" :class="{ 'scrolled': isScrolled }">
     <div class="nav-container">
-      
-      <a href= "#" @click="goToHome" class="logo">
+
+      <a href="#" @click.prevent="goToHome" class="logo">
         <img src="/titlenavbar.png" alt="Axonode" class="logo-image" />
       </a>
 
-      <ul class="nav-links">
+     
+      <ul class="nav-links desktop-links">
         <li v-for="item in menuItems" :key="item">
           <a :href="`/${slug(item)}`" class="nav-item" @click.prevent="goTo(slug(item))">{{ item }}</a>
         </li>
       </ul>
 
-      <div class="nav-actions">
-        <button class="btn-nav" @click="goToApply">
-          Join Us
+      
+      <div class="nav-actions desktop-actions">
+        <button class="btn-nav" @click="goToApply">Join Us</button>
+        <button class="btn-nav" @click="handleLoginClick" v-if="isLoggedIn">
+          Dashboard
         </button>
-        <button class="btn-nav" @click="handleLoginClick">
-          {{ isLoogedIn ? 'Dashboard' : 'Login' }}
-        </button>
-
         <ThemeSwitcher />
+      </div>
 
-        <button class="mobile-toggle">
-          <i class="fa-solid fa-bars"></i>
+      
+      <div class="mobile-right">
+        <ThemeSwitcher />
+        <button class="mobile-toggle" @click="toggleMenu" aria-label="Toggle menu">
+          <i :class="isMenuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+        </button>
+      </div>
+
+    </div>
+
+    
+    <div class="mobile-drawer" :class="{ 'drawer-open': isMenuOpen }">
+      <ul class="mobile-nav-links">
+        <li v-for="item in menuItems" :key="item">
+          <a
+            :href="`/${slug(item)}`"
+            class="nav-item"
+            @click.prevent="goTo(slug(item)); closeMenu()"
+          >{{ item }}</a>
+        </li>
+      </ul>
+      <div class="mobile-nav-actions">
+        <button class="btn-nav mobile-btn" @click="goToApply(); closeMenu()">Join Us</button>
+        <button class="btn-nav mobile-btn" @click="handleLoginClick(); closeMenu()">
+          {{ isLoggedIn ? 'Dashboard' : 'Login' }}
         </button>
       </div>
     </div>
+    <div class="drawer-backdrop" :class="{ 'backdrop-visible': isMenuOpen }" @click="closeMenu"></div>
   </nav>
 </template>
 
@@ -35,25 +59,26 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import ThemeSwitcher from '../components/ThemeSwitcher.vue';
 import { useRouter } from 'vue-router';
 import { admin } from '../libs/AxonConnector';
-import e from 'cors';
 
 const router = useRouter();
 const menuItems = ['Home', 'About', 'Groups', 'Support'];
 const isScrolled = ref(false);
-const isLoogedIn = ref(false);
+const isLoggedIn = ref(false);
+const isMenuOpen = ref(false);
 
-const slug = (text: string) => {
-  return String(text)
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9\-]/g, '');
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
 };
 
+const closeMenu = () => {
+  isMenuOpen.value = false;
+};
+
+const slug = (text: string) =>
+  String(text).toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
 
 const goTo = (to: string) => {
-  const path = to.startsWith('/') ? to : `/${to}`;
-  router.push(path);
+  router.push(to.startsWith('/') ? to : `/${to}`);
 };
 
 const handleScroll = () => {
@@ -62,12 +87,7 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-  if (!admin.tokenExpired){
-    isLoogedIn.value = true;
-  }
-  else{
-    isLoogedIn.value = false;
-  }
+  isLoggedIn.value = !admin.tokenExpired;
 });
 
 onUnmounted(() => {
@@ -75,31 +95,14 @@ onUnmounted(() => {
 });
 
 const handleLoginClick = () => {
-  if (isLoogedIn.value) {
-    router.push('/admin');
-  } else {
-    router.push('/login');
-  }
+  router.push(isLoggedIn.value ? '/admin' : '/login');
 };
 
-const goToApply = () => {
-  router.push('/join'); 
-};
-
-const goToHome = () => {
-  router.push('/'); 
-};
+const goToApply = () => router.push('/join');
+const goToHome = () => router.push('/');
 </script>
 
 <style scoped>
-:root {
-  --color-1: #78dee7;
-  --color-2: #95b0eb;
-  --nav-bg: rgba(249, 250, 251, 0.8);
-  --text-main: #111827;
-  --text-muted: #4B5563;
-}
-
 
 .navbar {
   position: fixed;
@@ -110,19 +113,19 @@ const goToHome = () => {
   padding: 15px 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', sans-serif;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .nav-container {
   max-width: 1500px;
-  width: calc(100% - 60px); 
+  width: calc(100% - 60px);
   margin: 0 auto;
   padding: 12px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  pointer-events: auto; 
-  
+  pointer-events: auto;
+
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -140,7 +143,7 @@ const goToHome = () => {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  max-width: 1100px; 
+  max-width: 1100px;
 }
 
 html.dark .nav-container {
@@ -153,11 +156,13 @@ html.dark .navbar.scrolled .nav-container {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  pointer-events: auto;
 }
 
 .logo-image {
@@ -205,11 +210,19 @@ html.dark .navbar.scrolled .nav-container {
   width: 100%;
 }
 
+html.dark .nav-item {
+  color: #d1d5db;
+}
+
+html.dark .nav-item:hover {
+  color: #fff;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
+  gap: 12px;
 }
-
 
 .btn-nav {
   padding: 10px 20px;
@@ -221,7 +234,12 @@ html.dark .navbar.scrolled .nav-container {
   background-color: #111;
   color: white;
   transition: all 0.2s ease;
-  margin-right: 2rem;
+}
+
+.btn-nav:hover {
+  background-color: #333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 html.dark .btn-nav {
@@ -229,47 +247,132 @@ html.dark .btn-nav {
   color: #111;
 }
 
-.btn-nav:hover {
-  background-color: #333;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+html.dark .btn-nav:hover {
+  background-color: #fff;
+}
+
+.mobile-right {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
 }
 
 .mobile-toggle {
-  display: none;
   background: none;
   border: none;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   cursor: pointer;
   color: #111;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
 }
 
-html.dark .nav-links .nav-item {
-  color: #fff;
+html.dark .mobile-toggle {
+  color: #f9fafb;
+}
+
+
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: min(320px, 80vw);
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 90px 32px 40px;
+  flex-direction: column;
+  gap: 0;
+  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
+  z-index: 999;
+  pointer-events: auto;
+}
+
+html.dark .mobile-drawer {
+  background: rgba(17, 24, 39, 0.98);
+}
+
+.mobile-drawer.drawer-open {
+  right: 0;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-nav-links .nav-item {
+  font-size: 1.15rem;
+  display: block;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+html.dark .mobile-nav-links .nav-item {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.mobile-nav-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn-nav.mobile-btn {
+  width: 100%;
+  text-align: center;
+}
+
+
+.drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.drawer-backdrop.backdrop-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media (max-width: 960px) {
-  .nav-links {
-    display: none;
-  }
-  
-  .login-link, .btn-nav {
+  .desktop-links,
+  .desktop-actions {
     display: none;
   }
 
-  .mobile-toggle {
+  .mobile-right {
+    display: flex;
+  }
+
+  .mobile-drawer {
+    display: flex;
+  }
+
+  .drawer-backdrop {
     display: block;
   }
-  
+
   .nav-container {
-    padding: 0 20px;
+    padding: 10px 20px;
+    width: calc(100% - 32px);
   }
-
-  .github-btn {
-  padding-right: 0rem;
- }
-
 }
-
-  
 </style>

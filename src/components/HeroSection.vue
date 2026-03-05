@@ -34,7 +34,7 @@
         <div class="video-stack-container">
           <div class="hero-top-badge">
             <div class="gradient-badge">
-              <span class="badge-inner">
+              <span class="badge-inner" v-if="!isMobile">
                 <img src="/sparkler.png" alt="Axonode" class="badge-icon" />
                 Welcome to Axonode
               </span>
@@ -66,15 +66,16 @@
   </section>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const heroSection = ref(null);
 const videoRef = ref(null);
 const isPlaying = ref(true);
 const isMuted = ref(true);
+
+const isMobile = ref(false)
 
 const goToApply = () => {
   router.push('/join');
@@ -82,6 +83,10 @@ const goToApply = () => {
 const goToAbout = () => {
   router.push('/about');
 };
+
+const checkScreen = () => {
+  isMobile.value = window.innerWidth <= 768
+}
 
 const togglePlay = () => {
   if (videoRef.value) {
@@ -106,7 +111,12 @@ onMounted(() => {
   if (videoRef.value) {
     isMuted.value = videoRef.value.muted;
   }
+  checkScreen()
+  window.addEventListener('resize', checkScreen)
 });
+onUnmounted(() => {
+  window.removeEventListener('resize', checkScreen)
+})
 </script>
 
 <style scoped>
