@@ -47,7 +47,7 @@ onMounted(async () => {
         const data = await res.json();
         return {
           ...member,
-          name: data.login || member.username, // Display Github username (login)
+          name: data.login || member.username,
           avatarUrl: data.avatar_url || `https://github.com/${member.username}.png`
         };
       } catch (e) {

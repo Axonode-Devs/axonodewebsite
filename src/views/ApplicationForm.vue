@@ -17,17 +17,17 @@
 
           <template v-else>
             <div class="form-header">
-              <Transition name="fade-slide">
-                <div v-if="inviteToken" class="invited-badge">
-                  ✦ Personal Invitation
-                </div>
-              </Transition>
               <h2 class="title">Join the <span class="gradient-text">Team</span></h2>
               <div class="stepper">
                 <div v-for="step in 3" :key="step" :class="['step', { active: currentStep >= step }]">
                   <span class="step-number">{{ step }}</span>
                 </div>
               </div>
+              <Transition name="fade-slide">
+                <div v-if="inviteToken" class="invited-badge">
+                  ✦ Personal Invitation
+                </div>
+              </Transition>
             </div>
 
             <form @submit.prevent="handleNextStep" class="axonode-form">

@@ -1,8 +1,5 @@
 <template>
-  <section class="about-section" id="about">
-    <div class="background-mesh"></div>
-    <canvas ref="canvasRef" class="spline-bg"></canvas>
-    
+  <section class="about-section" id="whatwedo">    
     <div class="container">
       <div class="header-content">
         <h2 class="title">Building the <span class="gradient-text">Future Together</span></h2>
@@ -65,7 +62,7 @@
   padding: 80px 0;
   min-height: auto;
   display: block;
-  overflow: hidden;
+  overflow: visible; /* allow orb from parent to show through */
   font-family: 'Inter', sans-serif;
   width: 100%;
 }
@@ -76,7 +73,7 @@
   left: 55rem;
   width: 100%;
   height: 100%;
-  z-index: 10; /* En altta */
+  z-index: 10;
 }
 
 .background-mesh {

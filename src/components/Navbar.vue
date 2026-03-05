@@ -6,14 +6,14 @@
         <img src="/titlenavbar.png" alt="Axonode" class="logo-image" />
       </a>
 
-     
       <ul class="nav-links desktop-links">
-        <li v-for="item in menuItems" :key="item">
-          <a :href="`/${slug(item)}`" class="nav-item" @click.prevent="goTo(slug(item))">{{ item }}</a>
+        <li v-for="item in menuItems" :key="item.label">
+          <a :href="item.target" class="nav-item" @click.prevent="handleNavClick(item)">
+            {{ item.label }}
+          </a>
         </li>
       </ul>
 
-      
       <div class="nav-actions desktop-actions">
         <button class="btn-nav" @click="goToApply">Join Us</button>
         <button class="btn-nav" @click="handleLoginClick" v-if="isLoggedIn">
@@ -22,7 +22,6 @@
         <ThemeSwitcher />
       </div>
 
-      
       <div class="mobile-right">
         <ThemeSwitcher />
         <button class="mobile-toggle" @click="toggleMenu" aria-label="Toggle menu">
@@ -32,15 +31,14 @@
 
     </div>
 
-    
     <div class="mobile-drawer" :class="{ 'drawer-open': isMenuOpen }">
       <ul class="mobile-nav-links">
-        <li v-for="item in menuItems" :key="item">
+        <li v-for="item in menuItems" :key="item.label">
           <a
-            :href="`/${slug(item)}`"
+            :href="item.target"
             class="nav-item"
-            @click.prevent="goTo(slug(item)); closeMenu()"
-          >{{ item }}</a>
+            @click.prevent="handleNavClick(item); closeMenu()"
+          >{{ item.label }}</a>
         </li>
       </ul>
       <div class="mobile-nav-actions">
@@ -50,40 +48,87 @@
         </button>
       </div>
     </div>
+
     <div class="drawer-backdrop" :class="{ 'backdrop-visible': isMenuOpen }" @click="closeMenu"></div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import ThemeSwitcher from '../components/ThemeSwitcher.vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { admin } from '../libs/AxonConnector';
 
 const router = useRouter();
-const menuItems = ['Home', 'About', 'Groups', 'Support'];
+const route  = useRoute();
+
+type NavItem =
+  | { label: string; scrollTo: string; target: string }
+  | { label: string; route: string;    target: string }
+
+const menuItems: NavItem[] = [
+  { label: 'Home',    scrollTo: 'hero',    target: '#hero'    },
+  { label: 'About',   scrollTo: 'about',   target: '#about'   },
+  { label: 'Groups',  route:    '/groups', target: '/groups'  },
+  { label: 'Support', route:    '/support',target: '/support' },
+];
+
+
+const NAV_OFFSET = 90;
+
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (!el) {
+    console.warn(`[Navbar] No element found with id="${id}"`);
+    return;
+  }
+  const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+  window.scrollTo({ top, behavior: 'smooth' });
+};
+
+
+const scrollAfterNavigation = (id: string) => {
+  let attempts = 0;
+  const maxAttempts = 20; // try for up to 2 seconds
+
+  const tryScroll = () => {
+    attempts++;
+    const el = document.getElementById(id);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+      window.scrollTo({ top, behavior: 'smooth' });
+    } else if (attempts < maxAttempts) {
+      setTimeout(tryScroll, 100);
+    } else {
+      console.warn(`[Navbar] Element #${id} not found after ${maxAttempts} attempts`);
+    }
+  };
+
+  
+  nextTick(() => setTimeout(tryScroll, 50));
+};
+
+const handleNavClick = async (item: NavItem) => {
+  if ('scrollTo' in item) {
+    if (route.path !== '/') {
+      await router.push('/');
+      scrollAfterNavigation(item.scrollTo);
+    } else {
+      scrollToSection(item.scrollTo);
+    }
+  } else {
+    router.push(item.route);
+  }
+};
+
 const isScrolled = ref(false);
 const isLoggedIn = ref(false);
 const isMenuOpen = ref(false);
 
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
+const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value; };
+const closeMenu  = () => { isMenuOpen.value = false; };
 
-const closeMenu = () => {
-  isMenuOpen.value = false;
-};
-
-const slug = (text: string) =>
-  String(text).toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
-
-const goTo = (to: string) => {
-  router.push(to.startsWith('/') ? to : `/${to}`);
-};
-
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 20;
-};
+const handleScroll = () => { isScrolled.value = window.scrollY > 20; };
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
@@ -94,16 +139,19 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 
-const handleLoginClick = () => {
-  router.push(isLoggedIn.value ? '/admin' : '/login');
-};
+const handleLoginClick = () => router.push(isLoggedIn.value ? '/admin' : '/login');
+const goToApply        = () => router.push('/join');
 
-const goToApply = () => router.push('/join');
-const goToHome = () => router.push('/');
+const goToHome = () => {
+  if (route.path === '/') {
+    scrollToSection('hero');
+  } else {
+    router.push('/').then(() => scrollAfterNavigation('hero'));
+  }
+};
 </script>
 
 <style scoped>
-
 .navbar {
   position: fixed;
   top: 0;
@@ -125,7 +173,6 @@ const goToHome = () => router.push('/');
   align-items: center;
   justify-content: space-between;
   pointer-events: auto;
-
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -135,9 +182,7 @@ const goToHome = () => router.push('/');
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
-.navbar.scrolled {
-  padding: 10px 0;
-}
+.navbar.scrolled { padding: 10px 0; }
 
 .navbar.scrolled .nav-container {
   background: rgba(255, 255, 255, 0.8);
@@ -156,7 +201,6 @@ html.dark .navbar.scrolled .nav-container {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-
 .logo {
   display: flex;
   align-items: center;
@@ -171,7 +215,6 @@ html.dark .navbar.scrolled .nav-container {
   object-fit: contain;
   display: block;
 }
-
 
 .nav-links {
   display: flex;
@@ -189,11 +232,10 @@ html.dark .navbar.scrolled .nav-container {
   font-size: 0.95rem;
   transition: color 0.2s ease;
   position: relative;
+  cursor: pointer;
 }
 
-.nav-item:hover {
-  color: #111827;
-}
+.nav-item:hover { color: #111827; }
 
 .nav-item::after {
   content: '';
@@ -206,17 +248,10 @@ html.dark .navbar.scrolled .nav-container {
   transition: width 0.3s ease;
 }
 
-.nav-item:hover::after {
-  width: 100%;
-}
+.nav-item:hover::after { width: 100%; }
 
-html.dark .nav-item {
-  color: #d1d5db;
-}
-
-html.dark .nav-item:hover {
-  color: #fff;
-}
+html.dark .nav-item       { color: #d1d5db; }
+html.dark .nav-item:hover { color: #fff; }
 
 .nav-actions {
   display: flex;
@@ -242,14 +277,8 @@ html.dark .nav-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-html.dark .btn-nav {
-  background-color: #d5d5d5;
-  color: #111;
-}
-
-html.dark .btn-nav:hover {
-  background-color: #fff;
-}
+html.dark .btn-nav       { background-color: #d5d5d5; color: #111; }
+html.dark .btn-nav:hover { background-color: #fff; }
 
 .mobile-right {
   display: none;
@@ -271,10 +300,7 @@ html.dark .btn-nav:hover {
   pointer-events: auto;
 }
 
-html.dark .mobile-toggle {
-  color: #f9fafb;
-}
-
+html.dark .mobile-toggle { color: #f9fafb; }
 
 .mobile-drawer {
   display: none;
@@ -295,13 +321,9 @@ html.dark .mobile-toggle {
   pointer-events: auto;
 }
 
-html.dark .mobile-drawer {
-  background: rgba(17, 24, 39, 0.98);
-}
+html.dark .mobile-drawer { background: rgba(17, 24, 39, 0.98); }
 
-.mobile-drawer.drawer-open {
-  right: 0;
-}
+.mobile-drawer.drawer-open { right: 0; }
 
 .mobile-nav-links {
   list-style: none;
@@ -335,7 +357,6 @@ html.dark .mobile-nav-links .nav-item {
   text-align: center;
 }
 
-
 .drawer-backdrop {
   display: none;
   position: fixed;
@@ -354,21 +375,11 @@ html.dark .mobile-nav-links .nav-item {
 
 @media (max-width: 960px) {
   .desktop-links,
-  .desktop-actions {
-    display: none;
-  }
+  .desktop-actions { display: none; }
 
-  .mobile-right {
-    display: flex;
-  }
-
-  .mobile-drawer {
-    display: flex;
-  }
-
-  .drawer-backdrop {
-    display: block;
-  }
+  .mobile-right    { display: flex; }
+  .mobile-drawer   { display: flex; }
+  .drawer-backdrop { display: block; }
 
   .nav-container {
     padding: 10px 20px;
