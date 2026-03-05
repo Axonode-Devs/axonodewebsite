@@ -1,0 +1,39 @@
+name: Publish Website to CPanel 
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  FTP-Deploy-Action: 
+    name: Build and Deploy
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with: 
+        fetch-depth: 0 
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Project
+      run: npm run build
+
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Vue build sonrası dosyalar 'dist' klasörüne çıkar.
+        local-dir: ./dist/ 
+        # CPanel'de sitenin durduğu klasör (genelde public_html)
+        server-dir: ./public_html/
