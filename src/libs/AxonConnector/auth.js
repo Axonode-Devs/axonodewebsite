@@ -22,7 +22,7 @@ export class AuthModule {
 
   /**
    * Sign in with email and password
-   */
+   **/
   async signInWithEmailPassword(email, password) {
     try {
       const { data } = await this.client.post('/auth/login', { email, password });
