@@ -2,10 +2,11 @@
     <div id="app">
     <Navbar />
     <HeroSection />
+    <TeamMarquee />
     <About />
-    <Founders />
+    <!--<Founders />-->
     
-    <ContactSection />
+    <!--<ContactSection />-->
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 import About from '../components/About.vue';
 import HeroSection from '../components/HeroSection.vue';
 import Navbar from '../components/Navbar.vue';
+import TeamMarquee from '../components/TeamMarquee.vue';
 import Founders from '../components/Founders.vue'
 import ProjectsSection from '../components/ProjectsSection.vue';
 import InfoSection from '../components/InfoSection.vue';

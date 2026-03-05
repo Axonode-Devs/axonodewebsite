@@ -7,7 +7,7 @@
     <div class="content-wrapper">
       <div class="hero-content">
         <div class="text-column">
-          <h1 class="hero-title">HERO</h1>
+          <h1 class="hero-title">CREATE</h1>
           <h2 class="headline">
             Meet With <br />
             <span class="gradient-text">Axonode</span>
@@ -19,18 +19,47 @@
           </p>
 
           <div class="action-group">
-            <button class="btn btn-primary" @click="goToAbout">About Us</button>
-            <button class="btn btn-secondary" @click="goToApply">
+            <button class="btn btn-primary" @click="goToApply">
               <span>Join Us</span>
               <span class="arrow"><i class="fa-solid fa-angle-right"></i></span>
+            </button>
+            <button class="btn btn-secondary" @click="goToAbout">
+              <span>About Us</span>
             </button>
           </div>
         </div>
       </div>
 
       <div class="visual-column">
-        <div class="video-placeholder-card">
-          <img src="/vpreview.jpeg" alt="Video Preview" class="preview-image">
+        <div class="video-stack-container">
+          <div class="hero-top-badge">
+            <div class="gradient-badge">
+              <span class="badge-inner">
+                <img src="/sparkler.png" alt="Axonode" class="badge-icon" />
+                Welcome to Axonode
+              </span>
+            </div>
+          </div>
+          <div class="video-placeholder-card">
+            <video 
+              ref="videoRef"
+              src="/video.mp4" 
+              class="hero-video" 
+              autoplay 
+              loop 
+              muted 
+              playsinline
+            ></video>
+            
+            <div class="video-controls">
+              <button class="control-btn" @click="togglePlay" :title="isPlaying ? 'Pause' : 'Play'">
+                <i :class="isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play'"></i>
+              </button>
+              <button class="control-btn" @click="toggleMute" :title="isMuted ? 'Unmute' : 'Mute'">
+                <i :class="isMuted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high'"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -38,11 +67,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const heroSection = ref(null);
+const videoRef = ref(null);
+const isPlaying = ref(true);
+const isMuted = ref(true);
 
 const goToApply = () => {
   router.push('/join');
@@ -50,6 +82,31 @@ const goToApply = () => {
 const goToAbout = () => {
   router.push('/about');
 };
+
+const togglePlay = () => {
+  if (videoRef.value) {
+    if (videoRef.value.paused) {
+      videoRef.value.play();
+      isPlaying.value = true;
+    } else {
+      videoRef.value.pause();
+      isPlaying.value = false;
+    }
+  }
+};
+
+const toggleMute = () => {
+  if (videoRef.value) {
+    videoRef.value.muted = !videoRef.value.muted;
+    isMuted.value = videoRef.value.muted;
+  }
+};
+
+onMounted(() => {
+  if (videoRef.value) {
+    isMuted.value = videoRef.value.muted;
+  }
+});
 </script>
 
 <style scoped>
@@ -90,8 +147,8 @@ const goToAbout = () => {
   width: 100%;
   height: 100%;
   background-image: 
-    linear-gradient(to right, rgba(18, 18, 18, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(18, 18, 18, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
   z-index: 2;
   pointer-events: none;
@@ -182,49 +239,110 @@ html.dark .subtext {
   padding: 16px 32px;
   font-size: 1.125rem;
   font-weight: 600;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary {
-  background: #111;
+  background: linear-gradient(135deg, #bb85df 0%, #fe78b2 100%);
   color: #fff;
   border: none;
+  box-shadow: 0 4px 15px rgba(254, 120, 178, 0.3);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(254, 120, 178, 0.5);
 }
 
-html.dark .btn-primary {
-  background: #fff;
-  color: #111;
+.btn-primary .arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover .arrow {
+  transform: translateX(4px);
 }
 
 .btn-secondary {
-  background: transparent;
-  border: 1px solid #E5E7EB;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   color: #111;
 }
 
 html.dark .btn-secondary {
-  border-color: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background: rgba(0,0,0,0.02);
-  border-color: #111;
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-3px) scale(1.02);
 }
 
 html.dark .btn-secondary:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient Badge Styles */
+.hero-top-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  z-index: 20;
+}
+
+.gradient-badge {
+  padding: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #bb85df, #8dedf5, #fe78b2);
+  background-size: 200% auto;
+  animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.badge-inner {
+  display: flex;
+  align-items: center;
+  padding: 4px 16px 4px 20px;
+  border-radius: 9999px;
+  background: #ffffff;
+  color: #111;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  position: relative;
+}
+
+.badge-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  transform: rotate(-10deg);
+  z-index: 10;
+}
+
+html.dark .badge-inner {
+  background: #080808;
+  color: #fff;
 }
 
 .visual-column {
@@ -235,10 +353,50 @@ html.dark .btn-secondary:hover {
   position: relative;
 }
 
-.video-placeholder-card {
+.video-stack-container {
   width: 100%;
   max-width: 680px;
   aspect-ratio: 16 / 9;
+  position: relative;
+}
+
+.video-stack-container::before,
+.video-stack-container::after {
+  content: '';
+  position: absolute;
+  top: 8%;
+  left: 5%;
+  width: 90%;
+  height: 84%;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  z-index: 0;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.video-stack-container::before {
+  border: 1.5px solid rgba(138, 138, 138, 0.5); /* Prominent Pink hint */
+  background: rgba(138, 138, 138, 0.15);
+  transform: translateX(-45px) rotate(-3deg);
+}
+
+.video-stack-container::after {
+  border: 1.5px solid rgba(138, 138, 138, 0.5); /* Prominent Blue hint */
+  background: rgba(138, 138, 138, 0.15);
+  transform: translateX(45px) rotate(3deg);
+}
+
+.video-stack-container:hover::before {
+  transform: translateX(-55px) rotate(-5deg);
+}
+
+.video-stack-container:hover::after {
+  transform: translateX(55px) rotate(5deg);
+}
+
+.video-placeholder-card {
+  width: 100%;
+  height: 100%;
   background: transparent; 
   border: 1.5px solid #ffffff; 
   border-radius: 24px;
@@ -248,17 +406,62 @@ html.dark .btn-secondary:hover {
   justify-content: center;
   position: relative;
   overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 0 10px rgba(254, 120, 178, 0.1); 
 }
 
-.video-placeholder-card:hover {
+.video-stack-container:hover .video-placeholder-card {
   transform: scale(1.02); 
 }
 
-.preview-image {
+.hero-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.video-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 15;
+}
+
+.video-placeholder-card:hover .video-controls {
+  opacity: 1;
+  visibility: visible;
+}
+
+.control-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+  border-color: #fe78b2;
+}
+
+.control-btn i {
+  font-size: 1.1rem;
 }
 
 .video-placeholder-card::before {
@@ -292,7 +495,7 @@ html.dark .btn-secondary:hover {
     margin-top: 40px;
     justify-content: center; 
   }
-  .video-placeholder-card {
+  .video-stack-container {
     max-width: 100%;
   }
 }

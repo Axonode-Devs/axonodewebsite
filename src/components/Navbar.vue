@@ -3,8 +3,7 @@
     <div class="nav-container">
       
       <a href= "#" @click="goToHome" class="logo">
-        <img src="../assets/logo.png" alt="Axonode logo" class="logo-image" />
-        <span class="logo-text">Axonode</span>
+        <img src="/titlenavbar.png" alt="Axonode" class="logo-image" />
       </a>
 
       <ul class="nav-links">
@@ -116,6 +115,7 @@ const goToHome = () => {
 
 .nav-container {
   max-width: 1500px;
+  width: calc(100% - 60px); 
   margin: 0 auto;
   padding: 12px 32px;
   display: flex;
@@ -156,28 +156,17 @@ html.dark .navbar.scrolled .nav-container {
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
 }
 
 .logo-image {
-  width: 45px;
-  height: 45px;
-  object-fit: cover;
-  border-radius: 6px;
+  height: 30px;
+  width: auto;
+  object-fit: contain;
   display: block;
 }
 
-.logo-text {
-  font-size: 1.2rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: linear-gradient(90deg, #78dee7 0%, #fe78b2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 .nav-links {
   display: flex;

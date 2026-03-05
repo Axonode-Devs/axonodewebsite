@@ -1,43 +1,56 @@
 <template>
   <section class="about-section" id="about">
-    
     <div class="background-mesh"></div>
     <canvas ref="canvasRef" class="spline-bg"></canvas>
+    
     <div class="container">
       <div class="header-content">
         <h2 class="title">Building the <span class="gradient-text">Future Together</span></h2>
       </div>
 
       <div class="cards-grid">
-        <div class="feature-card">
-          <div class="icon-wrapper blue">
-            <i class="fa-solid fa-code"></i>
+        <div class="feature-card card-blue">
+          <div class="glow-bg"></div>
+          <div class="card-content">
+            <div class="icon-wrapper blue">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <h3>Software</h3>
+            <p>We welcome all developers, from beginners to experts, to collaborate and share their knowledge and experiences!</p>
           </div>
-          <h3>Software</h3>
-          <p>We welcome all developers, from beginners to experts, to collaborate and share their knowledge and experiences!</p>
         </div>
 
-        <div class="feature-card">
-          <div class="icon-wrapper purple">
-            <i class="fa-solid fa-paint-brush"></i>
+        <div class="feature-card card-purple">
+          <div class="glow-bg"></div>
+          <div class="card-content">
+            <div class="icon-wrapper purple">
+              <i class="fa-solid fa-paint-brush"></i>
+            </div>
+            <h3>Designers</h3>
+            <p>We welcome all designers, from illustrators to 3D artists, to collaborate and share their art and ideas!</p>
           </div>
-          <h3>Designers</h3>
-          <p>We welcome all designers, from illustrators to 3D artists, to collaborate and share their art and ideas!</p>
         </div>
 
-        <div class="feature-card">
-          <div class="icon-wrapper pink">
-            <i class="fa-solid fa-people-group"></i>
+        <div class="feature-card card-pink">
+          <div class="glow-bg"></div>
+          <div class="card-content">
+            <div class="icon-wrapper pink">
+              <i class="fa-solid fa-people-group"></i>
+            </div>
+            <h3>Entrepreneurs</h3>
+            <p>Meet with like-minded people and build meaningful connections within our community!</p>
           </div>
-          <h3>Entrepreneurs</h3>
-          <p>Meet with like-minded people and build meaningful connections within our community!</p>
         </div>
-        <div class="feature-card">
-          <div class="icon-wrapper orange">
-            <i class="fa-solid fa-lightbulb"></i>
+        
+        <div class="feature-card card-orange">
+          <div class="glow-bg"></div>
+          <div class="card-content">
+            <div class="icon-wrapper orange">
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <h3>And What Else?</h3>
+            <p>Whatever you're passionate about, join us in building a vibrant community of creators and innovators!</p>
           </div>
-          <h3>And What Else?</h3>
-          <p>Whatever you're passionate about, join us in building a vibrant community of creators and innovators!</p>
         </div>
       </div>
     </div>
@@ -64,7 +77,6 @@
   width: 100%;
   height: 100%;
   z-index: 10; /* En altta */
-  
 }
 
 .background-mesh {
@@ -74,7 +86,6 @@
   height: 100%;
   z-index: 0;
   background-color: var(--bg-color);
-
 }
 
 .feature-card, 
@@ -88,26 +99,27 @@
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: 40px 20px;
+  padding: 0px 20px;
   pointer-events: none; 
 }
 
 .header-content {
   text-align: center;
   max-width: 700px;
-  margin: 0 auto 80px auto;
+  margin: 0 auto 50px auto;
 }
 
 .title {
-  font-size: 3rem;
-  font-weight: 800;
-  color: #111827;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #6B7280;
   margin-bottom: 20px;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 html.dark .title {
-  color: #f1f5f9;
+  color: #9ca3af;
 }
 
 .gradient-text {
@@ -115,75 +127,99 @@ html.dark .title {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.description {
-  font-size: 1.1rem;
-  color: #4B5563;
-  line-height: 1.6;
-}
-
-html.dark .description {
-  color: #cbd5e1;
+  font-weight: 600;
 }
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
+  perspective: 1000px;
 }
-
 
 .feature-card {
   position: relative;
-  padding: 40px 30px;
-  border-radius: 16px;
-
-  /* Glass */
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  border: 1px solid rgba(255, 255, 255, 0.35);
-
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
-
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.feature-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 246, 227, 0.35),
-    rgba(31, 16, 3, 0.233)
-  );
-  opacity: 0.6;
-  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+  z-index: 1;
+  display: flex;
 }
 
 html.dark .feature-card {
-  background: linear-gradient(
-    135deg,
-    rgba(15, 10, 0, 0.35),
-    rgba(32, 18, 4, 0.137)
-  );
+  background: rgba(17, 24, 39, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.glow-bg {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 60%);
+  opacity: 0.1;
+  transition: opacity 0.4s ease, transform 10s linear;
+  pointer-events: none;
+  z-index: 0;
+  animation: rotateGlow 8s linear infinite;
+}
+
+html.dark .glow-bg {
+  opacity: 0.15;
+}
+
+.card-blue { --glow-color: #78dee7; }
+.card-purple { --glow-color: #95b0eb; }
+.card-pink { --glow-color: #fe78b0; }
+.card-orange { --glow-color: #ffa500; }
+
+@keyframes rotateGlow {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
 }
 
 .feature-card:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transform: translateY(-10px) scale(1.02);
+  z-index: 5;
 }
 
-.feature-card:hover::before {
-  opacity: 0.85;
+.feature-card:hover .glow-bg {
+  opacity: 0.35;
+  animation-duration: 4s;
+}
+
+html.dark .feature-card:hover .glow-bg {
+  opacity: 0.5;
+}
+
+.card-blue:hover { box-shadow: 0 20px 50px -10px rgba(120, 222, 231, 0.5); border-color: rgba(120, 222, 231, 0.4); }
+.card-purple:hover { box-shadow: 0 20px 50px -10px rgba(149, 176, 235, 0.5); border-color: rgba(149, 176, 235, 0.4); }
+.card-pink:hover { box-shadow: 0 20px 50px -10px rgba(254, 120, 176, 0.5); border-color: rgba(254, 120, 176, 0.4); }
+.card-orange:hover { box-shadow: 0 20px 50px -10px rgba(255, 165, 0, 0.5); border-color: rgba(255, 165, 0, 0.4); }
+
+.feature-card:hover .icon-wrapper {
+  animation: bounceIcon 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes bounceIcon {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2) translateY(-4px); }
+  100% { transform: scale(1.05) translateY(-2px); }
 }
 
 .icon-wrapper {
@@ -194,7 +230,9 @@ html.dark .feature-card {
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 10;
 }
 
 .icon-wrapper.blue { background: rgba(120, 222, 231, 0.15); color: #2ebbc5; }
@@ -206,7 +244,9 @@ html.dark .feature-card {
   font-size: 1.25rem;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 10;
 }
 
 html.dark .feature-card h3 {
@@ -214,23 +254,25 @@ html.dark .feature-card h3 {
 }
 
 .feature-card p {
-  color: #6B7280;
-  line-height: 1.5;
+  color: #4B5563;
+  line-height: 1.6;
   font-size: 0.95rem;
+  position: relative;
+  z-index: 10;
 }
 
 html.dark .feature-card p {
-  color: #9ca3af;
+  color: #cbd5e1;
 }
 
 @media (max-width: 768px) {
-  .title { font-size: 2.25rem; }
+  .title { font-size: 1.1rem; }
 }
 
 @media (max-width: 420px) {
   .cards-grid { grid-template-columns: 1fr; gap: 18px; }
-  .feature-card { padding: 20px 14px; }
+  .feature-card { padding: 0; }
+  .card-content { padding: 30px 20px; }
   .container { padding: 20px 12px; }
 }
-
 </style>
