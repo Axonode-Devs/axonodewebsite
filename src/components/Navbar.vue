@@ -15,11 +15,11 @@
       </ul>
 
       <div class="nav-actions desktop-actions">
-        <button class="btn-nav" @click="goToApply">{{ t('navbar.joinUs') }}</button>
-        <button class="btn-nav" @click="handleLoginClick" v-if="isLoggedIn">
-          Dashboard
+        <button class="btn-text" @click="handleLoginClick">
+          {{ isLoggedIn ? 'Dashboard' : 'Login' }}
         </button>
         <LangSwitcher />
+        <button class="btn-gradient" @click="goToApply">{{ t('navbar.joinUs') }}</button>
         <ThemeSwitcher />
       </div>
 
@@ -44,7 +44,10 @@
         </li>
       </ul>
       <div class="mobile-nav-actions">
-        <button class="btn-nav mobile-btn" @click="goToApply(); closeMenu()">
+        <button class="btn-text mobile-btn" @click="handleLoginClick(); closeMenu()">
+          {{ isLoggedIn ? 'Dashboard' : 'Login' }}
+        </button>
+        <button class="btn-gradient mobile-btn" @click="goToApply(); closeMenu()">
           {{ t('navbar.join') }}
         </button>
       </div>
@@ -215,22 +218,82 @@ html.dark .navbar.scrolled .nav-container {
 html.dark .nav-item       { color: #d1d5db; }
 html.dark .nav-item:hover { color: #fff; }
 
-.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-actions { display: flex; align-items: center; gap: 16px; }
 
-.btn-nav {
-  padding: 10px 20px;
+.btn-text {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.3s ease;
+}
+.btn-text:hover { color: #f3f4f6; }
+
+html:not(.dark) .btn-text { color: #4B5563; }
+html:not(.dark) .btn-text:hover { color: #111827; }
+
+@keyframes sweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+.btn-gradient {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 24px;
   font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 9999px;
   cursor: pointer;
-  border: none;
-  background-color: #111;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: white;
-  transition: all 0.2s ease;
+  background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(254, 120, 178, 0.3);
 }
-.btn-nav:hover { background-color: #333; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-html.dark .btn-nav       { background-color: #d5d5d5; color: #111; }
-html.dark .btn-nav:hover { background-color: #fff; }
+
+.btn-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  animation: sweep 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(254, 120, 178, 0.5);
+  background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
+}
+
+html.dark .btn-gradient {
+  color: white;
+  background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .btn-gradient:hover {
+  background: linear-gradient(0deg, #e8639c 0%, #5ac0c9 100%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+}
 
 .mobile-right { display: none; align-items: center; gap: 10px; pointer-events: auto; }
 
@@ -268,7 +331,8 @@ html.dark .mobile-drawer { background: rgba(17, 24, 39, 0.98); }
 html.dark .mobile-nav-links .nav-item { border-bottom-color: rgba(255,255,255,0.06); }
 
 .mobile-nav-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
-.btn-nav.mobile-btn { width: 100%; text-align: center; }
+.btn-text.mobile-btn,
+.btn-gradient.mobile-btn { width: 100%; text-align: center; margin-bottom: 8px; }
 
 .drawer-backdrop {
   display: none;

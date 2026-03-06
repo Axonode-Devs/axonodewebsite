@@ -32,7 +32,7 @@ const pause = ref(false);
 const baseTeam = [
   { name: 'kaiross12', role: 'team.roles.head_community', username: 'kaiross12', color: '#BEECF0' },
   { name: 'BersisSe', role: 'team.roles.head_executive', username: 'bersisse', color: '#A59CE6' },
-  //{ name: 'lofnyy', role: 'Deputy Community Director', username: 'lofnyy', color: '#78bfda' },
+  { name: 'lofnyy', role: 'Deputy Community Director', username: 'lofnyy', color: '#78bfda' },
   { name: 'Kaan610', role: 'team.roles.head_media', username: 'Kaan610', color: '#fe78b2' },
 ];
 

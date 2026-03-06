@@ -120,7 +120,7 @@ onUnmounted(() => {
 .hero-container {
   position: relative;
   width: 100%;
-  min-height: 105vh;
+  min-height: 100vh;
   background-color: var(--bg-color, #F9FAFB);
   display: flex;
   align-items: center;
