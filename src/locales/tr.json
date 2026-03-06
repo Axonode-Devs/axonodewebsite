@@ -24,5 +24,21 @@
     "groups": "Gruplar",
     "support": "Destek",
     "joinUs": "Katıl"
+  },
+  "team": {
+    "label": {
+      "founders": "Kurucular",
+      "and": "&",
+      "team_members": "Ekip Üyeleri"
+    },
+    "accessibility": {
+      "view_github": "Github Profilini Görüntüle"
+    },
+    "roles": {
+      "head_community": "Topluluk Direktörü",
+      "head_executive": "Yönetim Kurulu Başkanı",
+      "deputy_community": "Topluluk Direktör Yardımcısı",
+      "head_media": "Medya Direktörü"
+    }
   }
 }

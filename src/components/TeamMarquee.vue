@@ -16,7 +16,7 @@
           <img :src="member.avatarUrl || `https://github.com/${member.username}.png`" :alt="member.name" class="avatar" />
           <div class="info">
             <h4 class="name">{{ member.name }}</h4>
-            <span class="role" :style="{ color: member.color }">{{ member.role }}</span>
+            <span class="role" :style="{ color: member.color }">{{ $t(member.role) }}</span>
           </div>
         </a>
       </div>
@@ -32,7 +32,7 @@ const pause = ref(false);
 const baseTeam = [
   { name: 'kaiross12', role: 'team.roles.head_community', username: 'kaiross12', color: '#BEECF0' },
   { name: 'BersisSe', role: 'team.roles.head_executive', username: 'bersisse', color: '#A59CE6' },
-  { name: 'lofnyy', role: 'Deputy Community Director', username: 'lofnyy', color: '#78bfda' },
+  { name: 'lofnyy', role: 'team.roles.deputy_community', username: 'lofnyy', color: '#78bfda' },
   { name: 'Kaan610', role: 'team.roles.head_media', username: 'Kaan610', color: '#fe78b2' },
 ];
 
