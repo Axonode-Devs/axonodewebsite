@@ -69,7 +69,7 @@ type NavItem =
 const menuItems: NavItem[] = [
   { label: 'Home',    scrollTo: 'hero',    target: '#hero'    },
   { label: 'About',   scrollTo: 'about',   target: '#about'   },
-  { label: 'Groups',  route:    '/groups', target: '/groups'  },
+  { label: 'Groups',  scrollTo: 'whatwedo', target: '#groups'  },
   { label: 'Support', route:    '/support',target: '/support' },
 ];
 
@@ -86,14 +86,11 @@ const scrollToSection = (id: string) => {
   const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
   console.log(`[Navbar] Calculated target top: ${top} (current scrollY: ${window.scrollY})`);
   
-  // Use document.documentElement.scrollTo as a fallback
   try {
     document.documentElement.scrollTo({ top, behavior: 'smooth' });
-    // Also try window.scrollTo just in case
     window.scrollTo({ top, behavior: 'smooth' });
   } catch (e) {
     console.error(`[Navbar] Scroll error:`, e);
-    // Hard jump as ultimate fallback
     window.scrollTo(0, top);
   }
 };

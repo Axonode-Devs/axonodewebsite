@@ -4,7 +4,7 @@
     <HeroSection />
     <TeamMarquee />
 
-    <div class="orb-section" id="about">
+    <div class="orb-section">
       <div class="shared-orb orb-teal"></div>
       <div class="shared-orb orb-pink"></div>
       <WhatWeDo />

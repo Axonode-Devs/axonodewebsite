@@ -48,7 +48,7 @@
 
 <script setup>
 function onSubmit() {
-  alert('Message sent! (not really, this is just a demo)');
+  
 }
 
 </script>
