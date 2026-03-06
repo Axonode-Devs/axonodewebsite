@@ -70,7 +70,7 @@ const menuItems: NavItem[] = [
   { label: 'Home',    scrollTo: 'hero',    target: '#hero'    },
   { label: 'About',   scrollTo: 'about',   target: '#about'   },
   { label: 'Groups',  scrollTo: 'whatwedo', target: '#groups'  },
-  { label: 'Support', route:    '/support',target: '/support' },
+  { label: 'Support', route:    'contact',target: '#support' },
 ];
 
 

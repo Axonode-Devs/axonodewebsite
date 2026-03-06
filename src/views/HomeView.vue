@@ -13,7 +13,7 @@
     </div>
 
     <!--<Founders />-->
-    <!--<ContactSection />-->
+    <ContactSection />
   </div>
 </template>
 

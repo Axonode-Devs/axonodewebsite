@@ -123,3 +123,7 @@ export const submitApplication = async (data) => {
     throw _handleError(err);
   }
 };
+
+export const submitContact = async (data) => {
+  const res = await client.post('/contact/', data)
+}
