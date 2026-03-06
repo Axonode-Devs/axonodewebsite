@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from './router'
+import { i18n } from './i18n.js'
 import { library, config } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -20,6 +21,7 @@ initializeAxon({
 
 const app = createApp(App)
 
+app.use(i18n)
 app.use(router)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')

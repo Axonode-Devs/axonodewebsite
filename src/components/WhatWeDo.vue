@@ -2,7 +2,7 @@
   <section class="about-section" id="whatwedo">    
     <div class="container">
       <div class="header-content">
-        <h2 class="title">Building the <span class="gradient-text">Future Together</span></h2>
+        <h2 class="title">{{ $t('what_we_do.title.main') }} <span class="gradient-text">{{ $t('what_we_do.title.gradient') }}</span></h2>
       </div>
 
       <div class="cards-grid">
@@ -12,8 +12,8 @@
             <div class="icon-wrapper blue">
               <i class="fa-solid fa-code"></i>
             </div>
-            <h3>Software</h3>
-            <p>We welcome all developers, from beginners to experts, to collaborate and share their knowledge and experiences!</p>
+            <h3>{{ $t('what_we_do.cards.software.title') }}</h3>
+            <p>{{ $t('what_we_do.cards.software.text') }}</p>
           </div>
         </div>
 
@@ -23,8 +23,8 @@
             <div class="icon-wrapper purple">
               <i class="fa-solid fa-paint-brush"></i>
             </div>
-            <h3>Designers</h3>
-            <p>We welcome all designers, from illustrators to 3D artists, to collaborate and share their art and ideas!</p>
+            <h3>{{ $t('what_we_do.cards.designers.title') }}</h3>
+            <p>{{ $t('what_we_do.cards.designers.text') }}</p>
           </div>
         </div>
 
@@ -34,8 +34,8 @@
             <div class="icon-wrapper pink">
               <i class="fa-solid fa-people-group"></i>
             </div>
-            <h3>Entrepreneurs</h3>
-            <p>Meet with like-minded people and build meaningful connections within our community!</p>
+            <h3>{{ $t('what_we_do.cards.entrepreneurs.title') }}</h3>
+            <p>{{ $t('what_we_do.cards.entrepreneurs.text') }}</p>
           </div>
         </div>
         
@@ -45,8 +45,8 @@
             <div class="icon-wrapper orange">
               <i class="fa-solid fa-lightbulb"></i>
             </div>
-            <h3>And What Else?</h3>
-            <p>Whatever you're passionate about, join us in building a vibrant community of creators and innovators!</p>
+            <h3>{{ $t('what_we_do.cards.other.title') }}</h3>
+            <p>{{ $t('what_we_do.cards.software.text') }}</p>
           </div>
         </div>
       </div>

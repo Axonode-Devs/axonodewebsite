@@ -5,9 +5,9 @@
     <div class="container">
       <div class="contact-wrapper">
         <div class="contact-info">
-          <h2 class="title">Let's Build <br><span class="gradient-text">Something Great</span></h2>
+          <h2 class="title">{{ $t('contact.header.title') }}<br><span class="gradient-text">{{ $t('contact.header.gradient') }}</span></h2>
           <p class="description">
-            Have an idea or want to join the Axonode? Drop us a line. We are always looking for new perspectives.
+            {{ $t('contact.header.description') }}
           </p>
           
           <div class="contact-links">
@@ -22,14 +22,14 @@
           <!-- Success state -->
           <div v-if="isSubmitted" class="success-state">
             <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
-            <h3>Message Sent!</h3>
-            <p>Thanks for reaching out. We'll get back to you soon.</p>
-            <button class="btn btn-primary" @click="resetForm">Send Another</button>
+            <h3>{{ $t('contact.success.sent') }}</h3>
+            <p>{{ $t('contact.success.thanks') }}</p>
+            <button class="btn btn-primary" @click="resetForm">{{ $t('contact.success.another') }}</button>
           </div>
 
           <form v-else class="glass-form" @submit.prevent="onSubmit" novalidate>
             <div class="form-group">
-              <label for="name">Name</label>
+              <label for="name">{{ $t('contact.buttons.name') }}</label>
               <input
                 type="text"
                 id="name"
@@ -55,7 +55,7 @@
             </div>
             
             <div class="form-group">
-              <label for="message">Message</label>
+              <label for="message">{{ $t('contact.buttons.message') }}</label>
               <textarea
                 id="message"
                 v-model="form.message"
@@ -73,7 +73,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
-              <span>{{ isSubmitting ? 'Sending…' : 'Send Message' }}</span>
+              <span>{{ isSubmitting ? $t('contact.buttons.sending') : $t('contact.buttons.send') }}</span>
               <span v-if="!isSubmitting" class="arrow"><i class="fa-solid fa-paper-plane"></i></span>
             </button>
           </form>
