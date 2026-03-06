@@ -1,36 +1,21 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const isDark = ref(false);
+const isDark = ref(true);
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem('theme');
-  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-    isDark.value = true;
-    document.documentElement.classList.add('dark');
-  } else {
-    isDark.value = false;
-    document.documentElement.classList.remove('dark');
-  }
+  document.documentElement.classList.add('dark');
+  localStorage.setItem('theme', 'dark');
 });
 
 const toggleTheme = () => {
-  isDark.value = !isDark.value;
-  
-  if (isDark.value) {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('theme', 'dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-    localStorage.setItem('theme', 'light');
-  }
+  // Theme change disabled
 };
 </script>
 
 <template>
   <button 
+    v-show="false"
     @click="toggleTheme" 
     class="theme-btn"
     :title="isDark ? 'Aydınlık Moduna Geç' : 'Karanlık Moduna Geç'"
