@@ -31,6 +31,7 @@
             </div>
 
             <form @submit.prevent="handleNextStep" class="axonode-form">
+
               
               <div v-if="currentStep === 1" class="step-content">
                 <h3 class="section-title"><i class="fa-regular fa-id-card"></i> Personal Information</h3>
@@ -44,27 +45,35 @@
                     <input type="email" id="email" v-model="form.email" placeholder="john@axonode.com" required />
                   </div>
                 </div>
-                <div class="form-row single-col">
+
+                <div class="form-group">
                   <label for="contact"><i class="fa-solid fa-phone"></i> Primary Contact</label>
                   <div class="form-group-row">
-                  <input type="text" id="contact" v-model="form.contact_value" placeholder="username#0000" style="flex: 1;" />
-                  <select v-model="form.contact_type" style="flex: 0 0 35%;">
-                    <option value="" disabled>Contact Platform</option>
-                    <option value="discord">Discord</option>
-                    <option value="phone">Phone</option>
-                    <option value="instagram">Instagram</option>
-                    <option value="linkedin">LinkedIn</option>
-                  </select>
+                    <input
+                      type="text"
+                      id="contact"
+                      v-model="form.contact_value"
+                      placeholder="Your Primary Contact"
+                      class="contact-input"
+                    />
+                    <select v-model="form.contact_type" class="contact-select">
+                      <option value="" disabled>Platform</option>
+                      <option value="discord">Discord</option>
+                      <option value="phone">Phone</option>
+                      <option value="instagram">Instagram</option>
+                      <option value="linkedin">LinkedIn</option>
+                    </select>
                   </div>
                 </div>
               </div>
 
+              <!-- Step 2: Profile -->
               <div v-if="currentStep === 2" class="step-content">
                 <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> Your Profile</h3>
                 <div class="form-group">
                   <label>Primary Area of Interest <span class="req">*</span></label>
                   <div class="grid-options">
-                    <label v-for="area in interestAreas" :key="area.id" 
+                    <label v-for="area in interestAreas" :key="area.id"
                       class="option-card" :class="{ active: form.main_interest === area.id }">
                       <input type="radio" :value="area.id" v-model="form.main_interest" />
                       <span>{{ area.label }}</span>
@@ -72,11 +81,22 @@
                   </div>
                 </div>
 
+                <!-- "Other" free-text — value will replace main_interest in the payload -->
+                <div v-if="selectedInterest?.id === 'other'" class="form-group">
+                  <label>What are you interested in? <span class="req">*</span></label>
+                  <input
+                    type="text"
+                    placeholder="Show us your passion!"
+                    v-model="form.other_interest"
+                    required
+                  />
+                </div>
+
                 <Transition name="fade-slide">
                   <div v-if="selectedInterest?.sub?.length" class="form-group mt-input">
                     <label>Sub-Interests (Select all that apply) <span class="req">*</span></label>
                     <div class="grid-options">
-                      <label v-for="sub in selectedInterest.sub" :key="sub.id" 
+                      <label v-for="sub in selectedInterest.sub" :key="sub.id"
                         class="option-card" :class="{ active: form.sub_interest.includes(sub.id) }">
                         <input type="checkbox" :value="sub.id" v-model="form.sub_interest" />
                         <span>{{ sub.label }}</span>
@@ -85,14 +105,15 @@
                   </div>
                 </Transition>
 
-                <div class="form-row two-col mt-input">
+                <div class="form-row mt-input">
                   <div class="form-group">
                     <label>English Proficiency</label>
                     <select v-model="form.english_level" required>
                       <option value="" disabled>Select Level</option>
-                      <option value="B1-B2">Intermediate</option>
-                      <option value="C1-C2">Advanced</option>
-                      <option value="native">Native</option>
+                      <option value="A1-A2">Beginner (A1-A2)</option>
+                      <option value="B1-B2">Intermediate (B1-B2)</option>
+                      <option value="C1">Advanced (C1)</option>
+                      <option value="C2">Fluent / Native (C2)</option>
                     </select>
                   </div>
                   <div class="form-group">
@@ -107,6 +128,7 @@
                 </div>
               </div>
 
+              <!-- Step 3: Final -->
               <div v-if="currentStep === 3" class="step-content">
                 <h3 class="section-title"><i class="fa-solid fa-rocket"></i> Final Details</h3>
                 <div class="form-group">
@@ -114,7 +136,7 @@
                   <input type="number" v-model="form.availability" placeholder="10" min="1" max="100" required />
                 </div>
                 <div class="form-group">
-                  <label for="reason">What motivates you to join our team? <span class="req">*</span></label>
+                  <label for="reason">What motivates you to join Axonode? <span class="req">*</span></label>
                   <textarea id="reason" v-model="form.reason" rows="5" placeholder="Tell us about your passion..." required></textarea>
                 </div>
               </div>
@@ -145,32 +167,51 @@ import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/InfoCard.vue";
 import { submitApplication, admin } from "../libs/AxonConnector";
 
+type ContactType = 'phone' | 'instagram' | 'discord' | 'telegram' | 'linkedin' | '';
+type ExperienceLevel = 'newbie' | 'junior' | 'mid' | 'senior';
+type EnglishLevel = 'A1-A2' | 'B1-B2' | 'C1' | 'C2' | '';
+
+interface AppForm {
+  fullname: string;
+  email: string;
+  contact_type: ContactType;
+  contact_value: string;
+  english_level: EnglishLevel;
+  experience_level: ExperienceLevel;
+  availability: string;
+  reason: string;
+  main_interest: string;
+  sub_interest: string[];
+  other_interest: string;  
+  invite_token: string | null;
+}
+
 const router = useRouter();
 const route = useRoute();
 
 const currentStep = ref(1);
 const isSubmitting = ref(false);
 const isSubmitted = ref(false);
-const inviteToken = ref(null); // 3. Store the token
+const inviteToken = ref<string | null>(null);
 
-const form = reactive({
+const form = reactive<AppForm>({
   fullname: "",
   email: "",
-  contact_type: "phone",
+  contact_type: "",
   contact_value: "",
   english_level: "",
   experience_level: "junior",
   availability: "",
   reason: "",
   main_interest: "",
-  sub_interest: [] as string[],
-  invite_token: null as string | null,
+  sub_interest: [],
+  other_interest: "",
+  invite_token: null,
 });
 
 const interestAreas = [
   {
-    id: "technology",
-    label: "Technology",
+    id: "technology", label: "Technology",
     sub: [
       { id: "frontend", label: "Frontend Development" },
       { id: "backend", label: "Backend Development" },
@@ -180,8 +221,7 @@ const interestAreas = [
     ],
   },
   {
-    id: "design",
-    label: "Design",
+    id: "design", label: "Design",
     sub: [
       { id: "uiux", label: "UI/UX Design" },
       { id: "graphic", label: "Graphic Design" },
@@ -190,8 +230,7 @@ const interestAreas = [
     ],
   },
   {
-    id: "business",
-    label: "Business & Strategy",
+    id: "business", label: "Business & Strategy",
     sub: [
       { id: "startup", label: "Startup Building" },
       { id: "marketing", label: "Marketing" },
@@ -200,8 +239,7 @@ const interestAreas = [
     ],
   },
   {
-    id: "creative",
-    label: "Creative Arts",
+    id: "creative", label: "Creative Arts",
     sub: [
       { id: "music", label: "Music Production" },
       { id: "writing", label: "Writing" },
@@ -209,26 +247,17 @@ const interestAreas = [
       { id: "content", label: "Content Creation" },
     ],
   },
-  {
-    id: "other",
-    label: "Other",
-    sub: [],
-  },
+  { id: "other", label: "Other", sub: [] },
 ];
 
 onMounted(async () => {
   const token = route.query.invite as string;
-  
   if (token) {
     try {
-      // Validate the token first
       const data = await admin.checkInvite(token);
       if (data.valid) {
         inviteToken.value = token;
         form.invite_token = token;
-      } else {
-        console.error("Invalid invite token");
-        // Optionally router.push to just the form without the query param
       }
     } catch (error) {
       console.error("Error checking token", error);
@@ -236,22 +265,33 @@ onMounted(async () => {
   }
 });
 
-const selectedInterest = computed(() => interestAreas.find((i) => i.id === form.main_interest));
+const selectedInterest = computed(() =>
+  interestAreas.find((i) => i.id === form.main_interest)
+);
 
-watch(() => form.main_interest, () => { form.sub_interest = []; });
+watch(() => form.main_interest, () => {
+  form.sub_interest = [];
+  form.other_interest = "";
+});
 
 function handleNextStep() {
   if (currentStep.value < 3) {
-    if (currentStep.value === 2 && !form.main_interest) {
-      alert("Please select an area of interest");
-      return;
+    if (currentStep.value === 2) {
+      if (!form.main_interest) {
+        alert("Please select an area of interest.");
+        return;
+      }
+     
+      if (form.main_interest === 'other' && !form.other_interest.trim()) {
+        alert("Please describe your interest.");
+        return;
+      }
     }
     currentStep.value++;
   } else {
     submitForm();
   }
-};
-
+}
 
 const submitForm = async () => {
   if (!form.main_interest) {
@@ -259,21 +299,28 @@ const submitForm = async () => {
     return;
   }
 
-  if (selectedInterest.value?.sub?.length &&
-  form.sub_interest.length === 0) {
-    alert("Please select a sub-interest.");
+  if (selectedInterest.value?.sub?.length && form.sub_interest.length === 0) {
+    alert("Please select at least one sub-interest.");
     return;
   }
 
   isSubmitting.value = true;
 
   try {
-    console.log("Submitting application with data:", JSON.stringify(form));
-    await submitApplication(form);
+    const { other_interest, ...rest } = form;
+    const payload = {
+      ...rest,
+      main_interest: form.main_interest === 'other'
+        ? `other: ${other_interest.trim()}`
+        : form.main_interest,
+    };
+
+    await submitApplication(payload);
     isSubmitted.value = true;
   } catch (error) {
-    console.error("Error adding document: ", error);
-    alert("Something went wrong. Please try again.\nError: " + error.message);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Error submitting application:", error);
+    alert("Something went wrong. Please try again.\nError: " + message);
   } finally {
     isSubmitting.value = false;
   }
@@ -281,7 +328,6 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-/* Stepper Styles */
 .stepper {
   display: flex;
   justify-content: center;
@@ -307,7 +353,6 @@ const submitForm = async () => {
   box-shadow: 0 0 15px rgba(149, 176, 235, 0.4);
 }
 
-/* Success Util */
 .success-state {
   text-align: center;
   padding: 40px 0;
@@ -336,21 +381,11 @@ const submitForm = async () => {
 
 .background-mesh {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background:
-    radial-gradient(
-      circle at top right,
-      rgba(187, 133, 223, 0.15),
-      transparent 60%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(120, 222, 231, 0.1),
-      transparent 60%
-    );
+    radial-gradient(circle at top right, rgba(187, 133, 223, 0.15), transparent 60%),
+    radial-gradient(circle at bottom left, rgba(120, 222, 231, 0.1), transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
@@ -366,7 +401,9 @@ html.dark .background-mesh {
   width: 100%;
   max-width: 1200px;
   padding: 0 20px;
-  margin: 0 auto; 
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .sidebar {
@@ -383,12 +420,6 @@ html.dark .background-mesh {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
 }
 
-.form-footer {
-  display: flex;
-  gap: 15px;
-  margin-top: 30px;
-}
-
 html.dark .form-wrapper {
   background: rgba(20, 20, 20, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -397,6 +428,12 @@ html.dark .form-wrapper {
 .form-header {
   text-align: center;
   margin-bottom: 50px;
+}
+
+.form-footer {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
 }
 
 .title {
@@ -424,19 +461,13 @@ html.dark .form-wrapper {
   align-items: center;
   gap: 10px;
 }
-
-.section-title i {
-  color: #95b0eb;
-}
+.section-title i { color: #95b0eb; }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
   margin-bottom: 20px;
-}
-.form-row.single-col {
-  grid-template-columns: 1fr;
 }
 
 .form-group {
@@ -445,25 +476,24 @@ html.dark .form-wrapper {
   gap: 8px;
   margin-bottom: 16px;
 }
+
 .form-group-row {
   display: flex;
   flex-direction: row;
-  gap: 0px;
+  gap: 10px;
 }
+
+.contact-input  { flex: 1; }
+.contact-select { flex: 0 0 38%; }
 
 label {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-color);
 }
+.req { color: #fe78b2; }
 
-.req {
-  color: #fe78b2;
-}
-
-input,
-select,
-textarea {
+input, select, textarea {
   width: 100%;
   padding: 12px 16px;
   border-radius: 10px;
@@ -484,18 +514,14 @@ html.dark textarea {
   color: #f1f5f9;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
+input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: #95b0eb;
   background: var(--bg-color);
   box-shadow: 0 0 0 3px rgba(149, 176, 235, 0.15);
 }
 
-.mt-input {
-  margin-top: 10px;
-}
+.mt-input { margin-top: 10px; }
 
 .grid-options {
   display: grid;
@@ -527,9 +553,7 @@ textarea:focus {
   height: 0;
 }
 
-.option-card:hover {
-  background: var(--hover-bg);
-}
+.option-card:hover { background: var(--hover-bg); }
 
 .option-card.active {
   background: rgba(120, 222, 231, 0.1);
@@ -537,9 +561,7 @@ textarea:focus {
   color: #78dee7;
   font-weight: 700;
 }
-html.dark .option-card.active {
-  background: rgba(120, 222, 231, 0.15);
-}
+html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
 
 .back-btn {
   padding: 16px 30px;
@@ -561,25 +583,15 @@ html.dark .option-card.active {
   font-weight: 700;
   font-size: 1.1rem;
   cursor: pointer;
-  transition:
-    transform 0.2s,
-    opacity 0.2s;
+  transition: transform 0.2s, opacity 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 }
+.submit-btn:hover { transform: translateY(-2px); opacity: 0.95; }
+.submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
-.submit-btn:hover {
-  transform: translateY(-2px);
-  opacity: 0.95;
-}
-
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none;
-}
 .invited-badge {
   display: inline-block;
   background: linear-gradient(135deg, #78dee7 0%, #bb85df 100%);
@@ -588,38 +600,22 @@ html.dark .option-card.active {
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-top: 12px;
   box-shadow: 0 4px 10px rgba(187, 133, 223, 0.3);
 }
 
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.3s ease;
-}
-.fade-slide-enter-from,
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+.fade-slide-enter-active, .fade-slide-leave-active { transition: all 0.3s ease; }
+.fade-slide-enter-from, .fade-slide-leave-to { opacity: 0; transform: translateY(-10px); }
+
+@media (max-width: 992px) {
+  .layout-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-  .form-wrapper {
-    padding: 30px 20px;
-  }
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .grid-options {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (max-width: 992px) {
-  .layout-grid {
-    grid-template-columns: 1fr;
-  }
-  .container {
-    margin-left: 0;
-  }
+  .form-wrapper { padding: 30px 20px; }
+  .form-row { grid-template-columns: 1fr; gap: 16px; }
+  .grid-options { grid-template-columns: 1fr 1fr; }
+  .form-group-row { flex-direction: column; }
+  .contact-select { flex: unset; }
 }
 </style>

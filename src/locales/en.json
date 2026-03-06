@@ -1,0 +1,101 @@
+{
+  "hero": {
+    "background_title": "CREATE",
+    "headline": {
+      "main": "Meet With",
+      "brand": "Axonode"
+    },
+    "subtext": "We are a welcoming community uniting our skills to share knowledge, create projects, and have fun together. Join us to connect with like-minded individuals!",
+    "badge": "Welcome to Axonode",
+    "buttons": {
+      "join": "Join Us",
+      "about": "About Us"
+    },
+    "video_controls": {
+      "play": "Play",
+      "pause": "Pause",
+      "mute": "Mute",
+      "unmute": "Unmute"
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "groups": "Groups",
+    "support": "Support",
+    "joinUs": "Join Us"
+  },
+  "team": {
+    "label": {
+      "founders": "Founders",
+      "and": "&",
+      "team_members": "Team Members"
+    },
+    "accessibility": {
+      "view_github": "View Github Profile"
+    },
+    "roles": {
+      "head_community": "Head Community Director",
+      "head_executive": "Head Executive",
+      "deputy_community": "Deputy Community Director",
+      "head_media": "Head of Media"
+    }
+  },
+  "what_we_do": {
+    "title": {
+      "main": "Building the",
+      "gradient": "Future Together"
+    },
+    "cards": {
+      "software": {
+        "title": "Software",
+        "text": "We welcome all developers, from beginners to experts, to collaborate and share their knowledge and experiences!"
+      },
+      "designers": {
+        "title": "Designers",
+        "text": "We welcome all designers, from illustrators to 3D artists, to collaborate and share their art and ideas!"
+      },
+      "entrepreneurs": {
+        "title": "Entrepreneurs",
+        "text": "Meet with like-minded people and build meaningful connections within our community!"
+      },
+      "other": {
+        "title": "And What Else?",
+        "text": "Whatever you're passionate about, join us in building a vibrant community of creators and innovators!"
+      }
+    }
+  },
+  "about_us": {
+    "header": {
+      "eyebrow": "Discover",
+      "title": "What is Our"
+    },
+    "vision": {
+      "title": "Vision",
+      "description": "To redefine the architecture of multi-participant projects and professional networking. We envision a future where the weight of \"finding the right team\" is put away. Our goal is to create a high-efficiency environment with collective power of a hyper-connected community."
+    },
+    "mission": {
+      "title": "Mission",
+      "description": "To enhance professional growth by simplifying the way people connect. At Axonode, we connect the subjects of career and giving the people a network they don't have to worry about, making business networking intuitive and accessible. By creating a global ecosystem for voluntary project participation, we give every developer, designer, and entrepreneur a platform to contribute their skills and build their portfolio."
+    }
+  },
+  "contact":{
+    "header":{
+        "title": "Lets Build",
+        "gradient": "Something Great",
+        "description": "Have an idea or want to join the Axonode? Drop us a line. We are always looking for new perspectives."
+    },
+    "success":{
+        "sent": "Message Sent!",
+        "thanks": "Thanks for reaching out. We'll get back to you soon.",
+        "another": "Send Another?"
+    },
+
+    "buttons":{
+        "name" : "Name",
+        "message": "Message",
+        "send": "Send Message",
+        "sending": "Sending.."
+    }
+  }
+}

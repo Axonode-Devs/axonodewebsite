@@ -116,9 +116,14 @@ export const initializeAxon = (config = {}) => {
 
 export const submitApplication = async (data) => {
   try {
+    
     const res = await client.post('/applications/', data);
     return res.data;
   } catch (err) {
     throw _handleError(err);
   }
 };
+
+export const submitContact = async (data) => {
+  const res = await client.post('/contact/', data)
+}

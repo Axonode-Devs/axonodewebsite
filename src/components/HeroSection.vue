@@ -7,24 +7,21 @@
     <div class="content-wrapper">
       <div class="hero-content">
         <div class="text-column">
-          <h1 class="hero-title">CREATE</h1>
+          <h1 class="hero-title">{{ $t('hero.background_title') }}</h1>
           <h2 class="headline">
-            Meet With <br />
-            <span class="gradient-text">Axonode</span>
+            {{ $t('hero.headline.main') }} <br />
+            <span class="gradient-text">{{ $t('hero.headline.brand') }}</span>
           </h2>
 
-          <p class="subtext">
-            We are a welcoming community uniting our skills to share knowledge, create projects, and have fun together.
-            Join us to connect with like-minded individuals!
-          </p>
+          <p class="subtext">{{ $t('hero.subtext') }}</p>
 
           <div class="action-group">
             <button class="btn btn-primary" @click="goToApply">
-              <span>Join Us</span>
+              <span>{{ $t('hero.buttons.join') }}</span>
               <span class="arrow"><i class="fa-solid fa-angle-right"></i></span>
             </button>
             <button class="btn btn-secondary" @click="goToAbout">
-              <span>About Us</span>
+              <span>{{ $t('hero.buttons.about') }}</span>
             </button>
           </div>
         </div>

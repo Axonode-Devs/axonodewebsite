@@ -1,0 +1,28 @@
+{
+  "hero": {
+    "background_title": "OLUŞTUR",
+    "headline": {
+      "main": "Axonode ile",
+      "brand": "Tanışın"
+    },
+    "subtext": "Bilgi paylaşmak, projeler üretmek ve birlikte eğlenmek için becerilerimizi birleştiren misafirperver bir topluluğuz. Benzer düşünceli bireylerle bağlantı kurmak için bize katıl!",
+    "badge": "Axonode'a Hoş Geldin",
+    "buttons": {
+      "join": "Katıl",
+      "about": "Hakkımızda"
+    },
+    "video_controls": {
+      "play": "Oynat",
+      "pause": "Durdur",
+      "mute": "Sesi Kapat",
+      "unmute": "Sesi Aç"
+    }
+  },
+  "navbar": {
+    "home": "Ana Sayfa",
+    "about": "Hakkında",
+    "groups": "Gruplar",
+    "support": "Destek",
+    "joinUs": "Katıl"
+  }
+}

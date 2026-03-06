@@ -1,11 +1,11 @@
 <template>
-  <section class="about-section">
+  <section class="about-section" id="about">
     <div class="container">
 
       <!-- Header -->
       <div class="header-content">
-        <p class="eyebrow">Discover</p>
-        <h2 class="title">What is Our <span class="gradient-text">:</span></h2>
+        <p class="eyebrow">{{ $t('about_us.header.eyebrow') }}</p>
+        <h2 class="title">{{ $t('about_us.header.title') }}<span class="gradient-text">:</span></h2>
       </div>
 
       <!-- Cards -->
@@ -23,9 +23,8 @@
                 <circle cx="24" cy="24" r="3.5" fill="currentColor"/>
               </svg>
             </div>
-            <h3>Vision</h3>
-            <p>To redefine the architecture of multi-participant projects and professional networking.
-We envision a future where the weight of "finding the right team" is put away. Our goal is to create a high-efficiency environment with collective power of a hyper-connected community.</p>
+            <h3>{{ $t('about_us.vision.title') }}</h3>
+            <p>{{ $t('about_us.vision.description') }}</p>
           </div>
         </div>
 
@@ -39,9 +38,8 @@ We envision a future where the weight of "finding the right team" is put away. O
                 <path d="M24 4L28.5 18H44L31.75 26.5L36.25 40.5L24 32L11.75 40.5L16.25 26.5L4 18H19.5L24 4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h3>Mission</h3>
-            <p>To enhance professional growth by simplifying the way people connect.
-At Axonode, we connect the subjects of career and giving the people a network they don't have to worry about, making business networking intuitive and accessible. By creating a global ecosystem for voluntary project participation, we give every developer, designer, and entrepreneur a platform to contribute their skills and build their portfolio.</p>
+            <h3>{{ $t('about_us.mission.title') }}</h3>
+            <p>{{ $t('about_us.vision.description') }}</p>
           </div>
         </div>
 

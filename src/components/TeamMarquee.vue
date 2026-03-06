@@ -1,13 +1,13 @@
 <template>
   <div class="marquee-container">
-    <div class="marquee-label"><span>Founders</span>& Team Members</div>
+    <div class="marquee-label"><span>{{ $t('team.label.founders') }}</span>& {{ $t('team.label.team_members') }}</div>
     <div class="marquee-content" @mouseenter="pause = true" @mouseleave="pause = false">
       <div class="marquee-track" :class="{ paused: pause }">
         <a :href="`https://github.com/${member.username}`" target="_blank" title="View Github Profile" v-for="(member, index) in combinedTeam" :key="'A'+index" class="team-card">
           <img :src="member.avatarUrl || `https://github.com/${member.username}.png`" :alt="member.name" class="avatar" />
           <div class="info">
             <h4 class="name">{{ member.name }}</h4>
-            <span class="role" :style="{ color: member.color }">{{ member.role }}</span>
+            <span class="role" :style="{ color: member.color }">{{ $t(member.role) }}</span>
           </div>
         </a>
       </div>
@@ -30,10 +30,10 @@ import { ref, onMounted } from 'vue';
 const pause = ref(false);
 
 const baseTeam = [
-  { name: 'kaiross12', role: 'Head Community Director', username: 'kaiross12', color: '#BEECF0' },
-  { name: 'BersisSe', role: 'Head Executive', username: 'bersisse', color: '#A59CE6' },
-  { name: 'lofnyy', role: 'Deputy Community Director', username: 'lofnyy', color: '#78bfda' },
-  { name: 'Kaan610', role: 'Head of Media', username: 'Kaan610', color: '#fe78b2' },
+  { name: 'kaiross12', role: 'team.roles.head_community', username: 'kaiross12', color: '#BEECF0' },
+  { name: 'BersisSe', role: 'team.roles.head_executive', username: 'bersisse', color: '#A59CE6' },
+  //{ name: 'lofnyy', role: 'Deputy Community Director', username: 'lofnyy', color: '#78bfda' },
+  { name: 'Kaan610', role: 'team.roles.head_media', username: 'Kaan610', color: '#fe78b2' },
 ];
 
 const combinedTeam = ref([...baseTeam, ...baseTeam, ...baseTeam]);
