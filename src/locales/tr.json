@@ -5,31 +5,31 @@
       "main": "Axonode ile",
       "brand": "Tanışın"
     },
-    "subtext": "Bilgi paylaşmak, projeler üretmek ve birlikte eğlenmek için becerilerimizi birleştiren misafirperver bir topluluğuz. Benzer düşünceli bireylerle bağlantı kurmak için bize katıl!",
-    "badge": "Axonode'a Hoş Geldin",
+    "subtext": "Bilgilerimizi paylaşmak, projeler üretmek ve birlikte eğlenmek için becerilerimizi birleştiren misafirperver bir topluluğuz. Benzer düşüncelerde bireyler ile bağlantı kurmak için bize katıl!",
+    "badge": "Axonode'a Hoş Geldiniz",
     "buttons": {
-      "join": "Katıl",
+      "join": "Bize Katıl",
       "about": "Hakkımızda"
     },
     "video_controls": {
       "play": "Oynat",
       "pause": "Durdur",
-      "mute": "Sesi Kapat",
-      "unmute": "Sesi Aç"
+      "mute": "Sustur",
+      "unmute": "Sesi aç"
     }
   },
   "navbar": {
-    "home": "Ana Sayfa",
+    "home": "Anasayfa",
     "about": "Hakkında",
     "groups": "Gruplar",
     "support": "Destek",
-    "joinUs": "Katıl"
+    "joinUs": "Bize Katıl"
   },
   "team": {
     "label": {
       "founders": "Kurucular",
       "and": "&",
-      "team_members": "Ekip Üyeleri"
+      "team_members": "Takım Üyeleri"
     },
     "accessibility": {
       "view_github": "Github Profilini Görüntüle"
@@ -39,6 +39,63 @@
       "head_executive": "Yönetim Kurulu Başkanı",
       "deputy_community": "Topluluk Direktör Yardımcısı",
       "head_media": "Medya Direktörü"
+    }
+  },
+  "what_we_do": {
+    "title": {
+      "main": "Geleceği Beraber",
+      "gradient": "İnşa Ediyoruz"
+    },
+    "cards": {
+      "software": {
+        "title": "Yazılım",
+        "text": " Acemilerden Uzmanlara tüm geliştiricileri, deneyimlerini ve bilgilerini paylaşmaları ve iş birliği için açık kollarla karşılıyoruz!"
+      },
+      "designers": {
+        "title": "Tasarım",
+        "text": "İllüstratörlerden 3D'ye; becerilerini ve fikirlerini paylaşmaları, İş birliklerinde bulunmaları için tüm tasarımcıları bekliyoruz!"
+      },
+      "entrepreneurs": {
+        "title": "Girişimciler",
+        "text": "Komünitemizde aynı fikirdeki insanlar ile tanışıp anlamlı bağlantılar kurun!"
+      },
+      "other": {
+        "title": "Ve Kim Bilir Başka Neler?",
+        "text": "Ne hakkında tutkuluysan, bize katıl ve yaratıcı ruhlardan oluşan komünitemize kendi rengini kat!"
+      }
+    }
+  },
+  "about_us": {
+    "header": {
+      "eyebrow": "Keşfet",
+      "title": "Bizim:"
+    },
+    "vision": {
+      "title": "Vizyonumuz",
+      "description": "Çoklu projelerin ve profesyonel bağlantılar kurmanın yapısını yeniden şekillendirmek. 'Doğru ekibi bulma' zorluğunun ortadan kalktığı bir gelecek hayal ediyoruz. Hedefimiz yüksek verimlilik sahibi kolektif gücü ile hiper-bağlı bir komünite oluşturmak."
+    },
+    "mission": {
+      "title": "Misyonumuz",
+      "description": "Profesyonel gelişimi desteklemek ve insanların bağlantı kurmasını basitleştirmek. Biz, Axonode'da, kariyer ve insanlara üzerine uğraşmaları gerekmeyen bir network verme konseptlerini birleştiriyoruz; kariyer bağlantıları kurmayı daha erişilebilir bir hale getiriyoruz. Gönüllü proje katılımları ile global bir ekosistem oluşturarak her yazılımcı, tasarımcı ve girişimciye becerilerini paylaşabileceği ve portfolyolarını büyütebilecekleri bir platform sunuyoruz."
+    }
+  },
+  "contact":{
+    "header":{
+        "title": "Birlikte",
+        "gradient": "İnşa Edelim",
+        "description": "Axonode için bir önerin/fikrin mi var? Bize ulaş, her zaman yeni perspektiflere açığız!"
+    },
+    "success":{
+        "sent": "Mesaj Gönderildi!",
+        "thanks": "Bize ulaştığınız için teşekkür ederiz, En kısa sürede geri dönüş yapacağız.",
+        "another": "Başka Bir Mesaj Gönder?"
+    },
+
+    "buttons":{
+        "name" : "İsim",
+        "message": "Mesaj",
+        "send": "Mesaj Gönder",
+        "sending": "Gönderiliyor.."
     }
   }
 }
