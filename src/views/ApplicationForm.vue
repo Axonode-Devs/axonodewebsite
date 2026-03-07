@@ -10,14 +10,14 @@
             <div class="success-icon">
               <i class="fa-solid fa-circle-check"></i>
             </div>
-            <h2 class="title">{{ t('application_form.success.title') }} <span class="gradient-text">{{ t('application_form.success.title_highlight') }}</span></h2>
-            <p>{{ t('application_form.success.message') }}</p>
-            <button @click="router.push('/')" class="submit-btn mt-input">{{ t('application_form.nav.back_to_home') }}</button>
+            <h2 class="title">{{ $t('application_form.success.title') }} <span class="gradient-text">{{ $t('application_form.success.title_highlight') }}</span></h2>
+            <p>{{ $t('application_form.success.message') }}</p>
+            <button @click="router.push('/')" class="submit-btn mt-input">{{ $t('application_form.nav.back_to_home') }}</button>
           </div>
 
           <template v-else>
             <div class="form-header">
-              <h2 class="title">{{ t('application_form.header.title') }} <span class="gradient-text">{{ t('application_form.header.title_highlight') }}</span></h2>
+              <h2 class="title">{{ $t('application_form.header.title') }} <span class="gradient-text">{{ $t('application_form.header.title_highlight') }}</span></h2>
               <div class="stepper">
                 <div v-for="step in 3" :key="step" :class="['step', { active: currentStep >= step }]">
                   <span class="step-number">{{ step }}</span>
@@ -25,63 +25,61 @@
               </div>
               <Transition name="fade-slide">
                 <div v-if="inviteToken" class="invited-badge">
-                  {{ t('application_form.header.invited_badge') }}
+                  {{ $t('application_form.header.invited_badge') }}
                 </div>
               </Transition>
             </div>
 
             <form @submit.prevent="handleNextStep" class="axonode-form">
 
-              <!-- Step 1: Personal Info -->
               <div v-if="currentStep === 1" class="step-content">
-                <h3 class="section-title"><i class="fa-regular fa-id-card"></i> {{ t('application_form.steps.personal_info.section_title') }}</h3>
+                <h3 class="section-title"><i class="fa-regular fa-id-card"></i> {{ $t('application_form.steps.personal_info.section_title') }}</h3>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="fullname"><i class="fa-solid fa-user"></i> {{ t('application_form.steps.personal_info.fullname.label') }} <span class="req">*</span></label>
-                    <input type="text" id="fullname" v-model="form.fullname" :placeholder="t('application_form.steps.personal_info.fullname.placeholder')" required />
+                    <label for="fullname"><i class="fa-solid fa-user"></i> {{ $t('application_form.steps.personal_info.fullname.label') }} <span class="req">*</span></label>
+                    <input type="text" id="fullname" v-model="form.fullname" :placeholder="$t('application_form.steps.personal_info.fullname.placeholder')" required />
                   </div>
                   <div class="form-group">
-                    <label for="email"><i class="fa-solid fa-envelope"></i> {{ t('application_form.steps.personal_info.email.label') }} <span class="req">*</span></label>
-                    <input type="email" id="email" v-model="form.email" :placeholder="t('application_form.steps.personal_info.email.placeholder')" required />
+                    <label for="email"><i class="fa-solid fa-envelope"></i> {{ $t('application_form.steps.personal_info.email.label') }} <span class="req">*</span></label>
+                    <input type="email" id="email" v-model="form.email" :placeholder="$t('application_form.steps.personal_info.email.placeholder')" required />
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="contact"><i class="fa-solid fa-phone"></i> {{ t('application_form.steps.personal_info.contact.label') }}</label>
+                  <label for="contact"><i class="fa-solid fa-phone"></i> {{ $t('application_form.steps.personal_info.contact.label') }}</label>
                   <div class="form-group-row">
                     <input
                       type="text"
                       id="contact"
                       v-model="form.contact_value"
-                      :placeholder="t('application_form.steps.personal_info.contact.placeholder')"
+                      :placeholder="$t('application_form.steps.personal_info.contact.placeholder')"
                       class="contact-input"
                     />
                     <select v-model="form.contact_type" class="contact-select">
-                      <option value="" disabled>{{ t('application_form.steps.personal_info.contact.platform_placeholder') }}</option>
+                      <option value="" disabled>{{ $t('application_form.steps.personal_info.contact.platform_placeholder') }}</option>
                       <option v-for="(_, key) in contactTypes" :key="key" :value="key">
-                        {{ t(`application_form.steps.personal_info.contact.types.${key}`) }}
+                        {{ $t(`application_form.steps.personal_info.contact.types.${key}`) }}
                       </option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              <!-- Step 2: Profile -->
               <div v-if="currentStep === 2" class="step-content">
-                <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> {{ t('application_form.steps.profile.section_title') }}</h3>
+                <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> {{ $t('application_form.steps.profile.section_title') }}</h3>
                 <div class="form-group">
-                  <label>{{ t('application_form.steps.profile.main_interest.label') }} <span class="req">*</span></label>
+                  <label>{{ $t('application_form.steps.profile.main_interest.label') }} <span class="req">*</span></label>
                   <div class="grid-options">
                     <label v-for="area in interestAreas" :key="area.id"
                       class="option-card" :class="{ active: form.main_interest === area.id }">
                       <input type="radio" :value="area.id" v-model="form.main_interest" />
-                      <span>{{ t(`application_form.interest_areas.${area.id}.label`) }}</span>
+                      <span>{{ $t(`application_form.interest_areas.${area.id}.label`) }}</span>
                     </label>
                   </div>
                 </div>
 
                 <div v-if="selectedInterest?.id === 'other'" class="form-group">
-                  <label>{{ t('application_form.steps.profile.other_interest.label') }} <span class="req">*</span></label>
+                  <label>{{ $t('application_form.steps.profile.other_interest.label') }} <span class="req">*</span></label>
                   <input
                     type="text"
                     :placeholder="t('application_form.steps.profile.other_interest.placeholder')"
@@ -92,12 +90,12 @@
 
                 <Transition name="fade-slide">
                   <div v-if="selectedInterest?.sub?.length" class="form-group mt-input">
-                    <label>{{ t('application_form.steps.profile.sub_interest.label') }} <span class="req">*</span></label>
+                    <label>{{ $t('application_form.steps.profile.sub_interest.label') }} <span class="req">*</span></label>
                     <div class="grid-options">
                       <label v-for="sub in selectedInterest.sub" :key="sub.id"
                         class="option-card" :class="{ active: form.sub_interest.includes(sub.id) }">
                         <input type="checkbox" :value="sub.id" v-model="form.sub_interest" />
-                        <span>{{ t(`application_form.interest_areas.${selectedInterest.id}.sub.${sub.id}`) }}</span>
+                        <span>{{ $t(`application_form.interest_areas.${selectedInterest.id}.sub.${sub.id}`) }}</span>
                       </label>
                     </div>
                   </div>
@@ -105,19 +103,19 @@
 
                 <div class="form-row mt-input">
                   <div class="form-group">
-                    <label>{{ t('application_form.steps.profile.english_level.label') }}</label>
+                    <label>{{ $t('application_form.steps.profile.english_level.label') }}</label>
                     <select v-model="form.english_level" required>
-                      <option value="" disabled>{{ t('application_form.steps.profile.english_level.placeholder') }}</option>
+                      <option value="" disabled>{{ $t('application_form.steps.profile.english_level.placeholder') }}</option>
                       <option v-for="(_, key) in englishLevels" :key="key" :value="englishLevels[key].value">
-                        {{ t(`application_form.steps.profile.english_level.levels.${key}`) }}
+                        {{ $t(`application_form.steps.profile.english_level.levels.${key}`) }}
                       </option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>{{ t('application_form.steps.profile.experience_level.label') }}</label>
+                    <label>{{ $t('application_form.steps.profile.experience_level.label') }}</label>
                     <select v-model="form.experience_level" required>
                       <option v-for="(_, key) in experienceLevels" :key="key" :value="key">
-                        {{ t(`application_form.steps.profile.experience_level.levels.${key}`) }}
+                        {{ $t(`application_form.steps.profile.experience_level.levels.${key}`) }}
                       </option>
                     </select>
                   </div>
@@ -126,21 +124,21 @@
 
               <!-- Step 3: Final -->
               <div v-if="currentStep === 3" class="step-content">
-                <h3 class="section-title"><i class="fa-solid fa-rocket"></i> {{ t('application_form.steps.final.section_title') }}</h3>
+                <h3 class="section-title"><i class="fa-solid fa-rocket"></i> {{ $t('application_form.steps.final.section_title') }}</h3>
                 <div class="form-group">
-                  <label>{{ t('application_form.steps.final.availability.label') }}</label>
-                  <input type="number" v-model="form.availability" :placeholder="t('application_form.steps.final.availability.placeholder')" min="1" max="100" required />
+                  <label>{{ $t('application_form.steps.final.availability.label') }}</label>
+                  <input type="number" v-model="form.availability" :placeholder="$t('application_form.steps.final.availability.placeholder')" min="1" max="100" required />
                 </div>
                 <div class="form-group">
-                  <label for="reason">{{ t('application_form.steps.final.reason.label') }} <span class="req">*</span></label>
-                  <textarea id="reason" v-model="form.reason" rows="5" :placeholder="t('application_form.steps.final.reason.placeholder')" required></textarea>
+                  <label for="reason">{{ $t('application_form.steps.final.reason.label') }} <span class="req">*</span></label>
+                  <textarea id="reason" v-model="form.reason" rows="5" :placeholder="$t('application_form.steps.final.reason.placeholder')" required></textarea>
                 </div>
               </div>
 
               <div class="form-footer">
-                <button v-if="currentStep > 1" type="button" @click="currentStep--" class="back-btn">{{ t('application_form.buttons.back') }}</button>
+                <button v-if="currentStep > 1" type="button" @click="currentStep--" class="back-btn">{{ $t('application_form.buttons.back') }}</button>
                 <button type="submit" class="submit-btn" :disabled="isSubmitting">
-                  <span>{{ currentStep === 3 ? (isSubmitting ? t('application_form.buttons.submitting') : t('application_form.buttons.submit')) : t('application_form.buttons.next') }}</span>
+                  <span>{{ currentStep === 3 ? (isSubmitting ? t('application_form.buttons.submitting') : $t('application_form.buttons.submit')) : t('application_form.buttons.next') }}</span>
                   <i v-if="!isSubmitting" class="fa-solid" :class="currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'"></i>
                 </button>
               </div>
@@ -163,8 +161,6 @@ import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/InfoCard.vue";
 import { submitApplication, admin } from "../libs/AxonConnector";
-
-const { t } = useI18n();
 
 type ContactType = 'phone' | 'instagram' | 'discord' | 'telegram' | 'linkedin' | '';
 type ExperienceLevel = 'newbie' | 'junior' | 'mid' | 'senior';
