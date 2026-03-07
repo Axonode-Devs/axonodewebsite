@@ -267,8 +267,8 @@
     "subtitle": "Bu toplu bir Davet değil, Ekibimiz içinden biri spesifik olarak seni seçti",
     "why_section": {
       "title": "Neden Seni Seçtik",
-      "paragraph_1": "Ekibimizden biri seni gördü ve etkilendi, dedi ki '{userName} gerçekten direkt iletişime geçmeye değer biri', bu sık yaşanan bir durum değil",
-      "paragraph_2": "Başvurunu Tamamladığında, sistemimiz üzerinde {invited} olarak görüşleceksin. Sen özenle seçilmiş biri gibi değerlendiliceksin, çünkü öylesin.",
+      "paragraph_1": "Ekibimizden biri seni gördü ve etkilendi, {userName} gerçekten direkt iletişime geçmeye değer biri diye düşündü ve bu daveti sana gönderdi. Bu sık yaşanan bir durum değil.",
+      "paragraph_2": "Başvurunu Tamamladığında, sistemimiz üzerinde {invited} olarak görüleceksin. Sen özenle seçilmiş biri gibi değerlendiriliceksin, çünkü öylesin ✦",
       "paragraph_2_invited": "\"Davet Edildi\"",
       "paragraph_3": "{userName}, İşte bu senin anın. Birilerinin sana olan inancının boşa gitmesine izin verme!"
     },
