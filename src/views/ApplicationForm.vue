@@ -138,7 +138,7 @@
               <div class="form-footer">
                 <button v-if="currentStep > 1" type="button" @click="currentStep--" class="back-btn">{{ $t('application_form.buttons.back') }}</button>
                 <button type="submit" class="submit-btn" :disabled="isSubmitting">
-                  <span>{{ currentStep === 3 ? (isSubmitting ? t('application_form.buttons.submitting') : $t('application_form.buttons.submit')) : t('application_form.buttons.next') }}</span>
+                  <span>{{ currentStep === 3 ? (isSubmitting ? $t('application_form.buttons.submitting') : $t('application_form.buttons.submit')) : $t('application_form.buttons.next') }}</span>
                   <i v-if="!isSubmitting" class="fa-solid" :class="currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'"></i>
                 </button>
               </div>
@@ -157,14 +157,15 @@
 <script setup lang="ts">
 import { ref, reactive, computed, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/InfoCard.vue";
 import { submitApplication, admin } from "../libs/AxonConnector";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 type ContactType = 'phone' | 'instagram' | 'discord' | 'telegram' | 'linkedin' | '';
 type ExperienceLevel = 'newbie' | 'junior' | 'mid' | 'senior';
 type EnglishLevel = 'A1-A2' | 'B1-B2' | 'C1' | 'C2' | '';
+
 
 interface AppForm {
   fullname: string;
@@ -204,7 +205,6 @@ const form = reactive<AppForm>({
   invite_token: null,
 });
 
-// Lookup maps used to drive <option> rendering
 const contactTypes: Record<string, null> = {
   discord: null,
   phone: null,
@@ -295,11 +295,11 @@ function handleNextStep() {
   if (currentStep.value < 3) {
     if (currentStep.value === 2) {
       if (!form.main_interest) {
-        alert(t('application_form.validation.select_interest'));
+        alert($t('application_form.validation.select_interest'));
         return;
       }
       if (form.main_interest === 'other' && !form.other_interest.trim()) {
-        alert(t('application_form.validation.describe_interest'));
+        alert($t('application_form.validation.describe_interest'));
         return;
       }
     }
@@ -311,12 +311,12 @@ function handleNextStep() {
 
 const submitForm = async () => {
   if (!form.main_interest) {
-    alert(t('application_form.validation.select_main_interest'));
+    alert($t('application_form.validation.select_main_interest'));
     return;
   }
 
   if (selectedInterest.value?.sub?.length && form.sub_interest.length === 0) {
-    alert(t('application_form.validation.select_sub_interest'));
+    alert($t('application_form.validation.select_sub_interest'));
     return;
   }
 
@@ -336,7 +336,7 @@ const submitForm = async () => {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error("Error submitting application:", error);
-    alert(t('application_form.validation.generic_error', { error: message }));
+    alert($t('application_form.validation.generic_error', { error: message }));
   } finally {
     isSubmitting.value = false;
   }

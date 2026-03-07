@@ -123,7 +123,7 @@
         },
         "email": {
           "label": "Email Address",
-          "placeholder": "john@axonode.com"
+          "placeholder": "john{'@'}axonode.com"
         },
         "contact": {
           "label": "Primary Contact",
