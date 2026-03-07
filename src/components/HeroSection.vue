@@ -33,7 +33,7 @@
             <div class="gradient-badge">
               <span class="badge-inner" v-if="!isMobile">
                 <img src="/sparkler.png" alt="Axonode" class="badge-icon" />
-                {{ t('hero.welcome') }}
+                {{ $t('hero.welcome') }}
               </span>
             </div>
           </div>
