@@ -10,14 +10,14 @@
             <div class="success-icon">
               <i class="fa-solid fa-circle-check"></i>
             </div>
-            <h2 class="title">Application <span class="gradient-text">Received!</span></h2>
-            <p>Thank you for applying to Axonode. Our team will review your profile and reach out via email or Discord soon.</p>
-            <button @click="router.push('/')" class="submit-btn mt-input">Back to Home</button>
+            <h2 class="title">{{ t('application_form.success.title') }} <span class="gradient-text">{{ t('application_form.success.title_highlight') }}</span></h2>
+            <p>{{ t('application_form.success.message') }}</p>
+            <button @click="router.push('/')" class="submit-btn mt-input">{{ t('application_form.nav.back_to_home') }}</button>
           </div>
 
           <template v-else>
             <div class="form-header">
-              <h2 class="title">Join the <span class="gradient-text">Team</span></h2>
+              <h2 class="title">{{ t('application_form.header.title') }} <span class="gradient-text">{{ t('application_form.header.title_highlight') }}</span></h2>
               <div class="stepper">
                 <div v-for="step in 3" :key="step" :class="['step', { active: currentStep >= step }]">
                   <span class="step-number">{{ step }}</span>
@@ -25,43 +25,42 @@
               </div>
               <Transition name="fade-slide">
                 <div v-if="inviteToken" class="invited-badge">
-                  ✦ Personal Invitation
+                  {{ t('application_form.header.invited_badge') }}
                 </div>
               </Transition>
             </div>
 
             <form @submit.prevent="handleNextStep" class="axonode-form">
 
-              
+              <!-- Step 1: Personal Info -->
               <div v-if="currentStep === 1" class="step-content">
-                <h3 class="section-title"><i class="fa-regular fa-id-card"></i> Personal Information</h3>
+                <h3 class="section-title"><i class="fa-regular fa-id-card"></i> {{ t('application_form.steps.personal_info.section_title') }}</h3>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="fullname"><i class="fa-solid fa-user"></i> Full Name <span class="req">*</span></label>
-                    <input type="text" id="fullname" v-model="form.fullname" placeholder="John Doe" required />
+                    <label for="fullname"><i class="fa-solid fa-user"></i> {{ t('application_form.steps.personal_info.fullname.label') }} <span class="req">*</span></label>
+                    <input type="text" id="fullname" v-model="form.fullname" :placeholder="t('application_form.steps.personal_info.fullname.placeholder')" required />
                   </div>
                   <div class="form-group">
-                    <label for="email"><i class="fa-solid fa-envelope"></i> Email Address <span class="req">*</span></label>
-                    <input type="email" id="email" v-model="form.email" placeholder="john@axonode.com" required />
+                    <label for="email"><i class="fa-solid fa-envelope"></i> {{ t('application_form.steps.personal_info.email.label') }} <span class="req">*</span></label>
+                    <input type="email" id="email" v-model="form.email" :placeholder="t('application_form.steps.personal_info.email.placeholder')" required />
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="contact"><i class="fa-solid fa-phone"></i> Primary Contact</label>
+                  <label for="contact"><i class="fa-solid fa-phone"></i> {{ t('application_form.steps.personal_info.contact.label') }}</label>
                   <div class="form-group-row">
                     <input
                       type="text"
                       id="contact"
                       v-model="form.contact_value"
-                      placeholder="Your Primary Contact"
+                      :placeholder="t('application_form.steps.personal_info.contact.placeholder')"
                       class="contact-input"
                     />
                     <select v-model="form.contact_type" class="contact-select">
-                      <option value="" disabled>Platform</option>
-                      <option value="discord">Discord</option>
-                      <option value="phone">Phone</option>
-                      <option value="instagram">Instagram</option>
-                      <option value="linkedin">LinkedIn</option>
+                      <option value="" disabled>{{ t('application_form.steps.personal_info.contact.platform_placeholder') }}</option>
+                      <option v-for="(_, key) in contactTypes" :key="key" :value="key">
+                        {{ t(`application_form.steps.personal_info.contact.types.${key}`) }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -69,24 +68,23 @@
 
               <!-- Step 2: Profile -->
               <div v-if="currentStep === 2" class="step-content">
-                <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> Your Profile</h3>
+                <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> {{ t('application_form.steps.profile.section_title') }}</h3>
                 <div class="form-group">
-                  <label>Primary Area of Interest <span class="req">*</span></label>
+                  <label>{{ t('application_form.steps.profile.main_interest.label') }} <span class="req">*</span></label>
                   <div class="grid-options">
                     <label v-for="area in interestAreas" :key="area.id"
                       class="option-card" :class="{ active: form.main_interest === area.id }">
                       <input type="radio" :value="area.id" v-model="form.main_interest" />
-                      <span>{{ area.label }}</span>
+                      <span>{{ t(`application_form.interest_areas.${area.id}.label`) }}</span>
                     </label>
                   </div>
                 </div>
 
-                <!-- "Other" free-text — value will replace main_interest in the payload -->
                 <div v-if="selectedInterest?.id === 'other'" class="form-group">
-                  <label>What are you interested in? <span class="req">*</span></label>
+                  <label>{{ t('application_form.steps.profile.other_interest.label') }} <span class="req">*</span></label>
                   <input
                     type="text"
-                    placeholder="Show us your passion!"
+                    :placeholder="t('application_form.steps.profile.other_interest.placeholder')"
                     v-model="form.other_interest"
                     required
                   />
@@ -94,12 +92,12 @@
 
                 <Transition name="fade-slide">
                   <div v-if="selectedInterest?.sub?.length" class="form-group mt-input">
-                    <label>Sub-Interests (Select all that apply) <span class="req">*</span></label>
+                    <label>{{ t('application_form.steps.profile.sub_interest.label') }} <span class="req">*</span></label>
                     <div class="grid-options">
                       <label v-for="sub in selectedInterest.sub" :key="sub.id"
                         class="option-card" :class="{ active: form.sub_interest.includes(sub.id) }">
                         <input type="checkbox" :value="sub.id" v-model="form.sub_interest" />
-                        <span>{{ sub.label }}</span>
+                        <span>{{ t(`application_form.interest_areas.${selectedInterest.id}.sub.${sub.id}`) }}</span>
                       </label>
                     </div>
                   </div>
@@ -107,22 +105,20 @@
 
                 <div class="form-row mt-input">
                   <div class="form-group">
-                    <label>English Proficiency</label>
+                    <label>{{ t('application_form.steps.profile.english_level.label') }}</label>
                     <select v-model="form.english_level" required>
-                      <option value="" disabled>Select Level</option>
-                      <option value="A1-A2">Beginner (A1-A2)</option>
-                      <option value="B1-B2">Intermediate (B1-B2)</option>
-                      <option value="C1">Advanced (C1)</option>
-                      <option value="C2">Fluent / Native (C2)</option>
+                      <option value="" disabled>{{ t('application_form.steps.profile.english_level.placeholder') }}</option>
+                      <option v-for="(_, key) in englishLevels" :key="key" :value="englishLevels[key].value">
+                        {{ t(`application_form.steps.profile.english_level.levels.${key}`) }}
+                      </option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Experience Level</label>
+                    <label>{{ t('application_form.steps.profile.experience_level.label') }}</label>
                     <select v-model="form.experience_level" required>
-                      <option value="newbie">Beginner</option>
-                      <option value="junior">Junior</option>
-                      <option value="mid">Mid-Level</option>
-                      <option value="senior">Senior</option>
+                      <option v-for="(_, key) in experienceLevels" :key="key" :value="key">
+                        {{ t(`application_form.steps.profile.experience_level.levels.${key}`) }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -130,21 +126,21 @@
 
               <!-- Step 3: Final -->
               <div v-if="currentStep === 3" class="step-content">
-                <h3 class="section-title"><i class="fa-solid fa-rocket"></i> Final Details</h3>
+                <h3 class="section-title"><i class="fa-solid fa-rocket"></i> {{ t('application_form.steps.final.section_title') }}</h3>
                 <div class="form-group">
-                  <label>Weekly Availability (Hours)</label>
-                  <input type="number" v-model="form.availability" placeholder="10" min="1" max="100" required />
+                  <label>{{ t('application_form.steps.final.availability.label') }}</label>
+                  <input type="number" v-model="form.availability" :placeholder="t('application_form.steps.final.availability.placeholder')" min="1" max="100" required />
                 </div>
                 <div class="form-group">
-                  <label for="reason">What motivates you to join Axonode? <span class="req">*</span></label>
-                  <textarea id="reason" v-model="form.reason" rows="5" placeholder="Tell us about your passion..." required></textarea>
+                  <label for="reason">{{ t('application_form.steps.final.reason.label') }} <span class="req">*</span></label>
+                  <textarea id="reason" v-model="form.reason" rows="5" :placeholder="t('application_form.steps.final.reason.placeholder')" required></textarea>
                 </div>
               </div>
 
               <div class="form-footer">
-                <button v-if="currentStep > 1" type="button" @click="currentStep--" class="back-btn">Back</button>
+                <button v-if="currentStep > 1" type="button" @click="currentStep--" class="back-btn">{{ t('application_form.buttons.back') }}</button>
                 <button type="submit" class="submit-btn" :disabled="isSubmitting">
-                  <span>{{ currentStep === 3 ? (isSubmitting ? 'Sending...' : 'Submit Application') : 'Next Step' }}</span>
+                  <span>{{ currentStep === 3 ? (isSubmitting ? t('application_form.buttons.submitting') : t('application_form.buttons.submit')) : t('application_form.buttons.next') }}</span>
                   <i v-if="!isSubmitting" class="fa-solid" :class="currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'"></i>
                 </button>
               </div>
@@ -163,9 +159,12 @@
 <script setup lang="ts">
 import { ref, reactive, computed, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/InfoCard.vue";
 import { submitApplication, admin } from "../libs/AxonConnector";
+
+const { t } = useI18n();
 
 type ContactType = 'phone' | 'instagram' | 'discord' | 'telegram' | 'linkedin' | '';
 type ExperienceLevel = 'newbie' | 'junior' | 'mid' | 'senior';
@@ -182,7 +181,7 @@ interface AppForm {
   reason: string;
   main_interest: string;
   sub_interest: string[];
-  other_interest: string;  
+  other_interest: string;
   invite_token: string | null;
 }
 
@@ -209,45 +208,67 @@ const form = reactive<AppForm>({
   invite_token: null,
 });
 
+// Lookup maps used to drive <option> rendering
+const contactTypes: Record<string, null> = {
+  discord: null,
+  phone: null,
+  instagram: null,
+  linkedin: null,
+};
+
+const englishLevels: Record<string, { value: EnglishLevel }> = {
+  a1_a2: { value: "A1-A2" },
+  b1_b2: { value: "B1-B2" },
+  c1:    { value: "C1" },
+  c2:    { value: "C2" },
+};
+
+const experienceLevels: Record<string, null> = {
+  newbie: null,
+  junior: null,
+  mid:    null,
+  senior: null,
+};
+
 const interestAreas = [
   {
-    id: "technology", label: "Technology",
+    id: "technology",
     sub: [
-      { id: "frontend", label: "Frontend Development" },
-      { id: "backend", label: "Backend Development" },
-      { id: "ai", label: "AI / Machine Learning" },
-      { id: "cybersecurity", label: "Cybersecurity" },
-      { id: "gamedev", label: "Game Development" },
+      { id: "frontend" },
+      { id: "backend" },
+      { id: "ai" },
+      { id: "cybersecurity" },
+      { id: "gamedev" },
     ],
   },
   {
-    id: "design", label: "Design",
+    id: "design",
     sub: [
-      { id: "uiux", label: "UI/UX Design" },
-      { id: "graphic", label: "Graphic Design" },
-      { id: "3d", label: "3D Modeling" },
-      { id: "motion", label: "Motion Design" },
+      { id: "uiux" },
+      { id: "graphic" },
+      { id: "3d" },
+      { id: "motion" },
     ],
   },
   {
-    id: "business", label: "Business & Strategy",
+    id: "business",
     sub: [
-      { id: "startup", label: "Startup Building" },
-      { id: "marketing", label: "Marketing" },
-      { id: "sales", label: "Sales" },
-      { id: "product", label: "Product Management" },
+      { id: "startup" },
+      { id: "marketing" },
+      { id: "sales" },
+      { id: "product" },
     ],
   },
   {
-    id: "creative", label: "Creative Arts",
+    id: "creative",
     sub: [
-      { id: "music", label: "Music Production" },
-      { id: "writing", label: "Writing" },
-      { id: "film", label: "Film & Video" },
-      { id: "content", label: "Content Creation" },
+      { id: "music" },
+      { id: "writing" },
+      { id: "film" },
+      { id: "content" },
     ],
   },
-  { id: "other", label: "Other", sub: [] },
+  { id: "other", sub: [] },
 ];
 
 onMounted(async () => {
@@ -278,12 +299,11 @@ function handleNextStep() {
   if (currentStep.value < 3) {
     if (currentStep.value === 2) {
       if (!form.main_interest) {
-        alert("Please select an area of interest.");
+        alert(t('application_form.validation.select_interest'));
         return;
       }
-     
       if (form.main_interest === 'other' && !form.other_interest.trim()) {
-        alert("Please describe your interest.");
+        alert(t('application_form.validation.describe_interest'));
         return;
       }
     }
@@ -295,12 +315,12 @@ function handleNextStep() {
 
 const submitForm = async () => {
   if (!form.main_interest) {
-    alert("Please select a main interest.");
+    alert(t('application_form.validation.select_main_interest'));
     return;
   }
 
   if (selectedInterest.value?.sub?.length && form.sub_interest.length === 0) {
-    alert("Please select at least one sub-interest.");
+    alert(t('application_form.validation.select_sub_interest'));
     return;
   }
 
@@ -320,7 +340,7 @@ const submitForm = async () => {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error("Error submitting application:", error);
-    alert("Something went wrong. Please try again.\nError: " + message);
+    alert(t('application_form.validation.generic_error', { error: message }));
   } finally {
     isSubmitting.value = false;
   }

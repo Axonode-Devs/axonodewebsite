@@ -57,10 +57,10 @@
       },
       "entrepreneurs": {
         "title": "Girişimciler",
-        "text": "Komünitemizde aynı fikirdeki insanlar ile tanışıp anlamlı bağlantılar kurun!"
+        "text": "Komünitemizde aynı fikirdeki insanlar ile tanışıp anlamlı bağlantılar kurun ve inovatif projelere imza atın!"
       },
       "other": {
-        "title": "Ve Kim Bilir Başka Neler?",
+        "title": "Kim Bilir Başka Neler?",
         "text": "Ne hakkında tutkuluysan, bize katıl ve yaratıcı ruhlardan oluşan komünitemize kendi rengini kat!"
       }
     }
@@ -68,7 +68,7 @@
   "about_us": {
     "header": {
       "eyebrow": "Keşfet",
-      "title": "Bizim:"
+      "title": "Bizim"
     },
     "vision": {
       "title": "Vizyonumuz",
@@ -98,4 +98,5 @@
         "sending": "Gönderiliyor.."
     }
   }
+
 }

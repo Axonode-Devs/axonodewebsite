@@ -79,23 +79,161 @@
       "description": "To enhance professional growth by simplifying the way people connect. At Axonode, we connect the subjects of career and giving the people a network they don't have to worry about, making business networking intuitive and accessible. By creating a global ecosystem for voluntary project participation, we give every developer, designer, and entrepreneur a platform to contribute their skills and build their portfolio."
     }
   },
-  "contact":{
-    "header":{
-        "title": "Lets Build",
-        "gradient": "Something Great",
-        "description": "Have an idea or want to join the Axonode? Drop us a line. We are always looking for new perspectives."
+  "contact": {
+    "header": {
+      "title": "Lets Build",
+      "gradient": "Something Great",
+      "description": "Have an idea or want to join the Axonode? Drop us a line. We are always looking for new perspectives."
     },
-    "success":{
-        "sent": "Message Sent!",
-        "thanks": "Thanks for reaching out. We'll get back to you soon.",
-        "another": "Send Another?"
+    "success": {
+      "sent": "Message Sent!",
+      "thanks": "Thanks for reaching out. We'll get back to you soon.",
+      "another": "Send Another?"
     },
 
-    "buttons":{
-        "name" : "Name",
-        "message": "Message",
-        "send": "Send Message",
-        "sending": "Sending.."
+    "buttons": {
+      "name": "Name",
+      "message": "Message",
+      "send": "Send Message",
+      "sending": "Sending.."
+    }
+  },
+
+  "application_form": {
+    "nav": {
+      "back_to_home": "Back to Home"
+    },
+    "success": {
+      "title": "Application",
+      "title_highlight": "Received!",
+      "message": "Thank you for applying to Axonode. Our team will review your profile and reach out via email or Discord soon."
+    },
+    "header": {
+      "title": "Join the",
+      "title_highlight": "Team",
+      "invited_badge": "✦ Personal Invitation"
+    },
+    "steps": {
+      "personal_info": {
+        "section_title": "Personal Information",
+        "fullname": {
+          "label": "Full Name",
+          "placeholder": "John Doe"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "john@axonode.com"
+        },
+        "contact": {
+          "label": "Primary Contact",
+          "placeholder": "Your Primary Contact",
+          "platform_placeholder": "Platform",
+          "types": {
+            "discord": "Discord",
+            "phone": "Phone",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn"
+          }
+        }
+      },
+      "profile": {
+        "section_title": "Your Profile",
+        "main_interest": {
+          "label": "Primary Area of Interest"
+        },
+        "other_interest": {
+          "label": "What are you interested in?",
+          "placeholder": "Show us your passion!"
+        },
+        "sub_interest": {
+          "label": "Sub-Interests (Select all that apply)"
+        },
+        "english_level": {
+          "label": "English Proficiency",
+          "placeholder": "Select Level",
+          "levels": {
+            "a1_a2": "Beginner (A1-A2)",
+            "b1_b2": "Intermediate (B1-B2)",
+            "c1": "Advanced (C1)",
+            "c2": "Fluent / Native (C2)"
+          }
+        },
+        "experience_level": {
+          "label": "Experience Level",
+          "levels": {
+            "newbie": "Beginner",
+            "junior": "Junior",
+            "mid": "Mid-Level",
+            "senior": "Senior"
+          }
+        }
+      },
+      "final": {
+        "section_title": "Final Details",
+        "availability": {
+          "label": "Weekly Availability (Hours)",
+          "placeholder": "10"
+        },
+        "reason": {
+          "label": "What motivates you to join Axonode?",
+          "placeholder": "Tell us about your passion..."
+        }
+      }
+    },
+    "interest_areas": {
+      "technology": {
+        "label": "Technology",
+        "sub": {
+          "frontend": "Frontend Development",
+          "backend": "Backend Development",
+          "ai": "AI / Machine Learning",
+          "cybersecurity": "Cybersecurity",
+          "gamedev": "Game Development"
+        }
+      },
+      "design": {
+        "label": "Design",
+        "sub": {
+          "uiux": "UI/UX Design",
+          "graphic": "Graphic Design",
+          "3d": "3D Modeling",
+          "motion": "Motion Design"
+        }
+      },
+      "business": {
+        "label": "Business & Strategy",
+        "sub": {
+          "startup": "Startup Building",
+          "marketing": "Marketing",
+          "sales": "Sales",
+          "product": "Product Management"
+        }
+      },
+      "creative": {
+        "label": "Creative Arts",
+        "sub": {
+          "music": "Music Production",
+          "writing": "Writing",
+          "film": "Film & Video",
+          "content": "Content Creation"
+        }
+      },
+      "other": {
+        "label": "Other"
+      }
+    },
+    "buttons": {
+      "back": "Back",
+      "next": "Next Step",
+      "submit": "Submit Application",
+      "submitting": "Sending..."
+    },
+    "validation": {
+      "select_interest": "Please select an area of interest.",
+      "describe_interest": "Please describe your interest.",
+      "select_main_interest": "Please select a main interest.",
+      "select_sub_interest": "Please select at least one sub-interest.",
+      "generic_error": "Something went wrong. Please try again.\nError: {error}"
     }
   }
 }
