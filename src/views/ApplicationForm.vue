@@ -233,6 +233,8 @@ const interestAreas = [
       { id: "frontend" },
       { id: "backend" },
       { id: "ai" },
+      { id: "system_design" },
+      { id: "embedded" },
       { id: "cybersecurity" },
       { id: "gamedev" },
     ],

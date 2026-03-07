@@ -10,38 +10,34 @@
     <div class="info-content">
       <div class="header">
         <i class="fa-regular fa-lightbulb icon-glow"></i>
-        <h3>Before You Apply</h3>
+        <h3>{{ $t('info_card.header.title') }}</h3>
       </div>
       <ul class="info-list">
         <li>
           <div class="icon-box"><i class="fa-solid fa-users"></i></div>
           <div class="text">
-            <strong>What is this Community?</strong>
-            <span>
-              We’re building a talented, innovative team of creators, builders, and thinkers.
-              Whether you're into tech, design, strategy, or creative work collaboration and growth
-              are at the center of what we do.
-            </span>
+            <strong>{{ $t('info_card.items.community.title') }}</strong>
+            <span>{{ $t('info_card.items.community.description') }}</span>
           </div>
         </li>
         <li>
           <div class="icon-box"><i class="fa-solid fa-user-check"></i></div>
           <div class="text">
-            <strong>Application Review Process</strong>
-            <span>Every application is carefully reviewed. We look at mindset, commitment, and alignment not just experience level.</span>
+            <strong>{{ $t('info_card.items.review.title') }}</strong>
+            <span>{{ $t('info_card.items.review.description') }}</span>
           </div>
         </li>
         <li>
           <div class="icon-box"><i class="fa-solid fa-rocket"></i></div>
           <div class="text">
-            <strong>What Happens Next</strong>
-            <span>If your application is accepted, you’ll receive an email with the next steps. Please make sure your contact information is correct and check your inbox regularly.</span>
+            <strong>{{ $t('info_card.items.next_steps.title') }}</strong>
+            <span>{{ $t('info_card.items.next_steps.description') }}</span>
           </div>
         </li>
       </ul>
 
       <div class="mini-footer">
-        <span>See you on the inside 🚀</span>
+        <span>{{ $t('info_card.footer') }}</span>
       </div>
     </div>
   </div>

@@ -4,14 +4,14 @@
     
     <div class="content">
       <h1 class="error-code">404</h1>
-      <h2 class="error-title">Page Not Found</h2>
+      <h2 class="error-title">{{ $t('not_found.title') }}</h2>
       <p class="error-desc">
-        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+        {{ $t('not_found.desc') }}
       </p>
       
       <a href="/" class="home-btn">
         <i class="fa-solid fa-arrow-left"></i>
-        <span>Back to Homepage</span>
+        <span>{{ $t('not_found.back') }}</span>
       </a>
     </div>
   </div>

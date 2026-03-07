@@ -1,6 +1,6 @@
 {
   "hero": {
-    "welcome": "Welcome to Axonode",
+    "welcome": "Welcome to Axonode!",
     "background_title": "CREATE",
     "headline": {
       "main": "Meet With",
@@ -84,7 +84,7 @@
     "header": {
       "title": "Lets Build",
       "gradient": "Something Great",
-      "description": "Have an idea or want to join the Axonode? Drop us a line. We are always looking for new perspectives."
+      "description": "Have an idea or suggestion about Axonode? Drop us a line. We are always looking for new perspectives."
     },
     "success": {
       "sent": "Message Sent!",
@@ -185,6 +185,8 @@
       "technology": {
         "label": "Technology",
         "sub": {
+          "system_design":"System Design",
+          "embedded":"Embeded Systems",
           "frontend": "Frontend Development",
           "backend": "Backend Development",
           "ai": "AI / Machine Learning",
@@ -236,5 +238,53 @@
       "select_sub_interest": "Please select at least one sub-interest.",
       "generic_error": "Something went wrong. Please try again.\nError: {error}"
     }
+  },
+  "info_card": {
+    "header": {
+      "title": "Before You Apply"
+    },
+    "items": {
+      "community": {
+        "title": "What is this Community?",
+        "description": "We're building a talented, innovative team of creators, builders, and thinkers. Whether you're into tech, design, strategy, or creative work collaboration and growth are at the center of what we do."
+      },
+      "review": {
+        "title": "Application Review Process",
+        "description": "Every application is carefully reviewed. We look at mindset, commitment, and alignment not just experience level."
+      },
+      "next_steps": {
+        "title": "What Happens Next",
+        "description": "If your application is accepted, you'll receive an email with the next steps. Please make sure your contact information is correct and check your inbox regularly."
+      }
+    },
+    "footer": "See you on the inside 🚀"
+  },
+  "invited": {
+    "badge": "✦ Personal Invitation",
+    "title": "{userName} you've been",
+    "title_highlight_invited": "invited",
+    "title_highlight_to": "to",
+    "title_brand": "Axonode",
+    "subtitle": "This isn't a mass invite — someone on our team specifically chose {userName} for this.",
+    "why_section": {
+      "title": "Why {userName}?",
+      "paragraph_1": "Someone on our team came across your profile and didn't just scroll past, they stopped, took notice, and decided {userName} was worth reaching out to directly. That doesn't happen often.",
+      "paragraph_2": "When you complete your profile, your application will be marked {invited} in our system. That means no waiting in the queue, no being one of thousands — you'll be reviewed as someone who was hand-picked, because you were.",
+      "paragraph_2_invited": "\"invited\"",
+      "paragraph_3": "{userName}, this is your moment. Don't let someone else's confidence in you go to waste."
+    },
+    "cta": {
+      "claim": "Claim Your Spot, {userName}",
+      "checking": "Checking...",
+      "learn_more": "Learn More About Axonode"
+    },
+    "error": {
+      "invalid_invite": "This invitation link is invalid or has expired."
+    }
+  },
+  "not_found":{
+    "title": "Not Found??",
+    "desc": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    "back": "Go Back"
   }
 }

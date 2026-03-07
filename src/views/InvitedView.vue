@@ -1,63 +1,44 @@
 <template>
   <div class="invited-container">
     <div class="content-wrapper">
-      <!-- Main Header -->
       <div class="header-section">
-        <div class="badge">✦ Personal Invitation</div>
+        <div class="badge">{{ $t('invited.badge') }}</div>
         <h1 class="main-title">
-          {{ userName }}, you've been
-          <span class="gradient-text">invited</span>
-          to <span class="gradient-text">Axonode</span>
+          {{ userName }}, {{ $t('invited.title') }}
+          <span class="gradient-text">{{ $t('invited.title_highlight_invited') }}</span>
+          {{ $t('invited.title_highlight_to') }} <span class="gradient-text">{{ $t('invited.title_brand') }}</span>
         </h1>
-        <p class="subtitle">
-          This isn't a mass invite someone on our team specifically chose
-          <strong>You</strong> for this.
-        </p>
+        <p class="subtitle" v-html="$t('invited.subtitle', { userName: `<strong>${userName}</strong>` })"></p>
       </div>
-      <!-- Description Section -->
+
       <div class="description-section">
-        <h2>Why {{ userName }}?</h2>
+        <h2>{{ $t('invited.why_section.title', { userName }) }}</h2>
         <div class="description-content">
-          <p>
-            Someone on our team came across your profile and didn't just scroll
-            past, they stopped, took notice, and decided
-            <strong>{{ userName }}</strong> was worth reaching out to directly.
-            That doesn't happen often.
-          </p>
-          <p>
-            When you complete your profile, your application will be marked
-            <strong>"invited"</strong> in our system. That means no waiting in
-            the queue, no being one of thousands you'll be reviewed as someone
-            who was hand-picked, because you were.
-          </p>
-          <p>
-            {{ userName }}, this is your moment. Don't let someone else's
-            confidence in you go to waste.
-          </p>
+          <p v-html="$t('invited.why_section.paragraph_1', { userName: `<strong>${userName}</strong>` })"></p>
+          <p v-html="$t('invited.why_section.paragraph_2', { invited: `<strong>${$t('invited.why_section.paragraph_2_invited')}</strong>` })"></p>
+          <p v-html="$t('invited.why_section.paragraph_3', { userName: `<strong>${userName}</strong>` })"></p>
         </div>
       </div>
 
-      <!-- CTA Buttons -->
       <div class="cta-section">
         <button
           @click="goToApply"
           class="btn btn-primary"
           :disabled="!isValid || loading"
         >
-          {{ loading ? "Checking..." : `Claim Your Spot, ${userName}` }}
+          {{ loading ? $t('invited.cta.checking') : $t('invited.cta.claim', { userName }) }}
         </button>
 
         <router-link to="/" class="btn btn-secondary">
-          Learn More About Axonode
+          {{ $t('invited.cta.learn_more') }}
         </router-link>
       </div>
 
       <p v-if="!isValid && !loading" class="error-message">
-        This invitation link is invalid or has expired.
+        {{ $t('invited.error.invalid_invite') }}
       </p>
     </div>
 
-    <!-- Decorative Elements -->
     <div class="decoration decoration-1"></div>
     <div class="decoration decoration-2"></div>
     <div class="decoration decoration-3"></div>
@@ -104,7 +85,7 @@ onMounted(async () => {
     loading.value = false;
     console.log("Final isValid state:", isValid.value);
     if(isValid === false){
-       router.push({ name: 'Home', query: { error: 'invalid-invite' } });
+       //router.push({ name: 'Home', query: { error: 'invalid-invite' } });
     }
   }
 });

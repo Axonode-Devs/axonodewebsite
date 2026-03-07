@@ -1,6 +1,6 @@
 {
   "hero": {
-    "welcome": "Hoş Geldiniz!",
+    "welcome": "Axonode'a Hoş Geldiniz!",
     "background_title": "OLUŞTUR",
     "headline": {
       "main": "Axonode ile",
@@ -68,7 +68,7 @@
   },
   "about_us": {
     "header": {
-      "eyebrow": "Keşfet",
+      "eyebrow": "Daha iyi bir Gelecek için",
       "title": "Bizim"
     },
     "vision": {
@@ -80,24 +80,210 @@
       "description": "Profesyonel gelişimi desteklemek ve insanların bağlantı kurmasını basitleştirmek. Biz, Axonode'da, kariyer ve insanlara üzerine uğraşmaları gerekmeyen bir network verme konseptlerini birleştiriyoruz; kariyer bağlantıları kurmayı daha erişilebilir bir hale getiriyoruz. Gönüllü proje katılımları ile global bir ekosistem oluşturarak her yazılımcı, tasarımcı ve girişimciye becerilerini paylaşabileceği ve portfolyolarını büyütebilecekleri bir platform sunuyoruz."
     }
   },
-  "contact":{
-    "header":{
-        "title": "Birlikte",
-        "gradient": "İnşa Edelim",
-        "description": "Axonode için bir önerin/fikrin mi var? Bize ulaş, her zaman yeni perspektiflere açığız!"
+  "contact": {
+    "header": {
+      "title": "Birlikte",
+      "gradient": "İnşa Edelim",
+      "description": "Axonode için bir önerin/fikrin mi var? Bize ulaş, her zaman yeni perspektiflere açığız!"
     },
-    "success":{
-        "sent": "Mesaj Gönderildi!",
-        "thanks": "Bize ulaştığınız için teşekkür ederiz, En kısa sürede geri dönüş yapacağız.",
-        "another": "Başka Bir Mesaj Gönder?"
+    "success": {
+      "sent": "Mesaj Gönderildi!",
+      "thanks": "Bize ulaştığınız için teşekkür ederiz, En kısa sürede geri dönüş yapacağız.",
+      "another": "Başka Bir Mesaj Gönder?"
     },
 
-    "buttons":{
-        "name" : "İsim",
-        "message": "Mesaj",
-        "send": "Mesaj Gönder",
-        "sending": "Gönderiliyor.."
+    "buttons": {
+      "name": "İsim",
+      "message": "Mesaj",
+      "send": "Mesaj Gönder",
+      "sending": "Gönderiliyor.."
     }
+  },
+  "application_form": {
+    "nav": {
+      "back_to_home": "Anasayfaya Geri Dön"
+    },
+    "success": {
+      "title": "Başvuru",
+      "title_highlight": "İletildi!",
+      "message": "Axonode'a başvurduğunuz için teşekkür ederiz. Ekibimiz başvurunuzu değerlendirip en kısa sürede Gmail ya da Discord ile geri dönüş yapacaktır."
+    },
+    "header": {
+      "title": "Komünitemize",
+      "title_highlight": "Katıl",
+      "invited_badge": "✦ Şahsa Münasır davetname"
+    },
+    "steps": {
+      "personal_info": {
+        "section_title": "Kişisel Bilgi",
+        "fullname": {
+          "label": "Ad ve Soyad",
+          "placeholder": "Celal Şengör"
+        },
+        "email": {
+          "label": "E-postanız",
+          "placeholder": "celal{'@'}axonode.com"
+        },
+        "contact": {
+          "label": "Ana İletişim",
+          "placeholder": "İletişim yolunuz",
+          "platform_placeholder": "Platform",
+          "types": {
+            "discord": "Discord",
+            "phone": "Telefone",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn"
+          }
+        }
+      },
+      "profile": {
+        "section_title": "Profiliniz",
+        "main_interest": {
+          "label": "Ana İlgi/Beceri Alanınız"
+        },
+        "other_interest": {
+          "label": "İlgi Alanınız Nedir?",
+          "placeholder": "Tutkunuzu Gösterin!"
+        },
+        "sub_interest": {
+          "label": "Alt-İlgi Alanları (Birden fazla seçebilirsiniz)"
+        },
+        "english_level": {
+          "label": "İngilizce Seviyeniz",
+          "placeholder": "Seviye Seçiniz",
+          "levels": {
+            "a1_a2": "Başlangıç (A1-A2)",
+            "b1_b2": "Orta Seviye (B1-B2)",
+            "c1": "Gelişmiş (C1)",
+            "c2": "Akıcı / Yerel (C2)"
+          }
+        },
+        "experience_level": {
+          "label": "Deneyim Düzeyi",
+          "levels": {
+            "newbie": "Başlangıç",
+            "junior": "Junior",
+            "mid": "Orta Derece",
+            "senior": "Kıdemli"
+          }
+        }
+      },
+      "final": {
+        "section_title": "Son Detaylar",
+        "availability": {
+          "label": "Haftalık Uygunluk (Saat)",
+          "placeholder": "10"
+        },
+        "reason": {
+          "label": "Axonode'a katılmakta sizi ne motive ediyor?",
+          "placeholder": "Geçmişinizi %100 Yargılamayacağımıza %75 Eminiz..."
+        }
+      }
+    },
+    "interest_areas": {
+      "technology": {
+        "label": "Teknoloji",
+        "sub": {
+          "system_design":"Sistem Tasarımı",
+          "embedded":"Gömülü Sistemler",
+          "frontend": "Frontend Geliştirme",
+          "backend": "Backend Geliştirme",
+          "ai": "AI / Makine Öğrenme",
+          "cybersecurity": "Siber Güvenlik",
+          "gamedev": "Oyun Geliştirme"
+        }
+      },
+      "design": {
+        "label": "Tasarım",
+        "sub": {
+          "uiux": "UI/UX Tasarımı",
+          "graphic": "Grafik Tasarımı",
+          "3d": "3D Modelleme",
+          "motion": "Hareketli Grafik Tasarımı"
+        }
+      },
+      "business": {
+        "label": "İşletme & Strateji",
+        "sub": {
+          "startup": "Girişim",
+          "marketing": "Pazarlama",
+          "sales": "Satış",
+          "product": "Ürün Yönetimi"
+        }
+      },
+      "creative": {
+        "label": "Yaratıcı Sanatlar",
+        "sub": {
+          "music": "Müzik prodüksiyonu",
+          "writing": "Yazarlık",
+          "film": "Film & Video",
+          "content": "İçerik Üretimi"
+        }
+      },
+      "other": {
+        "label": "Diğer"
+      }
+    },
+    "buttons": {
+      "back": "Geri",
+      "next": "Sıradaki Adım",
+      "submit": "Başvuruyu Gönder",
+      "submitting": "Gönderiliyor..."
+    },
+    "validation": {
+      "select_interest": "Lütfen bir ilgi alanı seçiniz.",
+      "describe_interest": "İlgi alanınızı açıklayınız.",
+      "select_main_interest": "Lütfen ana ilgi alanınızı seçiniz.",
+      "select_sub_interest": "En az bir alt-ilgi alanı seçiniz.",
+      "generic_error": "İkinci kuleye vurdular. Lütfen sonra tekrar deneyiniz.\nError: {error}"
+    }
+  },
+  "info_card": {
+    "header": {
+      "title": "Başvurmadan Önce"
+    },
+    "items": {
+      "community": {
+        "title": "Komünitemiz Neyi Amaçlar?",
+        "description": "Üretken ve düşünürlerden oluşan inovatif bir ekip kuruyoruz. Teknoloji, tasarım ya da neye ilgi duyuyorsanız duyun önceliğimiz işbirliği ve gelişimdir."
+      },
+      "review": {
+        "title": "Başvuru Değerlendirme Süreci",
+        "description": "Her başvuru titizlikle değerlendirilir. Başvuranların sadece deneyimine değil; kafa yapısına, ekip uyumuna vesürekliliğine bakıyoruz."
+      },
+      "next_steps": {
+        "title": "Sonraki Adımlar",
+        "description": "Eğer başvurunuz kabul edilirse, sıradaki adımlar hakkında bir email alacaksınız. Lütfen iletişim bilgilerinizin doğru olduğundan emin olun ve düzenli olarak gelen kutunuzu kontrol ediniz."
+      }
+    },
+    "footer": "İçeride Görüşürüz 🚀"
+  },
+  "invited": {
+    "badge": "✦ Özel Davetname ✦",
+    "title": "{userName} Sen",
+    "title_highlight_invited": "Axonode'a",
+    "title_highlight_to": "Davet",
+    "title_brand": "Edildin",
+    "subtitle": "Bu toplu bir Davet değil, Ekibimiz içinden biri spesifik olarak seni seçti",
+    "why_section": {
+      "title": "Neden Seni Seçtik",
+      "paragraph_1": "Ekibimizden biri seni gördü ve etkilendi, dedi ki '{userName} gerçekten direkt iletişime geçmeye değer biri', bu sık yaşanan bir durum değil",
+      "paragraph_2": "Başvurunu Tamamladığında, sistemimiz üzerinde {invited} olarak görüşleceksin. Sen özenle seçilmiş biri gibi değerlendiliceksin, çünkü öylesin.",
+      "paragraph_2_invited": "\"Davet Edildi\"",
+      "paragraph_3": "{userName}, İşte bu senin anın. Birilerinin sana olan inancının boşa gitmesine izin verme!"
+    },
+    "cta": {
+      "claim": "Yerini Kap, {userName}!",
+      "checking": "Kontrol Ediliyor..",
+      "learn_more": "Axonode hakkında daha fazla öğren"
+    },
+    "error": {
+      "invalid_invite": "Bu Davet Geçersiz."
+    }
+  },
+  "not_found":{
+    "title": "Sayfa Backrooms'da??",
+    "desc": "Aradığınız sayfa silinmiş, değiştirilmiş ya da geçici süreliğine devre dışı bırakılmış olabilir.",
+    "back": "Anasayfaya Geri Dön"
   }
-
 }
