@@ -15,8 +15,8 @@
       </ul>
 
       <div class="nav-actions desktop-actions">
-        <button class="btn-text" @click="handleLoginClick">
-          {{ isLoggedIn ? 'Dashboard' : 'Login' }}
+        <button v-if="isLoggedIn"class="btn-text" @click="handleLoginClick">
+          Dashboard
         </button>
         <LangSwitcher />
         <button class="btn-gradient" @click="goToApply">{{ t('navbar.joinUs') }}</button>
