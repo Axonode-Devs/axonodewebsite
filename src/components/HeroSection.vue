@@ -37,7 +37,7 @@
             </div>
           </div>
 
-          <div class="video-placeholder-card">
+          <div v-if="!isMobile" class="video-placeholder-card">
             <video
               ref="videoRef"
               src="/video.mp4"
@@ -72,13 +72,11 @@ import { useRouter } from 'vue-router';
 const NAV_OFFSET = 80; 
 
 const router = useRouter();
-const heroSection = ref<HTMLElement | null>(null);
+
 const videoRef = ref<HTMLVideoElement | null>(null);
 const isPlaying = ref(true);
 const isMuted = ref(true);
 const isMobile = ref(false);
-
-// ─── Navigation ──────────────────────────────────────────────────────────────
 
 const goToApply = () => router.push('/join');
 
