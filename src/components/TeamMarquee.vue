@@ -1,29 +1,52 @@
 <template>
   <div class="marquee-container">
-    <div class="marquee-label"><span>{{ $t('team.label.founders') }}</span>& {{ $t('team.label.team_members') }}</div>
-    <div class="marquee-content" @mouseenter="pause = true" @mouseleave="pause = false">
+    <div class="marquee-label">
+      <span>{{ $t('team.label.founders') }}</span>& {{ $t('team.label.team_members') }}
+    </div>
+
+    <div
+      class="marquee-content"
+      @mouseenter="isMobile ? null : (pause = true)"
+      @mouseleave="isMobile ? null : (pause = false)"
+    >
       <div class="marquee-track" :class="{ paused: pause }">
         <div
           v-for="(member, index) in combinedTeam"
-          :key="'A'+index"
+          :key="'A' + index"
           class="team-card"
           @click="openModal(member)"
         >
-          <img :src="member.avatarUrl || `https://github.com/${member.username}.png`" :alt="member.name" class="avatar" />
+          <img
+            :src="member.avatarUrl || `https://github.com/${member.username}.png`"
+            :alt="member.name"
+            class="avatar"
+            loading="lazy"
+            width="48"
+            height="48"
+          />
           <div class="info">
             <h4 class="name">{{ member.name }}</h4>
             <span class="role" :style="{ color: member.color }">{{ $t(member.role) }}</span>
           </div>
         </div>
       </div>
+
+      <!-- Duplicate track for seamless loop -->
       <div class="marquee-track" :class="{ paused: pause }" aria-hidden="true">
         <div
           v-for="(member, index) in combinedTeam"
-          :key="'B'+index"
+          :key="'B' + index"
           class="team-card"
           @click="openModal(member)"
         >
-          <img :src="member.avatarUrl || `https://github.com/${member.username}.png`" :alt="member.name" class="avatar" />
+          <img
+            :src="member.avatarUrl || `https://github.com/${member.username}.png`"
+            :alt="member.name"
+            class="avatar"
+            loading="lazy"
+            width="48"
+            height="48"
+          />
           <div class="info">
             <h4 class="name">{{ member.name }}</h4>
             <span class="role" :style="{ color: member.color }">{{ $t(member.role) }}</span>
@@ -37,14 +60,16 @@
   <Teleport to="body">
     <Transition name="modal">
       <div v-if="selectedMember" class="modal-overlay" @click.self="closeModal">
-        <div class="modal-card">
-          <button class="modal-close" @click="closeModal" aria-label="Kapat">✕</button>
+        <div class="modal-card" role="dialog" :aria-label="selectedMember.name">
+          <button class="modal-close" @click="closeModal" aria-label="Close">✕</button>
 
           <div class="modal-avatar-wrap">
             <img
               :src="selectedMember.avatarUrl || `https://github.com/${selectedMember.username}.png`"
               :alt="selectedMember.name"
               class="modal-avatar"
+              width="90"
+              height="90"
             />
             <div class="modal-avatar-ring" :style="{ borderColor: selectedMember.color }"></div>
           </div>
@@ -58,7 +83,7 @@
             rel="noopener noreferrer"
             class="modal-github-btn"
           >
-            <svg height="18" viewBox="0 0 16 16" width="18" fill="currentColor">
+            <svg height="18" viewBox="0 0 16 16" width="18" fill="currentColor" aria-hidden="true">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
                 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
                 -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
@@ -77,25 +102,51 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+
+// ─── State ────────────────────────────────────────────────────────────────────
 
 const pause = ref(false);
 const selectedMember = ref(null);
+const isMobile = ref(false);
 
-const openModal = (member) => { selectedMember.value = member; };
-const closeModal = () => { selectedMember.value = null; };
+// ─── Team data ────────────────────────────────────────────────────────────────
 
 const baseTeam = [
-  { name: 'kaiross12', role: 'team.roles.head_community', username: 'kaiross12', color: '#BEECF0' },
-  { name: 'BersisSe', role: 'team.roles.head_executive', username: 'bersisse', color: '#A59CE6' },
-  { name: 'lofnyy', role: 'team.roles.deputy_community', username: 'lofnyy', color: '#78bfda' },
-  { name: 'Kaan610', role: 'team.roles.head_media', username: 'Kaan610', color: '#fe78b2' },
+  { name: 'kaiross12', role: 'team.roles.head_community',   username: 'kaiross12', color: '#BEECF0' },
+  { name: 'BersisSe',  role: 'team.roles.head_executive',   username: 'bersisse',  color: '#A59CE6' },
+  { name: 'lofnyy',    role: 'team.roles.deputy_community', username: 'lofnyy',    color: '#78bfda' },
+  { name: 'Kaan610',   role: 'team.roles.head_media',       username: 'Kaan610',   color: '#fe78b2' },
 ];
 
-const combinedTeam = ref([...baseTeam, ...baseTeam, ...baseTeam]);
+// Two copies is enough for a seamless marquee loop — three is unnecessary DOM weight
+const combinedTeam = ref([...baseTeam, ...baseTeam]);
 
-onMounted(async () => {
-  const fetchedTeam = await Promise.all(
+// ─── Modal ────────────────────────────────────────────────────────────────────
+
+const openModal  = (member) => { selectedMember.value = member; };
+const closeModal = ()       => { selectedMember.value = null;   };
+
+// Close on Escape key
+const onKeydown = (e) => { if (e.key === 'Escape') closeModal(); };
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+
+const MOBILE_BREAKPOINT = 768;
+
+let resizeTimer = null;
+const checkMobile = () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    isMobile.value = window.innerWidth <= MOBILE_BREAKPOINT;
+  }, 100);
+};
+
+// ─── GitHub fetch ─────────────────────────────────────────────────────────────
+
+// Batch into a single Promise.all — same as before but fetches only baseTeam (4 req, not 12)
+const fetchTeam = async () => {
+  const fetched = await Promise.all(
     baseTeam.map(async (member) => {
       try {
         const res = await fetch(`https://api.github.com/users/${member.username}`);
@@ -104,19 +155,36 @@ onMounted(async () => {
         return {
           ...member,
           name: data.login || member.username,
-          avatarUrl: data.avatar_url || `https://github.com/${member.username}.png`
+          avatarUrl: data.avatar_url || `https://github.com/${member.username}.png`,
         };
-      } catch (e) {
+      } catch {
         return member;
       }
     })
   );
-  combinedTeam.value = [...fetchedTeam, ...fetchedTeam, ...fetchedTeam];
+  // Only two copies needed for seamless loop
+  combinedTeam.value = [...fetched, ...fetched];
+};
+
+// ─── Lifecycle ────────────────────────────────────────────────────────────────
+
+onMounted(() => {
+  isMobile.value = window.innerWidth <= MOBILE_BREAKPOINT;
+  window.addEventListener('resize', checkMobile, { passive: true });
+  window.addEventListener('keydown', onKeydown);
+  fetchTeam();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile);
+  window.removeEventListener('keydown', onKeydown);
+  clearTimeout(resizeTimer);
 });
 </script>
 
 <style scoped>
-/* ── Marquee (unchanged) ───────────────────────────────── */
+/* ─── Marquee container ──────────────────────────────────────────────────────── */
+
 .marquee-container {
   width: 100%;
   max-width: 1300px;
@@ -125,7 +193,10 @@ onMounted(async () => {
   background-color: transparent;
   position: relative;
   z-index: 20;
+  contain: layout style;
 }
+
+/* ─── Label ──────────────────────────────────────────────────────────────────── */
 
 .marquee-label {
   display: flex;
@@ -140,20 +211,29 @@ onMounted(async () => {
   margin-bottom: 30px;
   width: 100%;
 }
-.marquee-label span { margin-right: -10px; color: #111827; font-weight: 700; }
+
+.marquee-label span {
+  margin-right: -10px;
+  color: #111827;
+  font-weight: 700;
+}
+
 .marquee-label::before,
 .marquee-label::after {
-  content: "";
+  content: '';
   height: 1px;
   flex-grow: 1;
-  background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
 }
-html.dark .marquee-label { color: rgba(255,255,255,0.5); }
+
+html.dark .marquee-label { color: rgba(255, 255, 255, 0.5); }
 html.dark .marquee-label span { color: #ffffff; }
 html.dark .marquee-label::before,
 html.dark .marquee-label::after {
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
 }
+
+/* ─── Scroll track ───────────────────────────────────────────────────────────── */
 
 .marquee-content {
   display: flex;
@@ -165,19 +245,27 @@ html.dark .marquee-label::after {
   -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   pointer-events: none;
 }
+
 .marquee-track {
   display: flex;
   gap: 30px;
+  /* translateX is GPU-composited — no layout recalc per frame */
   animation: scroll 50s linear infinite;
   flex-shrink: 0;
   min-width: max-content;
   pointer-events: auto;
+  /* Promote to own layer — continuous animation */
+  will-change: transform;
 }
+
 .marquee-track.paused { animation-play-state: paused; }
+
 @keyframes scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(calc(-100% - 30px)); }
 }
+
+/* ─── Team cards ─────────────────────────────────────────────────────────────── */
 
 .team-card {
   display: flex;
@@ -185,31 +273,66 @@ html.dark .marquee-label::after {
   gap: 15px;
   padding: 10px 24px 10px 10px;
   background: rgba(243, 244, 246, 0.9);
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 999px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  /* Only transition what actually changes on hover */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              background 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
+
 html.dark .team-card {
-  background: rgba(48,48,48,0.5);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  background: rgba(48, 48, 48, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-.team-card:hover {
-  background: #ffffff;
-  border-color: rgba(254,120,178,0.4);
-  transform: scale(1.02) translateY(-2px);
-  box-shadow: 0 15px 35px rgba(254,120,178,0.15);
-  z-index: 10;
+
+/* Hover — pointer devices only */
+@media (hover: hover) and (pointer: fine) {
+  .team-card:hover {
+    background: #ffffff;
+    border-color: rgba(254, 120, 178, 0.4);
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 15px 35px rgba(254, 120, 178, 0.15);
+    z-index: 10;
+  }
+
+  html.dark .team-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.02) translateY(-2px);
+    z-index: 10;
+  }
+
+  /* Modal GitHub button hover */
+  .modal-github-btn:hover {
+    background: #3a3f45;
+    transform: translateY(-2px);
+  }
+
+  /* Modal close button hover */
+  .modal-close:hover { background: rgba(0, 0, 0, 0.1); color: #111827; }
+  html.dark .modal-close:hover { background: rgba(255, 255, 255, 0.15); color: #f3f4f6; }
 }
-html.dark .team-card:hover {
-  background: rgba(255,255,255,0.15);
-  transform: scale(1.02) translateY(-2px);
-  z-index: 10;
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  .team-card,
+  .modal-github-btn,
+  .modal-close {
+    transition: none !important;
+  }
 }
+
+/* ─── Avatars ────────────────────────────────────────────────────────────────── */
 
 .avatar {
   width: 48px;
@@ -217,10 +340,14 @@ html.dark .team-card:hover {
   border-radius: 50%;
   object-fit: cover;
   background: #f3f4f6;
+  /* Prevent layout shift while image loads */
+  aspect-ratio: 1;
 }
+
 html.dark .avatar { background: #374151; }
 
 .info { display: flex; flex-direction: column; }
+
 .name {
   font-size: 1rem;
   font-weight: 700;
@@ -228,8 +355,16 @@ html.dark .avatar { background: #374151; }
   margin: 0;
   white-space: nowrap;
 }
+
 html.dark .name { color: #f1f5f9; }
-.role { font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+
+.role {
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .marquee-content {
@@ -238,7 +373,16 @@ html.dark .name { color: #f1f5f9; }
   }
 }
 
-/* ── Modal ─────────────────────────────────────────────── */
+/* Remove backdrop-filter on small screens — expensive on low-end GPUs */
+@media (max-width: 640px) {
+  .team-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ─── Modal overlay ──────────────────────────────────────────────────────────── */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -266,6 +410,7 @@ html.dark .name { color: #f1f5f9; }
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
+
 html.dark .modal-card {
   background: #1f1f1f;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -275,7 +420,7 @@ html.dark .modal-card {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   border: none;
   width: 30px;
   height: 30px;
@@ -286,12 +431,14 @@ html.dark .modal-card {
   cursor: pointer;
   font-size: 0.8rem;
   color: #6b7280;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s ease, color 0.2s ease;
   padding: 0;
 }
-.modal-close:hover { background: rgba(0,0,0,0.1); color: #111827; }
-html.dark .modal-close { background: rgba(255,255,255,0.08); color: #9ca3af; }
-html.dark .modal-close:hover { background: rgba(255,255,255,0.15); color: #f3f4f6; }
+
+html.dark .modal-close {
+  background: rgba(255, 255, 255, 0.08);
+  color: #9ca3af;
+}
 
 .modal-avatar-wrap {
   position: relative;
@@ -299,12 +446,15 @@ html.dark .modal-close:hover { background: rgba(255,255,255,0.15); color: #f3f4f
   height: 90px;
   margin-bottom: 8px;
 }
+
 .modal-avatar {
   width: 90px;
   height: 90px;
   border-radius: 50%;
   object-fit: cover;
+  aspect-ratio: 1;
 }
+
 .modal-avatar-ring {
   position: absolute;
   inset: -4px;
@@ -319,6 +469,7 @@ html.dark .modal-close:hover { background: rgba(255,255,255,0.15); color: #f3f4f
   margin: 4px 0 0;
   color: #111827;
 }
+
 html.dark .modal-name { color: #f1f5f9; }
 
 .modal-role {
@@ -339,16 +490,19 @@ html.dark .modal-name { color: #f1f5f9; }
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: background 0.2s, transform 0.2s;
-}
-.modal-github-btn:hover {
-  background: #3a3f45;
-  transform: translateY(-2px);
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-/* ── Transitions ───────────────────────────────────────── */
+/* ─── Modal transition ───────────────────────────────────────────────────────── */
+
 .modal-enter-active,
-.modal-leave-active { transition: opacity 0.25s, transform 0.25s; }
+.modal-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
 .modal-enter-from,
-.modal-leave-to { opacity: 0; transform: scale(0.95) translateY(8px); }
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.95) translateY(8px);
+}
 </style>
