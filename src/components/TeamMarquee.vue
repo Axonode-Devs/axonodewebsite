@@ -104,13 +104,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 
-// ─── State ────────────────────────────────────────────────────────────────────
-
 const pause = ref(false);
 const selectedMember = ref(null);
 const isMobile = ref(false);
-
-// ─── Team data ────────────────────────────────────────────────────────────────
 
 const baseTeam = [
   { name: 'kaiross12', role: 'team.roles.head_community',   username: 'kaiross12', color: '#BEECF0' },
@@ -119,19 +115,10 @@ const baseTeam = [
   { name: 'Kaan610',   role: 'team.roles.head_media',       username: 'Kaan610',   color: '#fe78b2' },
 ];
 
-// Two copies is enough for a seamless marquee loop — three is unnecessary DOM weight
 const combinedTeam = ref([...baseTeam, ...baseTeam]);
-
-// ─── Modal ────────────────────────────────────────────────────────────────────
-
 const openModal  = (member) => { selectedMember.value = member; };
 const closeModal = ()       => { selectedMember.value = null;   };
-
-// Close on Escape key
 const onKeydown = (e) => { if (e.key === 'Escape') closeModal(); };
-
-// ─── Responsive ───────────────────────────────────────────────────────────────
-
 const MOBILE_BREAKPOINT = 768;
 
 let resizeTimer = null;
@@ -142,9 +129,7 @@ const checkMobile = () => {
   }, 100);
 };
 
-// ─── GitHub fetch ─────────────────────────────────────────────────────────────
 
-// Batch into a single Promise.all — same as before but fetches only baseTeam (4 req, not 12)
 const fetchTeam = async () => {
   const fetched = await Promise.all(
     baseTeam.map(async (member) => {
@@ -162,7 +147,6 @@ const fetchTeam = async () => {
       }
     })
   );
-  // Only two copies needed for seamless loop
   combinedTeam.value = [...fetched, ...fetched];
 };
 
@@ -249,12 +233,10 @@ html.dark .marquee-label::after {
 .marquee-track {
   display: flex;
   gap: 30px;
-  /* translateX is GPU-composited — no layout recalc per frame */
   animation: scroll 50s linear infinite;
   flex-shrink: 0;
   min-width: max-content;
   pointer-events: auto;
-  /* Promote to own layer — continuous animation */
   will-change: transform;
 }
 
@@ -275,7 +257,6 @@ html.dark .marquee-label::after {
   background: rgba(243, 244, 246, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 999px;
-  /* Only transition what actually changes on hover */
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
               background 0.3s ease,
               border-color 0.3s ease,
@@ -290,7 +271,6 @@ html.dark .team-card {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Hover — pointer devices only */
 @media (hover: hover) and (pointer: fine) {
   .team-card:hover {
     background: #ffffff;
@@ -306,7 +286,6 @@ html.dark .team-card {
     z-index: 10;
   }
 
-  /* Modal GitHub button hover */
   .modal-github-btn:hover {
     background: #3a3f45;
     transform: translateY(-2px);
@@ -340,7 +319,6 @@ html.dark .team-card {
   border-radius: 50%;
   object-fit: cover;
   background: #f3f4f6;
-  /* Prevent layout shift while image loads */
   aspect-ratio: 1;
 }
 
@@ -373,7 +351,6 @@ html.dark .name { color: #f1f5f9; }
   }
 }
 
-/* Remove backdrop-filter on small screens — expensive on low-end GPUs */
 @media (max-width: 640px) {
   .team-card {
     backdrop-filter: none;

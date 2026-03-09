@@ -52,12 +52,10 @@ const triggerRef = ref<HTMLElement | null>(null);
 const cardsVisible = ref(false);
 let observer: IntersectionObserver | null = null;
 
-// Respect reduced-motion — skip the scroll animation entirely if the user prefers it
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 onMounted(() => {
   if (prefersReducedMotion) {
-    // Show immediately — no animation
     cardsVisible.value = true;
     return;
   }
@@ -66,7 +64,6 @@ onMounted(() => {
     (entries) => {
       if (entries[0].isIntersecting) {
         cardsVisible.value = true;
-        // Once triggered, no need to keep observing
         observer?.disconnect();
         observer = null;
       }
@@ -162,7 +159,6 @@ onUnmounted(() => {
   display: flex;
   opacity: 0;
   transform: translateY(32px);
-  /* Separate entrance transitions from hover transitions cleanly */
   transition:
     opacity   0.7s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
@@ -170,7 +166,6 @@ onUnmounted(() => {
     border-color 0.4s ease;
 }
 
-/* backdrop-filter only where it has visible effect */
 @supports (backdrop-filter: blur(12px)) {
   .feature-card {
     backdrop-filter: blur(12px);
@@ -183,7 +178,6 @@ html.dark .feature-card {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Scroll-triggered entrance */
 .feature-card.visible {
   opacity: 1;
   transform: translateY(0);
@@ -207,7 +201,6 @@ html.dark .feature-card {
   opacity: 0.1;
   pointer-events: none;
   z-index: 0;
-  /* Promote only this element — it animates continuously */
   will-change: transform;
   animation: rotateGlow 8s linear infinite;
   transition: opacity 0.4s ease;
@@ -220,8 +213,6 @@ html.dark .glow-bg { opacity: 0.15; }
   50%  { transform: rotate(180deg) scale(1.1); }
   100% { transform: rotate(360deg) scale(1);   }
 }
-
-/* ─── Hover — pointer devices only ──────────────────────────────────────────── */
 
 @media (hover: hover) and (pointer: fine) {
   .feature-card:hover {
@@ -250,8 +241,6 @@ html.dark .glow-bg { opacity: 0.15; }
   100% { transform: scale(1.05) translateY(-2px); }
 }
 
-/* ─── Reduced motion ─────────────────────────────────────────────────────────── */
-
 @media (prefers-reduced-motion: reduce) {
   .header-content { animation: none; }
 
@@ -261,14 +250,14 @@ html.dark .glow-bg { opacity: 0.15; }
   }
 
   .feature-card {
-    /* Still show the card — just skip the entrance animation */
+    
     opacity: 1;
     transform: none;
     transition: none !important;
   }
 }
 
-/* ─── Mobile — kill backdrop-filter & glow animation ────────────────────────── */
+
 
 @media (max-width: 768px) {
   .glow-bg {
@@ -343,14 +332,10 @@ html.dark .feature-card h3 { color: #e2e8f0; }
 
 html.dark .feature-card p { color: #cbd5e1; }
 
-/* ─── Animations ─────────────────────────────────────────────────────────────── */
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-/* ─── Responsive ─────────────────────────────────────────────────────────────── */
 
 @media (max-width: 600px) {
   .cards-grid { grid-template-columns: 1fr; gap: 18px; }

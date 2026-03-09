@@ -69,7 +69,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const NAV_OFFSET = 80; // define once — was referenced but never declared in original
+const NAV_OFFSET = 80; 
 
 const router = useRouter();
 const heroSection = ref<HTMLElement | null>(null);
@@ -126,15 +126,13 @@ const checkScreen = () => {
   }, 100);
 };
 
-// ─── Lifecycle ───────────────────────────────────────────────────────────────
 
 onMounted(() => {
   const video = videoRef.value;
   if (video) isMuted.value = video.muted;
 
   isMobile.value = window.innerWidth <= MOBILE_BREAKPOINT;
-
-  // passive: true — never calls preventDefault, allows browser scroll optimisation
+  
   window.addEventListener('resize', checkScreen, { passive: true });
 });
 
@@ -145,7 +143,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* ─── Layout ────────────────────────────────────────────────────────────────── */
 
 .hero-container {
   position: relative;
@@ -161,7 +158,6 @@ onUnmounted(() => {
   padding: 60px 40px;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
-  /* CSS containment: isolates paint/layout from the rest of the page */
   contain: layout style;
 }
 
@@ -176,7 +172,6 @@ onUnmounted(() => {
   filter: blur(60px);
   z-index: 1;
   pointer-events: none;
-  /* Static — no will-change needed */
 }
 
 .grid-overlay {
@@ -223,7 +218,6 @@ html.dark .grid-overlay {
   left: 6rem;
   z-index: -1;
   user-select: none;
-  /* Pure text, no GPU layer needed */
 }
 
 html.dark .hero-title { color: rgba(255, 255, 255, 0.05); }
@@ -295,7 +289,6 @@ html.dark .subtext { color: #9CA3AF; }
   transition: transform 0.3s ease;
 }
 
-/* Hover animations — desktop/pointer only */
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover {
     transform: translateY(-3px) scale(1.02);
@@ -315,8 +308,6 @@ html.dark .subtext { color: #9CA3AF; }
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
   }
-
-  /* Video card hover */
   .video-stack-container:hover::before {
     transform: translateX(-55px) rotate(-5deg);
   }
@@ -329,14 +320,12 @@ html.dark .subtext { color: #9CA3AF; }
     transform: scale(1.02);
   }
 
-  /* Control buttons */
   .control-btn:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
     border-color: #fe78b2;
   }
 
-  /* Show controls on card hover */
   .video-placeholder-card:hover .video-controls {
     opacity: 1;
     visibility: visible;
@@ -477,7 +466,6 @@ html.dark .badge-inner {
   background: transparent;
   border: 1.5px solid #ffffff;
   border-radius: 24px;
-  /* Only transition transform — avoids triggering paint on box-shadow */
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   align-items: center;
@@ -561,7 +549,6 @@ html.dark .badge-inner {
 
   .video-stack-container { max-width: 100%; }
 
-  /* Disable stacked card pseudo-elements on tablet — saves compositing layers */
   .video-stack-container::before,
   .video-stack-container::after {
     display: none;
@@ -585,7 +572,6 @@ html.dark .badge-inner {
     justify-content: center;
   }
 
-  /* Kill backdrop-filter on mobile — expensive on low-end GPUs */
   .video-placeholder-card,
   .btn-secondary {
     backdrop-filter: none;

@@ -59,9 +59,6 @@
 
 <style scoped>
 *, *::before, *::after { box-sizing: border-box; }
-
-/* ─── Section ────────────────────────────────────────────────────────────────── */
-
 .about-section {
   position: relative;
   padding: 80px 0;
@@ -132,7 +129,7 @@ html.dark .title { color: #9ca3af; }
   border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  /* Only transition transform — avoids triggering paint on box-shadow every frame */
+
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
               box-shadow 0.4s ease,
               border-color 0.4s ease;
@@ -145,7 +142,6 @@ html.dark .feature-card {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* backdrop-filter is expensive — only apply where a blur background is actually visible */
 @supports (backdrop-filter: blur(12px)) {
   .feature-card {
     backdrop-filter: blur(12px);
@@ -178,7 +174,6 @@ html.dark .feature-card {
   opacity: 0.1;
   pointer-events: none;
   z-index: 0;
-  /* Promote to its own compositing layer — rotates continuously */
   will-change: transform;
   animation: rotateGlow 8s linear infinite;
   transition: opacity 0.4s ease;
@@ -286,7 +281,6 @@ html.dark .feature-card p { color: #cbd5e1; }
 @media (max-width: 768px) {
   .title { font-size: 1.1rem; }
 
-  /* Kill glow animation on mobile — continuous GPU paint on 4 elements is costly */
   .glow-bg {
     animation: none;
     will-change: auto;
@@ -294,7 +288,6 @@ html.dark .feature-card p { color: #cbd5e1; }
 }
 
 @media (max-width: 640px) {
-  /* Remove backdrop-filter entirely on mobile — expensive on low-end GPUs */
   .feature-card {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
