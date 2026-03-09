@@ -20,7 +20,7 @@
               <span>{{ $t('hero.buttons.join') }}</span>
               <span class="arrow"><i class="fa-solid fa-angle-right"></i></span>
             </button>
-            <button class="btn btn-secondary" @click="goToAbout">
+            <button class="btn btn-secondary" @click="scrollToSection('about')">
               <span>{{ $t('hero.buttons.about') }}</span>
             </button>
           </div>
@@ -77,9 +77,13 @@ const isMobile = ref(false)
 const goToApply = () => {
   router.push('/join');
 };
-const goToAbout = () => {
-  router.push('/about');
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (!el) { console.warn(`[Navbar] No element found with id="${id}"`); return; }
+  const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+  window.scrollTo({ top, behavior: 'smooth' });
 };
+
 
 const checkScreen = () => {
   isMobile.value = window.innerWidth <= 768
