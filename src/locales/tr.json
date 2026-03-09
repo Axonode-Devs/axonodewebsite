@@ -52,7 +52,7 @@
     "cards": {
       "software": {
         "title": "Yazılım",
-        "text": " Acemilerden Uzmanlara tüm geliştiricileri, deneyimlerini ve bilgilerini paylaşmaları ve iş birliği için açık kollarla karşılıyoruz!"
+        "text": " Acemilerden Uzmanlara herkesi, deneyimlerini ve bilgilerini paylaşmaları ve iş birliği için herkesi açık kollarla karşılıyoruz!"
       },
       "designers": {
         "title": "Tasarım",
@@ -70,7 +70,7 @@
   },
   "about_us": {
     "header": {
-      "eyebrow": "Daha iyi bir Gelecek için",
+      "eyebrow": "Daha iyi bir Gelecek adına",
       "title": "Bizim"
     },
     "vision": {

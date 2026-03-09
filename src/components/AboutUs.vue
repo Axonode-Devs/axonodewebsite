@@ -5,7 +5,7 @@
       <!-- Header -->
       <div class="header-content">
         <p class="eyebrow">{{ $t('about_us.header.eyebrow') }}</p>
-        <h2 class="title">{{ $t('about_us.header.title') }}<span class="gradient-text">:</span></h2>
+        <h2 class="title"><span class="gradient-text">< </span>{{ $t('about_us.header.title') }}<span class="gradient-text"> ></span></h2>
       </div>
 
       <!-- Cards -->
