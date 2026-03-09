@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="visual-column">
+      <div class="visual-column" v-if="!isMobile">
         <div class="video-stack-container">
           <div class="hero-top-badge">
             <div class="gradient-badge">
@@ -37,7 +37,7 @@
             </div>
           </div>
 
-          <div v-if="!isMobile" class="video-placeholder-card">
+          <div class="video-placeholder-card">
             <video
               ref="videoRef"
               src="/video.mp4"
@@ -46,11 +46,10 @@
               loop
               muted
               playsinline
-              :preload="isMobile ? 'none' : 'auto'"
             ></video>
 
             <!-- Controls only rendered on non-touch devices -->
-            <div v-if="!isMobile" class="video-controls" aria-label="Video controls">
+            <div class="video-controls" aria-label="Video controls">
               <button class="control-btn" @click="togglePlay" :title="isPlaying ? 'Pause' : 'Play'">
                 <i :class="isPlaying ? 'fa-solid fa-pause' : 'fa-solid fa-play'"></i>
               </button>
