@@ -1,3 +1,5 @@
+<img src="./public/titlenavbar.png"></img>
+
 # Meet Axonode!
 We are a welcoming community uniting our skills to share knowledge, create projects,
 and have fun together. Join us to connect with like-minded individuals!
