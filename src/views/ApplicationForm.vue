@@ -209,6 +209,7 @@ const contactTypes: Record<string, null> = {
   discord: null,
   phone: null,
   instagram: null,
+  telegram: null,
   linkedin: null,
 };
 

@@ -108,7 +108,7 @@
     "success": {
       "title": "Başvuru",
       "title_highlight": "İletildi!",
-      "message": "Axonode'a başvurduğunuz için teşekkür ederiz. Ekibimiz başvurunuzu değerlendirip en kısa sürede Gmail ya da Discord ile geri dönüş yapacaktır."
+      "message": "Axonode'a başvurduğunuz için teşekkür ederiz. Ekibimiz başvurunuzu değerlendirip en kısa sürede E-Posta veya Ana iletişim yolunuz ile geri dönüş yapacaktır."
     },
     "header": {
       "title": "Komünitemize",
@@ -120,7 +120,7 @@
         "section_title": "Kişisel Bilgi",
         "fullname": {
           "label": "Ad ve Soyad",
-          "placeholder": "Celal Şengör"
+          "placeholder": "Osman Osmanoğlu"
         },
         "email": {
           "label": "E-postanız",
@@ -128,13 +128,14 @@
         },
         "contact": {
           "label": "Ana İletişim",
-          "placeholder": "İletişim yolunuz",
+          "placeholder": "Size Ulaşmamız için ana yol.",
           "platform_placeholder": "Platform",
           "types": {
             "discord": "Discord",
-            "phone": "Telefone",
+            "phone": "Telefon",
             "instagram": "Instagram",
-            "linkedin": "LinkedIn"
+            "linkedin": "LinkedIn",
+            "telegram": "Telegram"
           }
         }
       },
@@ -145,7 +146,7 @@
         },
         "other_interest": {
           "label": "İlgi Alanınız Nedir?",
-          "placeholder": "Tutkunuzu Gösterin!"
+          "placeholder": "Bize Tutkunu Anlat!"
         },
         "sub_interest": {
           "label": "Alt-İlgi Alanları (Birden fazla seçebilirsiniz)"
@@ -251,7 +252,7 @@
       },
       "review": {
         "title": "Başvuru Değerlendirme Süreci",
-        "description": "Her başvuru titizlikle değerlendirilir. Başvuranların sadece deneyimine değil; kafa yapısına, ekip uyumuna vesürekliliğine bakıyoruz."
+        "description": "Her başvuru titizlikle değerlendirilir. Başvuranların sadece deneyimine değil; kafa yapısına, ekip uyumuna ve sürekliliğine bakıyoruz."
       },
       "next_steps": {
         "title": "Sonraki Adımlar",
@@ -269,8 +270,8 @@
     "subtitle": "Bu toplu bir Davet değil, Ekibimiz içinden biri spesifik olarak seni seçti",
     "why_section": {
       "title": "Neden Seni Seçtik",
-      "paragraph_1": "Ekibimizden biri seni gördü ve etkilendi, {userName} gerçekten direkt iletişime geçmeye değer biri diye düşündü ve bu daveti sana gönderdi. Bu sık yaşanan bir durum değil.",
-      "paragraph_2": "Başvurunu Tamamladığında, sistemimiz üzerinde {invited} olarak görüleceksin. Sen özenle seçilmiş biri gibi değerlendiriliceksin, çünkü öylesin ✦",
+      "paragraph_1": "Ekibimizden biri seni gördü ve etkilendi, {userName} gerçekten direkt iletişime geçmeye değer biri diye düşündü ve bu daveti sana gönderdi. Bu sık yaşanan bir durum değil doğrusu.",
+      "paragraph_2": "Başvurunu Tamamladığında, sistemimiz üzerinde {invited} olarak görüleceksin. Sen özenle seçilmiş biri gibi değerlendiriliceksin, çünkü Öylesin ✦",
       "paragraph_2_invited": "\"Davet Edildi\"",
       "paragraph_3": "{userName}, İşte bu senin anın. Birilerinin sana olan inancının boşa gitmesine izin verme!"
     },

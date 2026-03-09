@@ -44,11 +44,11 @@
         </li>
       </ul>
       <div class="mobile-nav-actions">
-        <button class="btn-text mobile-btn" @click="handleLoginClick(); closeMenu()">
-          {{ isLoggedIn ? 'Dashboard' : 'Login' }}
+        <button v-if="isLoggedIn" class="btn-text mobile-btn" @click="handleLoginClick(); closeMenu()">
+          Dashboard
         </button>
         <button class="btn-gradient mobile-btn" @click="goToApply(); closeMenu()">
-          {{ t('navbar.join') }}
+          {{ t('navbar.joinUs') }}
         </button>
       </div>
     </div>

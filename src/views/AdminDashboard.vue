@@ -1,159 +1,61 @@
-<script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import Navbar from '../components/Navbar.vue';
-import { admin, auth } from '../libs/AxonConnector';
-import LoginView from './LoginView.vue';
-
-const apps = ref([]);
-const loading = ref(true);
-const activeTab = ref('pending'); 
-const selectedApp = ref(null);
-const showRoleSelection = ref(false);
-const showInviteModal = ref(false);
-const inviteName = ref('');
-const inviteLoading = ref(false);
-const inviteSuccess = ref(null);
-const copySuccess = ref(false);
-const router = useRouter();
-
-// --- HELPERS ---
-const getInitials = (name) => {
-  return name ? name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : '??';
-};
-
-const formatDate = (dateStr) => {
-  if (!dateStr) return '';
-  const date = new Date(dateStr);
-  return new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'short' }).format(date);
-};
-
-const formatStatus = (status) => {
-  if (status === 'pending') return 'Beklemede';
-  if (status === 'approved') return 'Onaylandı';
-  if (status === 'rejected') return 'Reddedildi';
-  if (status === 'invited') return 'Davet Edildi ✦';
-};
-
-const formatExperience = (val) => {
-  const map = { newbie: 'Beginner', junior: 'Junior', mid: 'Mid', senior: 'Senior' };
-  return map[val] || val;
-};
-
-// --- DATA FETCHING ---
-const fetchApps = async () => {
-  if (admin.isTokenExpired) {
-      alert('Session expired. Please log in again.');
-     
-      router.push('/login');
-      return;
-    }
-  loading.value = true;
-  try {
-    const data = await admin.listApplications();
-    
-    console.log("Fetched applications:", data);
-    apps.value = data.items 
-  } catch (error) {
-    console.error("Fetch error:", error);
-  } finally {
-    loading.value = false;
-  }
-};
-
-// --- ACTIONS ---
-const updateStatus = async (id, newStatus) => {
-  try {
-    if (newStatus === 'approved') {
-      await admin.approveApplication(id, );
-    } else {
-      await admin.rejectApplication(id);
-    }
-    await fetchApps();
-    closeDetail();
-  } catch (error) {
-    alert("Hata: " + (error.msg || "İşlem başarısız."));
-  }
-};
-
-const openDetail = (app) => { 
-  selectedApp.value = app; 
-  showRoleSelection.value = false;
-};
-const closeDetail = () => { selectedApp.value = null; };
-
-
-const generateInvite = async () => {
-  if (!inviteName.value.trim()) {
-    alert('Lütfen bir ad girin.');
-    return;
-  }
-  inviteLoading.value = true;
-  try {
-    const result = await admin.createInvite(inviteName.value);
-    inviteSuccess.value = result;
-    inviteName.value = '';
-  } catch (error) {
-    alert('Hata: ' + (error.msg || 'Davet oluşturulamadı.'));
-  } finally {
-    inviteLoading.value = false;
-  }
-};
-
-const copyInviteLink = async () => {
-  if (inviteSuccess.value?.invite_link) {
-    try {
-      await navigator.clipboard.writeText(inviteSuccess.value.invite_link);
-      copySuccess.value = true;
-      setTimeout(() => {
-        copySuccess.value = false;
-      }, 2000);
-    } catch (err) {
-      alert('Bağlantı kopyalanamadı.');
-    }
-  }
-};
-
-// --- COMPUTED ---
-// Pending = invited & pending
-const notacceptedApps = computed(() => apps.value.filter(a => a.status === 'pending' || a.status === 'invited'));
-const historyApps = computed(() => apps.value.filter(a => a.status !== 'pending' && a.status !== 'invited'));
-const filteredApps = computed(() => activeTab.value === 'pending' ? notacceptedApps.value : historyApps.value);
-
-onMounted(fetchApps);
-</script>
-
 <template>
   <Navbar />
   <div class="admin-page">
     <div class="background-mesh"></div>
     <div class="content-wrapper">
-      
       <div class="tabs">
-        <button :class="['tab-btn', { active: activeTab === 'pending' }]" @click="activeTab = 'pending'">
-          Bekleyenler <span v-if="notacceptedApps.length" class="count-badge">{{ notacceptedApps.length }}</span>
+        <button
+          :class="['tab-btn', { active: activeTab === 'pending' }]"
+          @click="activeTab = 'pending'"
+        >
+          Bekleyenler
+          <span v-if="notacceptedApps.length" class="count-badge">{{
+            notacceptedApps.length
+          }}</span>
         </button>
-        <button :class="['tab-btn', { active: activeTab === 'history' }]" @click="activeTab = 'history'">Geçmiş</button>
-        
-        <button class="btn-end" @click="showInviteModal = true">Davet Oluştur</button>
+        <button
+          :class="['tab-btn', { active: activeTab === 'history' }]"
+          @click="activeTab = 'history'"
+        >
+          Geçmiş
+        </button>
+
+        <button class="btn-end" @click="showInviteModal = true">
+          Davet Oluştur
+        </button>
       </div>
 
       <div v-if="!loading" class="apps-grid">
         <div v-if="filteredApps.length === 0" class="empty-state">
           <p class="empty-message">
-            {{ activeTab === 'pending' ? 'Bekleyen başvurular yok.' : 'Geçmiş başvurular yok.' }}
+            {{
+              activeTab === "pending"
+                ? "Bekleyen başvurular yok."
+                : "Geçmiş başvurular yok."
+            }}
           </p>
         </div>
-        <div v-for="app in filteredApps" :key="app.id" class="app-card" @click="openDetail(app)">
+        <div
+          v-for="app in filteredApps"
+          :key="app.id"
+          class="app-card"
+          @click="openDetail(app)"
+        >
           <div class="card-header-top">
-            <div class="avatar-placeholder">{{ getInitials(app.fullname) }}</div>
-            <span :class="['status-badge', app.status]">{{ formatStatus(app.status) }}</span>
+            <div class="avatar-placeholder">
+              {{ getInitials(app.fullname) }}
+            </div>
+            <span :class="['status-badge', app.status]">{{
+              formatStatus(app.status)
+            }}</span>
           </div>
           <h3 class="applicant-name">{{ app.fullname }}</h3>
-          
+
           <div class="tags">
             <span class="tag main">{{ app.main_interest }}</span>
-            <span v-if="app.sub_interest?.length" class="tag more">+{{ app.sub_interest.length }}</span>
+            <span v-if="app.sub_interest?.length" class="tag more"
+              >+{{ app.sub_interest.length }}</span
+            >
           </div>
 
           <div class="card-footer">
@@ -178,15 +80,22 @@ onMounted(fetchApps);
               </div>
               <div class="info-item">
                 <label>İngilizce</label>
-                <p>{{ selectedApp.english_level || '-' }}</p>
+                <p>{{ selectedApp.english_level || "-" }}</p>
               </div>
             </div>
 
             <div class="detail-section mt-4">
               <label>İlgi Alanları</label>
               <div class="tags large">
-                <span class="tag main-interest">{{ selectedApp.main_interest }}</span>
-                <span v-for="sub in selectedApp.sub_interest" :key="sub" class="tag">{{ sub }}</span>
+                <span class="tag main-interest">{{
+                  selectedApp.main_interest
+                }}</span>
+                <span
+                  v-for="sub in selectedApp.sub_interest"
+                  :key="sub"
+                  class="tag"
+                  >{{ sub }}</span
+                >
               </div>
             </div>
 
@@ -198,32 +107,46 @@ onMounted(fetchApps);
         </div>
 
         <div v-if="activeTab === 'pending'" class="modal-overlay-actions">
-           <template v-if="!showRoleSelection">
-              <button @click="updateStatus(selectedApp.id, 'rejected')" class="btn btn-rejected">Reddet</button>
-              <button @click="updateStatus(selectedApp.id, 'approved')" class="btn btn-approved">Onayla</button>
-           </template>
+          <template v-if="!showRoleSelection">
+            <button
+              @click="updateStatus(selectedApp.id, 'rejected')"
+              class="btn btn-rejected"
+            >
+              Reddet
+            </button>
+            <button
+              @click="updateStatus(selectedApp.id, 'approved')"
+              class="btn btn-approved"
+            >
+              Onayla
+            </button>
+          </template>
         </div>
       </div>
     </div>
 
-    <div v-if="showInviteModal" class="modal-overlay" @click.self="showInviteModal = false">
+    <div
+      v-if="showInviteModal"
+      class="modal-overlay"
+      @click.self="closeInviteModal()"
+    >
       <div class="modal-container">
         <div class="modal-card">
           <div class="modal-body">
             <h2>Davet Oluştur</h2>
             <p class="modal-subtitle">Yeni bir davetiye oluşturun</p>
-            
+
             <div v-if="!inviteSuccess" class="invite-form">
               <div class="form-group">
                 <label for="invite-name">Ad/Not</label>
-                <input 
+                <input
                   id="invite-name"
-                  v-model="inviteName" 
-                  type="text" 
-                  placeholder="Örn: John Doe"
+                  v-model="inviteName"
+                  type="text"
+                  placeholder="Örn: Çok Önemli biri"
                   class="form-input"
                   @keyup.enter="generateInvite"
-                >
+                />
               </div>
             </div>
 
@@ -231,14 +154,20 @@ onMounted(fetchApps);
               <div class="success-content">
                 <p class="success-message">Davetiye başarıyla oluşturuldu!</p>
                 <div class="invite-link-container">
-                  <input 
-                    type="text" 
-                    :value="inviteSuccess?.invite_link" 
-                    readonly 
+                  <input
+                    type="text"
+                    :value="inviteSuccess?.invite_link"
+                    readonly
                     class="invite-link-input"
+                  />
+                  <button
+                    @click="copyInviteLink"
+                    :class="['btn-copy', { copied: copySuccess }]"
                   >
-                  <button @click="copyInviteLink" :class="['btn-copy', { copied: copySuccess }]">
-                    {{ copySuccess ? '✓ Kopyalandı' : 'Kopyala' }}
+                    {{ copySuccess ? "✓ Kopyalandı" : "Kopyala" }}
+                  </button>
+                  <button @click="inviteSuccess = null" class="btn-new-invite">
+                    + Yeni Davet Oluştur
                   </button>
                 </div>
               </div>
@@ -248,19 +177,178 @@ onMounted(fetchApps);
 
         <div class="modal-overlay-actions">
           <template v-if="!inviteSuccess">
-            <button @click="showInviteModal = false" class="btn btn-secondary">İptal</button>
-            <button @click="generateInvite" class="btn btn-approved" :disabled="inviteLoading">
-              {{ inviteLoading ? 'Oluşturuluyor...' : 'Oluştur' }}
+            <button @click="showInviteModal = false" class="btn btn-secondary">
+              İptal
+            </button>
+            <button
+              @click="generateInvite"
+              class="btn btn-approved"
+              :disabled="inviteLoading"
+            >
+              {{ inviteLoading ? "Oluşturuluyor..." : "Oluştur" }}
             </button>
           </template>
           <template v-else>
-            <button @click="showInviteModal = false" class="btn btn-approved">Kapat</button>
+            <button @click="closeInviteModal" class="btn btn-approved">
+              Kapat
+            </button>
           </template>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import Navbar from "../components/Navbar.vue";
+import { admin } from "../libs/AxonConnector";
+
+const apps = ref([]);
+const loading = ref(true);
+const activeTab = ref("pending");
+const selectedApp = ref(null);
+const showRoleSelection = ref(false);
+const showInviteModal = ref(false);
+const inviteName = ref("");
+const inviteLoading = ref(false);
+const inviteSuccess = ref(null);
+const copySuccess = ref(false);
+const router = useRouter();
+
+
+const getInitials = (name) => {
+  return name
+    ? name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .substring(0, 2)
+    : "??";
+};
+
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return new Intl.DateTimeFormat("tr-TR", {
+    day: "numeric",
+    month: "short",
+  }).format(date);
+};
+
+const formatStatus = (status) => {
+  if (status === "pending") return "Beklemede";
+  if (status === "approved") return "Onaylandı";
+  if (status === "rejected") return "Reddedildi";
+  if (status === "invited") return "Davet Edildi ✦";
+};
+
+const formatExperience = (val) => {
+  const map = {
+    newbie: "Beginner",
+    junior: "Junior",
+    mid: "Mid",
+    senior: "Senior",
+  };
+  return map[val] || val;
+};
+
+const fetchApps = async () => {
+  if (admin.isTokenExpired) {
+    alert("Session expired. Please log in again.");
+
+    router.push("/login");
+    return;
+  }
+  loading.value = true;
+  try {
+    const data = await admin.listApplications();
+
+    console.log("Fetched applications:", data);
+    apps.value = data.items;
+  } catch (error) {
+    console.error("Fetch error:", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+
+const updateStatus = async (id, newStatus) => {
+  try {
+    if (newStatus === "approved") {
+      await admin.approveApplication(id);
+    } else {
+      await admin.rejectApplication(id);
+    }
+    await fetchApps();
+    closeDetail();
+  } catch (error) {
+    alert("Hata: " + (error.msg || "İşlem başarısız."));
+  }
+};
+
+const openDetail = (app) => {
+  selectedApp.value = app;
+  showRoleSelection.value = false;
+};
+const closeDetail = () => {
+  selectedApp.value = null;
+};
+
+const generateInvite = async () => {
+  if (!inviteName.value.trim()) {
+    alert("Lütfen bir ad girin.");
+    return;
+  }
+  inviteLoading.value = true;
+  try {
+    const result = await admin.createInvite(inviteName.value);
+    inviteSuccess.value = result;
+    inviteName.value = "";
+  } catch (error) {
+    alert("Hata: " + (error.msg || "Davet oluşturulamadı."));
+  } finally {
+    inviteLoading.value = false;
+  }
+};
+
+const copyInviteLink = async () => {
+  if (inviteSuccess.value?.invite_link) {
+    try {
+      await navigator.clipboard.writeText(inviteSuccess.value.invite_link);
+      copySuccess.value = true;
+      setTimeout(() => {
+        copySuccess.value = false;
+      }, 2000);
+    } catch (err) {
+      alert("Bağlantı kopyalanamadı.");
+    }
+  }
+};
+
+const closeInviteModal = () => {
+  showInviteModal.value = false;
+  inviteSuccess.value = null;
+  inviteName.value = '';
+};
+
+const notacceptedApps = computed(() =>
+  apps.value.filter((a) => a.status === "pending" || a.status === "invited"),
+);
+const historyApps = computed(() =>
+  apps.value.filter((a) => a.status !== "pending" && a.status !== "invited"),
+);
+const filteredApps = computed(() =>
+  activeTab.value === "pending" ? notacceptedApps.value : historyApps.value,
+);
+
+onMounted(fetchApps);
+</script>
+
+
 <style scoped>
 :root {
   --color-1: #78dee7;
@@ -375,6 +463,10 @@ html.dark .background-mesh {
   background: var(--accent-color);
   color: #000;
   padding: 10px 15px;
+}
+
+.btn-new-invite:hover {
+  background: rgba(120, 222, 231, 0.1);
 }
 .tab-btn:hover {
   color: var(--text-main);

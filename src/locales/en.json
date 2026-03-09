@@ -109,7 +109,7 @@
     "success": {
       "title": "Application",
       "title_highlight": "Received!",
-      "message": "Thank you for applying to Axonode. Our team will review your profile and reach out via email or Discord soon."
+      "message": "Thank you for applying to Axonode. Our team will review your profile and reach out via Email or Your primary way of contact soon."
     },
     "header": {
       "title": "Join the",
@@ -135,7 +135,8 @@
             "discord": "Discord",
             "phone": "Phone",
             "instagram": "Instagram",
-            "linkedin": "LinkedIn"
+            "linkedin": "LinkedIn",
+            "telegram": "Telegram"
           }
         }
       },
