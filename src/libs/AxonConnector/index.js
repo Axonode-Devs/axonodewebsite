@@ -2,7 +2,6 @@ import axios from 'axios';
 import { AuthModule } from './auth.js';
 import { AdminModule } from './admin.js';
 
-
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -15,11 +14,21 @@ const processQueue = (error, token = null) => {
 };
 
 let client = axios.create({
-  baseURL: 'http://127.0.0.1:5000/api',
+  baseURL: 'http://127.0.0.1:5000/api/v1',
   headers: { 'Content-Type': 'application/json' }
 });
 
+/**
+ * RESTORED: Allows dynamic configuration of the API base URL
+ */
+export const initializeAxon = (config = {}) => {
+  if (config.baseURL) {
+    client.defaults.baseURL = config.baseURL;
+  }
+};
+
 client.interceptors.request.use(config => {
+  // Check for admin-specific routes or applications to use the admin token
   if (config.url.includes('/admin') || config.url.includes('/applications')) {
     const token = localStorage.getItem('axon_admintoken');
     if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -31,35 +40,28 @@ client.interceptors.request.use(config => {
 });
 
 client.interceptors.response.use(
-  (response) => response, // Pass through successful requests
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // If error is 401 and we haven't already tried to refresh this specific request
     if (error.response?.status === 401 && !originalRequest._retry) {
-      
-      // Don't try to refresh if the login itself failed or we're already on the refresh route
-      if (originalRequest.url.includes('/login') || originalRequest.url.includes('/refresh')) {
+      if (originalRequest.url.includes('/sessions') || originalRequest.url.includes('/tokens')) {
         return Promise.reject(error);
       }
 
       if (isRefreshing) {
-        // If a refresh is already in progress, wait in the queue
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
-        })
-          .then(token => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            return client(originalRequest);
-          })
-          .catch(err => Promise.reject(err));
+        }).then(token => {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return client(originalRequest);
+        }).catch(err => Promise.reject(err));
       }
 
       originalRequest._retry = true;
       isRefreshing = true;
 
-      // Determine which refresh token to use (Admin vs User)
-      const isAdmin = originalRequest.url.includes('/admin');
+      const isAdmin = originalRequest.url.includes('/admin') || originalRequest.url.includes('/applications');
       const refreshKey = isAdmin ? 'axon_admin_refresh' : 'axon_refresh';
       const tokenKey = isAdmin ? 'axon_admintoken' : 'axon_token';
       const refreshToken = localStorage.getItem(refreshKey);
@@ -70,53 +72,50 @@ client.interceptors.response.use(
       }
 
       try {
-        // Call the refresh endpoint
-        const { data } = await axios.post(`${client.defaults.baseURL}/auth/refresh`, {}, {
+        // Updated to /auth/tokens or /admin/tokens logic
+        const refreshUrl = isAdmin ? '/admin/tokens' : '/auth/tokens';
+        const { data } = await axios.post(`${client.defaults.baseURL}${refreshUrl}`, {}, {
           headers: { Authorization: `Bearer ${refreshToken}` }
         });
 
-        const newToken = data.access_token;
+        // Backend wraps the access_token inside a "data" object
+        const newToken = data.data.access_token;
         localStorage.setItem(tokenKey, newToken);
         
-        // Update the authorization header for the original request
-        client.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
         processQueue(null, newToken);
-        
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return client(originalRequest);
-      } catch (refreshError) {
+      }  catch (refreshError) {
         processQueue(refreshError, null);
-        // If refresh fails, the user session is truly dead. Clear and redirect.
+        
         localStorage.removeItem(tokenKey);
         localStorage.removeItem(refreshKey);
-        window.location.href = isAdmin ? '/admin/login' : '/login';
+      
+        
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
       }
     }
-
     return Promise.reject(error);
   }
 );
 
-const _handleError = (err) => ({
-  msg: err.response?.data?.msg || 'Request failed',
-  errors: err.response?.data?.errors || [],
-  status: err.response?.status
-});
+const _handleError = (err) => {
+  const errorBody = err.response?.data?.error;
+  return {
+    code: errorBody?.code || 'UNKNOWN_ERROR',
+    message: errorBody?.message || 'A server error occurred.',
+    details: errorBody?.details || [],
+    status: err.response?.status || 500
+  };
+};
 
 export const auth = new AuthModule(client, _handleError);
 export const admin = new AdminModule(client, _handleError);
 
-export const initializeAxon = (config = {}) => {
-  if (config.baseURL) {
-    client.defaults.baseURL = config.baseURL;
-  }
-};
-
 export const submitApplication = async (data) => {
   try {
-    
     const res = await client.post('/applications/', data);
     return res.data;
   } catch (err) {
@@ -125,5 +124,10 @@ export const submitApplication = async (data) => {
 };
 
 export const submitContact = async (data) => {
-  const res = await client.post('/contact/', data)
-}
+  try {
+    const res = await client.post('/contact/', data);
+    return res.data;
+  } catch (err) {
+    throw _handleError(err);
+  }
+};

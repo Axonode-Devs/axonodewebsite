@@ -74,9 +74,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    if (admin.currentUser) {
+    // Check if the refresh token exists in LocalStorage
+    // This survives page refreshes!
+    const hasToken = !!localStorage.getItem('axon_admin_refresh');
+
+    if (hasToken) {
       next();
     } else {
+      console.warn("No admin token found, redirecting to login");
       next('/login');
     }
   } else {

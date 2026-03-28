@@ -52,10 +52,10 @@
           <h3 class="applicant-name">{{ app.fullname }}</h3>
 
           <div class="tags">
-            <span class="tag main">{{ app.main_interest }}</span>
-            <span v-if="app.sub_interest?.length" class="tag more"
-              >+{{ app.sub_interest.length }}</span
-            >
+            <span class="tag main">{{ app.profile?.main_interest }}</span>
+            <span v-if="app.profile?.interests?.subs?.length" class="tag more">
+              +{{ app.profile?.sub_interest.length }}
+            </span>
           </div>
 
           <div class="card-footer">
@@ -76,22 +76,25 @@
             <div class="info-grid">
               <div class="info-item">
                 <label>Deneyim</label>
-                <p>{{ formatExperience(selectedApp.experience_level) }}</p>
+                <p>
+                  {{ formatExperience(selectedApp.profile?.experience_level) }}
+                </p>
               </div>
               <div class="info-item">
                 <label>İngilizce</label>
-                <p>{{ selectedApp.english_level || "-" }}</p>
+                <p>{{ selectedApp.profile?.english_level || "-" }}</p>
               </div>
             </div>
 
             <div class="detail-section mt-4">
               <label>İlgi Alanları</label>
               <div class="tags large">
-                <span class="tag main-interest">{{
-                  selectedApp.main_interest
-                }}</span>
+                <span class="tag main-interest">
+                  {{ selectedApp.profile?.main_interest }}
+                </span>
+                <i class="fa-solid fa-arrow-right"></i>
                 <span
-                  v-for="sub in selectedApp.sub_interest"
+                  v-for="sub in selectedApp.profile?.sub_interest"
                   :key="sub"
                   class="tag"
                   >{{ sub }}</span
@@ -217,7 +220,6 @@ const inviteSuccess = ref(null);
 const copySuccess = ref(false);
 const router = useRouter();
 
-
 const getInitials = (name) => {
   return name
     ? name
@@ -256,25 +258,19 @@ const formatExperience = (val) => {
 };
 
 const fetchApps = async () => {
-  if (admin.isTokenExpired) {
-    alert("Session expired. Please log in again.");
+  // 1. isTokenExpired is now available in the updated admin.js
 
-    router.push("/login");
-    return;
-  }
   loading.value = true;
   try {
-    const data = await admin.listApplications();
+    const response = await admin.listApplications();
 
-    console.log("Fetched applications:", data);
-    apps.value = data.items;
+    apps.value = response.data || [];
   } catch (error) {
     console.error("Fetch error:", error);
   } finally {
     loading.value = false;
   }
 };
-
 
 const updateStatus = async (id, newStatus) => {
   try {
@@ -332,7 +328,7 @@ const copyInviteLink = async () => {
 const closeInviteModal = () => {
   showInviteModal.value = false;
   inviteSuccess.value = null;
-  inviteName.value = '';
+  inviteName.value = "";
 };
 
 const notacceptedApps = computed(() =>
@@ -347,7 +343,6 @@ const filteredApps = computed(() =>
 
 onMounted(fetchApps);
 </script>
-
 
 <style scoped>
 :root {

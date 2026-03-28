@@ -4,86 +4,55 @@ export class AuthModule {
     this._handleError = handleError;
   }
 
-  /**
-   * Set password during account activation
-   */
   async setPassword(token, password) {
     try {
-      const { data } = await this.client.post('/auth/set-password', 
+      // Endpoint: auth.py -> /credentials
+      const { data } = await this.client.post('/auth/credentials', 
         { password }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      this._saveSession(data)
-      return data; 
+      this._saveSession(data.data); // data.data contains tokens/user
+      return data.data; 
     } catch (err) {
       throw this._handleError(err);
     }
   }
 
-  /**
-   * Sign in with email and password
-   **/
   async signInWithEmailPassword(email, password) {
     try {
-      const { data } = await this.client.post('/auth/login', { email, password });
-      this._saveSession(data)
-      return data;
+      // Endpoint: auth.py -> /sessions
+      const { data } = await this.client.post('/auth/sessions', { email, password });
+      this._saveSession(data.data);
+      return data.data;
     } catch (err) {
       throw this._handleError(err);
     }
   }
 
-  /**
-   * Internal helper to save tokens and user data
-   */
-  _saveSession(data) {
-    if (data.access_token) {
-      localStorage.setItem('axon_token', data.access_token);
+  _saveSession(sessionData) {
+    if (sessionData.access_token) {
+      localStorage.setItem('axon_token', sessionData.access_token);
     }
-    if (data.refresh_token) {
-      // THIS IS CRITICAL: The interceptor needs this key
-      localStorage.setItem('axon_refresh', data.refresh_token);
+    if (sessionData.refresh_token) {
+      localStorage.setItem('axon_refresh', sessionData.refresh_token);
     }
-    if (data.user) {
-      localStorage.setItem('axon_user', JSON.stringify(data.user));
+    if (sessionData.user) {
+      localStorage.setItem('axon_user', JSON.stringify(sessionData.user));
     }
   }
 
-  /**
-   * Sign out current user
-   */
   signOut() {
     localStorage.removeItem('axon_token');
     localStorage.removeItem('axon_refresh');
     localStorage.removeItem('axon_user');
   }
 
-  /**
-   * Check if user is signed in
-   */
   get isSignedIn() {
-    return !!localStorage.getItem('axon_token') || !!localStorage.getItem('axon_refresh');
+    return !!localStorage.getItem('axon_token');
   }
 
-  /**
-   * Get current user data
-   */
   get currentUser() {
     const user = localStorage.getItem('axon_user');
     return user ? JSON.parse(user) : null;
-  }
-
-  /**
-   * Get current user data (alias)
-   */
-  getCurrentUser() {
-    return this.currentUser;
-  }
-
-  /**
-   * Get current user token
-   */
-  getToken() {
-    return localStorage.getItem('axon_token');
   }
 }

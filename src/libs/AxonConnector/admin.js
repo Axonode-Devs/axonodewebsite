@@ -2,123 +2,85 @@ export class AdminModule {
   constructor(client, handleError) {
     this.client = client;
     this._handleError = handleError;
-    this._user = null;
   }
 
-  /**
-   * Login as admin
-   */
   async login(email, password) {
     try {
-      const { data } = await this.client.post('/admin/login', { email, password });
-      if (data.access_token) {
-        localStorage.setItem('axon_admintoken', data.access_token);
-      }
-      
-      // CRITICAL: Must match the key in your Axios interceptor
-      if (data.refresh_token) {
-        localStorage.setItem('axon_admin_refresh', data.refresh_token);
-      }
+      // Endpoint: admin.py -> /sessions
+      const { data } = await this.client.post("/admin/sessions", {
+        email,
+        password,
+      });
+      const adminData = data.data;
 
-      if (data.user) {
-        localStorage.setItem('axon_admin_user', JSON.stringify(data.user));
-        this._user = data.user;
+      if (adminData.access_token) {
+        localStorage.setItem("axon_admintoken", adminData.access_token);
       }
-      return data;
+      if (adminData.refresh_token) {
+        localStorage.setItem("axon_admin_refresh", adminData.refresh_token);
+      }
+      if (adminData.user) {
+        localStorage.setItem("axon_admin_user", JSON.stringify(adminData.user));
+      }
+      return adminData;
+    } catch (err) {
+      throw this._handleError(err);
+    }
+  }
+  /**
+   * Check if an invite token is valid (Public Route)
+   */
+  async checkInvite(token) {
+    try {
+      // Matches the route in public.py: /api/invites/<token>/validity
+      const { data } = await this.client.get(`/invites/${token}/validity`);
+      return data.data;
     } catch (err) {
       throw this._handleError(err);
     }
   }
 
-  /**
-   * Logout current admin
-   */
+  get isTokenExpired() {
+    return false;
+  }
   logout() {
-    localStorage.removeItem('axon_admintoken');
-    localStorage.removeItem('axon_admin_refresh');
-    localStorage.removeItem('axon_admin_user');
+    localStorage.removeItem("axon_admintoken");
+    localStorage.removeItem("axon_admin_refresh");
+    localStorage.removeItem("axon_admin_user");
   }
-
-  /**
-   * Check if admin is signed in
-   */
-  get isSignedIn() {
-    return !!localStorage.getItem('axon_admin_refresh');
-  }
-
-  /**
-   * Check if token has expired
-   */
-  get tokenExpired() {
-    return !this.isSignedIn;
-  }
-
-  /**
-   * Get current admin token
-   */
-  getToken() {
-    return localStorage.getItem('axon_admintoken');
-  }
-
-  /**
-   * Get current admin user data
-   */
-  get currentUser() {
-    const user = localStorage.getItem('axon_admin_user');
-    return user ? JSON.parse(user) : null;
-  }
-
-  /**
-   * Decode and check if token is expired
-   */
 
   // ============ Applications ============
 
-  /**
-   * List applications with pagination
-   */
-  async listApplications(page = 1, perPage = 10) {
+  async listApplications(params = {}) {
     try {
-      const { data } = await this.client.get('/applications/', {
-        params: { page, per_page: perPage }
-      });
-      return data;
+      // Endpoint: applications.py -> GET /
+      const { data } = await this.client.get("/applications/", { params });
+      return data; // returns { data: [], meta: {} }
     } catch (err) {
       throw this._handleError(err);
     }
   }
 
   /**
-   * Get single application by ID
-   */
-  async getApplication(id) {
-    try {
-      const { data } = await this.client.get(`/applications/${id}`);
-      return data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
-  }
-
-  /**
-   * Approve an application
+   * Status transitions: applications.py -> PATCH /<id>
    */
   async approveApplication(id) {
     try {
-      const { data } = await this.client.post(`/applications/${id}/approve`);
-      return data;
+      const { data } = await this.client.patch(`/applications/${id}`, {
+        status: "approved",
+      });
+      return data.data;
     } catch (err) {
       throw this._handleError(err);
     }
   }
 
-  /**
-   * Reject an application
-   */
   async rejectApplication(id) {
     try {
-      const { data } = await this.client.post(`/applications/${id}/reject`);
-      return data;
+      const { data } = await this.client.patch(`/applications/${id}`, {
+        status: "rejected",
+      });
+      return data.data;
     } catch (err) {
       throw this._handleError(err);
     }
@@ -126,38 +88,31 @@ export class AdminModule {
 
   // ============ Invites ============
 
-  /**
-   * Generate an invite link
-   */
-  async createInvite(note = 'You') {
+  async createInvite(note = "General Invite") {
     try {
-      const { data } = await this.client.post('/admin/generate-invite', { 
-        for: note 
-      });
+      // Endpoint: admin.py -> POST /invites
+      const { data } = await this.client.post("/admin/invites", { for: note });
+      return data.data;
+    } catch (err) {
+      throw this._handleError(err);
+    }
+  }
+
+  async listInvites(params = {}) {
+    try {
+      // Endpoint: admin.py -> GET /invites
+      const { data } = await this.client.get("/admin/invites", { params });
       return data;
     } catch (err) {
       throw this._handleError(err);
     }
   }
 
-  /**
-   * Revoke an invite link
-   */
   async revokeInvite(id) {
     try {
+      // Endpoint: admin.py -> POST /invites/<id>/revoke
       const { data } = await this.client.post(`/admin/invites/${id}/revoke`);
       return data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
-  }
-  /**
-   * Revoke an invite link
-   */
-  async checkInvite(id) {
-    try {
-      const { data } = await this.client.post(`/admin/check-invite`, {token : id});
-      return data
     } catch (err) {
       throw this._handleError(err);
     }

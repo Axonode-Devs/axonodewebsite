@@ -62,23 +62,27 @@ onMounted(async () => {
 
   if (!inviteToken.value) {
     loading.value = false;
+    isValid.value = false;
     return;
   }
 
   try {
-    const data = await admin.checkInvite(inviteToken.value);
-    if (data?.valid) {
-      userName.value = data.for;
-      isValid.value = true;
-    }
+    // This now calls GET /api/invites/<token>/validity
+    const inviteData = await admin.checkInvite(inviteToken.value);
+    
+    // If the request didn't throw an error, it's valid!
+    // public.py returns: { id, note, expires_at }
+    userName.value = inviteData.note || "You";
+    isValid.value = true;
+    
   } catch (err) {
     console.error("Invite check failed:", err);
+    isValid.value = false;
+    
+    // Optional: Redirect back home if the link is dead
+    // router.push({ name: 'Home', query: { error: 'invalid-invite' } });
   } finally {
     loading.value = false;
-    // Bug fix: original compared the ref object itself instead of .value
-    if (!isValid.value) {
-      router.push({ name: 'Home', query: { error: 'invalid-invite' } });
-    }
   }
 });
 
