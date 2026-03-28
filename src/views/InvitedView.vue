@@ -47,7 +47,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { admin } from "../libs/AxonConnector";
+import { public_ } from "../libs/AxonConnector";
 
 const router = useRouter();
 const route = useRoute();
@@ -68,7 +68,7 @@ onMounted(async () => {
 
   try {
     // This now calls GET /api/invites/<token>/validity
-    const inviteData = await admin.checkInvite(inviteToken.value);
+    const inviteData = await public_.checkInvite(inviteToken.value);
     
     // If the request didn't throw an error, it's valid!
     // public.py returns: { id, note, expires_at }

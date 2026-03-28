@@ -52,6 +52,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { admin, auth } from '../libs/AxonConnector';
+import { ApiError } from '../libs/AxonConnector';
 
 import Navbar from '../components/Navbar.vue';
 const route = useRoute();
@@ -81,9 +82,12 @@ const handleSetup = async () => {
     errorMsg.value = 'Cannot proceed without a valid token.';
     return;
   }
-
   if (password.value.length < 8) {
     errorMsg.value = 'Password must be at least 8 characters long.';
+    return;
+  }
+  if (password.value !== confirmPassword.value) {   // ← was missing entirely
+    errorMsg.value = 'Passwords do not match.';
     return;
   }
 
@@ -91,17 +95,12 @@ const handleSetup = async () => {
   errorMsg.value = '';
 
   try {
-    const response = await auth.setPassword(token.value, password.value);
-    
-    // If your backend returns an access_token, the connector already saved it.
-    // We can now teleport them to the home page or a "success" state.
-    alert("Password set successfully! Welcome to Axonode.");
-    router.push('/'); 
-    
+    await auth.setPassword(token.value, password.value);
+    router.push('/');                               // ← no alert(), just navigate
   } catch (error) {
-    // This will catch expired tokens, weak passwords, or server errors
-    errorMsg.value = error.msg || 'Failed to set password. The link may have expired.';
-    console.error('Setup Error:', error);
+    errorMsg.value = error instanceof ApiError
+      ? error.message                               // ← was error.msg (doesn't exist)
+      : 'Failed to set password. The link may have expired.';
   } finally {
     loading.value = false;
   }

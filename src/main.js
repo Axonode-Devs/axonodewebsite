@@ -12,10 +12,10 @@ import { faCoffee, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 library.add(faCoffee, faChevronRight, faGithub)
 
-import { initializeAxon } from "./libs/AxonConnector"
+import { initAxonode } from "./libs/AxonConnector"
 
 // 2. Configure the library for production
-initializeAxon({
+initAxonode({
   baseURL: 'https://axonode.org/api/v1'
 })
 

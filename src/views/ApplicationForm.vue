@@ -23,15 +23,20 @@
                   <span class="step-number">{{ step }}</span>
                 </div>
               </div>
+
+              <!-- Invited badge — now shows inviteNote from the server if available -->
               <Transition name="fade-slide">
                 <div v-if="inviteToken" class="invited-badge">
-                  {{ $t('application_form.header.invited_badge') }}
+                  {{ inviteNote
+                      ? $t('application_form.header.invited_badge_for', { name: inviteNote })
+                      : $t('application_form.header.invited_badge') }}
                 </div>
               </Transition>
             </div>
 
             <form @submit.prevent="handleNextStep" class="axonode-form">
 
+              <!-- Step 1: Personal info -->
               <div v-if="currentStep === 1" class="step-content">
                 <h3 class="section-title"><i class="fa-regular fa-id-card"></i> {{ $t('application_form.steps.personal_info.section_title') }}</h3>
                 <div class="form-row">
@@ -65,6 +70,7 @@
                 </div>
               </div>
 
+              <!-- Step 2: Profile -->
               <div v-if="currentStep === 2" class="step-content">
                 <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> {{ $t('application_form.steps.profile.section_title') }}</h3>
                 <div class="form-group">
@@ -136,12 +142,35 @@
               </div>
 
               <div class="form-footer">
-                <button v-if="currentStep > 1" type="button" @click="currentStep--" class="back-btn">{{ $t('application_form.buttons.back') }}</button>
-                <button type="submit" class="submit-btn" :disabled="isSubmitting">
-                  <span>{{ currentStep === 3 ? (isSubmitting ? $t('application_form.buttons.submitting') : $t('application_form.buttons.submit')) : $t('application_form.buttons.next') }}</span>
-                  <i v-if="!isSubmitting" class="fa-solid" :class="currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'"></i>
-                </button>
+                <!-- Step-level validation error (interest not selected, etc.) -->
+                <Transition name="fade-slide">
+                  <div v-if="stepError" class="form-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    {{ stepError }}
+                  </div>
+                </Transition>
+
+                <!-- API-level submit error -->
+                <Transition name="fade-slide">
+                  <div v-if="submitError" class="form-error form-error--api">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    {{ submitError }}
+                  </div>
+                </Transition>
+
+                <div class="form-footer-actions">
+                  <button v-if="currentStep > 1" type="button" @click="currentStep--; stepError = ''" class="back-btn">
+                    {{ $t('application_form.buttons.back') }}
+                  </button>
+                  <button type="submit" class="submit-btn" :disabled="isSubmitting">
+                    <span>{{ currentStep === 3
+                      ? (isSubmitting ? $t('application_form.buttons.submitting') : $t('application_form.buttons.submit'))
+                      : $t('application_form.buttons.next') }}</span>
+                    <i v-if="!isSubmitting" class="fa-solid" :class="currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'"></i>
+                  </button>
+                </div>
               </div>
+
             </form>
           </template>
         </div>
@@ -153,198 +182,6 @@
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-import { ref, reactive, computed, watch, onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import Navbar from "../components/Navbar.vue";
-import Infocard from "../components/InfoCard.vue";
-import { submitApplication, admin } from "../libs/AxonConnector";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
-type ContactType = 'phone' | 'instagram' | 'discord' | 'telegram' | 'linkedin' | '';
-type ExperienceLevel = 'newbie' | 'junior' | 'mid' | 'senior';
-type EnglishLevel = 'A1-A2' | 'B1-B2' | 'C1' | 'C2' | '';
-
-
-interface AppForm {
-  fullname: string;
-  email: string;
-  contact_type: ContactType;
-  contact_value: string;
-  english_level: EnglishLevel;
-  experience_level: ExperienceLevel;
-  availability: string;
-  reason: string;
-  main_interest: string;
-  sub_interest: string[];
-  other_interest: string;
-  invite_token: string | null;
-}
-
-const router = useRouter();
-const route = useRoute();
-
-const currentStep = ref(1);
-const isSubmitting = ref(false);
-const isSubmitted = ref(false);
-const inviteToken = ref<string | null>(null);
-
-const form = reactive<AppForm>({
-  fullname: "",
-  email: "",
-  contact_type: "",
-  contact_value: "",
-  english_level: "",
-  experience_level: "junior",
-  availability: "",
-  reason: "",
-  main_interest: "",
-  sub_interest: [],
-  other_interest: "",
-  invite_token: null,
-});
-
-const contactTypes: Record<string, null> = {
-  discord: null,
-  phone: null,
-  instagram: null,
-  telegram: null,
-  linkedin: null,
-};
-
-const englishLevels: Record<string, { value: EnglishLevel }> = {
-  a1_a2: { value: "A1-A2" },
-  b1_b2: { value: "B1-B2" },
-  c1:    { value: "C1" },
-  c2:    { value: "C2" },
-};
-
-const experienceLevels: Record<string, null> = {
-  newbie: null,
-  junior: null,
-  mid:    null,
-  senior: null,
-};
-
-const interestAreas = [
-  {
-    id: "technology",
-    sub: [
-      { id: "frontend" },
-      { id: "backend" },
-      { id: "ai" },
-      { id: "system_design" },
-      { id: "embedded" },
-      { id: "cybersecurity" },
-      { id: "gamedev" },
-    ],
-  },
-  {
-    id: "design",
-    sub: [
-      { id: "uiux" },
-      { id: "graphic" },
-      { id: "3d" },
-      { id: "motion" },
-    ],
-  },
-  {
-    id: "business",
-    sub: [
-      { id: "startup" },
-      { id: "marketing" },
-      { id: "sales" },
-      { id: "product" },
-    ],
-  },
-  {
-    id: "creative",
-    sub: [
-      { id: "music" },
-      { id: "writing" },
-      { id: "film" },
-      { id: "content" },
-    ],
-  },
-  { id: "other", sub: [] },
-];
-
-onMounted(async () => {
-  const token = route.query.invite as string;
-  if (token) {
-    try {
-      const data = await admin.checkInvite(token);
-      if (data.valid) {
-        inviteToken.value = token;
-        form.invite_token = token;
-      }
-    } catch (error) {
-      console.error("Error checking token", error);
-    }
-  }
-});
-
-const selectedInterest = computed(() =>
-  interestAreas.find((i) => i.id === form.main_interest)
-);
-
-watch(() => form.main_interest, () => {
-  form.sub_interest = [];
-  form.other_interest = "";
-});
-
-function handleNextStep() {
-  if (currentStep.value < 3) {
-    if (currentStep.value === 2) {
-      if (!form.main_interest) {
-        alert($t('application_form.validation.select_interest'));
-        return;
-      }
-      if (form.main_interest === 'other' && !form.other_interest.trim()) {
-        alert($t('application_form.validation.describe_interest'));
-        return;
-      }
-    }
-    currentStep.value++;
-  } else {
-    submitForm();
-  }
-}
-
-const submitForm = async () => {
-  if (!form.main_interest) {
-    alert($t('application_form.validation.select_main_interest'));
-    return;
-  }
-
-  if (selectedInterest.value?.sub?.length && form.sub_interest.length === 0) {
-    alert($t('application_form.validation.select_sub_interest'));
-    return;
-  }
-
-  isSubmitting.value = true;
-
-  try {
-    const { other_interest, ...rest } = form;
-    const payload = {
-      ...rest,
-      main_interest: form.main_interest === 'other'
-        ? `other: ${other_interest.trim()}`
-        : form.main_interest,
-    };
-
-    await submitApplication(payload);
-    isSubmitted.value = true;
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    console.error("Error submitting application:", error);
-    alert($t('application_form.validation.generic_error', { error: message }));
-  } finally {
-    isSubmitting.value = false;
-  }
-};
-</script>
 
 <style scoped>
 .stepper {
@@ -449,10 +286,42 @@ html.dark .form-wrapper {
   margin-bottom: 50px;
 }
 
+/* ── Form footer — errors stack above buttons ─────────────────────────── */
 .form-footer {
   display: flex;
-  gap: 15px;
+  flex-direction: column;   /* changed: was row, errors now stack above buttons */
+  gap: 12px;
   margin-top: 30px;
+}
+
+.form-footer-actions {
+  display: flex;
+  gap: 15px;
+}
+
+/* ── Inline error messages ────────────────────────────────────────────── */
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  background: rgba(254, 120, 178, 0.1);
+  border: 1px solid rgba(254, 120, 178, 0.3);
+  color: #fe78b2;
+}
+
+/* API errors get a slightly stronger border */
+.form-error--api {
+  background: rgba(254, 120, 178, 0.15);
+  border-color: rgba(254, 120, 178, 0.5);
+}
+
+html.dark .form-error,
+html.dark .form-error--api {
+  background: rgba(254, 120, 178, 0.08);
 }
 
 .title {
@@ -590,6 +459,7 @@ html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
   color: var(--text-color);
   cursor: pointer;
   font-weight: 600;
+  white-space: nowrap;   /* prevent label wrapping on small widths */
 }
 
 .submit-btn {
@@ -611,6 +481,7 @@ html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
 .submit-btn:hover { transform: translateY(-2px); opacity: 0.95; }
 .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
+/* ── Invited badge ─────────────────────────────────────────────────────── */
 .invited-badge {
   display: inline-block;
   background: linear-gradient(135deg, #78dee7 0%, #bb85df 100%);
@@ -621,11 +492,19 @@ html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
   font-weight: 700;
   margin-top: 12px;
   box-shadow: 0 4px 10px rgba(187, 133, 223, 0.3);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;   /* long invite notes won't break the layout */
 }
 
-.fade-slide-enter-active, .fade-slide-leave-active { transition: all 0.3s ease; }
-.fade-slide-enter-from, .fade-slide-leave-to { opacity: 0; transform: translateY(-10px); }
+/* ── Transitions ───────────────────────────────────────────────────────── */
+.fade-slide-enter-active,
+.fade-slide-leave-active { transition: all 0.3s ease; }
+.fade-slide-enter-from,
+.fade-slide-leave-to { opacity: 0; transform: translateY(-10px); }
 
+/* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 992px) {
   .layout-grid { grid-template-columns: 1fr; }
 }
@@ -636,5 +515,196 @@ html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
   .grid-options { grid-template-columns: 1fr 1fr; }
   .form-group-row { flex-direction: column; }
   .contact-select { flex: unset; }
+  .form-footer-actions { flex-direction: column; }
+  .back-btn { width: 100%; text-align: center; }
 }
 </style>
+<script setup lang="ts">
+import { ref, reactive, computed, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import Navbar from "../components/Navbar.vue";
+import Infocard from "../components/InfoCard.vue";
+import { public_ } from "../libs/AxonConnector";  // ← submitApplication lives here
+import { ApiError } from "../libs/AxonConnector/error.js";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
+type ContactType     = 'phone' | 'instagram' | 'discord' | 'telegram' | 'linkedin' | '';
+type ExperienceLevel = 'newbie' | 'junior' | 'mid' | 'senior';
+type EnglishLevel    = 'A1-A2' | 'B1-B2' | 'C1' | 'C2' | '';
+
+interface AppForm {
+  fullname:         string;
+  email:            string;
+  contact_type:     ContactType;
+  contact_value:    string;
+  english_level:    EnglishLevel;
+  experience_level: ExperienceLevel;
+  availability:     string;
+  reason:           string;
+  main_interest:    string;
+  sub_interest:     string[];
+  other_interest:   string;
+  invite_token:     string | null;
+}
+
+const router = useRouter();
+const route  = useRoute();
+
+const currentStep   = ref(1);
+const isSubmitting  = ref(false);
+const isSubmitted   = ref(false);
+const inviteToken   = ref<string | null>(null);
+const inviteNote    = ref<string | null>(null);  // friendly label from the invite
+const stepError     = ref("");                    // inline error — replaces alert()
+const submitError   = ref("");
+
+const form = reactive<AppForm>({
+  fullname:         "",
+  email:            "",
+  contact_type:     "",
+  contact_value:    "",
+  english_level:    "",
+  experience_level: "junior",
+  availability:     "",
+  reason:           "",
+  main_interest:    "",
+  sub_interest:     [],
+  other_interest:   "",
+  invite_token:     null,
+});
+
+const contactTypes: Record<string, null> = {
+  discord: null, phone: null, instagram: null,
+  telegram: null, linkedin: null,
+};
+
+const englishLevels: Record<string, { value: EnglishLevel }> = {
+  a1_a2: { value: "A1-A2" },
+  b1_b2: { value: "B1-B2" },
+  c1:    { value: "C1" },
+  c2:    { value: "C2" },
+};
+
+const experienceLevels: Record<string, null> = {
+  newbie: null, junior: null, mid: null, senior: null,
+};
+
+const interestAreas = [
+  {
+    id: "technology",
+    sub: [
+      { id: "frontend" }, { id: "backend" },   { id: "ai" },
+      { id: "system_design" }, { id: "embedded" },
+      { id: "cybersecurity" }, { id: "gamedev" },
+    ],
+  },
+  {
+    id: "design",
+    sub: [{ id: "uiux" }, { id: "graphic" }, { id: "3d" }, { id: "motion" }],
+  },
+  {
+    id: "business",
+    sub: [{ id: "startup" }, { id: "marketing" }, { id: "sales" }, { id: "product" }],
+  },
+  {
+    id: "creative",
+    sub: [{ id: "music" }, { id: "writing" }, { id: "film" }, { id: "content" }],
+  },
+  { id: "other", sub: [] },
+];
+
+// ── Invite token check ────────────────────────────────────────────────────────
+onMounted(async () => {
+  const token = route.query.invite as string;
+  if (!token) return;
+
+  try {
+    // public_.checkInvite throws ApiError on invalid/expired/revoked tokens
+    // On success it returns { id, note, expires_at } — no .valid field
+    const invite = await public_.checkInvite(token);
+    inviteToken.value    = token;
+    inviteNote.value     = invite.note ?? null;
+    form.invite_token    = token;
+  } catch (err) {
+    // Token is invalid, expired, revoked, or already used —
+    // just proceed as a regular (non-invited) application, no hard error
+    if (err instanceof ApiError) {
+      console.warn(`Invite token invalid (${err.code}) — proceeding without invite`);
+    }
+  }
+});
+
+// ── Computed ──────────────────────────────────────────────────────────────────
+const selectedInterest = computed(() =>
+  interestAreas.find((i) => i.id === form.main_interest)
+);
+
+watch(() => form.main_interest, () => {
+  form.sub_interest  = [];
+  form.other_interest = "";
+});
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function handleNextStep() {
+  stepError.value = "";
+
+  if (currentStep.value === 2) {
+    if (!form.main_interest) {
+      stepError.value = t('application_form.validation.select_interest');
+      return;
+    }
+    if (form.main_interest === 'other' && !form.other_interest.trim()) {
+      stepError.value = t('application_form.validation.describe_interest');
+      return;
+    }
+  }
+
+  if (currentStep.value < 3) {
+    currentStep.value++;
+  } else {
+    submitForm();
+  }
+}
+
+// ── Submit ────────────────────────────────────────────────────────────────────
+const submitForm = async () => {
+  stepError.value   = "";
+  submitError.value = "";
+
+  if (!form.main_interest) {
+    stepError.value = t('application_form.validation.select_main_interest');
+    return;
+  }
+
+  if (selectedInterest.value?.sub?.length && form.sub_interest.length === 0) {
+    stepError.value = t('application_form.validation.select_sub_interest');
+    return;
+  }
+
+  isSubmitting.value = true;
+
+  try {
+    const { other_interest, ...rest } = form;
+    const payload = {
+      ...rest,
+      main_interest: form.main_interest === 'other'
+        ? `other: ${other_interest.trim()}`
+        : form.main_interest,
+    };
+
+    await public_.submitApplication(payload);  // ← correct module
+    isSubmitted.value = true;
+
+  } catch (err) {
+    // ApiError.message is already human-readable from the server
+    submitError.value = err instanceof ApiError
+      ? err.message
+      : t('application_form.validation.generic_error');
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+</script>
+

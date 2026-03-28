@@ -1,120 +1,166 @@
+/**
+ * axonode/admin.js — admin authentication + management routes
+ */
 export class AdminModule {
-  constructor(client, handleError) {
-    this.client = client;
-    this._handleError = handleError;
-  }
-
-  async login(email, password) {
-    try {
-      // Endpoint: admin.py -> /sessions
-      const { data } = await this.client.post("/admin/sessions", {
-        email,
-        password,
-      });
-      const adminData = data.data;
-
-      if (adminData.access_token) {
-        localStorage.setItem("axon_admintoken", adminData.access_token);
-      }
-      if (adminData.refresh_token) {
-        localStorage.setItem("axon_admin_refresh", adminData.refresh_token);
-      }
-      if (adminData.user) {
-        localStorage.setItem("axon_admin_user", JSON.stringify(adminData.user));
-      }
-      return adminData;
-    } catch (err) {
-      throw this._handleError(err);
-    }
-  }
   /**
-   * Check if an invite token is valid (Public Route)
+   * @param {import('axios').AxiosInstance} client
+   * @param {import('./keys.js').KEYS} keys
    */
-  async checkInvite(token) {
-    try {
-      // Matches the route in public.py: /api/invites/<token>/validity
-      const { data } = await this.client.get(`/invites/${token}/validity`);
-      return data.data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
+  constructor(client, keys) {
+    this._client = client;
+    this._keys   = keys;
   }
 
-  get isTokenExpired() {
-    return false;
+  // Attach admin token + refresh key to every outgoing request config.
+  _cfg() {
+    return {
+      _tokenKey:   this._keys.adminToken,
+      _refreshKey: this._keys.adminRefresh,
+    };
   }
+
+  // ── Auth ────────────────────────────────────────────────────────────────
+
+  /**
+   * POST /api/v1/admin/sessions
+   *
+   * @param   {string} email
+   * @param   {string} password
+   * @returns {{ access_token, refresh_token, user }}
+   */
+  async login(email, password) {
+    const { data } = await this._client.post(
+      '/admin/sessions',
+      { email, password },
+      this._cfg(),
+    );
+    this._saveSession(data.data);
+    return data.data;
+  }
+
+  /** Client-side logout. */
   logout() {
-    localStorage.removeItem("axon_admintoken");
-    localStorage.removeItem("axon_admin_refresh");
-    localStorage.removeItem("axon_admin_user");
+    localStorage.removeItem(this._keys.adminToken);
+    localStorage.removeItem(this._keys.adminRefresh);
+    localStorage.removeItem(this._keys.adminUser);
   }
 
-  // ============ Applications ============
+  /** @returns {boolean} */
+  get isLoggedIn() {
+    return !!localStorage.getItem(this._keys.adminToken);
+  }
 
+  /** @returns {object|null} */
+  get currentUser() {
+    const raw = localStorage.getItem(this._keys.adminUser);
+    return raw ? JSON.parse(raw) : null;
+  }
+
+  // ── Applications ─────────────────────────────────────────────────────────
+
+  /**
+   * GET /api/v1/applications
+   *
+   * @param {object} [params]
+   * @param {string} [params.status]        "pending"|"invited"|"approved"|"rejected"
+   * @param {string} [params.search]
+   * @param {string} [params.search_field]  "fullname"|"email"
+   * @param {string} [params.sort_by]       "created_at"|"fullname"|"email"|"status"
+   * @param {string} [params.order]         "asc"|"desc"
+   * @param {string} [params.from_date]     ISO date e.g. "2024-01-01"
+   * @param {string} [params.to_date]       ISO date e.g. "2024-12-31"
+   * @param {number} [params.page]
+   * @param {number} [params.per_page]
+   * @returns {{ data: object[], meta: { total, pages, page, per_page } }}
+   */
   async listApplications(params = {}) {
-    try {
-      // Endpoint: applications.py -> GET /
-      const { data } = await this.client.get("/applications/", { params });
-      return data; // returns { data: [], meta: {} }
-    } catch (err) {
-      throw this._handleError(err);
-    }
+    const { data } = await this._client.get(
+      '/applications/',
+      { ...this._cfg(), params },
+    );
+    return data;
   }
 
   /**
-   * Status transitions: applications.py -> PATCH /<id>
+   * PATCH /api/v1/applications/<id>
+   * @param   {number} id
+   * @returns {object} updated application
    */
   async approveApplication(id) {
-    try {
-      const { data } = await this.client.patch(`/applications/${id}`, {
-        status: "approved",
-      });
-      return data.data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
+    const { data } = await this._client.patch(
+      `/applications/${id}`,
+      { status: 'approved' },
+      this._cfg(),
+    );
+    return data.data;
   }
 
+  /**
+   * PATCH /api/v1/applications/<id>
+   * @param   {number} id
+   * @returns {object} updated application
+   */
   async rejectApplication(id) {
-    try {
-      const { data } = await this.client.patch(`/applications/${id}`, {
-        status: "rejected",
-      });
-      return data.data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
+    const { data } = await this._client.patch(
+      `/applications/${id}`,
+      { status: 'rejected' },
+      this._cfg(),
+    );
+    return data.data;
   }
 
-  // ============ Invites ============
+  // ── Invites ──────────────────────────────────────────────────────────────
 
-  async createInvite(note = "General Invite") {
-    try {
-      // Endpoint: admin.py -> POST /invites
-      const { data } = await this.client.post("/admin/invites", { for: note });
-      return data.data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
-  }
-
+  /**
+   * GET /api/v1/admin/invites
+   *
+   * @param {object} [params]
+   * @param {string} [params.status]    "active"|"used"|"revoked"|"expired"
+   * @param {string} [params.sort_by]   "created_at"|"expires_at"
+   * @param {string} [params.order]     "asc"|"desc"
+   * @param {number} [params.page]
+   * @param {number} [params.per_page]
+   * @returns {{ data: object[], meta: { total, pages, page, per_page } }}
+   */
   async listInvites(params = {}) {
-    try {
-      // Endpoint: admin.py -> GET /invites
-      const { data } = await this.client.get("/admin/invites", { params });
-      return data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
+    const { data } = await this._client.get(
+      '/admin/invites',
+      { ...this._cfg(), params },
+    );
+    return data;
   }
 
+  /**
+   * POST /api/v1/admin/invites
+   * @param   {string} [note]
+   * @returns {object} created invite, includes invite_link
+   */
+  async createInvite(note = 'General Invite') {
+    const { data } = await this._client.post(
+      '/admin/invites',
+      { note },
+      this._cfg(),
+    );
+    return data.data;
+  }
+
+  /**
+   * PATCH /api/v1/admin/invites/<id>
+   * @param   {number} id
+   * @returns {object} updated invite
+   */
   async revokeInvite(id) {
-    try {
-      // Endpoint: admin.py -> POST /invites/<id>/revoke
-      const { data } = await this.client.post(`/admin/invites/${id}/revoke`);
-      return data;
-    } catch (err) {
-      throw this._handleError(err);
-    }
+    const { data } = await this._client.patch(
+      `/admin/invites/${id}`,
+      { revoked: true },
+      this._cfg(),
+    );
+    return data.data;
+  }
+
+  _saveSession({ access_token, refresh_token, user }) {
+    if (access_token)  localStorage.setItem(this._keys.adminToken,   access_token);
+    if (refresh_token) localStorage.setItem(this._keys.adminRefresh, refresh_token);
+    if (user)          localStorage.setItem(this._keys.adminUser,    JSON.stringify(user));
   }
 }

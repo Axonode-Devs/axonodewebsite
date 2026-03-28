@@ -84,16 +84,15 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import { submitApplication } from '../libs/AxonConnector';
+import { ApiError } from '../libs/AxonConnector/error';
+import { public_ } from '../libs/AxonConnector'; // ← correct module
 
-// ── Form state ────────────────────────────────────────────────
 const form = reactive({ name: '', email: '', message: '' });
 const errors = reactive({ name: '', email: '', message: '' });
 const isSubmitting = ref(false);
 const isSubmitted  = ref(false);
 const apiError     = ref('');
 
-// ── Validation ────────────────────────────────────────────────
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(): boolean {
@@ -105,29 +104,28 @@ function validate(): boolean {
   return !errors.name && !errors.email && !errors.message;
 }
 
-// ── Submit ────────────────────────────────────────────────────
 async function onSubmit() {
   apiError.value = '';
   if (!validate()) return;
 
   isSubmitting.value = true;
   try {
-    await submitApplication({
+    await public_.submitContact({       // ← correct method
       name:    form.name.trim(),
       email:   form.email.trim(),
       message: form.message.trim(),
     });
     isSubmitted.value = true;
-  } catch (err: any) {
-    apiError.value =
-      err?.response?.data?.error ??
-      'Something went wrong. Please try again.';
+  } catch (err) {
+    // ApiError instances carry .message directly — no .response wrapper
+    apiError.value = err instanceof ApiError
+      ? err.message
+      : 'Something went wrong. Please try again.';
   } finally {
     isSubmitting.value = false;
   }
 }
 
-// ── Reset ─────────────────────────────────────────────────────
 function resetForm() {
   form.name = form.email = form.message = '';
   errors.name = errors.email = errors.message = '';

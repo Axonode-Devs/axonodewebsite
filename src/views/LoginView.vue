@@ -64,6 +64,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { admin, auth } from '../libs/AxonConnector';
+import { ApiError } from '../libs/AxonConnector/error.js';
 
 import Navbar from '../components/Navbar.vue';
 
@@ -78,18 +79,18 @@ const handleLogin = async () => {
   loading.value = true;
   errorMsg.value = '';
   try {
-    if (isAdmin.value){
+    if (isAdmin.value) {
       await admin.login(email.value, password.value);
       router.push('/admin');
-      console.log("Admin login successful, redirecting to /admin");
-    }
-    else{
-      await auth.login(email.value, password.value);
+    } else {
+      await auth.signIn(email.value, password.value);  // ← was auth.login
       router.push('/dashboard');
     }
   } catch (error) {
-    errorMsg.value = 'Login failed. Please check your credentials.';
-    console.error(error.code);
+    // ApiError.message is already human-readable from the server
+    errorMsg.value = error instanceof ApiError
+      ? error.message
+      : 'Login failed. Please check your credentials.';
   } finally {
     loading.value = false;
   }

@@ -125,12 +125,18 @@ const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value; };
 const closeMenu  = () => { isMenuOpen.value = false; };
 const handleScroll = () => { isScrolled.value = window.scrollY > 20; };
 
+const handleSessionExpiry = () => { isLoggedIn.value = false; };
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-  isLoggedIn.value = !admin.tokenExpired;
+  window.addEventListener('axonode:session-expired', handleSessionExpiry);
+  isLoggedIn.value = admin.isLoggedIn;
 });
 
-onUnmounted(() => window.removeEventListener('scroll', handleScroll));
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('axonode:session-expired', handleSessionExpiry);
+});
 
 const handleLoginClick = () => router.push(isLoggedIn.value ? '/admin' : '/login');
 const goToApply        = () => router.push('/join');

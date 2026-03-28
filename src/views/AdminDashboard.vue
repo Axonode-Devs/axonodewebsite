@@ -1,6 +1,9 @@
 <template>
   <Navbar />
   <div class="admin-page">
+    <div v-if="actionError" class="api-error">
+      <i class="fa-solid fa-triangle-exclamation"></i> {{ actionError }}
+    </div>
     <div class="background-mesh"></div>
     <div class="content-wrapper">
       <div class="tabs">
@@ -201,12 +204,12 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 import { admin } from "../libs/AxonConnector";
+import { ApiError } from "../libs/AxonConnector/error.js";
 
 const apps = ref([]);
 const loading = ref(true);
@@ -218,10 +221,20 @@ const inviteName = ref("");
 const inviteLoading = ref(false);
 const inviteSuccess = ref(null);
 const copySuccess = ref(false);
+const actionError = ref(""); // replaces alert() for in-UI error display
+
+// Pagination state
+const page = ref(1);
+const perPage = ref(20);
+const total = ref(0);
+const hasMore = computed(() => apps.value.length < total.value);
+
 const router = useRouter();
 
-const getInitials = (name) => {
-  return name
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+const getInitials = (name: string) =>
+  name
     ? name
         .split(" ")
         .map((n) => n[0])
@@ -229,50 +242,72 @@ const getInitials = (name) => {
         .toUpperCase()
         .substring(0, 2)
     : "??";
-};
 
-const formatDate = (dateStr) => {
+const formatDate = (dateStr: string) => {
   if (!dateStr) return "";
-  const date = new Date(dateStr);
   return new Intl.DateTimeFormat("tr-TR", {
     day: "numeric",
     month: "short",
-  }).format(date);
+  }).format(new Date(dateStr));
 };
 
-const formatStatus = (status) => {
-  if (status === "pending") return "Beklemede";
-  if (status === "approved") return "Onaylandı";
-  if (status === "rejected") return "Reddedildi";
-  if (status === "invited") return "Davet Edildi ✦";
-};
+const formatStatus = (status: string) =>
+  ({
+    pending: "Beklemede",
+    approved: "Onaylandı",
+    rejected: "Reddedildi",
+    invited: "Davet Edildi ✦",
+  })[status] ?? status;
 
-const formatExperience = (val) => {
-  const map = {
+const formatExperience = (val: string) =>
+  ({
     newbie: "Beginner",
     junior: "Junior",
     mid: "Mid",
     senior: "Senior",
-  };
-  return map[val] || val;
-};
+  })[val] ?? val;
 
-const fetchApps = async () => {
-  // 1. isTokenExpired is now available in the updated admin.js
+// ── Data fetching ─────────────────────────────────────────────────────────────
 
+const fetchApps = async (reset = true) => {
   loading.value = true;
-  try {
-    const response = await admin.listApplications();
+  actionError.value = "";
 
-    apps.value = response.data || [];
-  } catch (error) {
-    console.error("Fetch error:", error);
+  if (reset) {
+    page.value = 1;
+    apps.value = [];
+  }
+
+  try {
+    const response = await admin.listApplications({
+      page: page.value,
+      per_page: perPage.value,
+    });
+    apps.value = reset
+      ? (response.data ?? [])
+      : [...apps.value, ...(response.data ?? [])];
+    total.value = response.meta?.total ?? 0;
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 401) {
+      // Silent refresh failed — interceptor already dispatched session-expired
+      return;
+    }
+    actionError.value =
+      err instanceof ApiError ? err.message : "Veriler yüklenemedi.";
   } finally {
     loading.value = false;
   }
 };
 
-const updateStatus = async (id, newStatus) => {
+const loadMore = async () => {
+  page.value++;
+  await fetchApps(false);
+};
+
+// ── Actions ───────────────────────────────────────────────────────────────────
+
+const updateStatus = async (id: number, newStatus: string) => {
+  actionError.value = "";
   try {
     if (newStatus === "approved") {
       await admin.approveApplication(id);
@@ -281,12 +316,14 @@ const updateStatus = async (id, newStatus) => {
     }
     await fetchApps();
     closeDetail();
-  } catch (error) {
-    alert("Hata: " + (error.msg || "İşlem başarısız."));
+  } catch (err) {
+    // Show error in UI — never use alert() in a dashboard
+    actionError.value =
+      err instanceof ApiError ? err.message : "İşlem başarısız.";
   }
 };
 
-const openDetail = (app) => {
+const openDetail = (app: any) => {
   selectedApp.value = app;
   showRoleSelection.value = false;
 };
@@ -296,32 +333,34 @@ const closeDetail = () => {
 
 const generateInvite = async () => {
   if (!inviteName.value.trim()) {
-    alert("Lütfen bir ad girin.");
+    actionError.value = "Lütfen bir ad girin.";
     return;
   }
   inviteLoading.value = true;
+  actionError.value = "";
   try {
-    const result = await admin.createInvite(inviteName.value);
-    inviteSuccess.value = result;
+    const result = await admin.createInvite(inviteName.value.trim());
+    inviteSuccess.value = result; // result has invite_link from the server
     inviteName.value = "";
-  } catch (error) {
-    alert("Hata: " + (error.msg || "Davet oluşturulamadı."));
+  } catch (err) {
+    actionError.value =
+      err instanceof ApiError ? err.message : "Davet oluşturulamadı.";
   } finally {
     inviteLoading.value = false;
   }
 };
 
 const copyInviteLink = async () => {
-  if (inviteSuccess.value?.invite_link) {
-    try {
-      await navigator.clipboard.writeText(inviteSuccess.value.invite_link);
-      copySuccess.value = true;
-      setTimeout(() => {
-        copySuccess.value = false;
-      }, 2000);
-    } catch (err) {
-      alert("Bağlantı kopyalanamadı.");
-    }
+  const link = inviteSuccess.value?.invite_link;
+  if (!link) return;
+  try {
+    await navigator.clipboard.writeText(link);
+    copySuccess.value = true;
+    setTimeout(() => {
+      copySuccess.value = false;
+    }, 2000);
+  } catch {
+    actionError.value = "Bağlantı kopyalanamadı.";
   }
 };
 
@@ -329,7 +368,10 @@ const closeInviteModal = () => {
   showInviteModal.value = false;
   inviteSuccess.value = null;
   inviteName.value = "";
+  actionError.value = "";
 };
+
+// ── Computed ──────────────────────────────────────────────────────────────────
 
 const notacceptedApps = computed(() =>
   apps.value.filter((a) => a.status === "pending" || a.status === "invited"),
@@ -341,7 +383,18 @@ const filteredApps = computed(() =>
   activeTab.value === "pending" ? notacceptedApps.value : historyApps.value,
 );
 
-onMounted(fetchApps);
+// ── Lifecycle ─────────────────────────────────────────────────────────────────
+
+const handleSessionExpiry = () => router.push("/login");
+
+onMounted(() => {
+  fetchApps();
+  window.addEventListener("axonode:session-expired", handleSessionExpiry);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("axonode:session-expired", handleSessionExpiry);
+});
 </script>
 
 <style scoped>
