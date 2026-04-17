@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { admin } from '../libs/AxonConnector'
-import HomeView       from '../views/HomeView.vue'
-import AboutView      from '../views/AboutView.vue'
+import HomeView from '../views/HomeView.vue'
+import AboutView from '../views/AboutView.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
-import NotFound       from '../views/NotFound.vue'
-import SetPassword    from '../views/SetPassword.vue'
+import NotFound from '../views/NotFound.vue'
+import SetPassword from '../views/SetPassword.vue'
 
 const routes = [
   {
@@ -36,6 +36,21 @@ const routes = [
     path: '/invited',
     name: 'Invited',
     component: () => import('../views/InvitedView.vue'),
+  },
+  {
+    path: '/teams/:teamId',
+    name: 'TeamView',
+    component: () => import('../views/TeamView.vue'),
+  },
+  {
+    path: '/teams',
+    name: 'TeamsView',
+    component: () => import('../views/TeamsView.vue'),
+  },
+  {
+    path: '/teams/frc0000',
+    name: 'VoltX',
+    component: () => import('../components/voltx/Home.vue'),
   },
   {
     path: '/admin',

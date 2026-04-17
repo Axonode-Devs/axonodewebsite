@@ -14,6 +14,20 @@
 
           <p class="subtext">{{ $t('hero.subtext') }}</p>
 
+          <!-- Mobile Video (Simple view, between text and buttons) -->
+          <div v-if="isMobile" class="mobile-video-container">
+            <div class="mobile-video-card">
+              <video
+                src="/video.mp4"
+                class="hero-video"
+                autoplay
+                loop
+                muted
+                playsinline
+              ></video>
+            </div>
+          </div>
+
           <div class="action-group">
             <button class="btn btn-primary" @click="goToApply">
               <span>{{ $t('hero.buttons.join') }}</span>
@@ -536,7 +550,7 @@ html.dark .badge-inner {
     left: 2rem;
   }
 
-  .headline { font-size: 3rem; }
+  .headline { font-size: 2.8rem; }
 
   .visual-column {
     width: 100%;
@@ -555,9 +569,9 @@ html.dark .badge-inner {
 @media (max-width: 640px) {
   .hero-title { display: none; }
 
-  .headline { font-size: 2.5rem; }
+  .headline { font-size: 2.2rem; }
 
-  .subtext { font-size: 1.1rem; }
+  .subtext { font-size: 1rem; margin-bottom: 32px; }
 
   .action-group {
     flex-direction: column;
@@ -567,11 +581,35 @@ html.dark .badge-inner {
   .btn {
     width: 100%;
     justify-content: center;
+    padding: 12px 24px;
+    font-size: 1rem;
   }
 
   .video-placeholder-card,
   .btn-secondary {
     backdrop-filter: none;
+  }
+
+  /* Mobile Video Styles */
+  .mobile-video-container {
+    width: 100%;
+    margin-bottom: 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-video-card {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .mobile-video-card .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 </style>

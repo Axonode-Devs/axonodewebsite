@@ -61,7 +61,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 .about-section {
   position: relative;
-  padding: 80px 0;
+  padding: 0px 0;
   display: block;
   overflow: visible;
   font-family: 'Inter', sans-serif;
@@ -126,7 +126,6 @@ html.dark .title { color: #9ca3af; }
   position: relative;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 

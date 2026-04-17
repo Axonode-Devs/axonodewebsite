@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 config.autoAddCss = false
-import { faCoffee, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faChevronRight, faGear } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-library.add(faCoffee, faChevronRight, faGithub)
+library.add(faCoffee, faChevronRight, faGithub, faGear)
 
 import { initAxonode } from "./libs/AxonConnector"
 

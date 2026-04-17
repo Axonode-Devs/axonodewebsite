@@ -296,7 +296,7 @@ html.dark .btn-gradient {
 }
 
 html.dark .btn-gradient:hover {
-  background: linear-gradient(0deg, #e8639c 0%, #5ac0c9 100%);
+  background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.2);
 }
@@ -329,7 +329,7 @@ html.dark .mobile-toggle { color: #f9fafb; }
   z-index: 999;
   pointer-events: auto;
 }
-html.dark .mobile-drawer { background: rgba(17, 24, 39, 0.98); }
+html.dark .mobile-drawer { background: rgba(29, 29, 29, 0.98); }
 .mobile-drawer.drawer-open { right: 0; }
 
 .mobile-nav-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -355,6 +355,6 @@ html.dark .mobile-nav-links .nav-item { border-bottom-color: rgba(255,255,255,0.
   .mobile-right    { display: flex; }
   .mobile-drawer   { display: flex; }
   .drawer-backdrop { display: block; }
-  .nav-container { padding: 10px 20px; width: calc(100% - 32px); }
+  .nav-container { padding: 10px 20px; width: calc(100% - 60px); }
 }
 </style>

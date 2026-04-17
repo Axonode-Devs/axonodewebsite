@@ -5,9 +5,9 @@
     <TeamMarquee />
 
     <div class="orb-section">
-      <div class="shared-orb orb-teal"></div>
-      <div class="shared-orb orb-pink"></div>
+      <VerticalSlider />
       <WhatWeDo />
+      
       <HDivider />
       <AboutUs />
     </div>
@@ -28,6 +28,7 @@ import Founders from '../components/Founders.vue'
 import ProjectsSection from '../components/ProjectsSection.vue';
 import InfoSection from '../components/InfoSection.vue';
 import ContactSection from '../components/ContactSection.vue';
+import VerticalSlider from '../components/VerticalSlider.vue';
 </script>
 
 <style scoped>
