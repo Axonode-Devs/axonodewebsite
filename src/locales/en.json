@@ -289,5 +289,48 @@
     "title": "Not Found??",
     "desc": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
     "back": "Go Back"
+  },
+  "projects": {
+    "section_title_main": "OUR",
+    "section_title_gradient": "PROJECTS",
+    "wavefy": {
+      "title": "Wavefy App",
+      "subtitle": "A user-friendly music app",
+      "tag": "Wavefy",
+      "leftTitle": "Wavefy\nMusic App",
+      "leftDesc": "A user friendly music app developed by Axonode Team.",
+      "stats": {
+        "users": "Users",
+        "consistency": "Search Consistency",
+        "uptime": "Uptime"
+      },
+      "badge": "BETA"
+    },
+    "voltx": {
+      "title": "VoltX Robotics",
+      "subtitle": "First Robotics Competition Team",
+      "tag": "Robotics",
+      "leftTitle": "VoltX\nRobotics",
+      "leftDesc": "A Turkiye located FRC team powered by Axonode Team.",
+      "stats": {
+        "season": "Season",
+        "members": "Members",
+        "companies": "Companies"
+      },
+      "badge": "FRC"
+    },
+    "soon": {
+      "title": "In Development",
+      "subtitle": "Next project is under development",
+      "tag": "COMING SOON",
+      "leftTitle": "In\nDevelopment",
+      "leftDesc": "Axonode will keep developing new projects.",
+      "stats": {
+        "status": "In",
+        "progress": "Development",
+        "count": "Project"
+      },
+      "badge": "SOON"
+    }
   }
 }

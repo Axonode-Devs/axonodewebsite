@@ -152,7 +152,7 @@ html.dark .lang-option { color: #d1d5db; }
 
 .lang-option:hover {
   background: rgba(120, 222, 231, 0.1);
-  color: #111827;
+  color: #181818;
 }
 
 html.dark .lang-option:hover {

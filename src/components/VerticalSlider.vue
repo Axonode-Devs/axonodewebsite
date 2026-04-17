@@ -1,25 +1,26 @@
 <template>
   <div class="slider-section">
-    <h2 class="section-title">PROJECTS</h2>
+    <h2 class="section-title">
+      {{ $t('projects.section_title_main') }}
+      <span class="gradient-text">{{ $t('projects.section_title_gradient') }}</span>
+    </h2>
     <div class="carousel-wrapper">
-      <!-- Sol Panel -->
       <div class="side-panel left-panel">
         <transition name="panel-fade" mode="out-in">
           <div :key="activeIndex" class="panel-content">
-            <div class="panel-tag" :style="{ color: activeCard.accent, fontFamily: 'Outfit, sans-serif' }">{{ activeCard.tag }}</div>
-            <h2 class="panel-title" :style="{ color: activeCard.leftTitleColor, fontFamily: 'Outfit, sans-serif' }">{{ activeCard.leftTitle }}</h2>
-            <p class="panel-desc" :style="{ color: activeCard.leftDescColor, fontFamily: 'DM Sans, sans-serif' }">{{ activeCard.leftDesc }}</p>
+            <div class="panel-tag" :style="{ color: activeCard.accent, fontFamily: 'Outfit, sans-serif' }">{{ $t(activeCard.tagKey) }}</div>
+            <h2 class="panel-title" :style="{ color: activeCard.leftTitleColor, fontFamily: 'Outfit, sans-serif' }">{{ $t(activeCard.leftTitleKey) }}</h2>
+            <p class="panel-desc" :style="{ color: activeCard.leftDescColor, fontFamily: 'DM Sans, sans-serif' }">{{ $t(activeCard.leftDescKey) }}</p>
             <ul class="panel-stats">
-              <li v-for="stat in activeCard.stats" :key="stat.label">
+              <li v-for="stat in activeCard.stats" :key="stat.labelKey">
                 <span class="stat-value" :style="{ color: activeCard.accent, fontFamily: 'Outfit, sans-serif' }">{{ stat.value }}</span>
-                <span class="stat-label" :style="{ fontFamily: 'DM Sans, sans-serif' }">{{ stat.label }}</span>
+                <span class="stat-label" :style="{ fontFamily: 'DM Sans, sans-serif' }">{{ $t(stat.labelKey) }}</span>
               </li>
             </ul>
           </div>
         </transition>
       </div>
 
-      <!-- Carousel Track -->
       <div class="carousel-track-container">
         <div
           class="carousel-track"
@@ -37,7 +38,6 @@
             @click="goTo(index)"
           >
             <div class="card-inner">
-              <!-- Tek logo fotoğrafı -->
               <div class="logo-box">
                 <font-awesome-icon
                   v-if="card.logo.isIcon"
@@ -54,16 +54,17 @@
               </div>
 
               <div class="card-meta">
-                <span class="card-title" :style="{ color: card.titleColor }">{{ card.title }}</span>
-                <span class="card-sub" :style="{ color: card.subColor }">{{ card.subtitle }}</span>
+                <span class="card-title" :style="{ color: card.titleColor }">{{ $t(card.titleKey) }}</span>
+                <span class="card-sub" :style="{ color: card.subColor }">{{ $t(card.subKey) }}</span>
               </div>
-              <div class="card-badge" :style="{ background: card.accent, color: card.badgetext }">{{ card.badge }}</div>
+              <div class="card-badge" :style="{ background: card.accent, color: card.badgetext || '#0a0a0a' }">
+                {{ $t(card.badgeKey) }}
+              </div>
             </div>
             <div class="card-glow" :style="{ background: card.accent }"></div>
           </div>
         </div>
 
-        <!-- Navigation Dots -->
         <div class="nav-dots">
           <button
             v-for="(card, i) in cards"
@@ -78,7 +79,6 @@
         </div>
       </div>
 
-      <!-- Sağ Panel — sadece fotoğraf -->
       <div class="side-panel right-panel">
         <transition name="panel-fade" mode="out-in">
           <div :key="activeIndex" class="right-photo-wrap">
@@ -101,7 +101,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 
 const activeIndex = ref(1)
@@ -109,12 +111,12 @@ const activeIndex = ref(1)
 const cards = [
   {
     id: 1,
-    title: 'Wavefy App',
-    subtitle: 'A user-friendly music app',
-    badge: 'BETA',
+    titleKey: 'projects.wavefy.title',
+    subKey: 'projects.wavefy.subtitle',
+    badgeKey: 'projects.wavefy.badge',
     accent: '#7b0828',
     cardBg: '#0f0e0e',
-    tag: 'Wavefy',
+    tagKey: 'projects.wavefy.tag',
     logo: {
       src: new URL('../assets/wavefy.png', import.meta.url),
       alt: 'DataStream Logo',
@@ -125,24 +127,24 @@ const cards = [
     leftTitleColor: '#e2e8f0',
     leftDescColor: 'rgba(226, 232, 240, 0.6)',
     rightPhoto: new URL('../assets/wavefyaxonode.png', import.meta.url),
-    leftTitle: 'Wavefy\nMusic App',
-    leftDesc: 'A user friendly music app developed by Axonode Team.',
+    leftTitleKey: 'projects.wavefy.leftTitle',
+    leftDescKey: 'projects.wavefy.leftDesc',
     stats: [
-      { value: '30+', label: 'Users' },
-      { value: '90%', label: 'Search Consistency' },
-      { value: '100%', label: 'Uptime' },
+      { value: '30+', labelKey: 'projects.wavefy.stats.users' },
+      { value: '90%', labelKey: 'projects.wavefy.stats.consistency' },
+      { value: '100%', labelKey: 'projects.wavefy.stats.uptime' },
     ],
     route: '/wavefy'
   },
   {
     id: 2,
-    title: 'VoltX Robotics',
-    subtitle: 'First Robotics Competition Team',
-    badge: 'FRC',
+    titleKey: 'projects.voltx.title',
+    subKey: 'projects.voltx.subtitle',
+    badgeKey: 'projects.voltx.badge',
     accent: '#252e2d',
     cardBg: '#ffff',
     badgetext: '#ffffff',
-    tag: 'Robotics',
+    tagKey: 'projects.voltx.tag',
     logo: {
       src: new URL('../assets/voltx-logo.png', import.meta.url),
       alt: 'VoltX Logo',
@@ -153,23 +155,23 @@ const cards = [
     leftTitleColor: '#a39baa',
     leftDescColor: 'rgba(163, 155, 170, 0.8)',
     rightPhoto: new URL('../assets/b1.png', import.meta.url),
-    leftTitle: 'VoltX\nRobotics',
-    leftDesc: 'A Turkiye located FRC team powered by Axonode Team.',
+    leftTitleKey: 'projects.voltx.leftTitle',
+    leftDescKey: 'projects.voltx.leftDesc',
     stats: [
-      { value: '2027', label: 'Season' },
-      { value: '20+', label: 'Members' },
-      { value: 'with/3', label: 'Companies' },
+      { value: '2027', labelKey: 'projects.voltx.stats.season' },
+      { value: '20+', labelKey: 'projects.voltx.stats.members' },
+      { value: 'with/3', labelKey: 'projects.voltx.stats.companies' },
     ],
     route: '/teams/frc0000'
   },
   {
     id: 3,
-    title: 'In Development',
-    subtitle: 'Next project is under development',
-    badge: 'SOON',
+    titleKey: 'projects.soon.title',
+    subKey: 'projects.soon.subtitle',
+    badgeKey: 'projects.soon.badge',
     accent: '#9C9C9C',
     cardBg: '#212121',
-    tag: 'COMING SOON',
+    tagKey: 'projects.soon.tag',
     logo: {
       isIcon: true,
       iconName: 'gear',
@@ -181,12 +183,12 @@ const cards = [
     leftTitleColor: '#e2e8f0',
     leftDescColor: 'rgba(226, 232, 240, 0.6)',
     rightPhoto: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&q=80',
-    leftTitle: 'In\nDevelopment',
-    leftDesc: 'Axonode will keep developing new projects.',
+    leftTitleKey: 'projects.soon.leftTitle',
+    leftDescKey: 'projects.soon.leftDesc',
     stats: [
-      { value: '0+', label: 'In' },
-      { value: '0%', label: 'Development' },
-      { value: '0', label: 'Project' },
+      { value: '0+', labelKey: 'projects.soon.stats.status' },
+      { value: '0%', labelKey: 'projects.soon.stats.progress' },
+      { value: '0', labelKey: 'projects.soon.stats.count' },
     ],
     route: '/teams'
   },
@@ -206,7 +208,6 @@ function getCardClass(index) {
 function goTo(index) {
   if (index >= 0 && index < cards.length) {
     if (activeIndex.value === index) {
-      // Navigate if clicked card is already active
       const route = cards[index].route
       if (route) router.push(route)
     } else {
@@ -246,11 +247,17 @@ function onTouchEnd(e) {
 .section-title {
   text-align: center;
   font-family: 'Outfit', sans-serif;
-  font-size: 42px;
-  font-weight: 800;
-  color: #e2e8f0;
-  margin-bottom: 60px;
-  letter-spacing: -0.02em;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #c9c9c9;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.gradient-text {
+  color:#c9c9c9;
+  background-clip: text;
+  font-weight: 600;
 }
 
 .carousel-wrapper {
@@ -265,14 +272,12 @@ function onTouchEnd(e) {
   box-sizing: border-box;
 }
 
-/* ─── Side Panels ─────────────────────────────── */
 .side-panel {
   width: 220px;
   min-width: 180px;
   flex-shrink: 0;
 }
 
-/* Sol panel içerik */
 .panel-content {
   display: flex;
   flex-direction: column;
@@ -337,7 +342,6 @@ function onTouchEnd(e) {
   letter-spacing: 0.05em;
 }
 
-/* ─── Sağ Panel — Fotoğraf ────────────────────── */
 .right-photo-wrap {
   position: relative;
   width: 220px;
@@ -365,7 +369,6 @@ function onTouchEnd(e) {
   pointer-events: none;
 }
 
-/* ─── Carousel Track ──────────────────────────── */
 .carousel-track-container {
   display: flex;
   flex-direction: column;
@@ -383,7 +386,6 @@ function onTouchEnd(e) {
   user-select: none;
 }
 
-/* ─── Cards ───────────────────────────────────── */
 .carousel-card {
   position: relative;
   width: 480px;
@@ -398,7 +400,6 @@ function onTouchEnd(e) {
     box-shadow 0.4s ease,
     height 0.4s ease;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  /* cardBg comes from :style binding */
 }
 
 .carousel-card.is-active {
@@ -435,7 +436,6 @@ function onTouchEnd(e) {
   gap: 20px;
 }
 
-/* ─── Logo Kutusu (tek görsel) ────────────────── */
 .logo-box {
   display: flex;
   align-items: center;
@@ -471,7 +471,6 @@ function onTouchEnd(e) {
   transform: rotate(45deg);
 }
 
-/* ─── Card Meta ───────────────────────────────── */
 .card-meta {
   flex: 1;
   display: flex;
@@ -492,7 +491,6 @@ function onTouchEnd(e) {
   font-family: 'Space Mono', monospace;
 }
 
-/* ─── Card Badge ──────────────────────────────── */
 .card-badge {
   font-family: 'Space Mono', monospace;
   font-size: 9px;
@@ -504,7 +502,6 @@ function onTouchEnd(e) {
   flex-shrink: 0;
 }
 
-/* ─── Glow Effect ─────────────────────────────── */
 .card-glow {
   position: absolute;
   bottom: -30px;
@@ -523,7 +520,6 @@ function onTouchEnd(e) {
   opacity: 0.35;
 }
 
-/* ─── Nav Dots ────────────────────────────────── */
 .nav-dots {
   display: flex;
   gap: 6px;
@@ -544,7 +540,6 @@ function onTouchEnd(e) {
   transform: scale(1.4);
 }
 
-/* ─── Panel Transition ────────────────────────── */
 .panel-fade-enter-active,
 .panel-fade-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -560,7 +555,6 @@ function onTouchEnd(e) {
   transform: translateY(-8px);
 }
 
-/* ─── Responsive ──────────────────────────────── */
 @media (max-width: 900px) {
   .carousel-wrapper {
     flex-direction: column;

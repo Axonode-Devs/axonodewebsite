@@ -288,5 +288,48 @@
     "title": "Sayfa Backrooms'da??",
     "desc": "Aradığınız sayfa silinmiş, değiştirilmiş ya da geçici süreliğine devre dışı bırakılmış olabilir.",
     "back": "Anasayfaya Geri Dön"
+  },
+  "projects": {
+    "section_title_main": "BİZİM",
+    "section_title_gradient": "PROJELERİMİZ",
+    "wavefy": {
+      "title": "Wavefy App",
+      "subtitle": "Kullanıcı dostu müzik uygulaması",
+      "tag": "Wavefy",
+      "leftTitle": "Wavefy\nMüzik Uygulaması",
+      "leftDesc": "Axonode Ekibi tarafından geliştirilen kullanıcı dostu bir müzik uygulaması.",
+      "stats": {
+        "users": "Kullanıcı",
+        "consistency": "Arama Tutarlılığı",
+        "uptime": "Çalışma Süresi"
+      },
+      "badge": "BETA"
+    },
+    "voltx": {
+      "title": "VoltX Robotics",
+      "subtitle": "First Robotics Competition Takımı",
+      "tag": "Robotik",
+      "leftTitle": "VoltX\nRobotik",
+      "leftDesc": "Türkiye merkezli, Axonode Ekibi tarafından desteklenen bir FRC takımı.",
+      "stats": {
+        "season": "Sezon",
+        "members": "Üye",
+        "companies": "Şirket"
+      },
+      "badge": "FRC"
+    },
+    "soon": {
+      "title": "Geliştirme Aşamasında",
+      "subtitle": "Sıradaki proje geliştirilmektedir",
+      "tag": "YAKINDA",
+      "leftTitle": "Geliştirme\nAşamasında",
+      "leftDesc": "Axonode yeni projeler geliştirmeye devam edecek.",
+      "stats": {
+        "status": "Geliştirme",
+        "progress": "Aşamasında",
+        "count": "Proje"
+      },
+      "badge": "YAKINDA"
+    }
   }
 }
