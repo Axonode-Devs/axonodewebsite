@@ -28,7 +28,7 @@ import Founders from '../components/Founders.vue'
 import ProjectsSection from '../components/ProjectsSection.vue';
 import InfoSection from '../components/InfoSection.vue';
 import ContactSection from '../components/ContactSection.vue';
-import VerticalSlider from '../components/VerticalSlider.vue';
+import VerticalSlider from '../components/ProjectsShow.vue';
 </script>
 
 <style scoped>

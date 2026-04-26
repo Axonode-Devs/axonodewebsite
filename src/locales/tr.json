@@ -41,7 +41,9 @@
       "head_community": "Topluluk Direktörü",
       "head_executive": "Yönetim Kurulu Başkanı",
       "deputy_community": "Topluluk Direktör Yardımcısı",
-      "head_media": "Medya Direktörü"
+      "head_productions": "Prodüksüyon Başkanı",
+      "head_media": "Medya Direktörü",
+      "head_pr": "Halkla İlişkiler Başkanı"
     }
   },
   "what_we_do": {

@@ -52,7 +52,7 @@ import { ref } from 'vue';
 const founders = ref([
   { 
     name: 'kaiross12',   
-    role: 'Head Community Director',        
+    role: 'Head of Productions',        
     username: 'kaiross12',
   },
   { 
@@ -72,7 +72,7 @@ const thanks = ref([
   { 
     name: 'Kaan610',   
     role: 'Head of Media',     
-    username: 'Kaan610',
+    username: 'Head of Public Relations',
   },
 ])
 

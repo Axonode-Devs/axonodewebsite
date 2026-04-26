@@ -14,19 +14,7 @@
 
           <p class="subtext">{{ $t('hero.subtext') }}</p>
 
-          <!-- Mobile Video (Simple view, between text and buttons) -->
-          <div v-if="isMobile" class="mobile-video-container">
-            <div class="mobile-video-card">
-              <video
-                src="/video.mp4"
-                class="hero-video"
-                autoplay
-                loop
-                muted
-                playsinline
-              ></video>
-            </div>
-          </div>
+          
 
           <div class="action-group">
             <button class="btn btn-primary" @click="goToApply">

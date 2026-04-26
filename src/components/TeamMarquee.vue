@@ -109,10 +109,9 @@ const selectedMember = ref(null);
 const isMobile = ref(false);
 
 const baseTeam = [
-  { name: 'kaiross12', role: 'team.roles.head_community',   username: 'kaiross12', color: '#BEECF0' },
-  { name: 'BersisSe',  role: 'team.roles.head_executive',   username: 'bersisse',  color: '#A59CE6' },
-  { name: 'lofnyy',    role: 'team.roles.deputy_community', username: 'lofnyy',    color: '#78bfda' },
-  { name: 'Kaan610',   role: 'team.roles.head_media',       username: 'Kaan610',   color: '#fe78b2' },
+  { name: 'Yaser Durabi', role: 'team.roles.head_productions',   username: 'kaiross12', color: '#BEECF0' },
+  { name: 'Bersis Sevimli',  role: 'team.roles.head_executive',   username: 'bersisse',  color: '#A59CE6' },
+  { name: 'Kaan Uygun',   role: 'team.roles.head_pr', username: 'Kaan610',   color: '#fe78b2' },
 ];
 
 const combinedTeam = ref([...baseTeam, ...baseTeam]);
@@ -139,7 +138,6 @@ const fetchTeam = async () => {
         const data = await res.json();
         return {
           ...member,
-          name: data.login || member.username,
           avatarUrl: data.avatar_url || `https://github.com/${member.username}.png`,
         };
       } catch {

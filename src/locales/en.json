@@ -41,7 +41,9 @@
       "head_community": "Head Community Director",
       "head_executive": "Head Executive",
       "deputy_community": "Deputy Community Director",
-      "head_media": "Head of Media"
+      "head_productions": "Head of Productions",
+      "head_media": "Head of Media",
+      "head_pr": "Head of Public Relations"
     }
   },
   "what_we_do": {

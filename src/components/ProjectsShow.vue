@@ -78,8 +78,8 @@
           ></button>
         </div>
       </div>
-
-      <div class="side-panel right-panel">
+      
+      <div v-if="!isMobile" class="side-panel right-panel">
         <transition name="panel-fade" mode="out-in">
           <div :key="activeIndex" class="right-photo-wrap">
             <img
@@ -99,14 +99,23 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const router = useRouter()
-
+const isMobile = ref(false);
 const activeIndex = ref(1)
+const MOBILE_BREAKPOINT = 900
+
+let resizeTimer = null
+const checkMobile = () => {
+  clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => {
+    isMobile.value = window.innerWidth <= MOBILE_BREAKPOINT
+  }, 100)
+}
 
 const cards = [
   {
@@ -193,6 +202,16 @@ const cards = [
     route: '/teams'
   },
 ]
+
+onMounted(() => {
+  isMobile.value = window.innerWidth <= MOBILE_BREAKPOINT
+  window.addEventListener('resize', checkMobile, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+  clearTimeout(resizeTimer)
+})
 
 const activeCard = computed(() => cards[activeIndex.value])
 

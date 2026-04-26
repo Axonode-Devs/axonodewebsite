@@ -28,7 +28,7 @@ const routes = [
     component: () => import('../views/LoginView.vue'),
   },
   {
-    path: '/credentials',        // ← matches activation_link in utils.py
+    path: '/credentials',       
     name: 'SetPassword',
     component: SetPassword,
   },
