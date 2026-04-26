@@ -109,7 +109,7 @@ const selectedMember = ref(null);
 const isMobile = ref(false);
 
 const baseTeam = [
-  { name: 'Yaser Durabi', role: 'team.roles.head_productions',   username: 'kaiross12', color: '#BEECF0' },
+  { name: 'Yaser Durubi', role: 'team.roles.head_productions',   username: 'kaiross12', color: '#BEECF0' },
   { name: 'Bersis Sevimli',  role: 'team.roles.head_executive',   username: 'bersisse',  color: '#A59CE6' },
   { name: 'Kaan Uygun',   role: 'team.roles.head_pr', username: 'Kaan610',   color: '#fe78b2' },
 ];
