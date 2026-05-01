@@ -18,4 +18,4 @@ We value openess in our work. Thats why we decided to make our Website's fronten
 
 This project's source code is licensed under the [GPLv3](./LICENSE). 
 
-**Exception:** All visual assets (logos, icons, etc.) located in the `/public` directory are **All Rights Reserved** by Axonode Organization and are not covered by the GPLv3 license. See [/public/README.md](./public/README.md) for more information.
+**Exception:** All visual assets (logos, icons, etc.) located in the `/public` and `/src/assets` directory are **All Rights Reserved** by Axonode Organization and are not covered by the GPLv3 license. See [/public/README.md](./public/README.md) for more information.
