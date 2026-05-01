@@ -14,4 +14,8 @@ Well this host's the code of our [Homepage](https://axonode.org).
 We value openess in our work. Thats why we decided to make our Website's frontend fully open source!
 
 
+## Licensing
 
+This project's source code is licensed under the [GPLv3](./LICENSE). 
+
+**Exception:** All visual assets (logos, icons, etc.) located in the `/public` directory are **All Rights Reserved** by Axonode Organization and are not covered by the GPLv3 license. See [/public/README.md](./public/README.md) for more information.
