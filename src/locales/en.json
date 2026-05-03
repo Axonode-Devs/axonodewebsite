@@ -116,7 +116,8 @@
     "header": {
       "title": "Join the",
       "title_highlight": "Team",
-      "invited_badge": "✦ Personal Invitation"
+      "invited_badge": "✦ Personal Invitation ✦",
+      "invited_badge_for": "✦ {name} Adına Davetname ✦"
     },
     "steps": {
       "personal_info": {

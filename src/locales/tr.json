@@ -115,7 +115,8 @@
     "header": {
       "title": "Komünitemize",
       "title_highlight": "Katıl",
-      "invited_badge": "✦ Şahsa Münasır davetname"
+      "invited_badge": "✦ Şahsa Münasır davetname ✦",
+      "invited_badge_for": "✦ {name} Adına Davetname ✦"
     },
     "steps": {
       "personal_info": {
