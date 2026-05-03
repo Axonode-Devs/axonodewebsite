@@ -139,7 +139,7 @@
                 -->
                 <div class="form-group">
                   <label for="reason">{{ $t('application_form.steps.final.reason.label') }} <span class="req">*</span></label>
-                  <textarea id="reason" v-model="form.reason" rows="5" :placeholder="$t('application_form.steps.final.reason.placeholder')" required></textarea>
+                  <textarea id="reason" v-model="form.reason" rows="10" :placeholder="$t('application_form.steps.final.reason.placeholder')" required></textarea>
                 </div>
               </div>
 
