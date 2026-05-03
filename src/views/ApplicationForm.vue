@@ -131,10 +131,12 @@
               <!-- Step 3: Final -->
               <div v-if="currentStep === 3" class="step-content">
                 <h3 class="section-title"><i class="fa-solid fa-rocket"></i> {{ $t('application_form.steps.final.section_title') }}</h3>
+                <!--
                 <div class="form-group">
                   <label>{{ $t('application_form.steps.final.availability.label') }}</label>
                   <input type="number" v-model="form.availability" :placeholder="$t('application_form.steps.final.availability.placeholder')" min="1" max="100" required />
                 </div>
+                -->
                 <div class="form-group">
                   <label for="reason">{{ $t('application_form.steps.final.reason.label') }} <span class="req">*</span></label>
                   <textarea id="reason" v-model="form.reason" rows="5" :placeholder="$t('application_form.steps.final.reason.placeholder')" required></textarea>
