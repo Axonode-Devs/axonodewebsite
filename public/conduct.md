@@ -14,7 +14,7 @@ All members of Axonode are expected to:
 
 - **Professionalism:** Treat every interaction as if you are speaking to a future business partner.
 
-### 3. The "Unbreakable" Rules (Zero Tolerance)
+## 3. The "Unbreakable" Rules (Zero Tolerance)
 To protect our members and their ideas, the following behaviors are strictly prohibited and subject to immediate Board action:
 - **Idea Poaching:** You may not take a concept shared in a private Axonode environment and develop it externally without the original creator's written consent.
 - **Harassment & Threats:** Any form of harassment, bullying, or threats (digital or physical) is strictly forbidden.
@@ -35,11 +35,11 @@ Disagreements are natural among passionate people. If a conflict arises:
 3. **Final Say:** The Board will review the situation and issue a binding decision.
 *Never Break the "Unbreakable" Rules in any of the confilicts.*
 
-### 6. Enforcement & Consequences
+## 6. Enforcement & Consequences
 The Axonode Board Authority reserves the right to enforce this Code of Conduct. Violations may result in:
 - **Level 1:** A formal warning.
-- **Level 2:** Temporary suspension.
-- **Level 3**: Formal reprimand.
+- **Level 2:** Formal reprimand.
+- **Level 3**: Temporary suspension.
 - **Level 4:** Permanent expulsion from Axonode and forfeiture of any stewardship roles.
 
 **Note:** Any actions involving illegal activity or physical harm will be referred to the local authorities in the Republic of Türkiye or the relevant jurisdiction.
