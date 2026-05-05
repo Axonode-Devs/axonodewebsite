@@ -176,9 +176,10 @@
       },
       "final": {
         "section_title": "Son Detaylar",
-        "availability": {
-          "label": "Haftalık Uygunluk (Saat)",
-          "placeholder": "10"
+        "agreement": {
+          "link_tos": "Hizmet Şartları",
+          "link_coc": "Topluluk Kuralları",
+          "text": "{tos} ve {coc}'nı okudum, onaylıyorum."
         },
         "reason": {
           "label": "Axonode'a katılmakta sizi ne motive ediyor?",
@@ -237,6 +238,7 @@
       "submitting": "Gönderiliyor..."
     },
     "validation": {
+      "must_agree": "Hizmet Şartları ve Topluluk Kurallarını Kabul etmeniz lazım",
       "select_interest": "Lütfen bir ilgi alanı seçiniz.",
       "describe_interest": "İlgi alanınızı açıklayınız.",
       "select_main_interest": "Lütfen ana ilgi alanınızı seçiniz.",

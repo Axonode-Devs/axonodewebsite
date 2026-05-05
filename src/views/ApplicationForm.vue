@@ -10,16 +10,32 @@
             <div class="success-icon">
               <i class="fa-solid fa-circle-check"></i>
             </div>
-            <h2 class="title">{{ $t('application_form.success.title') }} <span class="gradient-text">{{ $t('application_form.success.title_highlight') }}</span></h2>
-            <p>{{ $t('application_form.success.message') }}</p>
-            <button @click="router.push('/')" class="submit-btn mt-input">{{ $t('application_form.nav.back_to_home') }}</button>
+            <h2 class="title">
+              {{ $t("application_form.success.title") }}
+              <span class="gradient-text">{{
+                $t("application_form.success.title_highlight")
+              }}</span>
+            </h2>
+            <p>{{ $t("application_form.success.message") }}</p>
+            <button @click="router.push('/')" class="submit-btn mt-input">
+              {{ $t("application_form.nav.back_to_home") }}
+            </button>
           </div>
 
           <template v-else>
             <div class="form-header">
-              <h2 class="title">{{ $t('application_form.header.title') }} <span class="gradient-text">{{ $t('application_form.header.title_highlight') }}</span></h2>
+              <h2 class="title">
+                {{ $t("application_form.header.title") }}
+                <span class="gradient-text">{{
+                  $t("application_form.header.title_highlight")
+                }}</span>
+              </h2>
               <div class="stepper">
-                <div v-for="step in 3" :key="step" :class="['step', { active: currentStep >= step }]">
+                <div
+                  v-for="step in 3"
+                  :key="step"
+                  :class="['step', { active: currentStep >= step }]"
+                >
                   <span class="step-number">{{ step }}</span>
                 </div>
               </div>
@@ -27,43 +43,106 @@
               <!-- Invited badge — now shows inviteNote from the server if available -->
               <Transition name="fade-slide">
                 <div v-if="inviteToken" class="invited-badge">
-                  {{ inviteNote
-                      ? $t('application_form.header.invited_badge_for', { name: inviteNote })
-                      : $t('application_form.header.invited_badge') }}
+                  {{
+                    inviteNote
+                      ? $t("application_form.header.invited_badge_for", {
+                          name: inviteNote,
+                        })
+                      : $t("application_form.header.invited_badge")
+                  }}
                 </div>
               </Transition>
             </div>
 
             <form @submit.prevent="handleNextStep" class="axonode-form">
-
               <!-- Step 1: Personal info -->
               <div v-if="currentStep === 1" class="step-content">
-                <h3 class="section-title"><i class="fa-regular fa-id-card"></i> {{ $t('application_form.steps.personal_info.section_title') }}</h3>
+                <h3 class="section-title">
+                  <i class="fa-regular fa-id-card"></i>
+                  {{ $t("application_form.steps.personal_info.section_title") }}
+                </h3>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="fullname"><i class="fa-solid fa-user"></i> {{ $t('application_form.steps.personal_info.fullname.label') }} <span class="req">*</span></label>
-                    <input type="text" id="fullname" v-model="form.fullname" :placeholder="$t('application_form.steps.personal_info.fullname.placeholder')" required />
+                    <label for="fullname"
+                      ><i class="fa-solid fa-user"></i>
+                      {{
+                        $t(
+                          "application_form.steps.personal_info.fullname.label",
+                        )
+                      }}
+                      <span class="req">*</span></label
+                    >
+                    <input
+                      type="text"
+                      id="fullname"
+                      v-model="form.fullname"
+                      :placeholder="
+                        $t(
+                          'application_form.steps.personal_info.fullname.placeholder',
+                        )
+                      "
+                      required
+                    />
                   </div>
                   <div class="form-group">
-                    <label for="email"><i class="fa-solid fa-envelope"></i> {{ $t('application_form.steps.personal_info.email.label') }} <span class="req">*</span></label>
-                    <input type="email" id="email" v-model="form.email" :placeholder="$t('application_form.steps.personal_info.email.placeholder')" required />
+                    <label for="email"
+                      ><i class="fa-solid fa-envelope"></i>
+                      {{
+                        $t("application_form.steps.personal_info.email.label")
+                      }}
+                      <span class="req">*</span></label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      v-model="form.email"
+                      :placeholder="
+                        $t(
+                          'application_form.steps.personal_info.email.placeholder',
+                        )
+                      "
+                      required
+                    />
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="contact"><i class="fa-solid fa-phone"></i> {{ $t('application_form.steps.personal_info.contact.label') }}</label>
+                  <label for="contact"
+                    ><i class="fa-solid fa-phone"></i>
+                    {{
+                      $t("application_form.steps.personal_info.contact.label")
+                    }}</label
+                  >
                   <div class="form-group-row">
                     <input
                       type="text"
                       id="contact"
                       v-model="form.contact_value"
-                      :placeholder="$t('application_form.steps.personal_info.contact.placeholder')"
+                      :placeholder="
+                        $t(
+                          'application_form.steps.personal_info.contact.placeholder',
+                        )
+                      "
                       class="contact-input"
                     />
                     <select v-model="form.contact_type" class="contact-select">
-                      <option value="" disabled>{{ $t('application_form.steps.personal_info.contact.platform_placeholder') }}</option>
-                      <option v-for="(_, key) in contactTypes" :key="key" :value="key">
-                        {{ $t(`application_form.steps.personal_info.contact.types.${key}`) }}
+                      <option value="" disabled>
+                        {{
+                          $t(
+                            "application_form.steps.personal_info.contact.platform_placeholder",
+                          )
+                        }}
+                      </option>
+                      <option
+                        v-for="(_, key) in contactTypes"
+                        :key="key"
+                        :value="key"
+                      >
+                        {{
+                          $t(
+                            `application_form.steps.personal_info.contact.types.${key}`,
+                          )
+                        }}
                       </option>
                     </select>
                   </div>
@@ -72,36 +151,83 @@
 
               <!-- Step 2: Profile -->
               <div v-if="currentStep === 2" class="step-content">
-                <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> {{ $t('application_form.steps.profile.section_title') }}</h3>
+                <h3 class="section-title">
+                  <i class="fa-solid fa-laptop-code"></i>
+                  {{ $t("application_form.steps.profile.section_title") }}
+                </h3>
                 <div class="form-group">
-                  <label>{{ $t('application_form.steps.profile.main_interest.label') }} <span class="req">*</span></label>
+                  <label
+                    >{{
+                      $t("application_form.steps.profile.main_interest.label")
+                    }}
+                    <span class="req">*</span></label
+                  >
                   <div class="grid-options">
-                    <label v-for="area in interestAreas" :key="area.id"
-                      class="option-card" :class="{ active: form.main_interest === area.id }">
-                      <input type="radio" :value="area.id" v-model="form.main_interest" />
-                      <span>{{ $t(`application_form.interest_areas.${area.id}.label`) }}</span>
+                    <label
+                      v-for="area in interestAreas"
+                      :key="area.id"
+                      class="option-card"
+                      :class="{ active: form.main_interest === area.id }"
+                    >
+                      <input
+                        type="radio"
+                        :value="area.id"
+                        v-model="form.main_interest"
+                      />
+                      <span>{{
+                        $t(`application_form.interest_areas.${area.id}.label`)
+                      }}</span>
                     </label>
                   </div>
                 </div>
 
                 <div v-if="selectedInterest?.id === 'other'" class="form-group">
-                  <label>{{ $t('application_form.steps.profile.other_interest.label') }} <span class="req">*</span></label>
+                  <label
+                    >{{
+                      $t("application_form.steps.profile.other_interest.label")
+                    }}
+                    <span class="req">*</span></label
+                  >
                   <input
                     type="text"
-                    :placeholder="t('application_form.steps.profile.other_interest.placeholder')"
+                    :placeholder="
+                      t(
+                        'application_form.steps.profile.other_interest.placeholder',
+                      )
+                    "
                     v-model="form.other_interest"
                     required
                   />
                 </div>
 
                 <Transition name="fade-slide">
-                  <div v-if="selectedInterest?.sub?.length" class="form-group mt-input">
-                    <label>{{ $t('application_form.steps.profile.sub_interest.label') }} <span class="req">*</span></label>
+                  <div
+                    v-if="selectedInterest?.sub?.length"
+                    class="form-group mt-input"
+                  >
+                    <label
+                      >{{
+                        $t("application_form.steps.profile.sub_interest.label")
+                      }}
+                      <span class="req">*</span></label
+                    >
                     <div class="grid-options">
-                      <label v-for="sub in selectedInterest.sub" :key="sub.id"
-                        class="option-card" :class="{ active: form.sub_interest.includes(sub.id) }">
-                        <input type="checkbox" :value="sub.id" v-model="form.sub_interest" />
-                        <span>{{ $t(`application_form.interest_areas.${selectedInterest.id}.sub.${sub.id}`) }}</span>
+                      <label
+                        v-for="sub in selectedInterest.sub"
+                        :key="sub.id"
+                        class="option-card"
+                        :class="{ active: form.sub_interest.includes(sub.id) }"
+                      >
+                        <input
+                          type="checkbox"
+                          :value="sub.id"
+                          v-model="form.sub_interest"
+                        />
+                        <span>{{
+                          $t(
+                            `application_form.interest_areas.${selectedInterest.id}.sub.${sub.id}`,
+                          )
+                        }}</span>
                       </label>
                     </div>
                   </div>
@@ -109,19 +235,47 @@
 
                 <div class="form-row mt-input">
                   <div class="form-group">
-                    <label>{{ $t('application_form.steps.profile.english_level.label') }}</label>
+                    <label>{{
+                      $t("application_form.steps.profile.english_level.label")
+                    }}</label>
                     <select v-model="form.english_level" required>
-                      <option value="" disabled>{{ $t('application_form.steps.profile.english_level.placeholder') }}</option>
-                      <option v-for="(_, key) in englishLevels" :key="key" :value="englishLevels[key].value">
-                        {{ $t(`application_form.steps.profile.english_level.levels.${key}`) }}
+                      <option value="" disabled>
+                        {{
+                          $t(
+                            "application_form.steps.profile.english_level.placeholder",
+                          )
+                        }}
+                      </option>
+                      <option
+                        v-for="(_, key) in englishLevels"
+                        :key="key"
+                        :value="englishLevels[key].value"
+                      >
+                        {{
+                          $t(
+                            `application_form.steps.profile.english_level.levels.${key}`,
+                          )
+                        }}
                       </option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>{{ $t('application_form.steps.profile.experience_level.label') }}</label>
+                    <label>{{
+                      $t(
+                        "application_form.steps.profile.experience_level.label",
+                      )
+                    }}</label>
                     <select v-model="form.experience_level" required>
-                      <option v-for="(_, key) in experienceLevels" :key="key" :value="key">
-                        {{ $t(`application_form.steps.profile.experience_level.levels.${key}`) }}
+                      <option
+                        v-for="(_, key) in experienceLevels"
+                        :key="key"
+                        :value="key"
+                      >
+                        {{
+                          $t(
+                            `application_form.steps.profile.experience_level.levels.${key}`,
+                          )
+                        }}
                       </option>
                     </select>
                   </div>
@@ -130,7 +284,10 @@
 
               <!-- Step 3: Final -->
               <div v-if="currentStep === 3" class="step-content">
-                <h3 class="section-title"><i class="fa-solid fa-rocket"></i> {{ $t('application_form.steps.final.section_title') }}</h3>
+                <h3 class="section-title">
+                  <i class="fa-solid fa-rocket"></i>
+                  {{ $t("application_form.steps.final.section_title") }}
+                </h3>
                 <!--
                 <div class="form-group">
                   <label>{{ $t('application_form.steps.final.availability.label') }}</label>
@@ -138,8 +295,62 @@
                 </div>
                 -->
                 <div class="form-group">
-                  <label for="reason">{{ $t('application_form.steps.final.reason.label') }} <span class="req">*</span></label>
-                  <textarea id="reason" v-model="form.reason" rows="10" :placeholder="$t('application_form.steps.final.reason.placeholder')" required></textarea>
+                  <label for="reason"
+                    >{{ $t("application_form.steps.final.reason.label") }}
+                    <span class="req">*</span></label
+                  >
+                  <textarea
+                    id="reason"
+                    v-model="form.reason"
+                    rows="10"
+                    :placeholder="
+                      $t('application_form.steps.final.reason.placeholder')
+                    "
+                    required
+                  ></textarea>
+                </div>
+                <div class="form-group agreement-group mt-input">
+                  <label class="checkbox-container">
+                    <input
+                      type="checkbox"
+                      v-model="form.agreed_to_terms"
+                      required
+                    />
+                    <span class="checkmark"></span>
+                    <span class="agreement-text">
+                      <i18n-t
+                        keypath="application_form.steps.final.agreement.text"
+                        scope="global"
+                      >
+                        <template #tos>
+                          <router-link
+                            to="/terms"
+                            target="_blank"
+                            class="legal-link"
+                          >
+                            {{
+                              $t(
+                                "application_form.steps.final.agreement.link_tos",
+                              )
+                            }}
+                          </router-link>
+                        </template>
+                        <template #coc>
+                          <router-link
+                            to="/conduct"
+                            target="_blank"
+                            class="legal-link"
+                          >
+                            {{
+                              $t(
+                                "application_form.steps.final.agreement.link_coc",
+                              )
+                            }}
+                          </router-link>
+                        </template>
+                      </i18n-t>
+                    </span>
+                  </label>
                 </div>
               </div>
 
@@ -161,18 +372,39 @@
                 </Transition>
 
                 <div class="form-footer-actions">
-                  <button v-if="currentStep > 1" type="button" @click="currentStep--; stepError = ''" class="back-btn">
-                    {{ $t('application_form.buttons.back') }}
+                  <button
+                    v-if="currentStep > 1"
+                    type="button"
+                    @click="
+                      currentStep--;
+                      stepError = '';
+                    "
+                    class="back-btn"
+                  >
+                    {{ $t("application_form.buttons.back") }}
                   </button>
-                  <button type="submit" class="submit-btn" :disabled="isSubmitting">
-                    <span>{{ currentStep === 3
-                      ? (isSubmitting ? $t('application_form.buttons.submitting') : $t('application_form.buttons.submit'))
-                      : $t('application_form.buttons.next') }}</span>
-                    <i v-if="!isSubmitting" class="fa-solid" :class="currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'"></i>
+                  <button
+                    type="submit"
+                    class="submit-btn"
+                    :disabled="isSubmitting"
+                  >
+                    <span>{{
+                      currentStep === 3
+                        ? isSubmitting
+                          ? $t("application_form.buttons.submitting")
+                          : $t("application_form.buttons.submit")
+                        : $t("application_form.buttons.next")
+                    }}</span>
+                    <i
+                      v-if="!isSubmitting"
+                      class="fa-solid"
+                      :class="
+                        currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'
+                      "
+                    ></i>
                   </button>
                 </div>
               </div>
-
             </form>
           </template>
         </div>
@@ -186,6 +418,45 @@
 </template>
 
 <style scoped>
+.agreement-group {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(120, 222, 231, 0.05);
+  border-radius: 12px;
+  border: 1px dashed var(--accent-color);
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.checkbox-container input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent-color);
+}
+
+.legal-link {
+  color: var(--accent-color);
+  text-decoration: underline;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.legal-link:hover {
+  color: var(--accent-secondary);
+}
+
+.agreement-text {
+  line-height: 1.4;
+  color: var(--text-color);
+}
 .stepper {
   display: flex;
   justify-content: center;
@@ -239,11 +510,21 @@
 
 .background-mesh {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background:
-    radial-gradient(circle at top right, rgba(187, 133, 223, 0.15), transparent 60%),
-    radial-gradient(circle at bottom left, rgba(120, 222, 231, 0.1), transparent 60%);
+    radial-gradient(
+      circle at top right,
+      rgba(187, 133, 223, 0.15),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(120, 222, 231, 0.1),
+      transparent 60%
+    );
   pointer-events: none;
   z-index: 0;
 }
@@ -291,7 +572,7 @@ html.dark .form-wrapper {
 /* ── Form footer — errors stack above buttons ─────────────────────────── */
 .form-footer {
   display: flex;
-  flex-direction: column;   /* changed: was row, errors now stack above buttons */
+  flex-direction: column; /* changed: was row, errors now stack above buttons */
   gap: 12px;
   margin-top: 30px;
 }
@@ -351,7 +632,9 @@ html.dark .form-error--api {
   align-items: center;
   gap: 10px;
 }
-.section-title i { color: #95b0eb; }
+.section-title i {
+  color: #95b0eb;
+}
 
 .form-row {
   display: grid;
@@ -373,17 +656,25 @@ html.dark .form-error--api {
   gap: 10px;
 }
 
-.contact-input  { flex: 1; }
-.contact-select { flex: 0 0 38%; }
+.contact-input {
+  flex: 1;
+}
+.contact-select {
+  flex: 0 0 38%;
+}
 
 label {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-color);
 }
-.req { color: #fe78b2; }
+.req {
+  color: #fe78b2;
+}
 
-input, select, textarea {
+input,
+select,
+textarea {
   width: 100%;
   padding: 12px 16px;
   border-radius: 10px;
@@ -404,14 +695,18 @@ html.dark textarea {
   color: #f1f5f9;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border-color: #95b0eb;
   background: var(--bg-color);
   box-shadow: 0 0 0 3px rgba(149, 176, 235, 0.15);
 }
 
-.mt-input { margin-top: 10px; }
+.mt-input {
+  margin-top: 10px;
+}
 
 .grid-options {
   display: grid;
@@ -443,7 +738,9 @@ input:focus, select:focus, textarea:focus {
   height: 0;
 }
 
-.option-card:hover { background: var(--hover-bg); }
+.option-card:hover {
+  background: var(--hover-bg);
+}
 
 .option-card.active {
   background: rgba(120, 222, 231, 0.1);
@@ -451,7 +748,9 @@ input:focus, select:focus, textarea:focus {
   color: #78dee7;
   font-weight: 700;
 }
-html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
+html.dark .option-card.active {
+  background: rgba(120, 222, 231, 0.15);
+}
 
 .back-btn {
   padding: 16px 30px;
@@ -461,7 +760,7 @@ html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
   color: var(--text-color);
   cursor: pointer;
   font-weight: 600;
-  white-space: nowrap;   /* prevent label wrapping on small widths */
+  white-space: nowrap; /* prevent label wrapping on small widths */
 }
 
 .submit-btn {
@@ -474,14 +773,23 @@ html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
   font-weight: 700;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 }
-.submit-btn:hover { transform: translateY(-2px); opacity: 0.95; }
-.submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.submit-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
 
 /* ── Invited badge ─────────────────────────────────────────────────────── */
 .invited-badge {
@@ -497,28 +805,51 @@ html.dark .option-card.active { background: rgba(120, 222, 231, 0.15); }
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;   /* long invite notes won't break the layout */
+  white-space: nowrap; /* long invite notes won't break the layout */
 }
 
 /* ── Transitions ───────────────────────────────────────────────────────── */
 .fade-slide-enter-active,
-.fade-slide-leave-active { transition: all 0.3s ease; }
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
 .fade-slide-enter-from,
-.fade-slide-leave-to { opacity: 0; transform: translateY(-10px); }
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
 
 /* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 992px) {
-  .layout-grid { grid-template-columns: 1fr; }
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-  .form-wrapper { padding: 30px 20px; }
-  .form-row { grid-template-columns: 1fr; gap: 16px; }
-  .grid-options { grid-template-columns: 1fr 1fr; }
-  .form-group-row { flex-direction: column; }
-  .contact-select { flex: unset; }
-  .form-footer-actions { flex-direction: column; }
-  .back-btn { width: 100%; text-align: center; }
+  .form-wrapper {
+    padding: 30px 20px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .grid-options {
+    grid-template-columns: 1fr 1fr;
+  }
+  .form-group-row {
+    flex-direction: column;
+  }
+  .contact-select {
+    flex: unset;
+  }
+  .form-footer-actions {
+    flex-direction: column;
+  }
+  .back-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 </style>
 <script setup lang="ts">
@@ -526,80 +857,98 @@ import { ref, reactive, computed, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/InfoCard.vue";
-import { public_ } from "../libs/AxonConnector";  // ← submitApplication lives here
+import { public_ } from "../libs/AxonConnector"; // ← submitApplication lives here
 import { ApiError } from "../libs/AxonConnector/error.js";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-type ContactType     = 'phone' | 'instagram' | 'discord' | 'telegram' | 'linkedin' | '';
-type ExperienceLevel = 'newbie' | 'junior' | 'mid' | 'senior';
-type EnglishLevel    = 'A1-A2' | 'B1-B2' | 'C1' | 'C2' | '';
+type ContactType =
+  | "phone"
+  | "instagram"
+  | "discord"
+  | "telegram"
+  | "linkedin"
+  | "";
+type ExperienceLevel = "newbie" | "junior" | "mid" | "senior";
+type EnglishLevel = "A1-A2" | "B1-B2" | "C1" | "C2" | "";
 
 interface AppForm {
-  fullname:         string;
-  email:            string;
-  contact_type:     ContactType;
-  contact_value:    string;
-  english_level:    EnglishLevel;
+  fullname: string;
+  email: string;
+  contact_type: ContactType;
+  contact_value: string;
+  english_level: EnglishLevel;
   experience_level: ExperienceLevel;
-  availability:     string;
-  reason:           string;
-  main_interest:    string;
-  sub_interest:     string[];
-  other_interest:   string;
-  invite_token:     string | null;
+  availability: string;
+  reason: string;
+  main_interest: string;
+  sub_interest: string[];
+  other_interest: string;
+  invite_token: string | null;
+  agreed_to_terms: boolean;
 }
 
 const router = useRouter();
-const route  = useRoute();
+const route = useRoute();
 
-const currentStep   = ref(1);
-const isSubmitting  = ref(false);
-const isSubmitted   = ref(false);
-const inviteToken   = ref<string | null>(null);
-const inviteNote    = ref<string | null>(null);  // friendly label from the invite
-const stepError     = ref("");                    // inline error — replaces alert()
-const submitError   = ref("");
+const currentStep = ref(1);
+const isSubmitting = ref(false);
+const isSubmitted = ref(false);
+const inviteToken = ref<string | null>(null);
+const inviteNote = ref<string | null>(null); // friendly label from the invite
+const stepError = ref(""); // inline error — replaces alert()
+const submitError = ref("");
 
 const form = reactive<AppForm>({
-  fullname:         "",
-  email:            "",
-  contact_type:     "",
-  contact_value:    "",
-  english_level:    "",
+  fullname: "",
+  email: "",
+  contact_type: "",
+  contact_value: "",
+  english_level: "",
   experience_level: "junior",
-  availability:     "",
-  reason:           "",
-  main_interest:    "",
-  sub_interest:     [],
-  other_interest:   "",
-  invite_token:     null,
+  availability: "",
+  reason: "",
+  main_interest: "",
+  sub_interest: [],
+  other_interest: "",
+  invite_token: null,
+  agreed_to_terms: false,
 });
 
 const contactTypes: Record<string, null> = {
-  discord: null, phone: null, instagram: null,
-  telegram: null, linkedin: null,
+  discord: null,
+  phone: null,
+  instagram: null,
+  telegram: null,
+  linkedin: null,
 };
 
 const englishLevels: Record<string, { value: EnglishLevel }> = {
   a1_a2: { value: "A1-A2" },
   b1_b2: { value: "B1-B2" },
-  c1:    { value: "C1" },
-  c2:    { value: "C2" },
+  c1: { value: "C1" },
+  c2: { value: "C2" },
 };
 
 const experienceLevels: Record<string, null> = {
-  newbie: null, junior: null, mid: null, senior: null,
+  newbie: null,
+  junior: null,
+  mid: null,
+  senior: null,
 };
 
 const interestAreas = [
   {
     id: "technology",
     sub: [
-      { id: "frontend" }, { id: "backend" },   { id: "ai" },
-      { id: "system_design" }, { id: "embedded" },
-      { id: "cybersecurity" }, { id: "gamedev" },
+      { id: "frontend" },
+      { id: "backend" },
+      { id: "ai" },
+      { id: "system_design" },
+      { id: "embedded" },
+      { id: "cybersecurity" },
+      { id: "gamedev" },
     ],
   },
   {
@@ -608,11 +957,21 @@ const interestAreas = [
   },
   {
     id: "business",
-    sub: [{ id: "startup" }, { id: "marketing" }, { id: "sales" }, { id: "product" }],
+    sub: [
+      { id: "startup" },
+      { id: "marketing" },
+      { id: "sales" },
+      { id: "product" },
+    ],
   },
   {
     id: "creative",
-    sub: [{ id: "music" }, { id: "writing" }, { id: "film" }, { id: "content" }],
+    sub: [
+      { id: "music" },
+      { id: "writing" },
+      { id: "film" },
+      { id: "content" },
+    ],
   },
   { id: "other", sub: [] },
 ];
@@ -626,27 +985,32 @@ onMounted(async () => {
     // public_.checkInvite throws ApiError on invalid/expired/revoked tokens
     // On success it returns { id, note, expires_at } — no .valid field
     const invite = await public_.checkInvite(token);
-    inviteToken.value    = token;
-    inviteNote.value     = invite.note ?? null;
-    form.invite_token    = token;
+    inviteToken.value = token;
+    inviteNote.value = invite.note ?? null;
+    form.invite_token = token;
   } catch (err) {
     // Token is invalid, expired, revoked, or already used —
     // just proceed as a regular (non-invited) application, no hard error
     if (err instanceof ApiError) {
-      console.warn(`Invite token invalid (${err.code}) — proceeding without invite`);
+      console.warn(
+        `Invite token invalid (${err.code}) — proceeding without invite`,
+      );
     }
   }
 });
 
 // ── Computed ──────────────────────────────────────────────────────────────────
 const selectedInterest = computed(() =>
-  interestAreas.find((i) => i.id === form.main_interest)
+  interestAreas.find((i) => i.id === form.main_interest),
 );
 
-watch(() => form.main_interest, () => {
-  form.sub_interest  = [];
-  form.other_interest = "";
-});
+watch(
+  () => form.main_interest,
+  () => {
+    form.sub_interest = [];
+    form.other_interest = "";
+  },
+);
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 function handleNextStep() {
@@ -654,11 +1018,11 @@ function handleNextStep() {
 
   if (currentStep.value === 2) {
     if (!form.main_interest) {
-      stepError.value = t('application_form.validation.select_interest');
+      stepError.value = t("application_form.validation.select_interest");
       return;
     }
-    if (form.main_interest === 'other' && !form.other_interest.trim()) {
-      stepError.value = t('application_form.validation.describe_interest');
+    if (form.main_interest === "other" && !form.other_interest.trim()) {
+      stepError.value = t("application_form.validation.describe_interest");
       return;
     }
   }
@@ -672,16 +1036,21 @@ function handleNextStep() {
 
 // ── Submit ────────────────────────────────────────────────────────────────────
 const submitForm = async () => {
-  stepError.value   = "";
+  stepError.value = "";
   submitError.value = "";
 
+  if (!form.agreed_to_terms) {
+    stepError.value = t("application_form.validation.must_agree");
+    return;
+  }
+
   if (!form.main_interest) {
-    stepError.value = t('application_form.validation.select_main_interest');
+    stepError.value = t("application_form.validation.select_main_interest");
     return;
   }
 
   if (selectedInterest.value?.sub?.length && form.sub_interest.length === 0) {
-    stepError.value = t('application_form.validation.select_sub_interest');
+    stepError.value = t("application_form.validation.select_sub_interest");
     return;
   }
 
@@ -691,22 +1060,22 @@ const submitForm = async () => {
     const { other_interest, ...rest } = form;
     const payload = {
       ...rest,
-      main_interest: form.main_interest === 'other'
-        ? `other: ${other_interest.trim()}`
-        : form.main_interest,
+      main_interest:
+        form.main_interest === "other"
+          ? `other: ${other_interest.trim()}`
+          : form.main_interest,
     };
 
-    await public_.submitApplication(payload);  // ← correct module
+    await public_.submitApplication(payload); // ← correct module
     isSubmitted.value = true;
-
   } catch (err) {
     // ApiError.message is already human-readable from the server
-    submitError.value = err instanceof ApiError
-      ? err.message
-      : t('application_form.validation.generic_error');
+    submitError.value =
+      err instanceof ApiError
+        ? err.message
+        : t("application_form.validation.generic_error");
   } finally {
     isSubmitting.value = false;
   }
 };
 </script>
-

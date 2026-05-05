@@ -177,9 +177,10 @@
       },
       "final": {
         "section_title": "Final Details",
-        "availability": {
-          "label": "Weekly Availability (Hours)",
-          "placeholder": "10"
+        "agreement": {
+          "link_tos": "Terms of Service",
+          "link_coc": "Code of Conduct",
+          "text": "I have read and agree to the {tos} and {coc}."
         },
         "reason": {
           "label": "What motivates you to join Axonode?",
@@ -238,6 +239,7 @@
       "submitting": "Sending..."
     },
     "validation": {
+      "must_agree": "You Must Accept the Terms Of Service and Code of conduct",
       "select_interest": "Please select an area of interest.",
       "describe_interest": "Please describe your interest.",
       "select_main_interest": "Please select a main interest.",

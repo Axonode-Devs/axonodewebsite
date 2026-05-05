@@ -5,6 +5,7 @@ import AboutView from '../views/AboutView.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
 import NotFound from '../views/NotFound.vue'
 import SetPassword from '../views/SetPassword.vue'
+import LegalView from '../views/LegalView.vue';
 
 const routes = [
   {
@@ -63,6 +64,16 @@ const routes = [
     name: 'NotFound',
     component: NotFound,
   },
+  {
+    path: '/terms',
+    component: LegalView,
+    meta: { fileName: 'terms' } // Matches public/terms.md
+  },
+  {
+    path: '/conduct',
+    component: LegalView,
+    meta: { fileName: 'conduct' } // Matches public/conduct.md
+  }
 ]
 
 const router = createRouter({
