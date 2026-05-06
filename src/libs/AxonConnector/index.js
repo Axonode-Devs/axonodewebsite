@@ -3,6 +3,8 @@ import { AuthModule } from './auth.js';
 import { AdminModule } from './admin.js';
 import { KEYS } from './keys.js';
 import { ApiError } from './error.js';
+import { PublicModule } from './public.js';
+
 
 const client = axios.create({
   baseURL: 'http://127.0.0.1:5000/api/v1',
@@ -26,6 +28,8 @@ client.interceptors.request.use(config => {
   }
   return config;
 });
+
+
 
 // 2. REFRESH QUEUE STATE
 let isRefreshing = false;
@@ -105,14 +109,20 @@ client.interceptors.response.use(
 );
 
 const _normalizeError = (err) => {
-  const body = err.response?.data?.error;
+  // If it's already an ApiError (e.g. from a manual throw), just return it
+  if (err instanceof ApiError) return err;
+
+  const response = err.response;
+  const data = response?.data?.error; // Assumes your Flask backend sends { error: { code, message, details } }
+
   return new ApiError(
-    body?.code ?? 'UNKNOWN_ERROR',
-    body?.message ?? 'A server error occurred.',
-    err.response?.status ?? 500,
-    body?.details ?? [],
+    data?.code || 'UNKNOWN_ERROR',
+    data?.message || err.message || 'An unexpected error occurred.',
+    response?.status || 500,
+    data?.details || []
   );
 };
-
+export { ApiError } from './error.js';
 export const auth = new AuthModule(client, KEYS);
 export const admin = new AdminModule(client, KEYS);
+export const public_ = new PublicModule(client)
