@@ -14,9 +14,8 @@ library.add(faCoffee, faChevronRight, faGithub, faGear)
 
 import { initAxonode } from "./libs/AxonConnector"
 
-// 2. Configure the library for production
 initAxonode({
-  //baseURL: 'https://axonode.org/api/v1'
+  baseURL: 'https://axonode.org/api/v1'
 })
 
 const app = createApp(App)
