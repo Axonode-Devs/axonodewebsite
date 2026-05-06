@@ -13,9 +13,9 @@ export class AdminModule {
 
   // Attach admin token + refresh key to every outgoing request config.
   _cfg() {
-    return {
-      _tokenKey:   this._keys.adminToken,
-      _refreshKey: this._keys.adminRefresh,
+      return {
+      _tokenKey:   this._keys.userToken,   // Use 'access_token'
+      _refreshKey: this._keys.userRefresh, // Use 'refresh_token'
     };
   }
 
@@ -108,7 +108,17 @@ export class AdminModule {
     );
     return data.data;
   }
-
+  async createInvite(note) {
+    // If 'note' is an object {note: '...'}, extract the string
+    const noteText = typeof note === 'object' ? note.note : note;
+    
+    const { data } = await this._client.post(
+      '/admin/invites',
+      { note: noteText || 'General Invite' },
+      this._cfg(),
+    );
+    return data.data;
+  }
   // ── Invites ──────────────────────────────────────────────────────────────
 
   /**
@@ -138,7 +148,7 @@ export class AdminModule {
   async createInvite(note = 'General Invite') {
     const { data } = await this._client.post(
       '/admin/invites',
-      { note },
+      note,
       this._cfg(),
     );
     return data.data;
