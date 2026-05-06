@@ -8,7 +8,7 @@ export class AuthModule {
   _cfg() {
     return {
       _tokenKey: this.keys.userToken,
-      _refreshKey: this.keys.userRefresh
+      _refreshKey: this.keys.userRefresh,
     };
   }
 
@@ -20,7 +20,7 @@ export class AuthModule {
     const { data } = await this.client.post(
       "/auth/sessions",
       { email, password },
-      this._cfg() 
+      this._cfg(),
     );
     this._saveSession(data.data);
     return data.data;
@@ -42,8 +42,8 @@ export class AuthModule {
       { password: newPassword },
       {
         headers: { Authorization: `Bearer ${setupToken}` },
-        _skipAuth: true, // Tell interceptor not to inject stored tokens
-      }
+        _skipAuth: true,
+      },
     );
     this._saveSession(data.data);
     return data.data.user;
@@ -54,12 +54,26 @@ export class AuthModule {
   }
 
   get isSignedIn() {
-    const tokenKey = this.keys?.userToken || 'access_token';
+    const tokenKey = this.keys?.userToken || "access_token";
     return !!localStorage.getItem(tokenKey);
   }
 
+  get isAdmin() {
+    try {
+      const data = localStorage.getItem("user_data");
+      if (!data) return false;
+
+      const user = JSON.parse(data);
+      // Check if user exists and has the admin role
+      return user?.role === "admin";
+    } catch (e) {
+      // If JSON is malformed or storage is empty, safely return false
+      return false;
+    }
+  }
+
   get currentUser() {
-    const data = localStorage.getItem('user_data');
+    const data = localStorage.getItem("user_data");
     return data ? JSON.parse(data) : null;
   }
 }

@@ -1,11 +1,14 @@
 <template>
   <Navbar />
   <div class="login-container">
+    <!-- Mesh Background consistent with your Admin page -->
+    <div class="background-mesh"></div>
+
     <div class="login-content">
       <div class="login-box">
         <div class="login-header">
           <h1>Welcome Back</h1>
-          <p class="subtitle">{{ isAdmin ? 'Admin Portal' : 'Sign in to your account' }}</p>
+          <p class="subtitle">Sign in to your account</p>
         </div>
 
         <form @submit.prevent="handleLogin" class="login-form">
@@ -34,27 +37,18 @@
           <button type="submit" class="login-btn" :disabled="loading">
             <span v-if="!loading">Sign In</span>
             <span v-else class="loading-spinner">
-              <svg viewBox="0 0 24 24" width="20" height="20">
-                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
-              </svg>
+              <i class="fa-solid fa-circle-notch fa-spin"></i>
               Signing in...
             </span>
           </button>
         </form>
 
-        <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
-
-        <div class="divider">
-          <span>or</span>
-        </div>
-
-        <button 
-          type="button" 
-          class="admin-btn" 
-          @click="toggleAdminMode"
-        >
-          {{ isAdmin ? '← Back to User Login' : 'Admin Access →' }}
-        </button>
+        <!-- Use a Transition for the error message for a smoother UI -->
+        <Transition name="fade">
+          <p v-if="errorMsg" class="error-message">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ errorMsg }}
+          </p>
+        </Transition>
       </div>
     </div>
   </div>
@@ -63,44 +57,43 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { admin, auth } from '../libs/AxonConnector';
-import { ApiError } from '../libs/AxonConnector/error.js';
-
+import { admin, auth, ApiError } from '../libs/AxonConnector'; // Corrected import path
 import Navbar from '../components/Navbar.vue';
 
 const email = ref('');
 const password = ref('');
 const loading = ref(false);
 const errorMsg = ref('');
-const isAdmin = ref(false);
 const router = useRouter();
 
 const handleLogin = async () => {
   loading.value = true;
   errorMsg.value = '';
+
   try {
-    if (isAdmin.value) {
-      await admin.login(email.value, password.value);
+    // 1. Authenticate
+    await auth.signIn(email.value, password.value);
+
+    // 2. Determine where to go based on the user object
+    // We check the admin module specifically to see if the session saved 
+    // satisfies the admin requirements.
+    if (auth.isAdmin) {
       router.push('/admin');
     } else {
-      await auth.signIn(email.value, password.value);  // ← was auth.login
-      router.push('/dashboard');
+      router.push('/dashboard'); // or wherever your user home is
     }
+    
   } catch (error) {
-    // ApiError.message is already human-readable from the server
-    errorMsg.value = error instanceof ApiError
-      ? error.message
-      : 'Login failed. Please check your credentials.';
+    // 3. Handle specific ApiError from your SDK
+    if (error instanceof ApiError) {
+      errorMsg.value = error.message;
+    } else {
+      errorMsg.value = 'A connection error occurred. Please try again.';
+      console.error('Login error:', error);
+    }
   } finally {
     loading.value = false;
   }
-};
-
-const toggleAdminMode = () => {
-  isAdmin.value = !isAdmin.value;
-  errorMsg.value = '';
-  email.value = '';
-  password.value = '';
 };
 </script>
 

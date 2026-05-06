@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { admin } from '../libs/AxonConnector'
+import { auth } from '../libs/AxonConnector'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
-import AdminDashboard from '../views/AdminDashboard.vue'
 import NotFound from '../views/NotFound.vue'
 import SetPassword from '../views/SetPassword.vue'
 import LegalView from '../views/LegalView.vue';
@@ -56,7 +55,7 @@ const routes = [
   {
     path: '/admin',
     name: 'AdminDashboard',
-    component: AdminDashboard,
+    component: () => import('../views/AdminDashboard.vue'),
     meta: { requiresAuth: true },
   },
   {
@@ -82,11 +81,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
-  if (to.meta.requiresAuth && !admin.isLoggedIn) {
-    next('/login')
-  } else {
-    next()
+ const requiresAuth = to.meta.requiresAuth;
+  const isEnteringAdmin = to.path.startsWith('/admin');
+
+  if (requiresAuth && !auth.isSignedIn) {
+    return next('/login');
   }
+
+  if (isEnteringAdmin && !auth.isAdmin) {
+    return next('/'); 
+  }
+
+  next();
 })
 
 export default router

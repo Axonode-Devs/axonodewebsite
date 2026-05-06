@@ -19,43 +19,6 @@ export class AdminModule {
     };
   }
 
-  // ── Auth ────────────────────────────────────────────────────────────────
-
-  /**
-   * POST /api/v1/admin/sessions
-   *
-   * @param   {string} email
-   * @param   {string} password
-   * @returns {{ access_token, refresh_token, user }}
-   */
-  async login(email, password) {
-    const { data } = await this._client.post(
-      '/admin/sessions',
-      { email, password },
-      this._cfg(),
-    );
-    this._saveSession(data.data);
-    return data.data;
-  }
-
-  /** Client-side logout. */
-  logout() {
-    localStorage.removeItem(this._keys.adminToken);
-    localStorage.removeItem(this._keys.adminRefresh);
-    localStorage.removeItem(this._keys.adminUser);
-  }
-
-  /** @returns {boolean} */
-  get isLoggedIn() {
-    return !!localStorage.getItem(this._keys.adminToken);
-  }
-
-  /** @returns {object|null} */
-  get currentUser() {
-    const raw = localStorage.getItem(this._keys.adminUser);
-    return raw ? JSON.parse(raw) : null;
-  }
-
   // ── Applications ─────────────────────────────────────────────────────────
 
   /**
