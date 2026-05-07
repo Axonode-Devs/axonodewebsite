@@ -880,7 +880,6 @@ interface AppForm {
   contact_value: string;
   english_level: EnglishLevel;
   experience_level: ExperienceLevel;
-  availability: string;
   reason: string;
   main_interest: string;
   sub_interest: string[];
@@ -907,7 +906,6 @@ const form = reactive<AppForm>({
   contact_value: "",
   english_level: "",
   experience_level: "junior",
-  availability: "",
   reason: "",
   main_interest: "",
   sub_interest: [],
