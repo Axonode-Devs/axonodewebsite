@@ -1,7 +1,6 @@
 <template>
   <Navbar />
   <div class="admin-page">
-    <!-- Sophisticated background -->
     <div class="bg-glow-1"></div>
     <div class="bg-glow-2"></div>
 
@@ -79,9 +78,7 @@
         >
           <div class="card-top">
             <div class="user-info">
-              <div class="avatar-ring">
-                {{ getInitials(app.fullname) }}
-              </div>
+              <div class="avatar-ring">{{ getInitials(app.fullname) }}</div>
               <div class="user-meta">
                 <h3 class="name">{{ app.fullname }}</h3>
                 <span class="email">{{ app.email }}</span>
@@ -107,10 +104,10 @@
           </div>
 
           <div class="card-bottom">
-            <span class="timestamp"
-              ><i class="fa-regular fa-clock"></i>
-              {{ formatDate(app.created_at) }}</span
-            >
+            <span class="timestamp">
+              <i class="fa-regular fa-clock"></i>
+              {{ formatDate(app.created_at) }}
+            </span>
             <span class="view-action"
               >İncele <i class="fa-solid fa-chevron-right"></i
             ></span>
@@ -125,7 +122,146 @@
       </div>
     </div>
 
-    <!-- Modals remain for logic, but we'll style them via CSS below -->
+    <!-- ── Detail Sheet Modal ── -->
+    <Transition name="overlay-fade">
+      <div v-if="selectedApp" class="sheet-overlay" @click.self="closeDetail">
+        <Transition name="sheet-slide">
+          <div class="detail-sheet" v-if="selectedApp">
+            <div class="sheet-handle"></div>
+
+            <div class="sheet-header">
+              <span class="sheet-title">Başvuru Detayı</span>
+              <button
+                class="sheet-close"
+                @click="closeDetail"
+                aria-label="Kapat"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div class="sheet-body">
+              <!-- Hero -->
+              <div class="applicant-hero">
+                <div class="avatar-lg">
+                  {{ getInitials(selectedApp.fullname) }}
+                </div>
+                <div>
+                  <h2 class="hero-name">{{ selectedApp.fullname }}</h2>
+                  <p class="hero-email">{{ selectedApp.email }}</p>
+                  <span :class="['status-dot', selectedApp.status]">
+                    {{ formatStatus(selectedApp.status) }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Meta Grid -->
+              <div class="sheet-section">
+                <p class="section-label">Bilgiler</p>
+                <div class="info-grid">
+                  <div class="info-cell">
+                    <p class="info-label">Başvuru tarihi</p>
+                    <p class="info-value">
+                      {{ formatDate(selectedApp.created_at) }}
+                    </p>
+                  </div>
+                  <div class="info-cell">
+                    <p class="info-label">Deneyim seviyesi</p>
+                    <p class="info-value">
+                      {{
+                        formatExperience(
+                          selectedApp.profile?.experience_level,
+                        ) || "—"
+                      }}
+                    </p>
+                  </div>
+                  <div class="info-cell">
+                    <p class="info-label">İngilizce seviyesi</p>
+                    <p class="info-value">
+                      {{ selectedApp.profile?.english_level || "—" }}
+                    </p>
+                  </div>
+                  <div class="info-cell">
+                    <p class="info-label">Koşulları kabul etti</p>
+                    <p class="info-value">
+                      {{ selectedApp.agreed_to_terms ? "Evet" : "Hayır" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interests -->
+              <div class="sheet-section">
+                <p class="section-label">İlgi alanları</p>
+                <div class="tag-cloud">
+                  <span class="interest-tag main">{{
+                    selectedApp.profile?.main_interest
+                  }}</span>
+                  <span
+                    v-for="sub in selectedApp.profile?.sub_interest"
+                    :key="sub"
+                    class="interest-tag"
+                    >{{ sub }}</span
+                  >
+                </div>
+              </div>
+
+              <!-- Reason / Bio -->
+              <div class="sheet-section" v-if="selectedApp.reason">
+                <p class="section-label">Başvuru nedeni</p>
+                <div class="bio-box">{{ selectedApp.reason }}</div>
+              </div>
+
+              <!-- Contact -->
+              <div class="sheet-section" v-if="selectedApp.contact?.value">
+                <p class="section-label">İletişim</p>
+                <div class="tag-cloud">
+                  <a
+                    v-if="selectedApp.contact.type === 'github'"
+                    :href="'https://github.com/' + selectedApp.contact.value"
+                    target="_blank"
+                    class="social-link"
+                  >
+                    <i class="fa-brands fa-github"></i>
+                    {{ selectedApp.contact.value }}
+                  </a>
+                  <a
+                    v-else-if="selectedApp.contact.type === 'linkedin'"
+                    :href="selectedApp.contact.value"
+                    target="_blank"
+                    class="social-link"
+                  >
+                    <i class="fa-brands fa-linkedin"></i>
+                    LinkedIn
+                  </a>
+                  <span v-else class="interest-tag">
+                    <i class="fa-solid fa-at"></i>
+                    {{ selectedApp.contact.type }}:
+                    {{ selectedApp.contact.value }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions (only for pending) -->
+            <div class="sheet-actions" v-if="selectedApp.status === 'pending'">
+              <button
+                class="btn-sheet reject"
+                @click="updateStatus(selectedApp.id, 'rejected')"
+              >
+                <i class="fa-solid fa-xmark"></i> Reddet
+              </button>
+              <button
+                class="btn-sheet approve"
+                @click="updateStatus(selectedApp.id, 'approved')"
+              >
+                <i class="fa-solid fa-check"></i> Onayla
+              </button>
+            </div>
+          </div>
+        </Transition>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -367,12 +503,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   /* Use your theme's error color with low opacity for the background */
-  background: rgba(255, 107, 107, 0.1); 
+  background: rgba(255, 107, 107, 0.1);
   border: 1px solid var(--error-color);
   color: var(--error-color);
-  
+
   padding: 1rem 1.5rem;
   border-radius: 16px;
   margin-bottom: 2rem; /* Give the header some breathing room */
@@ -402,11 +538,13 @@
   opacity: 0.7;
 }
 
-.slide-fade-enter-active, .slide-fade-leave-active {
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: all 0.3s ease-out;
 }
 
-.slide-fade-enter-from, .slide-fade-leave-to {
+.slide-fade-enter-from,
+.slide-fade-leave-to {
   transform: translateY(-10px);
   opacity: 0;
 }
@@ -428,6 +566,224 @@
   to {
     background-position: -200% 0;
   }
+}
+
+/* ── Detail Sheet Modal ─────────────────────────────────────── */
+.sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.detail-sheet {
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--bg-color);
+  border-radius: 24px 24px 0 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-color);
+  margin: 12px auto 0;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.sheet-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.sheet-close {
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+.sheet-body {
+  padding: 1.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.applicant-hero {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.avatar-lg {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.hero-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+.hero-email {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  margin: 0 0 8px;
+}
+
+.sheet-section {
+  margin-bottom: 1.75rem;
+}
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.4;
+  margin-bottom: 0.75rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.info-cell {
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+.info-label {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin: 0 0 4px;
+}
+.info-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.bio-box {
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.social-link:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.sheet-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-color);
+  max-width: 680px;
+  margin: 0 auto;
+}
+.btn-sheet {
+  flex: 1;
+  padding: 0.85rem;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    filter 0.2s,
+    transform 0.2s;
+}
+.btn-sheet:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+.btn-sheet.reject {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+.btn-sheet.approve {
+  background: var(--accent-color);
+  color: #000;
+}
+
+/* Transitions */
+.overlay-fade-enter-active,
+.overlay-fade-leave-active {
+  transition: opacity 0.25s;
+}
+.overlay-fade-enter-from,
+.overlay-fade-leave-to {
+  opacity: 0;
+}
+
+.sheet-slide-enter-active,
+.sheet-slide-leave-active {
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.sheet-slide-enter-from,
+.sheet-slide-leave-to {
+  transform: translateY(100%);
 }
 </style>
 
