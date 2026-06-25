@@ -296,19 +296,14 @@
     "back": "Go Back"
   },
   "projects": {
-    "section_title_main": "OUR",
-    "section_title_gradient": "PROJECTS",
+    "section_title_main": "Things",
+    "section_title_gradient": "We Do",
     "wavefy": {
       "title": "Wavefy App",
       "subtitle": "A user-friendly music app",
       "tag": "Wavefy",
       "leftTitle": "Wavefy\nMusic App",
       "leftDesc": "A user friendly music app developed by Axonode Team.",
-      "stats": {
-        "users": "Users",
-        "consistency": "Search Consistency",
-        "uptime": "Uptime"
-      },
       "badge": "BETA"
     },
     "voltx": {
@@ -317,24 +312,21 @@
       "tag": "Robotics",
       "leftTitle": "VoltX\nRobotics",
       "leftDesc": "A Turkiye located FRC team powered by Axonode Team.",
-      "stats": {
-        "season": "Season",
-        "members": "Members",
-        "companies": "Companies"
-      },
       "badge": "FRC"
     },
+    "intent": {
+      "title": "Intent",
+      "subtitle": "A Productivity app that does not get in your way",
+      "tag": "Intent",
+      "badge": "Waitlist!"
+    },
+
     "soon": {
-      "title": "In Development",
+      "title": "Coming Soon!",
       "subtitle": "Next project is under development",
-      "tag": "COMING SOON",
+      "tag": "Not yet here",
       "leftTitle": "In\nDevelopment",
-      "leftDesc": "Axonode will keep developing new projects.",
-      "stats": {
-        "status": "In",
-        "progress": "Development",
-        "count": "Project"
-      },
+      "leftDesc": "Axonode is cooking up something :)",
       "badge": "SOON"
     }
   }

@@ -1,0 +1,54 @@
+{
+  "projects": [
+    {
+      "id": "wavefy",
+      "status": "beta",
+      "category": "app",
+      "featured": true,
+      "badge": "BETA",
+      "stack": ["Vue", "Node.js"],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "logo": {
+        "type": "asset",
+        "src": "../assets/wavefys.png",
+        "alt": "Wavefy Logo"
+      },
+      "thumbnail_bg": "#0f0e0e",
+      "i18n": {
+        "en": {
+          "title": "Wavefy App",
+          "subtitle": "A user-friendly music app",
+          "description": "A user friendly music app developed by Axonode Team."
+        }
+      }
+    },
+    {
+      "id": "intent",
+      "status": "waitlist",
+      "category": "app",
+      "featured": false,
+      "badge": "Waitlist!",
+      "stack": [],
+      "links": {
+        "github": null,
+        "live": "https://intent.axonode.org"
+      },
+      "logo": {
+        "type": "url",
+        "src": "https://intent.axonode.org/assets/INTENT-6M9P_T1Q.png",
+        "alt": "Intent Logo"
+      },
+      "thumbnail_bg": "#D8EAD3",
+      "i18n": {
+        "en": {
+          "title": "Intent",
+          "subtitle": "A productivity app that does not get in your way",
+          "description": "A productivity app that does not get in your way."
+        }
+      }
+    }
+  ]
+}

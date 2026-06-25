@@ -38,9 +38,9 @@ const routes = [
     component: () => import('../views/InvitedView.vue'),
   },
   {
-    path: '/teams/:teamId',
-    name: 'TeamView',
-    component: () => import('../views/TeamView.vue'),
+    path: '/projects',
+    name: 'ProjectsView',
+    component: () => import('../views/ComingSoon.vue'),
   },
   {
     path: '/teams',

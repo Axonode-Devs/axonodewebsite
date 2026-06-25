@@ -77,7 +77,8 @@ const menuItems: NavItem[] = [
   { label: 'Home',    i18nKey: 'navbar.home',    scrollTo: 'hero',     target: '#hero'    },
   { label: 'About',   i18nKey: 'navbar.about',   scrollTo: 'about',    target: '#about'   },
   { label: 'Groups',  i18nKey: 'navbar.groups',  scrollTo: 'whatwedo', target: '#groups'  },
-  { label: 'Support', i18nKey: 'navbar.support', scrollTo: 'contact',  target: '#support' },
+  { label: 'Support', i18nKey: 'navbar.support', scrollTo: 'contact',  target: '#support' }, 
+  { label: 'Projects', i18nKey: 'navbar.projects', route: '/projects'}
 ];
 
 const NAV_OFFSET = 90;

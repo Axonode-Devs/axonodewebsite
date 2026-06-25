@@ -5,11 +5,11 @@
     <TeamMarquee />
 
     <div class="orb-section">
-      <VerticalSlider />
       <WhatWeDo />
       
       <HDivider />
       <AboutUs />
+      <!--<ProjectsShow />-->
     </div>
 
     <!--<Founders />-->
@@ -28,7 +28,7 @@ import Founders from '../components/Founders.vue'
 import ProjectsSection from '../components/ProjectsSection.vue';
 import InfoSection from '../components/InfoSection.vue';
 import ContactSection from '../components/ContactSection.vue';
-import VerticalSlider from '../components/ProjectsShow.vue';
+import ProjectsShow from '../components/ProjectsShow.vue';
 </script>
 
 <style scoped>

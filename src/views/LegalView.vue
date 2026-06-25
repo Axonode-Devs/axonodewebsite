@@ -2,7 +2,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { marked } from 'marked';
-import Navbar from '../components/Navbar.vue'; // Keep consistency
+import Navbar from '../components/Navbar.vue'; 
 
 const route = useRoute();
 const legalContent = ref('');
@@ -17,7 +17,7 @@ const loadMarkdown = async () => {
     const rawText = await response.text();
     legalContent.value = marked.parse(rawText);
   } catch (err) {
-    legalContent.value = '<h1>Protocol Error</h1><p>The requested data could not be retrieved from the Axonode archives.</p>';
+    legalContent.value = '<h1>Content Error</h1><p>The requested data could not be retrieved from the Axonode archives.</p>';
   } finally {
     loading.value = false;
   }
@@ -34,7 +34,7 @@ onMounted(loadMarkdown);
 
     <div class="content-container">
       <transition name="fade" mode="out-in">
-        <div v-if="loading" class="loader">Accessing Axonode Protocols...</div>
+        <div v-if="loading" class="loader">Accessing Axonode Legal Papers</div>
         <div v-else v-html="legalContent" class="markdown-body"></div>
       </transition>
     </div>
