@@ -72,7 +72,7 @@ const loading = ref(false);
 const errorMsg = ref("");
 const token = ref("");
 const isTokenInvalid = ref(false); 
-const t = useI18n();
+const { t } = useI18n(); // ✅ Correct
 
 
 onMounted(() => {
