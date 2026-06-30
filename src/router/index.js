@@ -31,6 +31,7 @@ const routes = [
     path: '/credentials',       
     name: 'SetPassword',
     component: SetPassword,
+    meta: { requiresGuest: true } // Prevents logged-in users from resetting password
   },
   {
     path: '/invited',
@@ -53,12 +54,6 @@ const routes = [
     component: () => import('../components/voltx/Home.vue'),
   },
   {
-    path: '/admin',
-    name: 'AdminDashboard',
-    component: () => import('../views/AdminDashboard.vue'),
-    meta: { requiresAuth: true },
-  },
-  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: NotFound,
@@ -66,12 +61,17 @@ const routes = [
   {
     path: '/terms',
     component: LegalView,
-    meta: { fileName: 'terms' } // Matches public/terms.md
+    meta: { fileName: 'terms' }
   },
   {
     path: '/conduct',
     component: LegalView,
-    meta: { fileName: 'conduct' } // Matches public/conduct.md
+    meta: { fileName: 'conduct' } 
+  },
+  {
+    path: '/privacy',
+    component: LegalView,
+    meta: { fileName: 'privacy' } 
   }
 ]
 
@@ -81,16 +81,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
- const requiresAuth = to.meta.requiresAuth;
-  const isEnteringAdmin = to.path.startsWith('/admin');
+  const requiresAuth = to.meta.requiresAuth;
+  const requiresGuest = to.meta.requiresGuest;
 
   if (requiresAuth && !auth.isSignedIn) {
     return next('/login');
   }
 
-  if (isEnteringAdmin && !auth.isAdmin) {
-    return next('/'); 
+ 
+  if (requiresGuest && auth.isSignedIn) {
+    return next('/');
   }
+
 
   next();
 })

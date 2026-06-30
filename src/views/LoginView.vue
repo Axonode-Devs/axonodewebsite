@@ -74,13 +74,11 @@ const handleLogin = async () => {
     // 1. Authenticate
     await auth.signIn(email.value, password.value);
 
-    // 2. Determine where to go based on the user object
-    // We check the admin module specifically to see if the session saved 
-    // satisfies the admin requirements.
+    
     if (auth.isAdmin) {
       router.push('/admin');
     } else {
-      router.push('/dashboard'); // or wherever your user home is
+      router.push('/dashboard');
     }
     
   } catch (error) {

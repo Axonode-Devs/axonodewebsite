@@ -337,5 +337,33 @@
       "leftDesc": "Yeni şeyler hazırlıyoruz :)",
       "badge": "YAKINDA"
     }
+  },
+  "set_password": {
+    "header": {
+      "title": "Axonode'a Hoş Geldin!",
+      "subtitle": "Hadi Hesabın için bir şifre hazırlayalım"
+    },
+    "form": {
+      "password": {
+        "label": "Şifre",
+        "placeholder": "En az 8 karakter"
+      },
+      "confirm_password": {
+        "label": "Şifreni Onayla",
+        "placeholder": "Şifreni Tekrar yaz"
+      }
+    },
+    "buttons": {
+      "submit": "Şifreyi Onayla",
+      "submitting": "Kaydediliyor..."
+    },
+    "errors": {
+      "invalid_link": "Aktivasyon linki hatalı, yeniden yönlendiriliyor",
+      "missing_token": "Doğrulanmış bir token olmadan devam edilemez",
+      "min_length": "Şifre en az 8 karakter olmalı!",
+      "digits_only": "Şifre Sadece sayılar içeremez",
+      "mismatch": "Şifreler uyuşmuyor",
+      "failed": "Şifre Yapılandırılamadı, Link eskimiş olabilir lütfen yetkililere ulaşın!"
+    }
   }
 }

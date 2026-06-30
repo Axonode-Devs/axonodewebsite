@@ -329,5 +329,33 @@
       "leftDesc": "Axonode is cooking up something :)",
       "badge": "SOON"
     }
+  },
+  "set_password": {
+    "header": {
+      "title": "Welcome to Axonode",
+      "subtitle": "Let's set a password for your account"
+    },
+    "form": {
+      "password": {
+        "label": "Password",
+        "placeholder": "Min 8 characters"
+      },
+      "confirm_password": {
+        "label": "Confirm Password",
+        "placeholder": "Repeat your password"
+      }
+    },
+    "buttons": {
+      "submit": "Set Password",
+      "submitting": "Setting password..."
+    },
+    "errors": {
+      "invalid_link": "Invalid or missing activation link. Redirecting to home...",
+      "missing_token": "Cannot proceed without a valid token.",
+      "min_length": "Password must be at least 8 characters long.",
+      "digits_only": "Password cannot consist of digits only.",
+      "mismatch": "Passwords do not match.",
+      "failed": "Failed to set password. The link may have expired or been used."
+    }
   }
 }

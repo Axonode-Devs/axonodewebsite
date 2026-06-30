@@ -4,74 +4,85 @@
     <div class="login-content">
       <div class="login-box">
         <div class="login-header">
-          <h1>Welcome to Axonode</h1>
-          <p class="subtitle">Lets set your password for your account</p>
+          <h1>{{ $t("set_password.header.title") }}</h1>
+          <p class="subtitle">{{ $t("set_password.header.subtitle") }}</p>
         </div>
 
-        <form @submit.prevent="handleSetup" class="login-form">
+        <form
+          v-if="!isTokenInvalid"
+          @submit.prevent="handleSetup"
+          class="login-form"
+        >
           <div class="form-group">
-            <label for="password">Password</label>
-            <input 
+            <label for="password">{{
+              $t("set_password.form.password.label")
+            }}</label>
+            <input
               id="password"
-              type="password" 
-              v-model="password" 
-              placeholder="Min 8 characters" 
-              required 
+              type="password"
+              v-model="password"
+              :placeholder="$t('set_password.form.password.placeholder')"
+              required
             />
           </div>
+
           <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <input 
+            <label for="confirmPassword">{{
+              $t("set_password.form.confirm_password.label")
+            }}</label>
+            <input
               id="confirmPassword"
-              type="password" 
-              v-model="confirmPassword" 
-              placeholder="Repeat your password" 
-              required 
+              type="password"
+              v-model="confirmPassword"
+              :placeholder="
+                $t('set_password.form.confirm_password.placeholder')
+              "
+              required
             />
           </div>
 
           <button type="submit" class="login-btn" :disabled="loading">
-            <span v-if="!loading">Set Password</span>
+            <span v-if="!loading">{{ $t("set_password.buttons.submit") }}</span>
             <span v-else class="loading-spinner">
-              <svg viewBox="0 0 24 24" width="20" height="20">
-                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
-              </svg>
-              Setting password...
+              <!-- SVG icon stays here -->
+              {{ $t("set_password.buttons.submitting") }}
             </span>
           </button>
         </form>
 
         <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { admin, auth } from '../libs/AxonConnector';
-import { ApiError } from '../libs/AxonConnector';
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { auth, ApiError } from "../libs/AxonConnector"; 
+import Navbar from "../components/Navbar.vue";
+import { useI18n } from 'vue-i18n'; 
 
-import Navbar from '../components/Navbar.vue';
 const route = useRoute();
 const router = useRouter();
 
-
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref(''); 
+const password = ref("");
+const confirmPassword = ref("");
 const loading = ref(false);
-const errorMsg = ref('');
-const token = ref('');
+const errorMsg = ref("");
+const token = ref("");
+const isTokenInvalid = ref(false); 
+const t = useI18n();
 
 
 onMounted(() => {
   const urlToken = route.query.token;
   if (!urlToken) {
-    errorMsg.value = 'Invalid or missing activation link.';
-    router.push('/'); // Redirect to home or login page
+    isTokenInvalid.value = true;
+    errorMsg.value = t('set_password.errors.invalid_link'); // <-- Use t()
+    setTimeout(() => {
+      router.push('/');
+    }, 3000);
   } else {
     token.value = urlToken;
   }
@@ -79,15 +90,19 @@ onMounted(() => {
 
 const handleSetup = async () => {
   if (!token.value) {
-    errorMsg.value = 'Cannot proceed without a valid token.';
+    errorMsg.value = t('set_password.errors.missing_token');
     return;
   }
   if (password.value.length < 8) {
-    errorMsg.value = 'Password must be at least 8 characters long.';
+    errorMsg.value = t('set_password.errors.min_length');
     return;
   }
-  if (password.value !== confirmPassword.value) {   // ← was missing entirely
-    errorMsg.value = 'Passwords do not match.';
+  if (/^\d+$/.test(password.value)) {
+    errorMsg.value = t('set_password.errors.digits_only');
+    return;
+  }
+  if (password.value !== confirmPassword.value) {
+    errorMsg.value = t('set_password.errors.mismatch');
     return;
   }
 
@@ -95,17 +110,17 @@ const handleSetup = async () => {
   errorMsg.value = '';
 
   try {
-    await auth.setPassword(token.value, password.value);
-    router.push('/');                               // ← no alert(), just navigate
+    await auth.activateAccount(token.value, password.value);
+    router.push('/'); 
   } catch (error) {
+    // We keep the API error message if one exists, otherwise use fallback
     errorMsg.value = error instanceof ApiError
-      ? error.message                               // ← was error.msg (doesn't exist)
-      : 'Failed to set password. The link may have expired.';
+      ? error.message 
+      : t('set_password.errors.failed');
   } finally {
     loading.value = false;
   }
 };
-
 </script>
 
 <style scoped>
@@ -114,7 +129,11 @@ const handleSetup = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-color) 0%, rgba(120, 222, 231, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-color) 0%,
+    rgba(120, 222, 231, 0.05) 100%
+  );
   padding: 20px;
 }
 
@@ -153,7 +172,11 @@ const handleSetup = async () => {
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 8px 0;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -209,7 +232,11 @@ const handleSetup = async () => {
 
 .login-btn {
   padding: 14px 20px;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
   color: #000;
   border: none;
   border-radius: 8px;
@@ -280,7 +307,7 @@ const handleSetup = async () => {
 
 .divider::before,
 .divider::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
