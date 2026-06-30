@@ -1,10 +1,10 @@
 # Axonode: Privacy Policy
 
-*Last Updated:* [Insert Date]
+*Last Updated:* [30.06.2026]
 
 ## 1. Introduction
 
-This Privacy Policy explains how Axonode ("we," "us," "the Organization") collects, uses, stores, and protects information from applicants, members, and visitors to our website. By applying to Axonode, joining as a Member, or using our website, you agree to the practices described here. This Policy should be read alongside our Terms of Service and Code of Conduct, which govern how member created projects and internal communications are handled.
+This Privacy Policy explains how Axonode ("we," "us," "the Organization") collects, uses, stores, and protects information from applicants, members, and visitors to our website. By applying to Axonode, joining as a Member, or using our website, you agree to the practices described here.
 
 ## 2. Who Can Use Axonode
 
@@ -50,7 +50,7 @@ We work with the following third party service providers, who process certain da
 - *Resend:* used to send application confirmations, communications, and other organizational emails
 - *Google Analytics:* used to collect anonymized/aggregate website usage data on our homepage
 
-These providers process data according to their own privacy policies and applicable data protection standards. We do not sell member or applicant data to third parties.
+These providers process data according to their own privacy policies and applicable data protection standards. *We do not sell member or applicant data to third parties.*
 
 ## 6. Data Retention
 
@@ -60,7 +60,7 @@ These providers process data according to their own privacy policies and applica
 
 ## 7. Confidentiality of Internal Discussions
 
-As outlined in our Code of Conduct, internal Axonode discussions and project details are confidential by default unless a project is marked "Public" by the Board. We do not disclose member communications or project information outside the Organization except where required to enforce our Code of Conduct, resolve disputes, or comply with legal obligations.
+İnternal Axonode discussions and project details are confidential by default unless a project is marked "Public" by the Board. We do not disclose member communications or project information outside the Organization except where required to enforce our Code of Conduct, resolve disputes, or comply with legal obligations.
 
 ## 8. Your Rights
 
