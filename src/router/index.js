@@ -4,6 +4,8 @@ import AboutView from "../views/AboutView.vue";
 import NotFound from "../views/NotFound.vue";
 import SetPassword from "../views/SetPassword.vue";
 import LegalView from "../views/LegalView.vue";
+import { useAuthStore } from "../stores/auth.ts";
+const auth = useAuthStore();
 
 const routes = [
   {
@@ -88,11 +90,11 @@ router.beforeEach((to, _from, next) => {
   const requiresAuth = to.meta.requiresAuth;
   const requiresGuest = to.meta.requiresGuest;
 
-  if (requiresAuth && !auth.isSignedIn) {
+  if (requiresAuth && !auth.isAuthenticated) {
     return next("/login");
   }
 
-  if (requiresGuest && auth.isSignedIn) {
+  if (requiresGuest && auth.isAuthenticated) {
     return next("/");
   }
 

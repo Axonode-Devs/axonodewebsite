@@ -103,7 +103,7 @@ import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
 import { apiClient } from '../api/client'
 import { ApiError } from '../api/error'
-import { authService } from '../api/authService' // <-- Imported your authService
+import { authService } from '../api/authService' 
 import Navbar from '../components/Navbar.vue'
 
 const { t } = useI18n()
@@ -128,9 +128,8 @@ const passwordForm = reactive({ current: '', new: '', confirm: '' })
 
 // ── HYDRATE STATE ON MOUNT ──────────────────────────────────────────────────
 onMounted(() => {
-  // If Pinia lost the state on a page refresh, pull it back out of localStorage
   if (!authStore.user) {
-    const localUser = authService.getLocalUser() //[cite: 6]
+    const localUser = authService.getLocalUser() 
     if (localUser) {
       authStore.user = localUser
     } else {
