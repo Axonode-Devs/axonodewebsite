@@ -43,11 +43,10 @@
     <div class="decoration decoration-3" aria-hidden="true"></div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { public_ } from "../libs/AxonConnector";
+import { publicService } from "../api/publicService";
 
 const router = useRouter();
 const route = useRoute();
@@ -67,11 +66,7 @@ onMounted(async () => {
   }
 
   try {
-    // This now calls GET /api/invites/<token>/validity
-    const inviteData = await public_.checkInvite(inviteToken.value);
-    
-    // If the request didn't throw an error, it's valid!
-    // public.py returns: { id, note, expires_at }
+    const inviteData = await publicService.checkInvite(inviteToken.value);
     userName.value = inviteData.note || "You";
     isValid.value = true;
     

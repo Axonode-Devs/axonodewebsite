@@ -1,13 +1,11 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { ApiError } from './error';
 
-// Central token tracking from keys config
 export const KEYS = {
   userToken:   'axon_user_access',
   userRefresh: 'axon_user_refresh',
 } as const;
 
-// Extend Axios configuration safely for our interceptor flags
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
   _tokenKey?: string;
   _refreshKey?: string;
@@ -15,7 +13,7 @@ interface CustomRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
-let baseURL = import.meta.env.PROD ? 'http://127.0.0.1:5000/api/v1' : 'https://axonode.org/api/v1';
+let baseURL = 'https://axonode.org/api/v1';
 
 export const apiClient = axios.create({
   baseURL: baseURL,
@@ -33,7 +31,6 @@ apiClient.interceptors.request.use((config: CustomRequestConfig) => {
   return config;
 });
 
-// 2. REFRESH QUEUE STATE
 let isRefreshing = false;
 interface FailedRequest {
   resolve: (token: string) => void;

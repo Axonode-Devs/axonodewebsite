@@ -12,12 +12,9 @@ import { faCoffee, faChevronRight, faGear } from '@fortawesome/free-solid-svg-ic
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 library.add(faCoffee, faChevronRight, faGithub, faGear)
 import { createPinia } from 'pinia'
-import { initAxonode } from "./libs/AxonConnector"
 
 const pinia = createPinia()
-initAxonode({
-  baseURL: 'https://axonode.org/api/v1'
-})
+
 
 const app = createApp(App)
 

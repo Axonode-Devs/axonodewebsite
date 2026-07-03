@@ -84,8 +84,8 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import { ApiError } from '../libs/AxonConnector/error';
-import { public_ } from '../libs/AxonConnector'; // ← correct module
+import { publicService } from '../api/publicService';
+import { ApiError } from '../api/error';
 
 const form = reactive({ name: '', email: '', message: '' });
 const errors = reactive({ name: '', email: '', message: '' });
@@ -110,14 +110,15 @@ async function onSubmit() {
 
   isSubmitting.value = true;
   try {
-    await public_.submitContact({       // ← correct method
+    // Replaced public_.submitContact with the cleanly typed publicService method[cite: 9]
+    await publicService.submitContact({       
       name:    form.name.trim(),
       email:   form.email.trim(),
       message: form.message.trim(),
     });
     isSubmitted.value = true;
   } catch (err) {
-    // ApiError instances carry .message directly — no .response wrapper
+    // Your new ApiError instances carry .message directly[cite: 8]
     apiError.value = err instanceof ApiError
       ? err.message
       : 'Something went wrong. Please try again.';

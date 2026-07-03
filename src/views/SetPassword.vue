@@ -55,11 +55,14 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { auth, ApiError } from "../libs/AxonConnector"; 
+
+import { authService } from "../api/authService";
+import { ApiError } from "../api/error";
+import { useAuthStore } from "../stores/auth"; 
+
 import Navbar from "../components/Navbar.vue";
 import { useI18n } from 'vue-i18n'; 
 
@@ -73,7 +76,6 @@ const errorMsg = ref("");
 const token = ref("");
 const isTokenInvalid = ref(false); 
 const { t } = useI18n(); // ✅ Correct
-
 
 onMounted(() => {
   const urlToken = route.query.token;
@@ -110,10 +112,15 @@ const handleSetup = async () => {
   errorMsg.value = '';
 
   try {
-    await auth.activateAccount(token.value, password.value);
+   
+    const userProfile = await authService.activateAccount(token.value, password.value);
+    if (authStore) {
+      authStore.user = userProfile;
+      authStore.isAuthenticated = true; 
+    }
     router.push('/'); 
   } catch (error) {
-    // We keep the API error message if one exists, otherwise use fallback
+    
     errorMsg.value = error instanceof ApiError
       ? error.message 
       : t('set_password.errors.failed');

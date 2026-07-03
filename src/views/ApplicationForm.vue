@@ -857,9 +857,9 @@ import { ref, reactive, computed, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 import Infocard from "../components/InfoCard.vue";
-import { public_ } from "../libs/AxonConnector"; // ← submitApplication lives here
-import { ApiError } from "../libs/AxonConnector/error.js";
 import { useI18n } from "vue-i18n";
+import { publicService } from "../api/publicService"; 
+import { ApiError } from "../api/error";
 
 const { t } = useI18n();
 
@@ -895,8 +895,8 @@ const currentStep = ref(1);
 const isSubmitting = ref(false);
 const isSubmitted = ref(false);
 const inviteToken = ref<string | null>(null);
-const inviteNote = ref<string | null>(null); // friendly label from the invite
-const stepError = ref(""); // inline error — replaces alert()
+const inviteNote = ref<string | null>(null); 
+const stepError = ref("");
 const submitError = ref("");
 
 const form = reactive<AppForm>({
@@ -974,24 +974,19 @@ const interestAreas = [
   { id: "other", sub: [] },
 ];
 
-// ── Invite token check ────────────────────────────────────────────────────────
 onMounted(async () => {
   const token = route.query.invite as string;
   if (!token) return;
 
   try {
-    // public_.checkInvite throws ApiError on invalid/expired/revoked tokens
-    // On success it returns { id, note, expires_at } — no .valid field
-    const invite = await public_.checkInvite(token);
+    const invite = await publicService.checkInvite(token);
     inviteToken.value = token;
     inviteNote.value = invite.note ?? null;
     form.invite_token = token;
   } catch (err) {
-    // Token is invalid, expired, revoked, or already used —
-    // just proceed as a regular (non-invited) application, no hard error
     if (err instanceof ApiError) {
       console.warn(
-        `Invite token invalid (${err.code}) — proceeding without invite`,
+        `Invite token invalid (${err.status}) — proceeding without invite`
       );
     }
   }
@@ -999,7 +994,7 @@ onMounted(async () => {
 
 // ── Computed ──────────────────────────────────────────────────────────────────
 const selectedInterest = computed(() =>
-  interestAreas.find((i) => i.id === form.main_interest),
+  interestAreas.find((i) => i.id === form.main_interest)
 );
 
 watch(
@@ -1007,7 +1002,7 @@ watch(
   () => {
     form.sub_interest = [];
     form.other_interest = "";
-  },
+  }
 );
 
 // ── Navigation ────────────────────────────────────────────────────────────────
@@ -1064,10 +1059,10 @@ const submitForm = async () => {
           : form.main_interest,
     };
 
-    await public_.submitApplication(payload); // ← correct module
+    await publicService.submitApplication(payload); 
     isSubmitted.value = true;
   } catch (err) {
-    // ApiError.message is already human-readable from the server
+    // ApiError.message is extracted safely inside the interceptor now
     submitError.value =
       err instanceof ApiError
         ? err.message
