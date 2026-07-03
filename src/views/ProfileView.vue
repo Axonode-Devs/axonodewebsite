@@ -43,52 +43,7 @@
             </div>
           </section>
 
-          <!-- Security tab -->
-          <section v-if="activeTab === 'security'" class="section">
-            <div class="section-header">
-              <h2>{{ $t('profile.security.title') }}</h2>
-              <p class="section-sub">{{ $t('profile.security.subtitle') }}</p>
-            </div>
-
-            <form @submit.prevent="handlePasswordUpdate" class="settings-form">
-              <div class="form-group">
-                <label for="current-password">{{ $t('profile.security.current_password') }}</label>
-                <input
-                  id="current-password"
-                  type="password"
-                  v-model="passwordForm.current"
-                  required
-                  :placeholder="$t('profile.security.password_placeholder')"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="new-password">{{ $t('profile.security.new_password') }}</label>
-                <input
-                  id="new-password"
-                  type="password"
-                  v-model="passwordForm.new"
-                  required
-                  :placeholder="$t('profile.security.new_password_placeholder')"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="confirm-password">{{ $t('profile.security.confirm_password') }}</label>
-                <input
-                  id="confirm-password"
-                  type="password"
-                  v-model="passwordForm.confirm"
-                  required
-                  :placeholder="$t('profile.security.confirm_password_placeholder')"
-                />
-              </div>
-
-              <button type="submit" class="btn-save" :disabled="isSaving">
-                {{ isSaving ? $t('profile.security.saving') : $t('profile.security.save') }}
-              </button>
-            </form>
-          </section>
+          
 
         </main>
       </div>
