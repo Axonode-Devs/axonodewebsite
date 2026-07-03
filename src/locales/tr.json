@@ -334,7 +334,7 @@
       "subtitle": "Sıradaki proje geliştirilmektedir",
       "tag": "YAKINDA SİZLERLE",
       "leftTitle": "Geliştirme\nAşamasında",
-      "leftDesc": "Yeni şeyler hazırlıyoruz :)",
+      "leftDesc": "Güzel şeyler hazırlıyoruz :)",
       "badge": "YAKINDA"
     }
   },
@@ -364,6 +364,37 @@
       "digits_only": "Şifre Sadece sayılar içeremez",
       "mismatch": "Şifreler uyuşmuyor",
       "failed": "Şifre Yapılandırılamadı, Link eskimiş olabilir lütfen yetkililere ulaşın!"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "tabs": {
+      "account": "Hesap Bilgileri",
+      "security": "Güvenlik Ayarları"
+    },
+    "account": {
+      "title": "Hesap Bilgileri",
+      "subtitle": "Veritabanı kaydınızla eşleşen temel yapılandırma verileri.",
+      "email_label": "Kayıtlı E-Posta Adresi",
+      "email_hint": "E-Posta Değişikleri için yetkililerle iletişime geçin.",
+      "role_label": "Erişim Rolü İzinleri",
+      "role_default": "Standart Kullanıcı"
+    },
+    "security": {
+      "title": "Güvenlik Yapılandırmaları",
+      "subtitle": "Hesabınızı güvenli tutmak için kimlik bilgilerinizi periyodik olarak güncelleyin.",
+      "current_password": "Mevcut Şifre",
+      "new_password": "Yeni Şifre",
+      "confirm_password": "Yeni Şifreyi Onayla",
+      "password_placeholder": "••••••••",
+      "new_password_placeholder": "En az 8 karakter",
+      "confirm_password_placeholder": "Yeni şifreni tekrar gir",
+      "save": "Değişiklikleri Kaydet",
+      "saving": "Güncelleniyor...",
+      "success": "Şifreniz başarıyla güvenli bir şekilde güncellenmiştir.",
+      "error_mismatch": "Yeni şifreniz ve onay şifreniz uyuşmuyor.",
+      "error_too_short": "Yeni şifreniz en az 8 karakter uzunluğunda olmalıdır.",
+      "error_generic": "Sunucuya güncelleme gönderilemedi. Daha sonra tekrar deneyin."
     }
   }
 }

@@ -54,10 +54,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { admin, auth, ApiError } from '../libs/AxonConnector'; // Corrected import path
+import { useAuthStore } from '../stores/auth';
+import { ApiError } from '../api/error';
 import Navbar from '../components/Navbar.vue';
 
 const email = ref('');
@@ -65,29 +66,25 @@ const password = ref('');
 const loading = ref(false);
 const errorMsg = ref('');
 const router = useRouter();
+const authStore = useAuthStore();
 
 const handleLogin = async () => {
   loading.value = true;
   errorMsg.value = '';
 
   try {
-    // 1. Authenticate
-    await auth.signIn(email.value, password.value);
-
+   
+    await authStore.login(email.value.trim(), password.value);
+   
     
-    if (auth.isAdmin) {
-      router.push('/admin');
-    } else {
-      router.push('/dashboard');
-    }
-    
+    router.push('/');
   } catch (error) {
-    // 3. Handle specific ApiError from your SDK
     if (error instanceof ApiError) {
+      errorMsg.value = error.message; 
+    } else if (error instanceof Error) {
       errorMsg.value = error.message;
     } else {
-      errorMsg.value = 'A connection error occurred. Please try again.';
-      console.error('Login error:', error);
+      errorMsg.value = 'An unexpected connection error occurred.';
     }
   } finally {
     loading.value = false;

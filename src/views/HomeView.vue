@@ -14,6 +14,7 @@
 
     <!--<Founders />-->
     <ContactSection />
+    <Footer></Footer>
   </div>
 </template>
 
@@ -29,6 +30,7 @@ import ProjectsSection from '../components/ProjectsSection.vue';
 import InfoSection from '../components/InfoSection.vue';
 import ContactSection from '../components/ContactSection.vue';
 import ProjectsShow from '../components/ProjectsShow.vue';
+import Footer from '../components/Footer.vue'
 </script>
 
 <style scoped>

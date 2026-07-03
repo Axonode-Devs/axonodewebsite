@@ -1,24 +1,27 @@
-import axios from 'axios';
-import { AuthModule } from './auth.js';
-import { KEYS } from './keys.js';
-import { ApiError } from './error.js';
-import { PublicModule } from './public.js';
+import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import { ApiError } from './error';
 
+// Central token tracking from keys config
+export const KEYS = {
+  userToken:   'axon_user_access',
+  userRefresh: 'axon_user_refresh',
+} as const;
 
-const client = axios.create({
-  baseURL: 'https://127.0.0.1:5000/api/v1',
+// Extend Axios configuration safely for our interceptor flags
+interface CustomRequestConfig extends InternalAxiosRequestConfig {
+  _tokenKey?: string;
+  _refreshKey?: string;
+  _skipAuth?: boolean;
+  _retry?: boolean;
+}
+
+export const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api/v1',
   headers: { 'Content-Type': 'application/json' },
 });
 
-export const initAxonode = (config = {}) => {
-  if (config.baseURL) {
-    client.defaults.baseURL = config.baseURL.replace(/\/$/, '');
-  }
-};
-
 // 1. REQUEST INTERCEPTOR
-client.interceptors.request.use(config => {
-  // Use explicit key from config (set by module) or fallback to user token
+apiClient.interceptors.request.use((config: CustomRequestConfig) => {
   const key = config._tokenKey ?? KEYS.userToken;
   const token = localStorage.getItem(key);
   
@@ -28,26 +31,27 @@ client.interceptors.request.use(config => {
   return config;
 });
 
-
-
 // 2. REFRESH QUEUE STATE
 let isRefreshing = false;
-let failedQueue = [];
+interface FailedRequest {
+  resolve: (token: string) => void;
+  reject: (error: any) => void;
+}
+let failedQueue: FailedRequest[] = [];
 
-const processQueue = (error, token = null) => {
-  failedQueue.forEach(p => error ? p.reject(error) : p.resolve(token));
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(p => error ? p.reject(error) : p.resolve(token!));
   failedQueue = [];
 };
 
 // 3. RESPONSE INTERCEPTOR
-client.interceptors.response.use(
-  response => response,
-  async error => {
-    const original = error.config;
+apiClient.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  async (error: AxiosError) => {
+    const original = error.config as CustomRequestConfig;
 
-    // Check for 401. 
-    // We check for 'TOKEN_EXPIRED' but also fallback to generic 401 if it's not a login attempt
-    const errorCode = error.response?.data?.error?.code;
+    if (!original) return Promise.reject(_normalizeError(error));
+
     const is401 = error.response?.status === 401;
     const isAuthRequest = original.url?.includes('/sessions') || original.url?.includes('/tokens');
 
@@ -56,12 +60,14 @@ client.interceptors.response.use(
     }
 
     if (isRefreshing) {
-      return new Promise((resolve, reject) => {
+      return new Promise<string>((resolve, reject) => {
         failedQueue.push({ resolve, reject });
-      }).then(token => {
+      })
+      .then(token => {
         original.headers.Authorization = `Bearer ${token}`;
-        return client(original);
-      }).catch(err => Promise.reject(err));
+        return apiClient(original);
+      })
+      .catch(err => Promise.reject(err));
     }
 
     original._retry = true;
@@ -77,9 +83,8 @@ client.interceptors.response.use(
     }
 
     try {
-      // Use standard axios to avoid the interceptor loop
       const { data } = await axios.post(
-        `${client.defaults.baseURL}/auth/tokens`,
+        `${apiClient.defaults.baseURL}/auth/tokens`,
         {},
         { headers: { Authorization: `Bearer ${refreshToken}` } }
       );
@@ -89,9 +94,9 @@ client.interceptors.response.use(
 
       processQueue(null, newToken);
       original.headers.Authorization = `Bearer ${newToken}`;
-      return client(original);
+      return apiClient(original);
 
-    } catch (refreshError) {
+    } catch (refreshError: any) {
       processQueue(refreshError, null);
       localStorage.removeItem(tokenKey);
       localStorage.removeItem(refreshKey);
@@ -107,12 +112,11 @@ client.interceptors.response.use(
   }
 );
 
-const _normalizeError = (err) => {
-  // If it's already an ApiError (e.g. from a manual throw), just return it
+const _normalizeError = (err: AxiosError | any): ApiError => {
   if (err instanceof ApiError) return err;
 
   const response = err.response;
-  const data = response?.data?.error; // Assumes your Flask backend sends { error: { code, message, details } }
+  const data = response?.data?.error; 
 
   return new ApiError(
     data?.code || 'UNKNOWN_ERROR',
@@ -121,6 +125,3 @@ const _normalizeError = (err) => {
     data?.details || []
   );
 };
-export { ApiError } from './error.js';
-export const auth = new AuthModule(client, KEYS);
-export const public_ = new PublicModule(client)

@@ -11,9 +11,10 @@ config.autoAddCss = false
 import { faCoffee, faChevronRight, faGear } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 library.add(faCoffee, faChevronRight, faGithub, faGear)
-
+import { createPinia } from 'pinia'
 import { initAxonode } from "./libs/AxonConnector"
 
+const pinia = createPinia()
 initAxonode({
   baseURL: 'https://axonode.org/api/v1'
 })
@@ -22,5 +23,6 @@ const app = createApp(App)
 
 app.use(i18n)
 app.use(router)
+app.use(pinia)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')

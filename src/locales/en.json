@@ -192,8 +192,8 @@
       "technology": {
         "label": "Technology",
         "sub": {
-          "system_design":"System Design",
-          "embedded":"Embeded Systems",
+          "system_design": "System Design",
+          "embedded": "Embeded Systems",
           "frontend": "Frontend Development",
           "backend": "Backend Development",
           "ai": "AI / Machine Learning",
@@ -290,7 +290,7 @@
       "invalid_invite": "This invitation link is invalid or has expired."
     }
   },
-  "not_found":{
+  "not_found": {
     "title": "Not Found??",
     "desc": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
     "back": "Go Back"
@@ -326,7 +326,7 @@
       "subtitle": "Next project is under development",
       "tag": "Not yet here",
       "leftTitle": "In\nDevelopment",
-      "leftDesc": "Axonode is cooking up something :)",
+      "leftDesc": "Axonode is cooking up something goood :)",
       "badge": "SOON"
     }
   },
@@ -356,6 +356,37 @@
       "digits_only": "Password cannot consist of digits only.",
       "mismatch": "Passwords do not match.",
       "failed": "Failed to set password. The link may have expired or been used."
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "tabs": {
+      "account": "Account Settings",
+      "security": "Security Settings"
+    },
+    "account": {
+      "title": "Account Information",
+      "subtitle": "Basic configuration data matching your database record.",
+      "email_label": "Registered Email Address",
+      "email_hint": "Email changes must currently be handled via administrative support.",
+      "role_label": "Access Role Privilege",
+      "role_default": "Standard User"
+    },
+    "security": {
+      "title": "Security Configurations",
+      "subtitle": "Keep your account secure by periodically updating your credentials.",
+      "current_password": "Current Password",
+      "new_password": "New Password",
+      "confirm_password": "Confirm New Password",
+      "password_placeholder": "••••••••",
+      "new_password_placeholder": "Minimum 8 characters",
+      "confirm_password_placeholder": "Match your new password",
+      "save": "Save Changes",
+      "saving": "Updating...",
+      "success": "Your password has been securely updated successfully.",
+      "error_mismatch": "Your new password and confirmation password do not match.",
+      "error_too_short": "Your new password must be at least 8 characters long.",
+      "error_generic": "Could not communicate update to the server. Try again later."
     }
   }
 }
