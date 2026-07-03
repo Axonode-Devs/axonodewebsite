@@ -18,9 +18,10 @@
       </ul>
 
       <div class="nav-actions desktop-actions">
-        <!-- Automatically reacts to Pinia state -->
-
         <LangSwitcher />
+        <button v-if="!authStore.isAuthenticated" class="btn-gradient" @click="handleLoginClick">
+          {{ t("navbar.login") }}
+        </button>
         <button
           v-if="!authStore.isAuthenticated"
           class="btn-gradient"
@@ -29,7 +30,7 @@
           {{ t("navbar.joinUs") }}
         </button>
         <button v-else class="btn-gradient" @click="goToProfile">
-          Profile
+         {{ t("profile.title") }}
         </button>
       </div>
 
@@ -61,8 +62,9 @@
         </li>
       </ul>
       <div class="mobile-nav-actions">
-        <!-- Automatically reacts to Pinia state for mobile too -->
-
+        <button v-if="!authStore.isAuthenticated" class="btn-text" @click="handleLoginClick">
+          {{ t("navbar.login") }}
+        </button>
         <button
           v-if="!authStore.isAuthenticated"
           class="btn-gradient mobile-btn"
@@ -97,7 +99,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
-import ThemeSwitcher from "../components/ThemeSwitcher.vue";
 import LangSwitcher from "../components/LangSwitcher.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "../stores/auth"; // Added the Pinia store import
@@ -199,12 +200,7 @@ onUnmounted(() => {
 });
 
 const handleLoginClick = () => {
-  // Routes to admin or dashboard based on the user's role in the store
-  if (authStore.isAuthenticated) {
-    router.push(authStore.isAdmin ? "/admin" : "/dashboard");
-  } else {
-    router.push("/login");
-  }
+  router.push("/login");
 };
 
 const goToApply = () => router.push("/join");
@@ -219,7 +215,6 @@ const goToHome = () => {
 </script>
 
 <style scoped>
-/* Keeping your existing styles perfectly intact */
 .navbar {
   position: fixed;
   top: 0;

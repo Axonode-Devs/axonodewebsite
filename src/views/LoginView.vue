@@ -7,40 +7,43 @@
     <div class="login-content">
       <div class="login-box">
         <div class="login-header">
-          <h1>Welcome Back</h1>
-          <p class="subtitle">Sign in to your account</p>
+          <h1>{{ $t('login.title') }}</h1>
+          <p class="subtitle">{{ $t('login.subtitle') }}</p>
         </div>
 
         <form @submit.prevent="handleLogin" class="login-form">
           <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="email">{{ $t('login.form.email.label') }}</label>
             <input 
               id="email"
               type="email" 
               v-model="email" 
-              placeholder="Enter your email" 
+              :placeholder="$t('login.form.email.placeholder')" 
               required 
             />
           </div>
 
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">{{ $t('login.form.password.label') }}</label>
             <input 
               id="password"
               type="password" 
               v-model="password" 
-              placeholder="Enter your password" 
+              :placeholder="$t('login.form.password.placeholder')" 
               required 
             />
           </div>
 
           <button type="submit" class="login-btn" :disabled="loading">
-            <span v-if="!loading">Sign In</span>
+            <span v-if="!loading">{{ $t('login.form.submit.label') }}</span>
             <span v-else class="loading-spinner">
               <i class="fa-solid fa-circle-notch fa-spin"></i>
-              Signing in...
+              {{ $t('login.form.submit.submitting') }}
             </span>
           </button>
+          <router-link to="/join" class="join-link">
+            {{ $t('login.does_not_have_account') }}
+          </router-link>
         </form>
 
         <!-- Use a Transition for the error message for a smoother UI -->
@@ -208,6 +211,17 @@ const handleLogin = async () => {
   justify-content: center;
   gap: 8px;
 }
+
+.join-link {
+  display: block;
+  text-align: center;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
 
 .login-btn:hover:not(:disabled) {
   transform: translateY(-2px);

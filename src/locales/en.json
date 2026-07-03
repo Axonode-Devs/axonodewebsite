@@ -24,6 +24,7 @@
     "about": "About",
     "groups": "Groups",
     "support": "Reach Us",
+    "login": "Login",
     "events": "Events",
     "projects": "Projects",
     "joinUs": "Join Us"
@@ -387,6 +388,24 @@
       "error_mismatch": "Your new password and confirmation password do not match.",
       "error_too_short": "Your new password must be at least 8 characters long.",
       "error_generic": "Could not communicate update to the server. Try again later."
+    }
+  },
+  "login":{
+    "title": "Welcome Back!",
+    "subtitle": "Let's get you logged in!",
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "submit": {
+        "label": "Log In",
+        "submitting": "Logging in..."
+      }
     }
   }
 }

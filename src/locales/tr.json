@@ -24,6 +24,7 @@
     "about": "Hakkında",
     "groups": "Gruplar",
     "support": "Bize Ulaşın",
+    "login": "Giriş Yap",
     "events": "Etkinlikler",
     "projects": "Projeler",
     "joinUs": "Bize Katıl"
@@ -396,5 +397,24 @@
       "error_too_short": "Yeni şifreniz en az 8 karakter uzunluğunda olmalıdır.",
       "error_generic": "Sunucuya güncelleme gönderilemedi. Daha sonra tekrar deneyin."
     }
+  },
+  "login":{
+    "title": "Tekrar Hoş Geldin!",
+    "subtitle": "Hesabına giriş yapalım!",
+    "form": {
+      "email": {
+        "label": "E-Posta",
+        "placeholder": "E-Postanı gir"
+      },
+      "password": {
+        "label": "Şifre",
+        "placeholder": "Şifreni gir"
+      },
+      "submit": {
+        "label": "Giriş Yap",
+        "submitting": "Giriş Yapılıyor..."
+      }
+    },
+    "does_not_have_account": "Hesabın yok mu? Yeni Kişilere Her zaman açığız, Bize Katılmak için Tıkla!"
   }
 }
