@@ -12,7 +12,7 @@ Axonode is open to individuals aged 15 and older, primarily high school and univ
 
 ## 3. Information We Collect
 
-### 3.1 Information You Provide at Application
+### **3.1 Information You Provide at Application**
 
 When you apply to Axonode through the application form on our website, we collect:
 
@@ -24,11 +24,11 @@ When you apply to Axonode through the application form on our website, we collec
 - English proficiency
 - Motivation letter, where relevant to the application
 
-### 3.2 Information Collected Automatically
+### **3.2 Information Collected Automatically**
 
 When you visit our homepage, we use *Google Analytics* to collect standard usage data such as page views, session duration, device/browser type, and general location. This helps us understand how visitors interact with our site.
 
-### 3.3 Project Related Information
+### **3.3 Project Related Information**
 
 Members who develop projects within Axonode generate project data as described in our Terms of Service and Code of Conduct, including project content, history, and internal discussion related to the project. We may, in the future, collect *usage analytics* (such as page views and time spent) on websites or products built through Axonode projects. This Policy will be updated before any such analytics are implemented.
 
