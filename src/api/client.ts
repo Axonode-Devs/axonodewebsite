@@ -15,8 +15,10 @@ interface CustomRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
+let baseURL = import.meta.env.PROD ? 'http://127.0.0.1:5000/api/v1' : 'https://axonode.org/api/v1';
+
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api/v1',
+  baseURL: baseURL,
   headers: { 'Content-Type': 'application/json' },
 });
 
