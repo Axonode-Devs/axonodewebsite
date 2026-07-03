@@ -97,15 +97,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
 import { apiClient } from '../api/client'
 import { ApiError } from '../api/error'
+import { authService } from '../api/authService' // <-- Imported your authService
 import Navbar from '../components/Navbar.vue'
 
 const { t } = useI18n()
+const router = useRouter()
 const authStore = useAuthStore()
+
 enum TabKey {
   ACCOUNT = 'account',
   SECURITY = 'security'
@@ -121,6 +125,20 @@ const tabs = [
 ]
 
 const passwordForm = reactive({ current: '', new: '', confirm: '' })
+
+// ── HYDRATE STATE ON MOUNT ──────────────────────────────────────────────────
+onMounted(() => {
+  // If Pinia lost the state on a page refresh, pull it back out of localStorage
+  if (!authStore.user) {
+    const localUser = authService.getLocalUser() //[cite: 6]
+    if (localUser) {
+      authStore.user = localUser
+    } else {
+      // If there is no user in storage at all, boot them to the homepage
+      router.push('/')
+    }
+  }
+})
 
 const handlePasswordUpdate = async () => {
   errorMsg.value   = ''
@@ -154,7 +172,6 @@ const handlePasswordUpdate = async () => {
   }
 }
 </script>
-
 <style scoped>
 .profile-page {
   min-height: 100vh;

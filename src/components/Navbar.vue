@@ -101,12 +101,12 @@ import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import LangSwitcher from "../components/LangSwitcher.vue";
 import { useRouter, useRoute } from "vue-router";
-import { useAuthStore } from "../stores/auth"; // Added the Pinia store import
+import { useAuthStore } from "../stores/auth";
 
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
-const authStore = useAuthStore(); // Initialized the store
+const authStore = useAuthStore();
 
 type NavItem =
   | { label: string; i18nKey: string; scrollTo: string; target: string }
