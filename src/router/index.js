@@ -5,7 +5,6 @@ import NotFound from "../views/NotFound.vue";
 import SetPassword from "../views/SetPassword.vue";
 import LegalView from "../views/LegalView.vue";
 import { useAuthStore } from "../stores/auth.ts";
-const auth = useAuthStore();
 
 const routes = [
   {
@@ -87,6 +86,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from, next) => {
+  const auth = useAuthStore() // <--- This is safe, it runs AFTER app.use(pinia)
   const requiresAuth = to.meta.requiresAuth;
   const requiresGuest = to.meta.requiresGuest;
 

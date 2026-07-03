@@ -6,7 +6,6 @@ import { i18n } from './i18n.js'
 import { library, config } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-
 config.autoAddCss = false
 import { faCoffee, faChevronRight, faGear } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -18,8 +17,8 @@ const pinia = createPinia()
 
 const app = createApp(App)
 
+app.use(pinia)
 app.use(i18n)
 app.use(router)
-app.use(pinia)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
