@@ -112,11 +112,10 @@ const toggleMute = () => {
   isMuted.value = video.muted;
 };
 
-// ─── Responsive / resize ─────────────────────────────────────────────────────
+
 
 const MOBILE_BREAKPOINT = 768;
 
-// Debounce avoids layout thrashing on every pixel during resize
 let resizeTimer: ReturnType<typeof setTimeout> | null = null;
 const checkScreen = () => {
   if (resizeTimer !== null) clearTimeout(resizeTimer);
