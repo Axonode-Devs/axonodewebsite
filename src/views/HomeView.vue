@@ -9,11 +9,12 @@
       
       <HDivider />
       <AboutUs />
+      <HDivider top-margin="2px" />
       <!--<ProjectsShow />-->
+      <ContactSection />
     </div>
-
+    
     <!--<Founders />-->
-    <ContactSection />
     <Footer></Footer>
   </div>
 </template>

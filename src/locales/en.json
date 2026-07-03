@@ -87,9 +87,14 @@
   },
   "contact": {
     "header": {
-      "title": "Lets Build",
-      "gradient": "Something Great",
-      "description": "Have an idea or suggestion about Axonode? Drop us a line. We are always looking for new perspectives."
+      "eyebrow": "Reach Out",
+      "title": "Let’s build something",
+      "gradient": "meaningful together",
+      "description": "Whether you have an idea, a question, or just want to say hello, we’d love to hear from you. You can contact us about anything projects, collaboration, feedback, or even a casual conversation."
+    },
+    "cta": {
+      "title": "We’re here for it.",
+      "text": "Big ideas, bold questions, even a simple hello your message matters to us."
     },
     "success": {
       "sent": "Message Sent!",

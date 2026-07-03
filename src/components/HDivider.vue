@@ -7,10 +7,18 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     default: ''
+  },
+  topMargin: {
+    type: String,
+    default: '1.25rem'
+  },
+  bottomMargin: {
+    type: String,
+    default: '1.25rem'
   }
 });
 </script>
@@ -20,7 +28,8 @@ defineProps({
   display: flex;
   align-items: center;
   width: 100%;
-  margin: 2rem 0;
+  margin-top: v-bind('props.topMargin');
+  margin-bottom: v-bind('props.bottomMargin');
   color: #6b7280;
   font-size: 0.85rem;
   font-weight: 600;

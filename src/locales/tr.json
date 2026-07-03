@@ -87,9 +87,14 @@
   },
   "contact": {
     "header": {
-      "title": "Birlikte",
-      "gradient": "İnşa Edelim",
-      "description": "Axonode için bir önerin/fikrin mi var? Bize ulaş, her zaman yeni perspektiflere açığız!"
+      "eyebrow": "Bize Ulaş!",
+      "title": "Birlikte anlamlı bir şey",
+      "gradient": "inşa edelim",
+      "description": "Bir fikrin, sorunun ya da sadece merhaba demek istediğin bir şey varsa, duymaktan mutluluk duyarız. Projeler, iş birliği, geri bildirim ya da sadece kısa bir sohbet için bize ulaşabilirsin."
+    },
+    "cta": {
+      "title": "Biz buradayız.",
+      "text": "Büyük fikirler, cesur sorular ya da basit bir merhaba mesajın bizim için değerli."
     },
     "success": {
       "sent": "Mesaj Gönderildi!",
