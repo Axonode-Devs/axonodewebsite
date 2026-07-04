@@ -411,6 +411,7 @@
         "label": "Log In",
         "submitting": "Logging in..."
       }
-    }
+    },
+    "does_not_have_account": "Don't have an account? "
   }
 }
