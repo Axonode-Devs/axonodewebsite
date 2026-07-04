@@ -115,16 +115,16 @@ type NavItem =
 const menuItems: NavItem[] = [
   { label: "Home", i18nKey: "navbar.home", scrollTo: "hero", target: "#hero" },
   {
-    label: "About",
-    i18nKey: "navbar.about",
-    scrollTo: "about",
-    target: "#about",
-  },
-  {
     label: "Groups",
     i18nKey: "navbar.groups",
     scrollTo: "whatwedo",
     target: "#groups",
+  },
+  {
+    label: "About",
+    i18nKey: "navbar.about",
+    scrollTo: "about",
+    target: "#about",
   },
   {
     label: "Support",
