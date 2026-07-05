@@ -73,9 +73,6 @@ onMounted(async () => {
   } catch (err) {
     console.error("Invite check failed:", err);
     isValid.value = false;
-    
-    // Optional: Redirect back home if the link is dead
-    // router.push({ name: 'Home', query: { error: 'invalid-invite' } });
   } finally {
     loading.value = false;
   }

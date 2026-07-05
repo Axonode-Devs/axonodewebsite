@@ -1,7 +1,6 @@
 <template>
   <div class="lang-switcher" ref="switcherRef">
     <button class="lang-btn" @click="isOpen = !isOpen" :aria-expanded="isOpen" aria-haspopup="listbox">
-      <span class="lang-flag">{{ currentLang.flag }}</span>
       <span class="lang-code">{{ currentLang.code }}</span>
       <i class="fa-solid fa-chevron-down chevron" :class="{ 'chevron-open': isOpen }"></i>
     </button>
