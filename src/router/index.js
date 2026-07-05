@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/profile",
     component: () => import("../views/ProfileView.vue"),
-    meta: { requiresAuth: true }, 
+    meta: { requiresAuth: true },
   },
   {
     path: "/credentials",
@@ -47,16 +47,6 @@ const routes = [
     path: "/projects",
     name: "ProjectsView",
     component: () => import("../views/ComingSoon.vue"),
-  },
-  {
-    path: "/teams",
-    name: "TeamsView",
-    component: () => import("../views/TeamsView.vue"),
-  },
-  {
-    path: "/teams/frc0000",
-    name: "VoltX",
-    component: () => import("../components/voltx/Home.vue"),
   },
   {
     path: "/:pathMatch(.*)*",
