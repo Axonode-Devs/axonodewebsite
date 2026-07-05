@@ -6,15 +6,14 @@
 
     <div class="orb-section">
       <WhatWeDo />
-      
       <HDivider />
       <AboutUs />
-      <HDivider top-margin="2px" />
-      <!--<ProjectsShow />-->
+      <HDivider />
+      <!--<StartSection />-->
+      <!--<HDivider top-margin="2px" />-->
       <ContactSection />
     </div>
     
-    <!--<Founders />-->
     <Footer></Footer>
   </div>
 </template>
@@ -26,11 +25,8 @@ import HeroSection from '../components/HeroSection.vue';
 import Navbar from '../components/Navbar.vue';
 import HDivider from '../components/HDivider.vue'
 import TeamMarquee from '../components/TeamMarquee.vue';
-import Founders from '../components/Founders.vue'
-import ProjectsSection from '../components/ProjectsSection.vue';
-import InfoSection from '../components/InfoSection.vue';
+import StartSection from '../components/StartSection.vue';
 import ContactSection from '../components/ContactSection.vue';
-import ProjectsShow from '../components/ProjectsShow.vue';
 import Footer from '../components/Footer.vue'
 </script>
 

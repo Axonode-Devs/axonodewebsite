@@ -9,10 +9,9 @@
       </div>
 
       <div class="cards-grid" ref="trackRef" @scroll="onScroll">
-        <div class="feature-card card-blue">
-          <div class="glow-bg" aria-hidden="true"></div>
+        <div class="feature-card card-1">
           <div class="card-content">
-            <div class="icon-wrapper blue">
+            <div class="icon-wrapper">
               <i class="fa-solid fa-code"></i>
             </div>
             <h3>{{ $t('what_we_do.cards.software.title') }}</h3>
@@ -20,10 +19,9 @@
           </div>
         </div>
 
-        <div class="feature-card card-purple">
-          <div class="glow-bg" aria-hidden="true"></div>
+        <div class="feature-card card-2">
           <div class="card-content">
-            <div class="icon-wrapper purple">
+            <div class="icon-wrapper">
               <i class="fa-solid fa-paint-brush"></i>
             </div>
             <h3>{{ $t('what_we_do.cards.designers.title') }}</h3>
@@ -31,10 +29,9 @@
           </div>
         </div>
 
-        <div class="feature-card card-pink">
-          <div class="glow-bg" aria-hidden="true"></div>
+        <div class="feature-card card-3">
           <div class="card-content">
-            <div class="icon-wrapper pink">
+            <div class="icon-wrapper">
               <i class="fa-solid fa-people-group"></i>
             </div>
             <h3>{{ $t('what_we_do.cards.entrepreneurs.title') }}</h3>
@@ -42,10 +39,9 @@
           </div>
         </div>
 
-        <div class="feature-card card-orange">
-          <div class="glow-bg" aria-hidden="true"></div>
+        <div class="feature-card card-4">
           <div class="card-content">
-            <div class="icon-wrapper orange">
+            <div class="icon-wrapper">
               <i class="fa-solid fa-lightbulb"></i>
             </div>
             <h3>{{ $t('what_we_do.cards.other.title') }}</h3>
@@ -104,7 +100,7 @@ const scrollToCard = (index) => {
 *, *::before, *::after { box-sizing: border-box; }
 .about-section {
   position: relative;
-  padding: 0px 0;
+  padding: 0px 0 80px 0;
   display: block;
   overflow: visible;
   font-family: 'Inter', sans-serif;
@@ -166,8 +162,6 @@ html.dark .title { color: #9ca3af; }
   font-weight: 600;
 }
 
-/* ─── Grid (desktop default — unchanged) ────────────────────────────────────── */
-
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -175,14 +169,10 @@ html.dark .title { color: #9ca3af; }
   perspective: 1000px;
 }
 
-/* ─── Carousel dots — hidden by default, only shown on mobile below ─────────── */
-
 .carousel-dots {
   display: none;
   pointer-events: auto;
 }
-
-/* ─── Cards ──────────────────────────────────────────────────────────────────── */
 
 .feature-card {
   position: relative;
@@ -199,7 +189,7 @@ html.dark .title { color: #9ca3af; }
 }
 
 html.dark .feature-card {
-  background: rgba(17, 24, 39, 0.4);
+  background: #1f1f1f;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -218,36 +208,6 @@ html.dark .feature-card {
   height: 100%;
 }
 
-/* ─── Glow background ────────────────────────────────────────────────────────── */
-
-.card-blue   { --glow-color: #78dee7; }
-.card-purple { --glow-color: #95b0eb; }
-.card-pink   { --glow-color: #fe78b0; }
-.card-orange { --glow-color: #ffa500; }
-
-.glow-bg {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 60%);
-  opacity: 0.1;
-  pointer-events: none;
-  z-index: 0;
-  will-change: transform;
-  animation: rotateGlow 8s linear infinite;
-  transition: opacity 0.4s ease;
-}
-
-html.dark .glow-bg { opacity: 0.15; }
-
-@keyframes rotateGlow {
-  0%   { transform: rotate(0deg)   scale(1);   }
-  50%  { transform: rotate(180deg) scale(1.1); }
-  100% { transform: rotate(360deg) scale(1);   }
-}
-
 /* ─── Icon wrappers ──────────────────────────────────────────────────────────── */
 
 .icon-wrapper {
@@ -261,19 +221,21 @@ html.dark .glow-bg { opacity: 0.15; }
   margin-bottom: 10px;
   position: relative;
   z-index: 10;
+  background: rgba(150, 150, 150, 0.1);
+  color: var(--text-color);
 }
 
-.icon-wrapper.blue   { background: rgba(120, 222, 231, 0.15); color: #2ebbc5; }
-.icon-wrapper.purple { background: rgba(149, 176, 235, 0.15); color: #6b8cd4; }
-.icon-wrapper.pink   { background: rgba(254, 120, 176, 0.15); color: #e04b8b; }
-.icon-wrapper.orange { background: rgba(255, 165, 0,   0.15); color: #ff8c00; }
+html.dark .icon-wrapper {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
 
 /* ─── Card typography ────────────────────────────────────────────────────────── */
 
 .feature-card h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #111827;
+  color: #272727;
   margin-bottom: 15px;
   position: relative;
   z-index: 10;
@@ -295,21 +257,25 @@ html.dark .feature-card p { color: #cbd5e1; }
 
 @media (hover: hover) and (pointer: fine) {
   .feature-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    z-index: 5;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--text-color);
   }
 
-  .feature-card:hover .glow-bg {
-    opacity: 0.35;
-    animation-duration: 4s;
+  html.dark .feature-card:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
-  html.dark .feature-card:hover .glow-bg { opacity: 0.5; }
-
-  .card-blue:hover   { box-shadow: 0 20px 50px -10px rgba(120, 222, 231, 0.5); border-color: rgba(120, 222, 231, 0.4); }
-  .card-purple:hover { box-shadow: 0 20px 50px -10px rgba(149, 176, 235, 0.5); border-color: rgba(149, 176, 235, 0.4); }
-  .card-pink:hover   { box-shadow: 0 20px 50px -10px rgba(254, 120, 176, 0.5); border-color: rgba(254, 120, 176, 0.4); }
-  .card-orange:hover { box-shadow: 0 20px 50px -10px rgba(255, 165, 0,   0.5); border-color: rgba(255, 165, 0,   0.4); }
+  .feature-card.card-1:hover .icon-wrapper { background: #78dee7; color: #111; }
+  .feature-card.card-2:hover .icon-wrapper { background: #95b0eb; color: #111; }
+  .feature-card.card-3:hover .icon-wrapper { background: #fe78b2; color: #fff; }
+  .feature-card.card-4:hover .icon-wrapper { background: #ffa500; color: #111; }
+  
+  html.dark .feature-card.card-1:hover .icon-wrapper { background: #78dee7; color: #111; }
+  html.dark .feature-card.card-2:hover .icon-wrapper { background: #95b0eb; color: #111; }
+  html.dark .feature-card.card-3:hover .icon-wrapper { background: #fe78b2; color: #fff; }
+  html.dark .feature-card.card-4:hover .icon-wrapper { background: #ffa500; color: #111; }
 
   .feature-card:hover .icon-wrapper {
     animation: bounceIcon 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -328,22 +294,11 @@ html.dark .feature-card p { color: #cbd5e1; }
   .feature-card:active {
     transform: scale(0.98);
   }
-
-  .feature-card:active .glow-bg {
-    opacity: 0.3;
-  }
-
-  html.dark .feature-card:active .glow-bg { opacity: 0.45; }
 }
 
 /* ─── Reduced motion ─────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .glow-bg {
-    animation: none !important;
-    will-change: auto;
-  }
-
   .feature-card,
   .icon-wrapper {
     transition: none !important;
@@ -359,11 +314,6 @@ html.dark .feature-card p { color: #cbd5e1; }
 
 @media (max-width: 768px) {
   .title { font-size: 1.1rem; }
-
-  .glow-bg {
-    animation: none !important;
-    will-change: auto;
-  }
 
   .feature-card {
     transition: none !important;

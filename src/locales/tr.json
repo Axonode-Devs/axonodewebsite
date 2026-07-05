@@ -27,7 +27,8 @@
     "login": "Giriş Yap",
     "events": "Etkinlikler",
     "projects": "Projeler",
-    "joinUs": "Bize Katıl"
+    "joinUs": "Bize Katıl",
+    "startnow": "Başla"
   },
   "team": {
     "label": {
@@ -101,7 +102,6 @@
       "thanks": "Bize ulaştığınız için teşekkür ederiz, En kısa sürede geri dönüş yapacağız.",
       "another": "Başka Bir Mesaj Gönder?"
     },
-
     "buttons": {
       "name": "İsim",
       "message": "Mesaj",
@@ -197,8 +197,8 @@
       "technology": {
         "label": "Teknoloji",
         "sub": {
-          "system_design":"Sistem Tasarımı",
-          "embedded":"Gömülü Sistemler",
+          "system_design": "Sistem Tasarımı",
+          "embedded": "Gömülü Sistemler",
           "frontend": "Frontend Geliştirme",
           "backend": "Backend Geliştirme",
           "ai": "AI / Makine Öğrenme",
@@ -295,7 +295,7 @@
       "invalid_invite": "Bu Davet Geçersiz."
     }
   },
-  "not_found":{
+  "not_found": {
     "title": "Sayfa Backrooms'da??",
     "desc": "Aradığınız sayfa silinmiş, değiştirilmiş ya da geçici süreliğine devre dışı bırakılmış olabilir.",
     "back": "Anasayfaya Geri Dön"
@@ -403,7 +403,7 @@
       "error_generic": "Sunucuya güncelleme gönderilemedi. Daha sonra tekrar deneyin."
     }
   },
-  "login":{
+  "login": {
     "title": "Tekrar Hoş Geldin!",
     "subtitle": "Hesabına giriş yapalım!",
     "form": {

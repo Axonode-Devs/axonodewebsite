@@ -127,6 +127,12 @@ const menuItems: NavItem[] = [
     target: "#about",
   },
   {
+    label: "Start Now",
+    i18nKey: "navbar.startnow",
+    scrollTo: "startnow",
+    target: "#startnow",
+  },
+  {
     label: "Support",
     i18nKey: "navbar.support",
     scrollTo: "contact",

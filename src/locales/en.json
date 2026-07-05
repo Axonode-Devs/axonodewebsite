@@ -27,7 +27,8 @@
     "login": "Login",
     "events": "Events",
     "projects": "Projects",
-    "joinUs": "Join Us"
+    "joinUs": "Join Us",
+    "startnow": "Start Now"
   },
   "team": {
     "label": {
@@ -101,7 +102,6 @@
       "thanks": "Thanks for reaching out. We'll get back to you soon.",
       "another": "Send Another?"
     },
-
     "buttons": {
       "name": "Name",
       "message": "Message",
@@ -109,7 +109,6 @@
       "sending": "Sending.."
     }
   },
-
   "application_form": {
     "nav": {
       "back_to_home": "Back to Home"
@@ -326,7 +325,6 @@
       "tag": "Intent",
       "badge": "Waitlist!"
     },
-
     "soon": {
       "title": "Coming Soon!",
       "subtitle": "Next project is under development",
@@ -395,7 +393,7 @@
       "error_generic": "Could not communicate update to the server. Try again later."
     }
   },
-  "login":{
+  "login": {
     "title": "Welcome Back!",
     "subtitle": "Let's get you logged in!",
     "form": {
