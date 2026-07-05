@@ -32,12 +32,12 @@ import { useI18n } from 'vue-i18n';
 const { locale } = useI18n();
 
 const languages = [
-  { locale: 'en', code: 'EN', name: 'English', flag: '🇬🇧' },
-  { locale: 'tr', code: 'TR', name: 'Türkçe',  flag: '🇹🇷' },
+  { locale: 'en', code: 'EN', name: 'English', flag: 'US' },
+  { locale: 'tr', code: 'TR', name: 'Türkçe',  flag: 'TR' },
 ];
 
 const isOpen = ref(false);
-const switcherRef = ref<HTMLElement | null>(null);
+const switcherRef = ref<HTMLDivElement | null>(null);
 
 const currentLang = computed(
   () => languages.find(l => l.locale === locale.value) ?? languages[0]
@@ -56,8 +56,19 @@ const onClickOutside = (e: MouseEvent) => {
   }
 };
 
-onMounted(()  => document.addEventListener('mousedown', onClickOutside));
-onUnmounted(() => document.removeEventListener('mousedown', onClickOutside));
+onMounted(() => {
+  // Restore saved locale preference
+  const savedLocale = localStorage.getItem('locale');
+  if (savedLocale && languages.some(l => l.locale === savedLocale)) {
+    locale.value = savedLocale;
+  }
+  
+  document.addEventListener('mousedown', onClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('mousedown', onClickOutside);
+});
 </script>
 
 <style scoped>
