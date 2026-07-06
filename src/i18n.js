@@ -10,7 +10,7 @@ const detectedLocale = supportedLocales.includes(browserLocale) ? browserLocale 
 
 export const i18n = createI18n({
   legacy: false,
-  locale: savedLocale || detectedLocale, // saved wins, then browser, then 'en'
+  locale: savedLocale || detectedLocale,
   fallbackLocale: 'en',
   messages: { en, tr },
 })
