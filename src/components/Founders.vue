@@ -102,23 +102,8 @@ const thanks = ref([
   font-size: 0.95rem;
 }
 
-html.dark .component-header {
-  background: transparent;
-}
-html.dark .component-title {
-  color: #e6eef8;
-}
-html.dark .component-subtitle {
-  color: #cbd5e1;
-}
-
 @media (max-width: 600px) {
   .component-title { font-size: 2.25rem; }
-}
-
-
-html.dark .founders-section {
-  background-color: var(--bg-color);
 }
 
 .container {
@@ -141,9 +126,7 @@ html.dark .founders-section {
   color: #111827;
   margin-bottom: 24px;
 }
-html.dark .section-title {
-  color: #e2e8f0;
-}
+
 .founders-grid {
   display: flex;
   gap: 20px;
@@ -165,11 +148,6 @@ html.dark .section-title {
   flex: 1 1 260px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.04);
   transition: transform 0.2s ease;
-}
-
-html.dark .founder-card-item {
-  background: var(--sc-color);
-  border: 1px solid rgba(255,255,255,0.06);
 }
 
 .founder-card-item .info { flex-direction: column; align-items: flex-start; }
@@ -205,12 +183,6 @@ html.dark .founder-card-item {
   overflow: visible;
 }
 
-html.dark .founders-card {
-  background: var(--sc-color);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
-}
-
 .star-decoration {
   position: absolute;
   top: -20px;
@@ -227,11 +199,6 @@ html.dark .founders-card {
   font-size: 1.5rem;
   z-index: 5;
   animation: pulseStar 3s infinite ease-in-out;
-}
-
-html.dark .star-decoration {
-  background: var(--sc-color);
-  box-shadow: 0 4px 15px rgba(255,255,255,0.1);
 }
 
 .founders-list {
@@ -254,10 +221,6 @@ html.dark .star-decoration {
 
 .founder-row:hover {
   background-color: #f9fafb;
-}
-
-html.dark .founder-row:hover {
-  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .founder-info-group {
@@ -285,11 +248,6 @@ html.dark .founder-row:hover {
   background-color: #f3f4f6;
 }
 
-html.dark .avatar {
-  background-color: #374151;
-  border: var(--sc-color);
-}
-
 .text-group {
   display: flex;
   flex-direction: column;
@@ -302,10 +260,6 @@ html.dark .avatar {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-html.dark .founder-name {
-  color: #e2e8f0;
 }
 
 .founder-name {
@@ -336,12 +290,6 @@ html.dark .founder-name {
 
   white-space: nowrap;
   letter-spacing: 0.01em;
-}
-
-html.dark .custom-badge {
-  background-color: rgba(255, 255, 255, 0.04);
-  color: #d0d7ee;
-  border: 1px solid rgba(255,255,255,0.06);
 }
 
 .founder-executive-role {

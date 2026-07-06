@@ -5,7 +5,6 @@
     <div class="bottom-gradient" aria-hidden="true"></div>
 
     <div class="content-wrapper">
-      <!-- Left Column: Text Content -->
       <div class="hero-content">
         <div class="text-column">
           
@@ -29,7 +28,6 @@
         </div>
       </div>
 
-      <!-- Right Column: Video -->
       <div class="visual-column">
         <div class="video-container">
           <video
@@ -66,7 +64,6 @@ const scrollToSection = (id: string) => {
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/coolvetica-2');
 @import url('https://fonts.cdnfonts.com/css/poppins');
-/* ─── Base Layout ───────────────────────────────────────────────────────────── */
 
 .hero-container {
   background-color: #141414;
@@ -184,7 +181,7 @@ const scrollToSection = (id: string) => {
 }
 
 .subtext {
-  color: #a1a1a1;
+  color: var(--text-color2);
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 40px;
@@ -212,7 +209,7 @@ const scrollToSection = (id: string) => {
 }
 
 .btn-primary {
-  background-color: #fe78b0;
+  background: linear-gradient(45deg, #fe78b0, #fe78e1);
   color: var(--text-color);
   padding: 10px 30px;
   border-radius: 15px;

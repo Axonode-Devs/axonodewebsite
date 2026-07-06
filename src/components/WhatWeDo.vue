@@ -4,7 +4,8 @@
       <div class="header-content">
         <h2 class="title">
           {{ $t('what_we_do.title.main') }}
-          <span class="gradient-text">{{ $t('what_we_do.title.gradient') }}</span>
+          <span class="pastel-text1">{{ $t('what_we_do.title.gradient1') }}</span>
+          <span class="pastel-text2">{{ $t('what_we_do.title.gradient2') }}</span>
         </h2>
       </div>
 
@@ -112,6 +113,7 @@ const scrollToCard = (index) => {
   width: 100%;
   overflow: hidden;
   background: transparent;
+  /*border-top: 5px solid var(--text-color2);*/
 }
 
 .about-section::before {
@@ -121,7 +123,7 @@ const scrollToCard = (index) => {
   left: 0;
   width: 100%;
   height: 120px;
-  /*background: linear-gradient(to bottom, #fe78b00a 0%, transparent 100%);*/
+  background: linear-gradient(to bottom, #fe78b00a 0%, transparent 100%);
   z-index: 0;
   pointer-events: none;
 }
@@ -161,22 +163,46 @@ const scrollToCard = (index) => {
 }
 
 .title {
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #6B7280;
+  font-size: 1.6rem;
+  color: var(--text-color);
   margin-bottom: 20px;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-weight: 600;
+  font-family: 'Coolvetica', sans-serif;
+  position: relative;
+  display: inline-block;
 }
 
-html.dark .title { color: #9ca3af; }
+.title::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: -8px;
+  width: 80%;
+  height: 2px;
 
-.gradient-text {
-  background: linear-gradient(90deg, #78dee7 0%, #fe78b2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #fe78b0,
+    #a59ce6,
+    #78dee7,
+    transparent
+  );
+
+  border-radius: 2px;
+}
+
+.pastel-text1 {
+  color: #a59ce6;
   font-weight: 600;
+  font-family: 'Coolvetica', sans-serif;
+}
+
+.pastel-text2 {
+  color: #fe78b0;
+  font-weight: 600;
+  font-family: 'Coolvetica', sans-serif;
 }
 
 .cards-grid {
@@ -201,11 +227,6 @@ html.dark .title { color: #9ca3af; }
   display: flex;
 }
 
-html.dark .feature-card {
-  background: #1a1a1a;
-  border: none;
-}
-
 @supports (backdrop-filter: blur(12px)) {
   .feature-card {
     backdrop-filter: blur(12px);
@@ -216,13 +237,39 @@ html.dark .feature-card {
 .card-content {
   position: relative;
   z-index: 2;
-  padding: 50px 30px;
+  padding: 50px 25px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  border-radius: 24px;
+}
+
+.card-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 3px;
+
+  border-radius: inherit;
+
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--glow-color) 30%, transparent),
+    color-mix(in srgb, var(--glow-color) 70%, white 10%),
+    color-mix(in srgb, var(--glow-color) 35%, black)
+  );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
 }
 
 .card-blue   { --glow-color: #78dee7; }
@@ -236,14 +283,31 @@ html.dark .feature-card {
   left: 0;
   width: 100%;
   height: 70%;
-  background: radial-gradient(circle at bottom center, var(--glow-color) 0%, transparent 65%);
+
+  background: radial-gradient(
+    circle at bottom center,
+    var(--glow-color) 0%,
+    transparent 65%
+  );
+
   opacity: 0.25;
   pointer-events: none;
   z-index: 0;
   transition: opacity 0.4s ease;
 }
 
-html.dark .glow-bg { opacity: 0.25; }
+.glow-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+
+  opacity: 0.1; 
+  mix-blend-mode: overlay;
+
+  pointer-events: none;
+}
 
 .icon-wrapper {
   font-size: 2rem;
@@ -257,32 +321,32 @@ html.dark .glow-bg { opacity: 0.25; }
 .icon-wrapper.pink   { color: #fe78b0; }
 .icon-wrapper.orange { color: #ff6b6b; }
 
+
 .feature-card h3 {
   font-size: 1.1rem;
-  font-weight: 500;
-  color: #e2e8f0;
+  font-weight: 900;
   margin-bottom: 30px;
   position: relative;
   z-index: 10;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-family: 'Coolvetica', sans-serif;
-}
 
-html.dark .feature-card h3 { color: #ffffff; }
+  background: linear-gradient(-45deg, var(--glow-color), var(--text-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .feature-card p {
-  color: #242424;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  font-weight: 280;
+  margin-bottom: 30px;
   position: relative;
   z-index: 10;
-  font-weight: 400;
-  margin-bottom: 3rem;
-  font-family: 'Poppins', sans-serif; 
-  font-size: 14px;
+  letter-spacing: 0.05em;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color2);
 }
-
-html.dark .feature-card p { color: #7c7c7c; }
 
 @media (hover: hover) and (pointer: fine) {
   .feature-card:hover {
@@ -302,8 +366,6 @@ html.dark .feature-card p { color: #7c7c7c; }
   .feature-card:active .glow-bg {
     opacity: 0.3;
   }
-
-  html.dark .feature-card:active .glow-bg { opacity: 0.45; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -447,14 +509,25 @@ html.dark .feature-card p { color: #7c7c7c; }
     -webkit-tap-highlight-color: transparent;
   }
 
-  html.dark .dot {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
   .dot.active {
     width: 20px;
     border-radius: 4px;
-    background: linear-gradient(90deg, #78dee7 0%, #fe78b2 100%);
+  }
+
+  .dot:nth-child(1).active {
+    background: linear-gradient(90deg, #78dee7, #aef0f6);
+  }
+
+  .dot:nth-child(2).active {
+    background: linear-gradient(90deg, #a59ce6, #d3cfff);
+  }
+
+  .dot:nth-child(3).active {
+    background: linear-gradient(90deg, #fe78b0, #ffc1da);
+  }
+
+  .dot:nth-child(4).active {
+    background: linear-gradient(90deg, #ff6b6b, #ffb3b3);
   }
 
   @media (prefers-reduced-motion: reduce) {

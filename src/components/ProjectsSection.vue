@@ -180,10 +180,6 @@ const filteredProjects = computed(() => {
   box-sizing: border-box;
 }
 
-html.dark .projects-section {
-  background-color: #0c0c0c;
-}
-
 .background-mesh {
   position: absolute;
   bottom: -20%;
@@ -227,10 +223,6 @@ html.dark .projects-section {
   margin-bottom: 20px;
 }
 
-html.dark .title {
-  color: #f1f5f9;
-}
-
 .gradient-text {
   background: linear-gradient(90deg, #78dee7 0%, #fe78b2 100%);
   -webkit-background-clip: text;
@@ -243,11 +235,6 @@ html.dark .title {
   color: #4B5563;
   line-height: 1.6;
 }
-
-html.dark .description {
-  color: #cbd5e1;
-}
-
 
 .filters {
   display: flex;
@@ -296,12 +283,6 @@ html.dark .description {
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-}
-
-html.dark .project-card {
-  background: #1b1b1b;
-  border-color: rgba(255,255,255,0.1);
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
 }
 
 .project-card:hover {
@@ -415,10 +396,6 @@ html.dark .project-card {
   margin: 0 0 10px 0;
 }
 
-html.dark .project-title {
-  color: #f1f5f9;
-}
-
 .project-desc {
   font-size: 0.95rem;
   color: #6B7280;
@@ -445,12 +422,6 @@ html.dark .project-title {
   color: #4B5563;
   border: 1px solid rgba(0,0,0,0.05);
   transition: all 0.2s ease;
-}
-
-html.dark .tech-badge {
-  background-color: #2c2c2c;
-  color: #9ca3af;
-  border-color: rgba(255,255,255,0.1);
 }
 
 .project-card:hover .tech-badge {

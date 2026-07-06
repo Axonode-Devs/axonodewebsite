@@ -49,7 +49,6 @@ const selectLang = (newLocale: string) => {
   isOpen.value = false;
 };
 
-// Close on outside click
 const onClickOutside = (e: MouseEvent) => {
   if (switcherRef.value && !switcherRef.value.contains(e.target as Node)) {
     isOpen.value = false;
@@ -57,7 +56,6 @@ const onClickOutside = (e: MouseEvent) => {
 };
 
 onMounted(() => {
-  // Restore saved locale preference
   const savedLocale = localStorage.getItem('locale');
   if (savedLocale && languages.some(l => l.locale === savedLocale)) {
     locale.value = savedLocale;
@@ -72,42 +70,34 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/coolvetica-2');
+@import url('https://fonts.cdnfonts.com/css/poppins');
+
 .lang-switcher {
   position: relative;
   display: inline-block;
 }
 
-/* ── Trigger button ── */
 .lang-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 12px;
+  padding: 4px 12px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.5);
-  color: #374151;
-  font-size: 0.85rem;
+  border: 1.5px solid var(--text-color2);
+  background: rgba(236, 236, 236, 0);
+  color: var(--text-color2);
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
-}
-
-html.dark .lang-btn {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #d1d5db;
+  font-family: 'Poppins', sans-serif;
 }
 
 .lang-btn:hover {
   background: rgba(255, 255, 255, 0.8);
-  border-color: #78dee7;
-}
-
-html.dark .lang-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: #78dee7;
+  -webkit-text-fill-color: #1f1f1f;
 }
 
 .lang-flag { font-size: 1rem; line-height: 1; }
@@ -117,16 +107,16 @@ html.dark .lang-btn:hover {
   font-size: 0.65rem;
   transition: transform 0.25s ease;
   opacity: 0.6;
+  color: var(--text-color2);
 }
 .chevron-open { transform: rotate(180deg); }
 
-/* ── Dropdown ── */
 .lang-dropdown {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
   min-width: 140px;
-  background: rgba(255, 255, 255, 0.95);
+  background: #1f1f1f;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -137,12 +127,9 @@ html.dark .lang-btn:hover {
   padding: 6px;
   z-index: 1100;
   overflow: hidden;
-}
-
-html.dark .lang-dropdown {
-  background: rgba(24, 24, 32, 0.97);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  display: grid;
+  gap: 6px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .lang-option {
@@ -153,38 +140,28 @@ html.dark .lang-dropdown {
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #374151;
+  color: #3f3f3f;
   cursor: pointer;
   transition: background 0.15s ease;
 }
 
-html.dark .lang-option { color: #d1d5db; }
-
 .lang-option:hover {
-  background: rgba(120, 222, 231, 0.1);
-  color: #181818;
-}
-
-html.dark .lang-option:hover {
-  background: rgba(120, 222, 231, 0.12);
-  color: #fff;
+  background: #3f3f3f;
+  color: var(--text-color);
 }
 
 .lang-option.active {
-  background: rgba(120, 222, 231, 0.12);
-  color: #2ebbc5;
+  background: #3f3f3f;
+  color: var(--text-color);
   font-weight: 700;
 }
-
-html.dark .lang-option.active { color: #78dee7; }
 
 .check-icon {
   margin-left: auto;
   font-size: 0.75rem;
-  color: #78dee7;
+  color: var(--text-color);
 }
 
-/* ── Transition ── */
 .dropdown-enter-active,
 .dropdown-leave-active {
   transition: opacity 0.2s ease, transform 0.2s ease;

@@ -118,10 +118,6 @@
   letter-spacing: -0.02em;
 }
 
-html.dark .title {
-  color: #f1f5f9;
-}
-
 .gradient-text {
   background: linear-gradient(90deg, #95b0eb 0%, #fe78b2 100%);
   -webkit-background-clip: text;
@@ -136,19 +132,11 @@ html.dark .title {
   margin-bottom: 40px;
 }
 
-html.dark .description {
-  color: #cbd5e1;
-}
-
 .stats-row {
   display: flex;
   gap: 50px;
   border-top: 1px solid rgba(0,0,0,0.1);
   padding-top: 30px;
-}
-
-html.dark .stats-row {
-  border-color: rgba(255,255,255,0.1);
 }
 
 .stat-item {
@@ -160,10 +148,6 @@ html.dark .stats-row {
   font-size: 2.5rem;
   font-weight: 800;
   color: #111827;
-}
-
-html.dark .stat-number {
-  color: #fff;
 }
 
 .stat-label {
@@ -190,12 +174,6 @@ html.dark .stat-number {
   padding: 30px;
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
   transition: transform 0.4s ease;
-}
-
-html.dark .info-card {
-  background: rgba(30, 30, 30, 0.6);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3);
 }
 
 .main-card {
@@ -255,8 +233,6 @@ html.dark .info-card {
   color: #111827;
   margin: 0 0 8px 0;
 }
-
-html.dark .info-card h3 { color: #f1f5f9; }
 
 .info-card p {
   font-size: 0.9rem;

@@ -163,10 +163,6 @@ onMounted(() => {
   z-index: 2;
 }
 
-html:not(.dark) .info-content {
-  background: rgba(255, 255, 255, 0.95);
-}
-
 .header {
   display: flex;
   align-items: center;

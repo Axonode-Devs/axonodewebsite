@@ -10,7 +10,7 @@
     "badge": "Welcome to Axonode",
     "buttons": {
       "learn": "Learn More",
-      "about": "About Us"
+      "about": "Get Started"
     },
     "video_controls": {
       "play": "Play",
@@ -51,7 +51,8 @@
   "what_we_do": {
     "title": {
       "main": "Building the",
-      "gradient": "Future Together"
+      "gradient1": "Future ",
+      "gradient2": "Together"
     },
     "cards": {
       "software": {

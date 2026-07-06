@@ -236,17 +236,9 @@ onUnmounted(() => {
   color: #2ebbc5;
 }
 
-html.dark .icon-wrapper.accent-cyan {
-  color: #78dee7;
-}
-
 .icon-wrapper.accent-pink {
   background: rgba(254, 120, 176, 0.15);
   color: #e04b8b;
-}
-
-html.dark .icon-wrapper.accent-pink {
-  color: #fe78b2;
 }
 
 @media (hover: hover) and (pointer: fine) {
