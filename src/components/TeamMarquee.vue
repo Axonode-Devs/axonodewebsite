@@ -108,9 +108,9 @@ const selectedMember = ref(null);
 const isMobile = ref(false);
 
 const baseTeam = [
-  { name: 'Yaser Durubi', role: 'team.roles.head_productions',   username: 'kaiross12', color: '#BEECF0' },
-  { name: 'Bersis Sevimli',  role: 'team.roles.head_executive',   username: 'bersisse',  color: '#A59CE6' },
-  { name: 'Kaan Uygun',   role: 'team.roles.head_pr', username: 'Kaan610',   color: '#fe78b2' },
+  { name: 'Yaser Durubi', role: 'team.roles.head_productions',   username: 'kaiross12', color: '#a59ce6' },
+  { name: 'Bersis Sevimli',  role: 'team.roles.head_executive',   username: 'bersisse',  color: '#78dee7' },
+  { name: 'Kaan Uygun',   role: 'team.roles.head_pr', username: 'Kaan610',   color: '#fe78b0' },
 ];
 
 const combinedTeam = ref([...baseTeam, ...baseTeam]);
@@ -263,8 +263,6 @@ html.dark .marquee-label::after {
               box-shadow 0.3s ease;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  /* Prevents the browser's default grey tap-highlight flash on mobile,
-     since we provide our own :active feedback below. */
   -webkit-tap-highlight-color: transparent;
 }
 

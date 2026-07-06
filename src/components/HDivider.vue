@@ -30,46 +30,41 @@ const props = defineProps({
   width: 100%;
   margin-top: v-bind('props.topMargin');
   margin-bottom: v-bind('props.bottomMargin');
-  color: #6b7280;
+  color: #313131;
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
-/* The Left Line */
 .divider::before {
   content: "";
   flex: 1;
   height: 2px;
-  background: linear-gradient(to right, transparent, #d1d5db);
+  background: linear-gradient(to right, transparent, #929292);
 }
 
-/* The Right Line */
 .divider::after {
   content: "";
   flex: 1;
   height: 2px;
-  background: linear-gradient(to left, transparent, #d1d5db);
+  background: linear-gradient(to left, transparent, #929292);
 }
 
-/* Text Container Styling */
 .divider-content {
   margin: 0 1.25rem;
-  /* Keeps text from being too "bright" compared to the faded lines */
-  color: #374151; 
+  color: #222222; 
 }
 
-/* Dark Mode adjustment (Optional) */
 @media (prefers-color-scheme: dark) {
   .divider::before {
-    background: linear-gradient(to right, transparent, #4b5563);
+    background: linear-gradient(to right, transparent, #1f1f1f);
   }
   .divider::after {
-    background: linear-gradient(to left, transparent, #4b5563);
+    background: linear-gradient(to left, transparent, #1f1f1f);
   }
   .divider-content {
-    color: #9ca3af;
+    color: #2c2c2c;
   }
 }
 </style>

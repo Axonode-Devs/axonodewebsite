@@ -25,6 +25,8 @@
 <script setup lang="ts"></script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/coolvetica-2');
+@import url('https://fonts.cdnfonts.com/css/poppins');
 .contact-section {
   position: relative;
   padding: 60px 20px 80px;
@@ -33,7 +35,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
   overflow: hidden;
 }
 
@@ -64,7 +67,7 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #78dee7;
+  color: #a59ce6;
 }
 
 .title {
@@ -77,18 +80,18 @@
 
 .gradient-text {
   display: block;
-  background: linear-gradient(90deg, #78dee7 0%, #fe78b2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fe78b0;
   background-clip: text;
 }
 
 .description {
   font-size: 1rem;
-  color: #cbd5e1;
+  color: #9b9b9b;
   line-height: 1.7;
   margin: 0 0 24px;
   max-width: 600px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
 }
 
 .contact-links {
@@ -105,8 +108,7 @@
   text-decoration: none;
   color: #f9fafb;
   font-weight: 600;
-  background: rgba(120, 222, 231, 0.12);
-  border: 1px solid rgba(120, 222, 231, 0.25);
+  border: 1px solid #292929;
   transition: all 0.2s ease;
 }
 
@@ -119,12 +121,17 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #78dee7, #fe78b2);
+  background: #292929;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.contact-links span{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 280;
 }
 
 @media (max-width: 768px) {
