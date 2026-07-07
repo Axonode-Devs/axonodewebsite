@@ -5,20 +5,24 @@
     <div class="bottom-gradient" aria-hidden="true"></div>
 
     <div class="content-wrapper">
-      <!-- Left Column: Text Content -->
       <div class="hero-content">
         <div class="text-column">
           
-          <h1 class="headline">
-            <span class="white-text">{{ $t("hero.headline.main") }}</span><br />
-            <span class="gradient-text">{{ $t("hero.headline.brand") }}</span>
+          <h1 class="headline" :class="{ revealed: textRevealed }">
+            <span class="reveal-line">
+              <span class="white-text">{{ $t("hero.headline.main") }}</span>
+            </span>
+            <br />
+            <span class="reveal-line" style="--delay: 0.12s">
+              <span class="gradient-text">{{ $t("hero.headline.brand") }}</span>
+            </span>
           </h1>
 
-          <p class="subtext">
+          <p class="subtext" :class="{ revealed: textRevealed }">
             {{ $t("hero.subtext") }}
           </p>
 
-          <div class="action-group">
+          <div class="action-group" :class="{ revealed: textRevealed }">
             <button class="btn btn-primary" @click="scrollToSection('about')">
               {{ $t("hero.buttons.about") }}
             </button>
@@ -29,7 +33,6 @@
         </div>
       </div>
 
-      <!-- Right Column: Video -->
       <div class="visual-column">
         <div class="video-container">
           <video
@@ -51,9 +54,11 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import TeamMarquee from './TeamMarquee.vue';
 
 const NAV_OFFSET = 80;
+const textRevealed = ref(false);
 
 const scrollToSection = (id: string) => {
   const el = document.getElementById(id);
@@ -61,12 +66,19 @@ const scrollToSection = (id: string) => {
   const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
   window.scrollTo({ top, behavior: 'smooth' });
 };
+
+onMounted(() => {
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      textRevealed.value = true;
+    }, 100);
+  });
+});
 </script>
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/coolvetica-2');
 @import url('https://fonts.cdnfonts.com/css/poppins');
-/* ─── Base Layout ───────────────────────────────────────────────────────────── */
 
 .hero-container {
   background-color: #141414;
@@ -155,6 +167,61 @@ const scrollToSection = (id: string) => {
 .dot-lavender { background-color: #9d8df1; }
 .dot-pink { background-color: #ff7ab8; }
 
+.reveal-line {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.reveal-line > span,
+.reveal-line > .gradient-text {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition:
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease;
+  transition-delay: var(--delay, 0s);
+}
+
+.headline.revealed .reveal-line > span,
+.headline.revealed .reveal-line > .gradient-text {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.subtext {
+  color: var(--text-color2);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 280;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+.subtext.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease 0.6s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
+}
+
+.action-group.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 .headline {
   font-size: 5rem;
   font-weight: 800;
@@ -183,21 +250,6 @@ const scrollToSection = (id: string) => {
   color: #78dee7;
 }
 
-.subtext {
-  color: #a1a1a1;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 40px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 280;
-}
-
-.action-group {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
 .btn {
   font-family: 'Inter', sans-serif;
   cursor: pointer;
@@ -212,7 +264,7 @@ const scrollToSection = (id: string) => {
 }
 
 .btn-primary {
-  background-color: #fe78b0;
+  background: linear-gradient(45deg, #fe78b0, #fe78e1);
   color: var(--text-color);
   padding: 10px 30px;
   border-radius: 15px;
@@ -268,6 +320,11 @@ const scrollToSection = (id: string) => {
     padding: 40px 20px;
     gap: 60px;
   }
+
+  .subtex{
+    font-size: 12px;
+    line-height: 0px;
+  }
   
   .hero-content {
     max-width: 100%;
@@ -296,10 +353,18 @@ const scrollToSection = (id: string) => {
   .headline {
     font-size: 3rem;
   }
-  
+  .subtex{
+    font-size: 12px;
+    line-height: 0px;
+  }
   .mock-ui-layout {
     flex-direction: column;
     padding: 30px 20px;
+  }
+
+  p{
+    font-size: 12px;
+    line-height: 0px;
   }
   
   .mock-title {
@@ -316,6 +381,10 @@ const scrollToSection = (id: string) => {
   .headline {
     font-size: 2.5rem;
   }
+  p{
+    font-size: 12px;
+    line-height: 0px;
+  }
   .action-group {
     flex-direction: column;
     width: 100%;
@@ -323,6 +392,17 @@ const scrollToSection = (id: string) => {
   .btn-primary, .btn-text {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-line > span,
+  .reveal-line > .gradient-text,
+  .subtext,
+  .action-group {
+    transition: none;
+    transform: none;
+    opacity: 1;
   }
 }
 </style>

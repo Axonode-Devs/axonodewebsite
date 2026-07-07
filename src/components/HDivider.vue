@@ -56,15 +56,4 @@ const props = defineProps({
   color: #222222; 
 }
 
-@media (prefers-color-scheme: dark) {
-  .divider::before {
-    background: linear-gradient(to right, transparent, #1f1f1f);
-  }
-  .divider::after {
-    background: linear-gradient(to left, transparent, #1f1f1f);
-  }
-  .divider-content {
-    color: #2c2c2c;
-  }
-}
 </style>

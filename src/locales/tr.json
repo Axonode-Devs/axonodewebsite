@@ -10,7 +10,7 @@
     "badge": "Axonode'a Hoş Geldiniz",
     "buttons": {
       "learn": "Daha Fazla",
-      "about": "Hakkımızda"
+      "about": "Hemen Başla"
     },
     "video_controls": {
       "play": "Oynat",
@@ -51,7 +51,8 @@
   "what_we_do": {
     "title": {
       "main": "Geleceği Beraber",
-      "gradient": "İnşa Ediyoruz"
+      "gradient1": "İnşa ",
+      "gradient2": "Ediyoruz"
     },
     "cards": {
       "software": {
@@ -72,10 +73,14 @@
       }
     }
   },
+  "banner": {
+    "button": "Keşfet"
+  },
   "about_us": {
     "header": {
-      "eyebrow": "Daha iyi bir Gelecek adına",
-      "title": "Bizim"
+      "title_start": "Bizim",
+      "title_end": "",
+      "subtitle": "Hakkımızda Daha Fazlası"
     },
     "vision": {
       "title": "Vizyonumuz",

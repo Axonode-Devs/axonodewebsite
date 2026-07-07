@@ -39,8 +39,6 @@
                   <span class="step-number">{{ step }}</span>
                 </div>
               </div>
-
-              <!-- Invited badge — now shows inviteNote from the server if available -->
               <Transition name="fade-slide">
                 <div v-if="inviteToken" class="invited-badge">
                   {{
@@ -55,7 +53,6 @@
             </div>
 
             <form @submit.prevent="handleNextStep" class="axonode-form">
-              <!-- Step 1: Personal info -->
               <div v-if="currentStep === 1" class="step-content">
                 <h3 class="section-title">
                   <i class="fa-regular fa-id-card"></i>
@@ -355,7 +352,6 @@
               </div>
 
               <div class="form-footer">
-                <!-- Step-level validation error (interest not selected, etc.) -->
                 <Transition name="fade-slide">
                   <div v-if="stepError" class="form-error">
                     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -529,13 +525,6 @@
   z-index: 0;
 }
 
-html.dark .background-mesh {
-  background:
-    radial-gradient(at 0% 0%, rgba(187, 133, 223, 0.2) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(120, 222, 231, 0.2) 0px, transparent 50%);
-  filter: blur(80px);
-}
-
 .container {
   width: 100%;
   max-width: 1200px;
@@ -551,17 +540,12 @@ html.dark .background-mesh {
 }
 
 .form-wrapper {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--bg-color);
   backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid #beecf0;
   border-radius: 24px;
   padding: 50px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
-}
-
-html.dark .form-wrapper {
-  background: rgba(20, 20, 20, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .form-header {
@@ -569,10 +553,9 @@ html.dark .form-wrapper {
   margin-bottom: 50px;
 }
 
-/* ── Form footer — errors stack above buttons ─────────────────────────── */
 .form-footer {
   display: flex;
-  flex-direction: column; /* changed: was row, errors now stack above buttons */
+  flex-direction: column; 
   gap: 12px;
   margin-top: 30px;
 }
@@ -582,7 +565,6 @@ html.dark .form-wrapper {
   gap: 15px;
 }
 
-/* ── Inline error messages ────────────────────────────────────────────── */
 .form-error {
   display: flex;
   align-items: center;
@@ -596,15 +578,9 @@ html.dark .form-wrapper {
   color: #fe78b2;
 }
 
-/* API errors get a slightly stronger border */
 .form-error--api {
   background: rgba(254, 120, 178, 0.15);
   border-color: rgba(254, 120, 178, 0.5);
-}
-
-html.dark .form-error,
-html.dark .form-error--api {
-  background: rgba(254, 120, 178, 0.08);
 }
 
 .title {
@@ -679,20 +655,12 @@ textarea {
   padding: 12px 16px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(36, 36, 36, 0.6);
   font-family: inherit;
   font-size: 0.95rem;
   color: var(--text-color);
   transition: all 0.2s;
   box-sizing: border-box;
-}
-
-html.dark input,
-html.dark select,
-html.dark textarea {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #f1f5f9;
 }
 
 input:focus,
@@ -748,9 +716,6 @@ textarea:focus {
   color: #78dee7;
   font-weight: 700;
 }
-html.dark .option-card.active {
-  background: rgba(120, 222, 231, 0.15);
-}
 
 .back-btn {
   padding: 16px 30px;
@@ -760,7 +725,7 @@ html.dark .option-card.active {
   color: var(--text-color);
   cursor: pointer;
   font-weight: 600;
-  white-space: nowrap; /* prevent label wrapping on small widths */
+  white-space: nowrap;
 }
 
 .submit-btn {
@@ -791,7 +756,6 @@ html.dark .option-card.active {
   transform: none;
 }
 
-/* ── Invited badge ─────────────────────────────────────────────────────── */
 .invited-badge {
   display: inline-block;
   background: linear-gradient(135deg, #78dee7 0%, #bb85df 100%);
@@ -805,10 +769,9 @@ html.dark .option-card.active {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* long invite notes won't break the layout */
+  white-space: nowrap; 
 }
 
-/* ── Transitions ───────────────────────────────────────────────────────── */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: all 0.3s ease;
@@ -819,7 +782,6 @@ html.dark .option-card.active {
   transform: translateY(-10px);
 }
 
-/* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 992px) {
   .layout-grid {
     grid-template-columns: 1fr;
@@ -992,7 +954,6 @@ onMounted(async () => {
   }
 });
 
-// ── Computed ──────────────────────────────────────────────────────────────────
 const selectedInterest = computed(() =>
   interestAreas.find((i) => i.id === form.main_interest)
 );
@@ -1005,7 +966,6 @@ watch(
   }
 );
 
-// ── Navigation ────────────────────────────────────────────────────────────────
 function handleNextStep() {
   stepError.value = "";
 
@@ -1027,7 +987,6 @@ function handleNextStep() {
   }
 }
 
-// ── Submit ────────────────────────────────────────────────────────────────────
 const submitForm = async () => {
   stepError.value = "";
   submitError.value = "";
@@ -1062,7 +1021,6 @@ const submitForm = async () => {
     await publicService.submitApplication(payload); 
     isSubmitted.value = true;
   } catch (err) {
-    // ApiError.message is extracted safely inside the interceptor now
     submitError.value =
       err instanceof ApiError
         ? err.message

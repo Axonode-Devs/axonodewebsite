@@ -38,6 +38,7 @@
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   overflow: hidden;
+  margin-top: 4rem;
 }
 
 .background-mesh {

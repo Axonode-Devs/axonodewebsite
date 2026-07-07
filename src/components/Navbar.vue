@@ -190,9 +190,6 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
-  // Theme is stuck on dark mode for now.
-  document.documentElement.classList.add('dark');
-  localStorage.setItem('theme', 'dark');
 });
 
 onUnmounted(() => {
@@ -215,6 +212,9 @@ const goToHome = () => {
 </script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/coolvetica-2');
+@import url('https://fonts.cdnfonts.com/css/poppins');
+
 .navbar {
   position: fixed;
   top: 0;
@@ -236,10 +236,9 @@ const goToHome = () => {
   align-items: center;
   justify-content: space-between;
   pointer-events: auto;
-  background: rgba(255, 255, 255, 0.05);
+  background: #1f1f1f9f;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
@@ -249,18 +248,8 @@ const goToHome = () => {
   padding: 10px 0;
 }
 .navbar.scrolled .nav-container {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: #1f1f1f9f;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-}
-
-html.dark .nav-container {
-  background: rgba(29, 29, 29, 0.4);
-  border-color: rgba(255, 255, 255, 0.05);
-}
-html.dark .navbar.scrolled .nav-container {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .logo {
@@ -288,15 +277,16 @@ html.dark .navbar.scrolled .nav-container {
 .nav-item {
   text-decoration: none;
   padding: 8px;
-  color: #4b5563;
-  font-weight: 500;
-  font-size: 0.95rem;
+  color: var(--text-color2);
+  font-weight: 300;
+  font-size: 0.9rem;
   transition: color 0.2s ease;
   position: relative;
   cursor: pointer;
+  font-family: 'Poppins', sans-serif;
 }
 .nav-item:hover {
-  color: #111827;
+  color: #7a7a7a;
 }
 .nav-item::after {
   content: "";
@@ -310,12 +300,6 @@ html.dark .navbar.scrolled .nav-container {
 }
 .nav-item:hover::after {
   width: 100%;
-}
-html.dark .nav-item {
-  color: #d1d5db;
-}
-html.dark .nav-item:hover {
-  color: #fff;
 }
 
 .nav-actions {
@@ -334,15 +318,9 @@ html.dark .nav-item:hover {
   padding: 8px;
   transition: color 0.3s ease;
 }
+
 .btn-text:hover {
   color: #f3f4f6;
-}
-
-html:not(.dark) .btn-text {
-  color: #4b5563;
-}
-html:not(.dark) .btn-text:hover {
-  color: #111827;
 }
 
 @keyframes sweep {
@@ -358,15 +336,15 @@ html:not(.dark) .btn-text:hover {
   position: relative;
   overflow: hidden;
   padding: 10px 24px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
   border-radius: 9999px;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid #ffffff26;
   color: white;
   background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(254, 120, 178, 0.3);
+  font-family: 'Poppins', sans-serif;
 }
 
 .btn-gradient::before {
@@ -388,21 +366,7 @@ html:not(.dark) .btn-text:hover {
 
 .btn-gradient:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(254, 120, 178, 0.5);
   background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
-}
-
-html.dark .btn-gradient {
-  color: white;
-  background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-html.dark .btn-gradient:hover {
-  background: linear-gradient(0deg, #2b2b2b 0%, #353535 100%);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .mobile-right {
@@ -417,15 +381,12 @@ html.dark .btn-gradient:hover {
   border: none;
   font-size: 1.4rem;
   cursor: pointer;
-  color: #111;
+  color: var(--text-color2);
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
-}
-html.dark .mobile-toggle {
-  color: #f9fafb;
 }
 
 .mobile-drawer {
@@ -435,7 +396,7 @@ html.dark .mobile-toggle {
   right: -100%;
   width: min(320px, 80vw);
   height: 100vh;
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--bg-color);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   padding: 90px 32px 40px;
@@ -446,9 +407,7 @@ html.dark .mobile-toggle {
   z-index: 999;
   pointer-events: auto;
 }
-html.dark .mobile-drawer {
-  background: rgba(29, 29, 29, 0.98);
-}
+
 .mobile-drawer.drawer-open {
   right: 0;
 }
@@ -466,9 +425,6 @@ html.dark .mobile-drawer {
   display: block;
   padding: 12px 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-html.dark .mobile-nav-links .nav-item {
-  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
 .mobile-nav-actions {

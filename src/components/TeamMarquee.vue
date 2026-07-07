@@ -30,8 +30,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Duplicate track for seamless loop -->
       <div class="marquee-track" :class="{ paused: pause }" aria-hidden="true">
         <div
           v-for="(member, index) in combinedTeam"
@@ -150,8 +148,6 @@ const fetchTeam = async () => {
   combinedTeam.value = [...fetched, ...fetched];
 };
 
-// ─── Lifecycle ────────────────────────────────────────────────────────────────
-
 onMounted(() => {
   isMobile.value = window.innerWidth <= MOBILE_BREAKPOINT;
   window.addEventListener('resize', checkMobile, { passive: true });
@@ -167,7 +163,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* ─── Marquee container ──────────────────────────────────────────────────────── */
 
 .marquee-container {
   width: 100%;
@@ -180,8 +175,6 @@ onUnmounted(() => {
   contain: layout style;
 }
 
-/* ─── Label ──────────────────────────────────────────────────────────────────── */
-
 .marquee-label {
   display: flex;
   align-items: center;
@@ -189,7 +182,7 @@ onUnmounted(() => {
   gap: 20px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #6B7280;
+  color: #666666;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin-bottom: 30px;
@@ -198,8 +191,9 @@ onUnmounted(() => {
 
 .marquee-label span {
   margin-right: -10px;
-  color: #111827;
+  color: var(--text-color);
   font-weight: 700;
+  font-family: 'Poppins', sans-serif;
 }
 
 .marquee-label::before,
@@ -210,15 +204,6 @@ onUnmounted(() => {
   background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
 }
 
-html.dark .marquee-label { color: rgba(255, 255, 255, 0.5); }
-html.dark .marquee-label span { color: #ffffff; }
-html.dark .marquee-label::before,
-html.dark .marquee-label::after {
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
-}
-
-/* ─── Scroll track ───────────────────────────────────────────────────────────── */
-
 .marquee-content {
   display: flex;
   overflow: hidden;
@@ -228,6 +213,7 @@ html.dark .marquee-label::after {
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   pointer-events: none;
+  font-family: 'Poppins', sans-serif;
 }
 
 .marquee-track {
@@ -247,15 +233,13 @@ html.dark .marquee-label::after {
   100% { transform: translateX(calc(-100% - 30px)); }
 }
 
-/* ─── Team cards ─────────────────────────────────────────────────────────────── */
-
 .team-card {
   display: flex;
   align-items: center;
   gap: 15px;
   padding: 10px 24px 10px 10px;
-  background: rgba(243, 244, 246, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--sc-color);
+  border: 1px solid rgba(110, 110, 110, 0.322);
   border-radius: 999px;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
               background 0.3s ease,
@@ -266,25 +250,9 @@ html.dark .marquee-label::after {
   -webkit-tap-highlight-color: transparent;
 }
 
-html.dark .team-card {
-  background: rgba(48, 48, 48, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Desktop-only hover interactions. Scoped so touch devices never get a
-   "stuck" hover state from tapping (the classic mobile hover bug). */
 @media (hover: hover) and (pointer: fine) {
   .team-card:hover {
-    background: #ffffff;
-    border-color: rgba(254, 120, 178, 0.4);
-    transform: scale(1.02) translateY(-2px);
-    box-shadow: 0 15px 35px rgba(254, 120, 178, 0.15);
-    z-index: 10;
-  }
-
-  html.dark .team-card:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: #272727;
     transform: scale(1.02) translateY(-2px);
     z-index: 10;
   }
@@ -294,22 +262,13 @@ html.dark .team-card {
     transform: translateY(-2px);
   }
 
-  /* Modal close button hover */
   .modal-close:hover { background: rgba(0, 0, 0, 0.1); color: #111827; }
-  html.dark .modal-close:hover { background: rgba(255, 255, 255, 0.15); color: #f3f4f6; }
 }
-
-/* Touch-only tap feedback, so mobile users still get a responsive feel
-   without inheriting any hover-only effect. */
 @media (hover: none) and (pointer: coarse) {
   .team-card:active {
     background: #ffffff;
     transform: scale(0.97);
     box-shadow: 0 4px 10px rgba(254, 120, 178, 0.15);
-  }
-
-  html.dark .team-card:active {
-    background: rgba(255, 255, 255, 0.15);
   }
 
   .modal-github-btn:active {
@@ -321,12 +280,7 @@ html.dark .team-card {
     background: rgba(0, 0, 0, 0.15);
   }
 
-  html.dark .modal-close:active {
-    background: rgba(255, 255, 255, 0.2);
-  }
 }
-
-/* ─── Reduced motion ─────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
@@ -341,8 +295,6 @@ html.dark .team-card {
   }
 }
 
-/* ─── Avatars ────────────────────────────────────────────────────────────────── */
-
 .avatar {
   width: 48px;
   height: 48px;
@@ -353,27 +305,22 @@ html.dark .team-card {
   flex-shrink: 0;
 }
 
-html.dark .avatar { background: #374151; }
 
 .info { display: flex; flex-direction: column; min-width: 0; }
 
 .name {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #111827;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color);
   margin: 0;
   white-space: nowrap;
 }
 
-html.dark .name { color: #f1f5f9; }
-
 .role {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
   white-space: nowrap;
 }
-
-/* ─── Responsive ─────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .marquee-container {
@@ -395,8 +342,6 @@ html.dark .name { color: #f1f5f9; }
 
   .marquee-track {
     gap: 20px;
-    /* Slower relative perceived speed + easier on low-power/battery-saving
-       mobile GPUs than a fast desktop-tuned scroll. */
     animation-duration: 30s;
   }
 
@@ -451,8 +396,6 @@ html.dark .name { color: #f1f5f9; }
   }
 }
 
-/* ─── Modal overlay ──────────────────────────────────────────────────────────── */
-
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -479,15 +422,8 @@ html.dark .name { color: #f1f5f9; }
   gap: 8px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
   text-align: center;
-  /* Lets the modal shrink gracefully on very short/small viewports
-     instead of overflowing the screen. */
   max-height: calc(100dvh - 40px);
   overflow-y: auto;
-}
-
-html.dark .modal-card {
-  background: #1f1f1f;
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .modal-close {
@@ -508,11 +444,6 @@ html.dark .modal-card {
   transition: background 0.2s ease, color 0.2s ease;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
-}
-
-html.dark .modal-close {
-  background: rgba(255, 255, 255, 0.08);
-  color: #9ca3af;
 }
 
 .modal-avatar-wrap {
@@ -544,8 +475,6 @@ html.dark .modal-close {
   margin: 4px 0 0;
   color: #111827;
 }
-
-html.dark .modal-name { color: #f1f5f9; }
 
 .modal-role {
   font-size: 0.9rem;
@@ -585,8 +514,6 @@ html.dark .modal-name { color: #f1f5f9; }
     font-size: 1.1rem;
   }
 }
-
-/* ─── Modal transition ───────────────────────────────────────────────────────── */
 
 .modal-enter-active,
 .modal-leave-active {

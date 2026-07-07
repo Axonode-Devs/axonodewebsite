@@ -5,8 +5,10 @@
     <div class="orb-section">
       <WhatWeDo />
       <HDivider />
+      <!--<DenemeBackground/>-->
+      
+      <BannerSection />
       <AboutUs />
-      <HDivider />
       <!--<StartSection />-->
       <!--<HDivider top-margin="2px" />-->
       <ContactSection />
@@ -25,6 +27,7 @@ import HDivider from '../components/HDivider.vue'
 import StartSection from '../components/StartSection.vue';
 import ContactSection from '../components/ContactSection.vue';
 import Footer from '../components/Footer.vue'
+import BannerSection from '../components/BannerSection.vue'
 </script>
 
 <style scoped>
