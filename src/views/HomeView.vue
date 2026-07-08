@@ -5,12 +5,9 @@
     <div class="orb-section">
       <WhatWeDo />
       <HDivider />
-      <!--<DenemeBackground/>-->
       
-      <BannerSection />
+      
       <AboutUs />
-      <!--<StartSection />-->
-      <!--<HDivider top-margin="2px" />-->
       <ContactSection />
     </div>
     
@@ -39,8 +36,6 @@ canvas {
   width: 100%;
   height: 100%;
 }
-
-
 .orb-section {
   position: relative;
 }

@@ -129,8 +129,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-@import url('https://fonts.cdnfonts.com/css/coolvetica-2');
-@import url('https://fonts.cdnfonts.com/css/poppins');
 
 *, *::before, *::after { box-sizing: border-box; }
 .about-section {

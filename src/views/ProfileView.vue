@@ -4,13 +4,18 @@
 
     <div class="profile-wrapper">
       <div class="profile-container" v-if="authStore.user">
-
-        <!-- Sidebar -->
         <aside class="sidebar">
           <div class="avatar-block">
-            <div class="avatar">{{ authStore.user.email[0].toUpperCase() }}</div>
+            <div class="avatar">{{ authStore.user.email?.[0]?.toUpperCase() ?? '?' }}</div>
             <p class="avatar-email">{{ authStore.user.email }}</p>
+            <div class="user-meta">
+              <span class="status-pill">
+                {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
+              </span>
+              <span class="status-pill subtle">{{ $t('profile.account.status') }}</span>
+            </div>
           </div>
+
           <nav class="sidebar-nav">
             <button
               v-for="tab in tabs"
@@ -21,15 +26,33 @@
               {{ $t(tab.labelKey) }}
             </button>
           </nav>
+
+          <div class="sidebar-footer">
+            <button class="sign-out-btn" @click="handleSignOut">
+              <span>↺</span>
+              {{ $t('profile.actions.sign_out') }}
+            </button>
+          </div>
         </aside>
 
-        <!-- Content -->
         <main class="content">
-
           <div v-if="successMsg" class="alert alert-success">{{ successMsg }}</div>
-          <div v-if="errorMsg"   class="alert alert-danger">{{ errorMsg }}</div>
+          <div v-if="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
 
-          <!-- Account tab -->
+          <section class="hero-card">
+            <div>
+              <p class="hero-eyebrow">{{ $t('profile.account.hero_eyebrow') }}</p>
+              <h3>{{ $t('profile.account.hero_title') }}</h3>
+              <p class="hero-copy">{{ $t('profile.account.hero_text') }}</p>
+            </div>
+            <div class="hero-badges">
+              <span class="hero-badge">
+                {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
+              </span>
+              <span class="hero-badge muted">{{ $t('profile.account.connected') }}</span>
+            </div>
+          </section>
+
           <section v-if="activeTab === 'account'" class="section">
             <div class="section-header">
               <h2>{{ $t('profile.account.title') }}</h2>
@@ -43,8 +66,31 @@
             </div>
           </section>
 
-          
+          <section v-if="activeTab === 'security'" class="section">
+            <div class="section-header">
+              <h2>{{ $t('profile.security.title') }}</h2>
+              <p class="section-sub">{{ $t('profile.security.subtitle') }}</p>
+            </div>
 
+            <div class="form-group">
+              <label>{{ $t('profile.security.current_password') }}</label>
+              <input v-model="passwordForm.current" type="password" :placeholder="$t('profile.security.password_placeholder')" />
+            </div>
+
+            <div class="form-group">
+              <label>{{ $t('profile.security.new_password') }}</label>
+              <input v-model="passwordForm.new" type="password" :placeholder="$t('profile.security.new_password_placeholder')" />
+            </div>
+
+            <div class="form-group">
+              <label>{{ $t('profile.security.confirm_password') }}</label>
+              <input v-model="passwordForm.confirm" type="password" :placeholder="$t('profile.security.confirm_password_placeholder')" />
+            </div>
+
+            <button class="btn-save" :disabled="isSaving" @click="handlePasswordUpdate">
+              {{ isSaving ? $t('profile.security.saving') : $t('profile.security.save') }}
+            </button>
+          </section>
         </main>
       </div>
     </div>
@@ -93,6 +139,11 @@ onMounted(() => {
     }
   }
 })
+
+const handleSignOut = () => {
+  authStore.logout()
+  router.push('/')
+}
 
 const handlePasswordUpdate = async () => {
   errorMsg.value   = ''
@@ -255,10 +306,70 @@ const handlePasswordUpdate = async () => {
 
 /* ── Content panel ────────────────────────────────────────────────────────── */
 .content {
-  border-radius: 16px;
+  border-radius: 20px;
   border: 0.5px solid var(--border-color);
-  background: var(--bg-color);
-  padding: 36px 40px;
+  background: linear-gradient(145deg, var(--bg-color) 0%, rgba(255,255,255,0.035) 100%);
+  padding: 32px;
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.06);
+}
+
+.hero-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, rgba(254, 120, 178, 0.16), rgba(77, 198, 255, 0.12));
+  border: 0.5px solid rgba(254, 120, 178, 0.18);
+}
+
+.hero-eyebrow {
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.hero-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.hero-copy {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-color);
+  opacity: 0.7;
+  max-width: 560px;
+}
+
+.hero-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.hero-badge {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text-color);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+}
+
+.hero-badge.muted {
+  background: rgba(255, 255, 255, 0.45);
+  opacity: 0.9;
 }
 
 /* ── Section header ───────────────────────────────────────────────────────── */
@@ -282,6 +393,57 @@ const handlePasswordUpdate = async () => {
   opacity: 0.45;
   margin: 0;
   line-height: 1.6;
+}
+
+/* ── Sidebar footer ─────────────────────────────────────────────────────── */
+.sidebar-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 0.5px solid var(--border-color);
+}
+
+.sign-out-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 0.5px solid rgba(255, 107, 107, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 107, 107, 0.08);
+  color: var(--error-color);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.17s ease, box-shadow 0.17s ease;
+}
+
+.sign-out-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 107, 107, 0.12);
+}
+
+.user-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.status-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.6);
+  border: 0.5px solid rgba(255, 255, 255, 0.28);
+}
+
+.status-pill.subtle {
+  opacity: 0.7;
 }
 
 /* ── Form ─────────────────────────────────────────────────────────────────── */
@@ -326,7 +488,6 @@ const handlePasswordUpdate = async () => {
   line-height: 1.5;
 }
 
-/* ── Save button ──────────────────────────────────────────────────────────── */
 .btn-save {
   margin-top: 8px;
   padding: 11px 28px;
@@ -374,5 +535,7 @@ const handlePasswordUpdate = async () => {
   .profile-container { grid-template-columns: 1fr; }
   .sidebar           { position: static; }
   .content           { padding: 24px 20px; }
+  .hero-card         { flex-direction: column; align-items: flex-start; }
+  .hero-badges       { width: 100%; flex-direction: row; flex-wrap: wrap; min-width: unset; }
 }
 </style>

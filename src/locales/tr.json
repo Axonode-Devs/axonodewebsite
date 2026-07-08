@@ -379,6 +379,9 @@
   },
   "profile": {
     "title": "Profil",
+    "actions": {
+      "sign_out": "Çıkış Yap"
+    },
     "tabs": {
       "account": "Hesap Bilgileri",
       "security": "Güvenlik Ayarları"
@@ -389,7 +392,13 @@
       "email_label": "Kayıtlı E-Posta Adresi",
       "email_hint": "E-Posta Değişikleri için yetkililerle iletişime geçin.",
       "role_label": "Erişim Rolü İzinleri",
-      "role_default": "Standart Kullanıcı"
+      "role_default": "Standart Kullanıcı",
+      "role_admin": "Yönetici Erişimi",
+      "status": "Aktif üye",
+      "hero_eyebrow": "Hesap merkeziniz",
+      "hero_title": "Profilinizi daha net yönetin",
+      "hero_text": "Hesap bilgilerinizi inceleyin, güvenlik ayarlarınızı güncelleyin ve her şeyi tek bir yerde organize edin.",
+      "connected": "Korunmuş oturum"
     },
     "security": {
       "title": "Güvenlik Yapılandırmaları",

@@ -369,6 +369,9 @@
   },
   "profile": {
     "title": "Profile",
+    "actions": {
+      "sign_out": "Sign Out"
+    },
     "tabs": {
       "account": "Account Settings",
       "security": "Security Settings"
@@ -379,7 +382,13 @@
       "email_label": "Registered Email Address",
       "email_hint": "Email changes must currently be handled via administrative support.",
       "role_label": "Access Role Privilege",
-      "role_default": "Standard User"
+      "role_default": "Standard User",
+      "role_admin": "Admin Access",
+      "status": "Active member",
+      "hero_eyebrow": "Your account hub",
+      "hero_title": "Manage your profile with clarity",
+      "hero_text": "Review your account details, update access credentials, and keep your privacy settings organized in one place.",
+      "connected": "Protected session"
     },
     "security": {
       "title": "Security Configurations",
