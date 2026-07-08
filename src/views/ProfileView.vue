@@ -12,20 +12,8 @@
               <span class="status-pill">
                 {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
               </span>
-              <span class="status-pill subtle">{{ $t('profile.account.status') }}</span>
             </div>
           </div>
-
-          <nav class="sidebar-nav">
-            <button
-              v-for="tab in tabs"
-              :key="tab.key"
-              :class="{ active: activeTab === tab.key }"
-              @click="activeTab = tab.key"
-            >
-              {{ $t(tab.labelKey) }}
-            </button>
-          </nav>
 
           <div class="sidebar-footer">
             <button class="sign-out-btn" @click="handleSignOut">
@@ -36,60 +24,24 @@
         </aside>
 
         <main class="content">
-          <div v-if="successMsg" class="alert alert-success">{{ successMsg }}</div>
-          <div v-if="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
-
-          <section class="hero-card">
-            <div>
-              <p class="hero-eyebrow">{{ $t('profile.account.hero_eyebrow') }}</p>
-              <h3>{{ $t('profile.account.hero_title') }}</h3>
-              <p class="hero-copy">{{ $t('profile.account.hero_text') }}</p>
-            </div>
-            <div class="hero-badges">
-              <span class="hero-badge">
-                {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
-              </span>
-              <span class="hero-badge muted">{{ $t('profile.account.connected') }}</span>
-            </div>
-          </section>
-
-          <section v-if="activeTab === 'account'" class="section">
+          <section class="section">
             <div class="section-header">
               <h2>{{ $t('profile.account.title') }}</h2>
               <p class="section-sub">{{ $t('profile.account.subtitle') }}</p>
             </div>
 
-            <div class="form-group">
-              <label>{{ $t('profile.account.email_label') }}</label>
-              <input type="text" :value="authStore.user.email" disabled class="input-disabled" />
-              <small>{{ $t('profile.account.email_hint') }}</small>
+            <div class="detail-card">
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.email_label') }}</span>
+                <span class="detail-value">{{ authStore.user.email }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.role_label') }}</span>
+                <span class="detail-value">
+                  {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
+                </span>
+              </div>
             </div>
-          </section>
-
-          <section v-if="activeTab === 'security'" class="section">
-            <div class="section-header">
-              <h2>{{ $t('profile.security.title') }}</h2>
-              <p class="section-sub">{{ $t('profile.security.subtitle') }}</p>
-            </div>
-
-            <div class="form-group">
-              <label>{{ $t('profile.security.current_password') }}</label>
-              <input v-model="passwordForm.current" type="password" :placeholder="$t('profile.security.password_placeholder')" />
-            </div>
-
-            <div class="form-group">
-              <label>{{ $t('profile.security.new_password') }}</label>
-              <input v-model="passwordForm.new" type="password" :placeholder="$t('profile.security.new_password_placeholder')" />
-            </div>
-
-            <div class="form-group">
-              <label>{{ $t('profile.security.confirm_password') }}</label>
-              <input v-model="passwordForm.confirm" type="password" :placeholder="$t('profile.security.confirm_password_placeholder')" />
-            </div>
-
-            <button class="btn-save" :disabled="isSaving" @click="handlePasswordUpdate">
-              {{ isSaving ? $t('profile.security.saving') : $t('profile.security.save') }}
-            </button>
           </section>
         </main>
       </div>
@@ -98,43 +50,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
-import { apiClient } from '../api/client'
-import { ApiError } from '../api/error'
 import { authService } from '../api/authService' 
 import Navbar from '../components/Navbar.vue'
 
-const { t } = useI18n()
 const router = useRouter()
 const authStore = useAuthStore()
 
-enum TabKey {
-  ACCOUNT = 'account',
-  SECURITY = 'security'
-}
-const activeTab = ref<TabKey>(TabKey.ACCOUNT)
-const isSaving  = ref(false)
-const successMsg = ref('')
-const errorMsg   = ref('')
-
-const tabs = [
-  { key: TabKey.ACCOUNT,  labelKey: 'profile.tabs.account' },
-  { key: TabKey.SECURITY, labelKey: 'profile.tabs.security' },
-]
-
-const passwordForm = reactive({ current: '', new: '', confirm: '' })
-
-// ── HYDRATE STATE ON MOUNT ──────────────────────────────────────────────────
 onMounted(() => {
   if (!authStore.user) {
     const localUser = authService.getLocalUser() 
     if (localUser) {
       authStore.user = localUser
     } else {
-      // If there is no user in storage at all, boot them to the homepage
       router.push('/')
     }
   }
@@ -143,38 +73,6 @@ onMounted(() => {
 const handleSignOut = () => {
   authStore.logout()
   router.push('/')
-}
-
-const handlePasswordUpdate = async () => {
-  errorMsg.value   = ''
-  successMsg.value = ''
-
-  if (passwordForm.new !== passwordForm.confirm) {
-    errorMsg.value = t('profile.security.error_mismatch')
-    return
-  }
-  if (passwordForm.new.length < 8) {
-    errorMsg.value = t('profile.security.error_too_short')
-    return
-  }
-
-  isSaving.value = true
-  try {
-    await apiClient.post('/auth/change-password', {
-      current_password: passwordForm.current,
-      new_password: passwordForm.new,
-    })
-    successMsg.value = t('profile.security.success')
-    passwordForm.current = ''
-    passwordForm.new     = ''
-    passwordForm.confirm = ''
-  } catch (error) {
-    errorMsg.value = error instanceof ApiError
-      ? error.message
-      : t('profile.security.error_generic')
-  } finally {
-    isSaving.value = false
-  }
 }
 </script>
 <style scoped>
@@ -308,68 +206,46 @@ const handlePasswordUpdate = async () => {
 .content {
   border-radius: 20px;
   border: 0.5px solid var(--border-color);
-  background: linear-gradient(145deg, var(--bg-color) 0%, rgba(255,255,255,0.035) 100%);
+  background: linear-gradient(145deg, var(--bg-color) 0%, rgba(255,255,255,0.03) 100%);
   padding: 32px;
   box-shadow: 0 18px 70px rgba(0, 0, 0, 0.06);
 }
 
-.hero-card {
+.detail-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--hover-bg);
+  border: 0.5px solid var(--border-color);
+}
+
+.detail-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 22px 24px;
-  border-radius: 16px;
-  margin-bottom: 24px;
-  background: linear-gradient(135deg, rgba(254, 120, 178, 0.16), rgba(77, 198, 255, 0.12));
-  border: 0.5px solid rgba(254, 120, 178, 0.18);
+  padding: 10px 0;
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
 }
 
-.hero-eyebrow {
-  margin: 0 0 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--accent-color);
+.detail-row:last-child {
+  border-bottom: 0;
 }
 
-.hero-card h3 {
-  margin: 0 0 8px;
-  font-size: 1.2rem;
-  color: var(--text-color);
-}
-
-.hero-copy {
-  margin: 0;
-  font-size: 13.5px;
-  line-height: 1.6;
+.detail-label {
+  font-size: 13px;
+  font-weight: 600;
   color: var(--text-color);
   opacity: 0.7;
-  max-width: 560px;
 }
 
-.hero-badges {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 180px;
-}
-
-.hero-badge {
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.7);
+.detail-value {
+  font-size: 13px;
+  font-weight: 500;
   color: var(--text-color);
-  border: 0.5px solid rgba(255, 255, 255, 0.3);
-}
-
-.hero-badge.muted {
-  background: rgba(255, 255, 255, 0.45);
-  opacity: 0.9;
+  text-align: right;
+  word-break: break-word;
 }
 
 /* ── Section header ───────────────────────────────────────────────────────── */
@@ -437,13 +313,10 @@ const handlePasswordUpdate = async () => {
   border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
-  color: var(--text-color);
-  background: rgba(255, 255, 255, 0.6);
-  border: 0.5px solid rgba(255, 255, 255, 0.28);
-}
-
-.status-pill.subtle {
-  opacity: 0.7;
+  color: var(--text-color2);
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.95;
 }
 
 /* ── Form ─────────────────────────────────────────────────────────────────── */
@@ -535,7 +408,7 @@ const handlePasswordUpdate = async () => {
   .profile-container { grid-template-columns: 1fr; }
   .sidebar           { position: static; }
   .content           { padding: 24px 20px; }
-  .hero-card         { flex-direction: column; align-items: flex-start; }
-  .hero-badges       { width: 100%; flex-direction: row; flex-wrap: wrap; min-width: unset; }
+  .detail-row        { flex-direction: column; align-items: flex-start; }
+  .detail-value      { text-align: left; }
 }
 </style>
