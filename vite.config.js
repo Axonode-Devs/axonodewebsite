@@ -17,7 +17,8 @@ export default defineConfig({
         '/terms',
         '/conduct',
         '/privacy'
-      ]
+      ],
+      robots: [{userAgent: '*', allow: '/', disallow: ['/login', '/invited', '/profile','/credentials']}]
     })
   ]
 })
