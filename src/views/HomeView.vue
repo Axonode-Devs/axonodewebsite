@@ -5,8 +5,7 @@
     <div class="orb-section">
       <WhatWeDo />
       <HDivider />
-      
-      
+      <BannerSection />
       <AboutUs />
       <ContactSection />
     </div>
