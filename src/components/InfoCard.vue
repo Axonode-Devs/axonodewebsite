@@ -64,8 +64,8 @@ onMounted(() => {
 <style scoped>
 .info-box-wrapper {
   position: relative;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  background: var(--sc-color);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 2px;
@@ -139,26 +139,12 @@ onMounted(() => {
   }
 }
 
-.info-box-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  padding: 2px; 
-  background: linear-gradient(135deg, #78dee7, #95b0eb, #bb85df);
-  -webkit-mask: 
-     linear-gradient(#fff 0 0) content-box, 
-     linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 1;
-}
+
 
 .info-content {
-  background: rgba(15, 17, 21, 0.95);
-  border-radius: 14px;
-  padding: 24px;
+  background: var(--sc-color);
+  border-radius: 12px;
+  padding: 22px;
   position: relative;
   z-index: 2;
 }
@@ -176,7 +162,7 @@ onMounted(() => {
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(90deg, #78dee7 0%, #95b0eb 100%);
+  background: linear-gradient(90deg, var(--accent-color) 0%, var(--accent-tertiary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

@@ -156,11 +156,11 @@
       "profile": {
         "section_title": "Profiliniz",
         "main_interest": {
-          "label": "Ana İlgi/Beceri Alanınız"
+          "label": "Ana İlgi/Beceri Alanlarınız"
         },
         "other_interest": {
           "label": "İlgi Alanınız Nedir?",
-          "placeholder": "Bize Tutkunu Anlat!"
+          "placeholder": "Anlat bize tüm yeteneklerini!"
         },
         "sub_interest": {
           "label": "Alt-İlgi Alanları (Birden fazla seçebilirsiniz)"
@@ -252,7 +252,7 @@
       "must_agree": "Hizmet Şartları ve Topluluk Kurallarını Kabul etmeniz lazım",
       "select_interest": "Lütfen bir ilgi alanı seçiniz.",
       "describe_interest": "İlgi alanınızı açıklayınız.",
-      "select_main_interest": "Lütfen ana ilgi alanınızı seçiniz.",
+      "select_main_interest": "Lütfen en az bir ana ilgi alanı seçiniz.",
       "select_sub_interest": "En az bir alt-ilgi alanı seçiniz.",
       "generic_error": "İkinci kuleye vurdular. Lütfen sonra tekrar deneyiniz.\nError: {error}"
     }

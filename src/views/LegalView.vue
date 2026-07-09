@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { marked } from 'marked';
@@ -15,7 +15,7 @@ const loadMarkdown = async () => {
     const response = await fetch(`/${fileName}.md`);
     if (!response.ok) throw new Error('Document not found');
     const rawText = await response.text();
-    legalContent.value = marked.parse(rawText);
+    legalContent.value = await marked.parse(rawText);
   } catch (err) {
     legalContent.value = '<h1>Content Error</h1><p>The requested data could not be retrieved from the Axonode archives.</p>';
   } finally {
@@ -31,7 +31,6 @@ onMounted(loadMarkdown);
   <div class="legal-wrapper">
     <Navbar />
     
-
     <div class="content-container">
       <transition name="fade" mode="out-in">
         <div v-if="loading" class="loader">Accessing Axonode Legal Papers</div>

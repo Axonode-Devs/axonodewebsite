@@ -156,11 +156,11 @@
       "profile": {
         "section_title": "Your Profile",
         "main_interest": {
-          "label": "Primary Area of Interest"
+          "label": "Primary Areas of Interest"
         },
         "other_interest": {
           "label": "What are you interested in?",
-          "placeholder": "Show us your passion!"
+          "placeholder": "Tell us about your interests"
         },
         "sub_interest": {
           "label": "Sub-Interests (Select all that apply)"
@@ -252,7 +252,7 @@
       "must_agree": "You Must Accept the Terms Of Service and Code of conduct",
       "select_interest": "Please select an area of interest.",
       "describe_interest": "Please describe your interest.",
-      "select_main_interest": "Please select a main interest.",
+      "select_main_interest": "Please select at least one main interest.",
       "select_sub_interest": "Please select at least one sub-interest.",
       "generic_error": "Something went wrong. Please try again.\nError: {error}"
     }

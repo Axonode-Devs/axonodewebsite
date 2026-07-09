@@ -164,10 +164,10 @@
                       v-for="area in interestAreas"
                       :key="area.id"
                       class="option-card"
-                      :class="{ active: form.main_interest === area.id }"
+                      :class="{ active: form.main_interest.includes(area.id) }"
                     >
                       <input
-                        type="radio"
+                        type="checkbox"
                         :value="area.id"
                         v-model="form.main_interest"
                       />
@@ -178,15 +178,18 @@
                   </div>
                 </div>
 
-                <div v-if="selectedInterest?.id === 'other'" class="form-group">
+                <div
+                  v-if="form.main_interest.includes('other')"
+                  class="form-group"
+                >
                   <label
                     >{{
                       $t("application_form.steps.profile.other_interest.label")
                     }}
                     <span class="req">*</span></label
                   >
-                  <input
-                    type="text"
+                  <textarea
+                    rows="4"
                     :placeholder="
                       t(
                         'application_form.steps.profile.other_interest.placeholder',
@@ -194,12 +197,12 @@
                     "
                     v-model="form.other_interest"
                     required
-                  />
+                  ></textarea>
                 </div>
 
                 <Transition name="fade-slide">
                   <div
-                    v-if="selectedInterest?.sub?.length"
+                    v-if="selectedInterests.some((interest) => interest.sub?.length)"
                     class="form-group mt-input"
                   >
                     <label
@@ -209,23 +212,25 @@
                       <span class="req">*</span></label
                     >
                     <div class="grid-options">
-                      <label
-                        v-for="sub in selectedInterest.sub"
-                        :key="sub.id"
-                        class="option-card"
-                        :class="{ active: form.sub_interest.includes(sub.id) }"
-                      >
-                        <input
-                          type="checkbox"
-                          :value="sub.id"
-                          v-model="form.sub_interest"
-                        />
-                        <span>{{
-                          $t(
-                            `application_form.interest_areas.${selectedInterest.id}.sub.${sub.id}`,
-                          )
-                        }}</span>
-                      </label>
+                      <template v-for="interest in selectedInterests" :key="interest.id">
+                        <label
+                          v-for="sub in interest.sub"
+                          :key="`${interest.id}-${sub.id}`"
+                          class="option-card"
+                          :class="{ active: form.sub_interest.includes(sub.id) }"
+                        >
+                          <input
+                            type="checkbox"
+                            :value="sub.id"
+                            v-model="form.sub_interest"
+                          />
+                          <span>{{
+                            $t(
+                              `application_form.interest_areas.${interest.id}.sub.${sub.id}`,
+                            )
+                          }}</span>
+                        </label>
+                      </template>
                     </div>
                   </div>
                 </Transition>
@@ -472,7 +477,7 @@
   opacity: 0.5;
 }
 .step.active {
-  background: linear-gradient(135deg, #78dee7, #95b0eb);
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
   color: white;
   opacity: 1;
   box-shadow: 0 0 15px rgba(149, 176, 235, 0.4);
@@ -510,17 +515,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(187, 133, 223, 0.15),
-      transparent 60%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(120, 222, 231, 0.1),
-      transparent 60%
-    );
+  background-color: var(--bg-color);
   pointer-events: none;
   z-index: 0;
 }
@@ -540,9 +535,9 @@
 }
 
 .form-wrapper {
-  background: var(--bg-color);
+  background: var(--sc-color);
   backdrop-filter: blur(24px);
-  border: 1px solid #beecf0;
+  border: 2px dashed var(--border-color);
   border-radius: 24px;
   padding: 50px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
@@ -591,7 +586,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #78dee7 0%, #95b0eb 50%, #bb85df 100%);
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -733,8 +728,8 @@ textarea:focus {
   padding: 16px;
   border-radius: 12px;
   border: none;
-  background: linear-gradient(90deg, #78dee7 0%, #95b0eb 50%, #bb85df 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  color: var(--trd-color);
   font-weight: 700;
   font-size: 1.1rem;
   cursor: pointer;
@@ -758,7 +753,7 @@ textarea:focus {
 
 .invited-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #78dee7 0%, #bb85df 100%);
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 100%);
   color: white;
   padding: 6px 16px;
   border-radius: 20px;
@@ -843,7 +838,7 @@ interface AppForm {
   english_level: EnglishLevel;
   experience_level: ExperienceLevel;
   reason: string;
-  main_interest: string;
+  main_interest: string[];
   sub_interest: string[];
   other_interest: string;
   invite_token: string | null;
@@ -869,7 +864,7 @@ const form = reactive<AppForm>({
   english_level: "",
   experience_level: "junior",
   reason: "",
-  main_interest: "",
+  main_interest: [],
   sub_interest: [],
   other_interest: "",
   invite_token: null,
@@ -954,15 +949,17 @@ onMounted(async () => {
   }
 });
 
-const selectedInterest = computed(() =>
-  interestAreas.find((i) => i.id === form.main_interest)
+const selectedInterests = computed(() =>
+  interestAreas.filter((interest) => form.main_interest.includes(interest.id))
 );
 
 watch(
   () => form.main_interest,
   () => {
     form.sub_interest = [];
-    form.other_interest = "";
+    if (!form.main_interest.includes("other")) {
+      form.other_interest = "";
+    }
   }
 );
 
@@ -970,11 +967,11 @@ function handleNextStep() {
   stepError.value = "";
 
   if (currentStep.value === 2) {
-    if (!form.main_interest) {
+    if (!form.main_interest.length) {
       stepError.value = t("application_form.validation.select_interest");
       return;
     }
-    if (form.main_interest === "other" && !form.other_interest.trim()) {
+    if (form.main_interest.includes("other") && !form.other_interest.trim()) {
       stepError.value = t("application_form.validation.describe_interest");
       return;
     }
@@ -996,12 +993,15 @@ const submitForm = async () => {
     return;
   }
 
-  if (!form.main_interest) {
+  if (!form.main_interest.length) {
     stepError.value = t("application_form.validation.select_main_interest");
     return;
   }
 
-  if (selectedInterest.value?.sub?.length && form.sub_interest.length === 0) {
+  if (
+    selectedInterests.value.some((interest) => interest.sub?.length) &&
+    form.sub_interest.length === 0
+  ) {
     stepError.value = t("application_form.validation.select_sub_interest");
     return;
   }
@@ -1010,12 +1010,16 @@ const submitForm = async () => {
 
   try {
     const { other_interest, ...rest } = form;
+    const normalizedMainInterests = form.main_interest.includes("other")
+      ? [
+          ...form.main_interest.filter((interest) => interest !== "other"),
+          `other: ${other_interest.trim()}`,
+        ]
+      : form.main_interest;
+
     const payload = {
       ...rest,
-      main_interest:
-        form.main_interest === "other"
-          ? `other: ${other_interest.trim()}`
-          : form.main_interest,
+      main_interest: normalizedMainInterests,
     };
 
     await publicService.submitApplication(payload); 
