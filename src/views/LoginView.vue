@@ -1,7 +1,6 @@
 <template>
   <Navbar />
   <div class="login-container">
-    <!-- Mesh Background consistent with your Admin page -->
     <div class="background-mesh"></div>
 
     <div class="login-content">
@@ -37,7 +36,7 @@
           <button type="submit" class="login-btn" :disabled="loading">
             <span v-if="!loading">{{ $t('login.form.submit.label') }}</span>
             <span v-else class="loading-spinner">
-              <i class="fa-solid fa-circle-notch fa-spin"></i>
+              <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
               {{ $t('login.form.submit.submitting') }}
             </span>
           </button>
@@ -46,10 +45,9 @@
           </router-link>
         </form>
 
-        <!-- Use a Transition for the error message for a smoother UI -->
         <Transition name="fade">
           <p v-if="errorMsg" class="error-message">
-            <i class="fa-solid fa-circle-exclamation"></i> {{ errorMsg }}
+            <font-awesome-icon :icon="['fas', 'circle-exclamation']" /> {{ errorMsg }}
           </p>
         </Transition>
       </div>

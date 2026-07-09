@@ -4,31 +4,37 @@
   <div class="info-box-wrapper" v-if="isVisible">
     
     <button class="mobile-close-btn" @click="closePopup">
-      <i class="fa-solid fa-xmark"></i>
+      <font-awesome-icon :icon="['fas', 'xmark']" />
     </button>
 
     <div class="info-content">
       <div class="header">
-        <i class="fa-regular fa-lightbulb icon-glow"></i>
+        <font-awesome-icon :icon="['far', 'lightbulb']" class="icon-glow" />
         <h3>{{ $t('info_card.header.title') }}</h3>
       </div>
       <ul class="info-list">
         <li>
-          <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+          <div class="icon-box">
+            <font-awesome-icon :icon="['fas', 'users']" />
+          </div>
           <div class="text">
             <strong>{{ $t('info_card.items.community.title') }}</strong>
             <span>{{ $t('info_card.items.community.description') }}</span>
           </div>
         </li>
         <li>
-          <div class="icon-box"><i class="fa-solid fa-user-check"></i></div>
+          <div class="icon-box">
+            <font-awesome-icon :icon="['fas', 'user-check']" />
+          </div>
           <div class="text">
             <strong>{{ $t('info_card.items.review.title') }}</strong>
             <span>{{ $t('info_card.items.review.description') }}</span>
           </div>
         </li>
         <li>
-          <div class="icon-box"><i class="fa-solid fa-rocket"></i></div>
+          <div class="icon-box">
+            <font-awesome-icon :icon="['fas', 'rocket']" />
+          </div>
           <div class="text">
             <strong>{{ $t('info_card.items.next_steps.title') }}</strong>
             <span>{{ $t('info_card.items.next_steps.description') }}</span>

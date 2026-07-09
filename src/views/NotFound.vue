@@ -10,7 +10,7 @@
       </p>
       
       <a href="/" class="home-btn">
-        <i class="fa-solid fa-arrow-left"></i>
+        <font-awesome-icon :icon="['fas', 'arrow-left']"/>
         <span>{{ $t('not_found.back') }}</span>
       </a>
     </div>

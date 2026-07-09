@@ -8,7 +8,7 @@
         <div class="form-wrapper">
           <div v-if="isSubmitted" class="success-state">
             <div class="success-icon">
-              <i class="fa-solid fa-circle-check"></i>
+              <font-awesome-icon :icon="['fas', 'circle-check']" />
             </div>
             <h2 class="title">
               {{ $t("application_form.success.title") }}
@@ -55,20 +55,20 @@
             <form @submit.prevent="handleNextStep" class="axonode-form">
               <div v-if="currentStep === 1" class="step-content">
                 <h3 class="section-title">
-                  <i class="fa-regular fa-id-card"></i>
+                  <font-awesome-icon :icon="['far', 'id-card']" />
                   {{ $t("application_form.steps.personal_info.section_title") }}
                 </h3>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="fullname"
-                      ><i class="fa-solid fa-user"></i>
+                    <label for="fullname">
+                      <font-awesome-icon :icon="['fas', 'user']" />
                       {{
                         $t(
                           "application_form.steps.personal_info.fullname.label",
                         )
                       }}
-                      <span class="req">*</span></label
-                    >
+                      <span class="req">*</span>
+                    </label>
                     <input
                       type="text"
                       id="fullname"
@@ -82,13 +82,13 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="email"
-                      ><i class="fa-solid fa-envelope"></i>
+                    <label for="email">
+                      <font-awesome-icon :icon="['fas', 'envelope']" />
                       {{
                         $t("application_form.steps.personal_info.email.label")
                       }}
-                      <span class="req">*</span></label
-                    >
+                      <span class="req">*</span>
+                    </label>
                     <input
                       type="email"
                       id="email"
@@ -104,12 +104,12 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="contact"
-                    ><i class="fa-solid fa-phone"></i>
+                  <label for="contact">
+                    <font-awesome-icon :icon="['fas', 'phone']" />
                     {{
                       $t("application_form.steps.personal_info.contact.label")
-                    }}</label
-                  >
+                    }}
+                  </label>
                   <div class="form-group-row">
                     <input
                       type="text"
@@ -146,19 +146,18 @@
                 </div>
               </div>
 
-              <!-- Step 2: Profile -->
               <div v-if="currentStep === 2" class="step-content">
                 <h3 class="section-title">
-                  <i class="fa-solid fa-laptop-code"></i>
+                  <font-awesome-icon :icon="['fas', 'laptop-code']" />
                   {{ $t("application_form.steps.profile.section_title") }}
                 </h3>
                 <div class="form-group">
-                  <label
-                    >{{
+                  <label>
+                    {{
                       $t("application_form.steps.profile.main_interest.label")
                     }}
-                    <span class="req">*</span></label
-                  >
+                    <span class="req">*</span>
+                  </label>
                   <div class="grid-options">
                     <label
                       v-for="area in interestAreas"
@@ -182,12 +181,12 @@
                   v-if="form.main_interest.includes('other')"
                   class="form-group"
                 >
-                  <label
-                    >{{
+                  <label>
+                    {{
                       $t("application_form.steps.profile.other_interest.label")
                     }}
-                    <span class="req">*</span></label
-                  >
+                    <span class="req">*</span>
+                  </label>
                   <textarea
                     rows="4"
                     :placeholder="
@@ -205,12 +204,12 @@
                     v-if="selectedInterests.some((interest) => interest.sub?.length)"
                     class="form-group mt-input"
                   >
-                    <label
-                      >{{
+                    <label>
+                      {{
                         $t("application_form.steps.profile.sub_interest.label")
                       }}
-                      <span class="req">*</span></label
-                    >
+                      <span class="req">*</span>
+                    </label>
                     <div class="grid-options">
                       <template v-for="interest in selectedInterests" :key="interest.id">
                         <label
@@ -284,23 +283,16 @@
                 </div>
               </div>
 
-              <!-- Step 3: Final -->
               <div v-if="currentStep === 3" class="step-content">
                 <h3 class="section-title">
-                  <i class="fa-solid fa-rocket"></i>
+                  <font-awesome-icon :icon="['fas', 'rocket']" />
                   {{ $t("application_form.steps.final.section_title") }}
                 </h3>
-                <!--
                 <div class="form-group">
-                  <label>{{ $t('application_form.steps.final.availability.label') }}</label>
-                  <input type="number" v-model="form.availability" :placeholder="$t('application_form.steps.final.availability.placeholder')" min="1" max="100" required />
-                </div>
-                -->
-                <div class="form-group">
-                  <label for="reason"
-                    >{{ $t("application_form.steps.final.reason.label") }}
-                    <span class="req">*</span></label
-                  >
+                  <label for="reason">
+                    {{ $t("application_form.steps.final.reason.label") }}
+                    <span class="req">*</span>
+                  </label>
                   <textarea
                     id="reason"
                     v-model="form.reason"
@@ -359,15 +351,14 @@
               <div class="form-footer">
                 <Transition name="fade-slide">
                   <div v-if="stepError" class="form-error">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
                     {{ stepError }}
                   </div>
                 </Transition>
 
-                <!-- API-level submit error -->
                 <Transition name="fade-slide">
                   <div v-if="submitError" class="form-error form-error--api">
-                    <i class="fa-solid fa-circle-xmark"></i>
+                    <font-awesome-icon :icon="['fas', 'circle-xmark']" />
                     {{ submitError }}
                   </div>
                 </Transition>
@@ -396,13 +387,10 @@
                           : $t("application_form.buttons.submit")
                         : $t("application_form.buttons.next")
                     }}</span>
-                    <i
+                    <font-awesome-icon 
                       v-if="!isSubmitting"
-                      class="fa-solid"
-                      :class="
-                        currentStep === 3 ? 'fa-paper-plane' : 'fa-arrow-right'
-                      "
-                    ></i>
+                      :icon="['fas', currentStep === 3 ? 'paper-plane' : 'arrow-right']" 
+                    />
                   </button>
                 </div>
               </div>

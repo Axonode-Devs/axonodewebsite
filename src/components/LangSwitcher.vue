@@ -2,7 +2,11 @@
   <div class="lang-switcher" ref="switcherRef">
     <button class="lang-btn" @click="isOpen = !isOpen" :aria-expanded="isOpen" aria-haspopup="listbox">
       <span class="lang-code">{{ currentLang.code }}</span>
-      <i class="fa-solid fa-chevron-down chevron" :class="{ 'chevron-open': isOpen }"></i>
+      <font-awesome-icon 
+        :icon="['fas', 'chevron-down']" 
+        class="chevron" 
+        :class="{ 'chevron-open': isOpen }" 
+      />
     </button>
 
     <Transition name="dropdown">
@@ -18,7 +22,11 @@
         >
           <span class="lang-flag">{{ lang.flag }}</span>
           <span>{{ lang.name }}</span>
-          <i v-if="locale === lang.locale" class="fa-solid fa-check check-icon"></i>
+          <font-awesome-icon 
+            v-if="locale === lang.locale" 
+            :icon="['fas', 'check']" 
+            class="check-icon" 
+          />
         </li>
       </ul>
     </Transition>

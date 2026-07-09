@@ -13,7 +13,9 @@
 
         <div class="contact-links">
           <a href="mailto:contact@contact.axonode.org" class="link-item">
-            <div class="icon-box"><i class="fa-regular fa-envelope"></i></div>
+            <div class="icon-box">
+              <font-awesome-icon :icon="['far', 'envelope']" />
+            </div>
             <span>contact@contact.axonode.org</span>
           </a>
         </div>

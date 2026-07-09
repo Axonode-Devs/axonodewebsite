@@ -14,7 +14,7 @@
           <div class="glow-bg" aria-hidden="true"></div>
           <div class="card-content">
             <div class="icon-wrapper blue">
-              <i class="fa-solid fa-code"></i>
+              <font-awesome-icon :icon="['fas', 'code']" />
             </div>
             <h3>{{ $t('what_we_do.cards.software.title') }}</h3>
             <p>{{ $t('what_we_do.cards.software.text') }}</p>
@@ -25,7 +25,7 @@
           <div class="glow-bg" aria-hidden="true"></div>
           <div class="card-content">
             <div class="icon-wrapper purple">
-              <i class="fa-solid fa-paint-brush"></i>
+              <font-awesome-icon :icon="['fas', 'brush']" />
             </div>
             <h3>{{ $t('what_we_do.cards.designers.title') }}</h3>
             <p>{{ $t('what_we_do.cards.designers.text') }}</p>
@@ -36,7 +36,7 @@
           <div class="glow-bg" aria-hidden="true"></div>
           <div class="card-content">
             <div class="icon-wrapper pink">
-              <i class="fa-solid fa-people-group"></i>
+              <font-awesome-icon :icon="['fas', 'people-group']" />
             </div>
             <h3>{{ $t('what_we_do.cards.entrepreneurs.title') }}</h3>
             <p>{{ $t('what_we_do.cards.entrepreneurs.text') }}</p>
@@ -47,7 +47,7 @@
           <div class="glow-bg" aria-hidden="true"></div>
           <div class="card-content">
             <div class="icon-wrapper orange">
-              <i class="fa-solid fa-lightbulb"></i>
+              <font-awesome-icon :icon="['fas', 'lightbulb']" />
             </div>
             <h3>{{ $t('what_we_do.cards.other.title') }}</h3>
             <p>{{ $t('what_we_do.cards.other.text') }}</p>
