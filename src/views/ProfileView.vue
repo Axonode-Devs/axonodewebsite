@@ -4,47 +4,45 @@
 
     <div class="profile-wrapper">
       <div class="profile-container" v-if="authStore.user">
-
-        <!-- Sidebar -->
         <aside class="sidebar">
           <div class="avatar-block">
-            <div class="avatar">{{ authStore.user.email[0].toUpperCase() }}</div>
+            <div class="avatar">{{ authStore.user.email?.[0]?.toUpperCase() ?? '?' }}</div>
             <p class="avatar-email">{{ authStore.user.email }}</p>
+            <div class="user-meta">
+              <span class="status-pill">
+                {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
+              </span>
+            </div>
           </div>
-          <nav class="sidebar-nav">
-            <button
-              v-for="tab in tabs"
-              :key="tab.key"
-              :class="{ active: activeTab === tab.key }"
-              @click="activeTab = tab.key"
-            >
-              {{ $t(tab.labelKey) }}
+
+          <div class="sidebar-footer">
+            <button class="sign-out-btn" @click="handleSignOut">
+              <span>↺</span>
+              {{ $t('profile.actions.sign_out') }}
             </button>
-          </nav>
+          </div>
         </aside>
 
-        <!-- Content -->
         <main class="content">
-
-          <div v-if="successMsg" class="alert alert-success">{{ successMsg }}</div>
-          <div v-if="errorMsg"   class="alert alert-danger">{{ errorMsg }}</div>
-
-          <!-- Account tab -->
-          <section v-if="activeTab === 'account'" class="section">
+          <section class="section">
             <div class="section-header">
               <h2>{{ $t('profile.account.title') }}</h2>
               <p class="section-sub">{{ $t('profile.account.subtitle') }}</p>
             </div>
 
-            <div class="form-group">
-              <label>{{ $t('profile.account.email_label') }}</label>
-              <input type="text" :value="authStore.user.email" disabled class="input-disabled" />
-              <small>{{ $t('profile.account.email_hint') }}</small>
+            <div class="detail-card">
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.email_label') }}</span>
+                <span class="detail-value">{{ authStore.user.email }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.role_label') }}</span>
+                <span class="detail-value">
+                  {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
+                </span>
+              </div>
             </div>
           </section>
-
-          
-
         </main>
       </div>
     </div>
@@ -52,78 +50,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
-import { apiClient } from '../api/client'
-import { ApiError } from '../api/error'
 import { authService } from '../api/authService' 
 import Navbar from '../components/Navbar.vue'
 
-const { t } = useI18n()
 const router = useRouter()
 const authStore = useAuthStore()
 
-enum TabKey {
-  ACCOUNT = 'account',
-  SECURITY = 'security'
-}
-const activeTab = ref<TabKey>(TabKey.ACCOUNT)
-const isSaving  = ref(false)
-const successMsg = ref('')
-const errorMsg   = ref('')
-
-const tabs = [
-  { key: TabKey.ACCOUNT,  labelKey: 'profile.tabs.account' },
-  { key: TabKey.SECURITY, labelKey: 'profile.tabs.security' },
-]
-
-const passwordForm = reactive({ current: '', new: '', confirm: '' })
-
-// ── HYDRATE STATE ON MOUNT ──────────────────────────────────────────────────
 onMounted(() => {
   if (!authStore.user) {
     const localUser = authService.getLocalUser() 
     if (localUser) {
       authStore.user = localUser
     } else {
-      // If there is no user in storage at all, boot them to the homepage
       router.push('/')
     }
   }
 })
 
-const handlePasswordUpdate = async () => {
-  errorMsg.value   = ''
-  successMsg.value = ''
-
-  if (passwordForm.new !== passwordForm.confirm) {
-    errorMsg.value = t('profile.security.error_mismatch')
-    return
-  }
-  if (passwordForm.new.length < 8) {
-    errorMsg.value = t('profile.security.error_too_short')
-    return
-  }
-
-  isSaving.value = true
-  try {
-    await apiClient.post('/auth/change-password', {
-      current_password: passwordForm.current,
-      new_password: passwordForm.new,
-    })
-    successMsg.value = t('profile.security.success')
-    passwordForm.current = ''
-    passwordForm.new     = ''
-    passwordForm.confirm = ''
-  } catch (error) {
-    errorMsg.value = error instanceof ApiError
-      ? error.message
-      : t('profile.security.error_generic')
-  } finally {
-    isSaving.value = false
-  }
+const handleSignOut = () => {
+  authStore.logout()
+  router.push('/')
 }
 </script>
 <style scoped>
@@ -255,10 +204,48 @@ const handlePasswordUpdate = async () => {
 
 /* ── Content panel ────────────────────────────────────────────────────────── */
 .content {
-  border-radius: 16px;
+  border-radius: 20px;
   border: 0.5px solid var(--border-color);
-  background: var(--bg-color);
-  padding: 36px 40px;
+  background: linear-gradient(145deg, var(--bg-color) 0%, rgba(255,255,255,0.03) 100%);
+  padding: 32px;
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.06);
+}
+
+.detail-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--hover-bg);
+  border: 0.5px solid var(--border-color);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+
+.detail-row:last-child {
+  border-bottom: 0;
+}
+
+.detail-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.detail-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-color);
+  text-align: right;
+  word-break: break-word;
 }
 
 /* ── Section header ───────────────────────────────────────────────────────── */
@@ -282,6 +269,54 @@ const handlePasswordUpdate = async () => {
   opacity: 0.45;
   margin: 0;
   line-height: 1.6;
+}
+
+/* ── Sidebar footer ─────────────────────────────────────────────────────── */
+.sidebar-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 0.5px solid var(--border-color);
+}
+
+.sign-out-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 0.5px solid rgba(255, 107, 107, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 107, 107, 0.08);
+  color: var(--error-color);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.17s ease, box-shadow 0.17s ease;
+}
+
+.sign-out-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 107, 107, 0.12);
+}
+
+.user-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.status-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-color2);
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.95;
 }
 
 /* ── Form ─────────────────────────────────────────────────────────────────── */
@@ -326,7 +361,6 @@ const handlePasswordUpdate = async () => {
   line-height: 1.5;
 }
 
-/* ── Save button ──────────────────────────────────────────────────────────── */
 .btn-save {
   margin-top: 8px;
   padding: 11px 28px;
@@ -374,5 +408,7 @@ const handlePasswordUpdate = async () => {
   .profile-container { grid-template-columns: 1fr; }
   .sidebar           { position: static; }
   .content           { padding: 24px 20px; }
+  .detail-row        { flex-direction: column; align-items: flex-start; }
+  .detail-value      { text-align: left; }
 }
 </style>

@@ -23,10 +23,10 @@
           </p>
 
           <div class="action-group" :class="{ revealed: textRevealed }">
-            <button class="btn btn-primary" @click="scrollToSection('about')">
+            <button class="btn btn-primary" @click="goToRoute('join')">
               {{ $t("hero.buttons.about") }}
             </button>
-            <button class="btn btn-text">
+            <button class="btn btn-text" @click="scrollToSection('about')">
               {{ $t("hero.buttons.learn") }}
             </button>
           </div>
@@ -56,7 +56,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import TeamMarquee from './TeamMarquee.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const NAV_OFFSET = 80;
 const textRevealed = ref(false);
 
@@ -66,6 +68,10 @@ const scrollToSection = (id: string) => {
   const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
   window.scrollTo({ top, behavior: 'smooth' });
 };
+
+const goToRoute = (route: string) => {
+  router.push(route);
+}
 
 onMounted(() => {
   requestAnimationFrame(() => {
@@ -77,8 +83,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import url('https://fonts.cdnfonts.com/css/coolvetica-2');
-@import url('https://fonts.cdnfonts.com/css/poppins');
 
 .hero-container {
   background-color: #141414;

@@ -1,7 +1,24 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import Sitemap from 'vite-plugin-sitemap'
 
-// https://vite.dev/config/
+
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    Sitemap({
+      hostname: 'https://www.axonode.org',
+      dynamicRoutes: [
+        '/',
+        '/join',
+        '/login',
+        '/invited',
+        '/projects',
+        '/terms',
+        '/conduct',
+        '/privacy'
+      ],
+      robots: [{userAgent: '*', allow: '/', disallow: ['/login', '/invited', '/profile','/credentials']}]
+    })
+  ]
 })

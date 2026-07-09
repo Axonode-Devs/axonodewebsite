@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /profile
+Disallow: /credentials
+Disallow: /login
+
+Sitemap: https://www.axonode.org/sitemap.xml
