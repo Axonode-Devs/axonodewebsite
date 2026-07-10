@@ -1,8 +1,6 @@
 <template>
   <Navbar />
   <div class="login-container">
-    <div class="background-mesh"></div>
-
     <div class="login-content">
       <div class="login-box">
         <div class="login-header">
@@ -99,7 +97,7 @@ const handleLogin = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-color) 0%, rgba(120, 222, 231, 0.05) 100%);
+  background-color: var(--bg-color);
   padding: 20px;
 }
 
@@ -109,10 +107,10 @@ const handleLogin = async () => {
 }
 
 .login-box {
-  background: rgba(255, 255, 255, 0.08);
+  background-color: var(--sc-color);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
+  border: 2px dashed var(--border-color);
+  border-radius: 26px;
   padding: 48px 40px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   animation: slideUp 0.6s ease-out;

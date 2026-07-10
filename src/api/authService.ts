@@ -1,18 +1,32 @@
 import { apiClient, KEYS } from './client';
 
-export interface UserProfile {
-  id: string;
+// 1. The nested metadata table layout
+export interface UserProfileMetadata {
+  fullname: string;
+  english_level: string | null;
+  experience_level: string | null;
+  main_interest: string | null;
+  sub_interest: string[];
+}
+
+// 2. The core User record (Matches your updated backend payload)
+export interface UserAccount {
+  id: number;
+  username: string;
   email: string;
   role: 'user' | 'admin';
-  [key: string]: any;
+  is_active: boolean;
+  created_at: string;
+  profile: UserProfileMetadata | null; // Can be null if profile migration hasn't fired
 }
 
 export interface SessionResponse {
   access_token: string;
   refresh_token: string;
-  user: UserProfile;
+  user: UserAccount; // Swapped to match the updated nested contract
 }
 
+// Helper to keep local storage sync'd safely
 const _saveSession = ({ access_token, refresh_token, user }: SessionResponse): void => {
   localStorage.setItem(KEYS.userToken, access_token);
   localStorage.setItem(KEYS.userRefresh, refresh_token);
@@ -26,13 +40,15 @@ export const authService = {
     return data.data;
   },
 
-  async activateAccount(setupToken: string, newPassword: string): Promise<UserProfile> {
+  async activateAccount(setupToken: string, username: string, newPassword: string): Promise<UserAccount> {
     const { data } = await apiClient.post(
       "/auth/credentials",
-      { password: newPassword },
+      { 
+        username,          // Added: Pass the chosen username
+        password: newPassword 
+      },
       {
         headers: { Authorization: `Bearer ${setupToken}` },
-        // Explicit cast workaround for internal flags passing to configuration pipeline
         ...({ _skipAuth: true } as any)
       }
     );
@@ -46,7 +62,7 @@ export const authService = {
     localStorage.removeItem("user_data");
   },
 
-  getLocalUser(): UserProfile | null {
+  getLocalUser(): UserAccount | null {
     const data = localStorage.getItem("user_data");
     try {
       return data ? JSON.parse(data) : null;

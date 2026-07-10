@@ -14,6 +14,19 @@
           class="login-form"
         >
           <div class="form-group">
+            <label for="username">{{
+              $t("set_password.form.username.label")
+            }}</label>
+            <input
+              id="username"
+              type="text"
+              v-model="username"
+              :placeholder="$t('set_password.form.username.placeholder')"
+              required
+            />
+            ,
+          </div>
+          <div class="form-group">
             <label for="password">{{
               $t("set_password.form.password.label")
             }}</label>
@@ -24,6 +37,7 @@
               :placeholder="$t('set_password.form.password.placeholder')"
               required
             />
+            ,
           </div>
 
           <div class="form-group">
@@ -69,19 +83,20 @@ import { useI18n } from 'vue-i18n';
 const route = useRoute();
 const router = useRouter();
 
+const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const loading = ref(false);
 const errorMsg = ref("");
 const token = ref("");
 const isTokenInvalid = ref(false); 
-const { t } = useI18n(); // ✅ Correct
+const { t } = useI18n(); 
 
 onMounted(() => {
   const urlToken = route.query.token;
   if (!urlToken) {
     isTokenInvalid.value = true;
-    errorMsg.value = t('set_password.errors.invalid_link'); // <-- Use t()
+    errorMsg.value = t('set_password.errors.invalid_link'); 
     setTimeout(() => {
       router.push('/');
     }, 3000);
@@ -113,7 +128,7 @@ const handleSetup = async () => {
 
   try {
    
-    const userProfile = await authService.activateAccount(token.value, password.value);
+    const userProfile = await authService.activateAccount(token.value, username.value, password.value);
     if (authStore) {
       authStore.user = userProfile;
       authStore.isAuthenticated = true; 

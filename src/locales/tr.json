@@ -355,6 +355,10 @@
       "subtitle": "Hadi Hesabın için bir şifre hazırlayalım"
     },
     "form": {
+      "username":{
+        "label": "Kullanıcı Adınız",
+        "placeholder": "Özgün bişey seç ya"
+      },
       "password": {
         "label": "Şifre",
         "placeholder": "En az 8 karakter"
@@ -365,7 +369,7 @@
       }
     },
     "buttons": {
-      "submit": "Şifreyi Onayla",
+      "submit": "Hesabı Tamamla",
       "submitting": "Kaydediliyor..."
     },
     "errors": {

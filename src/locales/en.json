@@ -345,6 +345,10 @@
       "subtitle": "Let's set a password for your account"
     },
     "form": {
+      "username":{
+        "label": "Username",
+        "placeholder": "Pick a Unique one"
+      },
       "password": {
         "label": "Password",
         "placeholder": "Min 8 characters"
@@ -355,8 +359,8 @@
       }
     },
     "buttons": {
-      "submit": "Set Password",
-      "submitting": "Setting password..."
+      "submit": "Activate Account",
+      "submitting": "Activating account..."
     },
     "errors": {
       "invalid_link": "Invalid or missing activation link. Redirecting to home...",
