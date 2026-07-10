@@ -2,7 +2,7 @@
   <nav class="navbar" :class="{ scrolled: isScrolled }">
     <div class="nav-container">
       <a href="#" @click.prevent="goToHome" class="logo">
-        <img src="/titlenavbar.png" alt="Axonode" class="logo-image" />
+        <img src="/titlenavbar.png" alt="Axonode Logo" class="logo-image" />
       </a>
 
       <ul class="nav-links desktop-links">

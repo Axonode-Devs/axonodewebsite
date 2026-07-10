@@ -1,0 +1,27 @@
+# Axonode
+
+> Axonode is a next-generation community platform and hub designed for connecting developers, creatives, and innovators to collaborate, network, and drive tech innovation.
+
+## Core Information
+- **Domain:** https://www.axonode.org
+- **Purpose:** Community engagement, networking, and project discovery for software developers and creative technologists.
+- **Audience:** Developers, designers, tech teams, and innovators looking to collaborate on projects.
+
+## Primary Navigation Links
+These are the main public URLs accessible to search engines and automation agents:
+
+- [Home](https://www.axonode.org/) - Main landing page showcasing the platform's mission and community features.
+- [Join Portal](https://www.axonode.org/join) - Registration page for new members to sign up and join the Axonode network.
+- [Login Portal](https://www.axonode.org/login) - Secure authentication page for existing community members.
+- [Projects Hub](https://www.axonode.org/projects) - Showcase directory of community-driven development and creative works.
+
+## Legal and Compliance
+- [Terms of Service](https://www.axonode.org/terms) - Platform rules, user responsibilities, and service guidelines.
+- [Code of Conduct](https://www.axonode.org/conduct) - Community standards ensuring a collaborative, respectful environment.
+- [Privacy Policy](https://www.axonode.org/privacy) - Data collection rules and user privacy protections.
+
+## Restricted Endpoints
+The following directories require session authentication, tokens, or unique states, and are explicitly restricted from general crawling/indexing:
+- `/invited` (Private application onboarding)
+- `/profile` (User-specific dashboards)
+- `/credentials` (Sensitive security management)
