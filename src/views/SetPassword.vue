@@ -24,7 +24,7 @@
               :placeholder="$t('set_password.form.username.placeholder')"
               required
             />
-            ,
+            
           </div>
           <div class="form-group">
             <label for="password">{{
@@ -37,7 +37,7 @@
               :placeholder="$t('set_password.form.password.placeholder')"
               required
             />
-            ,
+            
           </div>
 
           <div class="form-group">
