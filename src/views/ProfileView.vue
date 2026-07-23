@@ -50,25 +50,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { authService } from '../api/authService' 
 import Navbar from '../components/Navbar.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
-
-onMounted(() => {
-  if (!authStore.user) {
-    const localUser = authService.getLocalUser() 
-    if (localUser) {
-      authStore.user = localUser
-    } else {
-      router.push('/')
-    }
-  }
-})
 
 const handleSignOut = () => {
   authStore.logout()

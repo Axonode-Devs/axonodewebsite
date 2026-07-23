@@ -70,8 +70,10 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, _from, next) => {
-  const auth = useAuthStore() 
+router.beforeEach(async (to, _from, next) => {
+  const auth = useAuthStore();
+  await auth.init();
+
   const requiresAuth = to.meta.requiresAuth;
   const requiresGuest = to.meta.requiresGuest;
 

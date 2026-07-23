@@ -1,31 +1,31 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { ApiError } from './error';
 
-export const KEYS = {
-  userToken:   'axon_user_access',
-  userRefresh: 'axon_user_refresh',
-} as const;
+let accessToken: string | null = null;
 
-interface CustomRequestConfig extends InternalAxiosRequestConfig {
-  _tokenKey?: string;
-  _refreshKey?: string;
-  _skipAuth?: boolean;
-  _retry?: boolean;
+export function setAccessToken(token: string | null) {
+  accessToken = token;
 }
 
-let baseURL = 'https://axonode.org/api/v1';
+export function getAccessToken(): string | null {
+  return accessToken;
+}
+
+export function clearAccessToken() {
+  accessToken = null;
+}
+
+let baseURL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
 
 export const apiClient = axios.create({
-  baseURL: baseURL,
+  baseURL,
   headers: { 'Content-Type': 'application/json' },
+  withCredentials: true,
 });
 
-// 1. REQUEST INTERCEPTOR
-apiClient.interceptors.request.use((config: CustomRequestConfig) => {
-  const key = config._tokenKey ?? KEYS.userToken;
-  const token = localStorage.getItem(key);
-  
-  if (token && !config._skipAuth) {
+apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = accessToken;
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
@@ -43,11 +43,10 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = [];
 };
 
-// 3. RESPONSE INTERCEPTOR
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
-    const original = error.config as CustomRequestConfig;
+    const original = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
     if (!original) return Promise.reject(_normalizeError(error));
 
@@ -72,24 +71,15 @@ apiClient.interceptors.response.use(
     original._retry = true;
     isRefreshing = true;
 
-    const refreshKey = original._refreshKey ?? KEYS.userRefresh;
-    const tokenKey = original._tokenKey ?? KEYS.userToken;
-    const refreshToken = localStorage.getItem(refreshKey);
-
-    if (!refreshToken) {
-      isRefreshing = false;
-      return Promise.reject(_normalizeError(error));
-    }
-
     try {
       const { data } = await axios.post(
         `${apiClient.defaults.baseURL}/auth/tokens`,
         {},
-        { headers: { Authorization: `Bearer ${refreshToken}` } }
+        { withCredentials: true }
       );
 
       const newToken = data.data.access_token;
-      localStorage.setItem(tokenKey, newToken);
+      setAccessToken(newToken);
 
       processQueue(null, newToken);
       original.headers.Authorization = `Bearer ${newToken}`;
@@ -97,12 +87,9 @@ apiClient.interceptors.response.use(
 
     } catch (refreshError: any) {
       processQueue(refreshError, null);
-      localStorage.removeItem(tokenKey);
-      localStorage.removeItem(refreshKey);
+      clearAccessToken();
 
-      window.dispatchEvent(new CustomEvent('axonode:session-expired', {
-        detail: { tokenKey },
-      }));
+      window.dispatchEvent(new CustomEvent('axonode:session-expired'));
 
       return Promise.reject(_normalizeError(refreshError));
     } finally {
@@ -115,7 +102,7 @@ const _normalizeError = (err: AxiosError | any): ApiError => {
   if (err instanceof ApiError) return err;
 
   const response = err.response;
-  const data = response?.data?.error; 
+  const data = response?.data?.error;
 
   return new ApiError(
     data?.code || 'UNKNOWN_ERROR',

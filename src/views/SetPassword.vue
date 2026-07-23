@@ -129,10 +129,7 @@ const handleSetup = async () => {
   try {
    
     const userProfile = await authService.activateAccount(token.value, username.value, password.value);
-    if (authStore) {
-      authStore.user = userProfile;
-      authStore.isAuthenticated = true; 
-    }
+    authStore.user = userProfile;
     router.push('/'); 
   } catch (error) {
     

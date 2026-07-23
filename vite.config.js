@@ -4,6 +4,14 @@ import Sitemap from 'vite-plugin-sitemap'
 
 
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://axonode.org',
+        changeOrigin: true,
+      }
+    }
+  },
   plugins: [
     vue(),
     Sitemap({

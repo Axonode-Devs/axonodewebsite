@@ -1,6 +1,5 @@
-import { apiClient, KEYS } from './client';
+import { apiClient, setAccessToken, clearAccessToken } from './client';
 
-// 1. The nested metadata table layout
 export interface UserProfileMetadata {
   fullname: string;
   english_level: string | null;
@@ -9,7 +8,6 @@ export interface UserProfileMetadata {
   sub_interest: string[];
 }
 
-// 2. The core User record (Matches your updated backend payload)
 export interface UserAccount {
   id: number;
   username: string;
@@ -17,56 +15,54 @@ export interface UserAccount {
   role: 'user' | 'admin';
   is_active: boolean;
   created_at: string;
-  profile: UserProfileMetadata | null; // Can be null if profile migration hasn't fired
+  profile: UserProfileMetadata | null;
 }
+
+export type UserProfile = UserAccount;
 
 export interface SessionResponse {
   access_token: string;
-  refresh_token: string;
-  user: UserAccount; // Swapped to match the updated nested contract
+  user: UserAccount;
 }
-
-// Helper to keep local storage sync'd safely
-const _saveSession = ({ access_token, refresh_token, user }: SessionResponse): void => {
-  localStorage.setItem(KEYS.userToken, access_token);
-  localStorage.setItem(KEYS.userRefresh, refresh_token);
-  localStorage.setItem("user_data", JSON.stringify(user));
-};
 
 export const authService = {
   async signIn(email: string, password: string): Promise<SessionResponse> {
-    const { data } = await apiClient.post("/auth/sessions", { email, password });
-    _saveSession(data.data);
-    return data.data;
+    const { data } = await apiClient.post('/auth/sessions', { email, password });
+    const session = data.data;
+    setAccessToken(session.access_token);
+    return session;
   },
 
   async activateAccount(setupToken: string, username: string, newPassword: string): Promise<UserAccount> {
     const { data } = await apiClient.post(
-      "/auth/credentials",
-      { 
-        username,          // Added: Pass the chosen username
-        password: newPassword 
-      },
-      {
-        headers: { Authorization: `Bearer ${setupToken}` },
-        ...({ _skipAuth: true } as any)
-      }
+      '/auth/credentials',
+      { username, password: newPassword },
+      { headers: { Authorization: `Bearer ${setupToken}` } }
     );
-    _saveSession(data.data);
-    return data.data.user;
+    const session = data.data;
+    setAccessToken(session.access_token);
+    return session.user;
   },
 
-  signOut(): void {
-    localStorage.removeItem(KEYS.userToken);
-    localStorage.removeItem(KEYS.userRefresh);
-    localStorage.removeItem("user_data");
-  },
-
-  getLocalUser(): UserAccount | null {
-    const data = localStorage.getItem("user_data");
+  async signOut(): Promise<void> {
     try {
-      return data ? JSON.parse(data) : null;
+      await apiClient.post('/auth/logout');
     } catch {
+      // clear local state regardless of server response
+    }
+    clearAccessToken();
+  },
+
+  async fetchSession(): Promise<UserAccount | null> {
+    try {
+      const refreshRes = await apiClient.post('/auth/tokens');
+      const accessToken = refreshRes.data.data.access_token;
+      setAccessToken(accessToken);
+
+      const userRes = await apiClient.get('/auth/me');
+      return userRes.data.data.user;
+    } catch {
+      clearAccessToken();
       return null;
     }
   }

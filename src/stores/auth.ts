@@ -1,26 +1,32 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { authService, UserProfile } from '../api/authService';
+import { authService, UserAccount } from '../api/authService';
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref<UserProfile | null>(authService.getLocalUser());
+  const user = ref<UserAccount | null>(null);
+  let initPromise: Promise<void> | null = null;
 
-  const isAuthenticated = computed<boolean>(() => !!user.value);
-  const isAdmin = computed<boolean>(() => user.value?.role === 'admin');
+  const isAuthenticated = computed(() => !!user.value);
+  const isAdmin = computed(() => user.value?.role === 'admin');
 
-  async function login(email: string, password: string): Promise<UserProfile> {
-    try {
-      const data = await authService.signIn(email, password);
-      user.value = data.user;
-      return data.user;
-    } catch (error) {
-      throw error;
-    }
+  async function login(email: string, password: string): Promise<UserAccount> {
+    const data = await authService.signIn(email, password);
+    user.value = data.user;
+    return data.user;
   }
 
-  function logout(): void {
-    authService.signOut();
+  async function logout(): Promise<void> {
+    await authService.signOut();
     user.value = null;
+  }
+
+  function init(): Promise<void> {
+    if (!initPromise) {
+      initPromise = authService.fetchSession().then(u => {
+        if (u) user.value = u;
+      });
+    }
+    return initPromise;
   }
 
   window.addEventListener('axonode:session-expired', () => {
@@ -32,6 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     isAdmin,
     login,
-    logout
+    logout,
+    init,
   };
 });
