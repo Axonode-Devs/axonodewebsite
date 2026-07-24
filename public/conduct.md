@@ -18,15 +18,19 @@ All members of Axonode are expected to:
 To protect our members and their ideas, the following behaviors are strictly prohibited and subject to immediate Board action:
 - **Idea Poaching:** You may not take a concept shared in a private Axonode environment and develop it externally without the original creator's written consent.
 - **Harassment & Threats:** Any form of harassment, bullying, or threats (digital or physical) is strictly forbidden.
-- **Physical Safety:** Any kind of unauthorized or unwelcome physical contact is out of order.
+- **Physical Safety:** Any kind of unauthorized or unwelcome physical contact is out of order. This applies to Axonode hosted events and personal interactions. 
 - **Sabotage:** Any attempt to sabotage, delete, or maliciously hinder a project or idea is out of order.
 - **Misrepresentation:** Do not claim credit for work you did not do.
 
 ## 4. Confidentiality
-Because we deal with early-stage innovation, many conversations are sensitive.
-- **Default Privacy:** Unless a project is marked as "Public" by the Board, assume all internal discussions are confidential.
 
-- **"What happens in Axonode stays in Axonode":** Do not share screenshots or project details outside the organization without the Board’s or the Lead Innovator’s permission.
+Because we deal with early-stage innovation, many conversations are sensitive. Axonode communication falls into three categories:
+
+- Confidential (default): Internal project discussions and materials not marked "Public" by the Board. Do not share screenshots or project details from these discussions outside the organization without the Board's or the Lead Innovator's permission.
+- Member-visible: Content shared in community-wide channels (e.g. our WhatsApp group) — visible to other members, but still not to be shared outside Axonode without permission.
+- Public: Content the Board has marked "Public," or published to public-facing channels such as blog posts and comments, which anyone may see and share.
+
+**"What happens in Axonode stays in Axonode"**: Applies fully to confidential and member-visible content. Use judgment about which category a conversation falls into, and treat community channels as member-visible, not confidential, unless a discussion is explicitly private.
 
 ## 5. Conflict Resolution
 Disagreements are natural among passionate people. If a conflict arises:

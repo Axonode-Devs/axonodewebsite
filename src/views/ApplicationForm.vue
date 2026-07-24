@@ -144,6 +144,23 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label for="birthdate">
+                    {{
+                      $t("application_form.steps.personal_info.birthdate.label")
+                    }}
+                    <span class="req">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    id="birthdate"
+                    v-model="form.birthdate"
+                    :min="minBirthdate"
+                    :max="maxBirthdate"
+                    required
+                  />
+                </div>
               </div>
 
               <div v-if="currentStep === 2" class="step-content">
@@ -342,10 +359,41 @@
                             }}
                           </router-link>
                         </template>
+                        <template #prc>
+                          <router-link
+                            to="/privacy"
+                            target="_blank"
+                            class="legal-link"
+                          >
+                            {{
+                              $t(
+                                "application_form.steps.final.agreement.link_prc",
+                              )
+                            }}
+                          </router-link>
+                        </template>
                       </i18n-t>
                     </span>
                   </label>
                 </div>
+
+                <Transition name="fade-slide">
+                  <div v-if="isMinor" class="form-group agreement-group mt-input">
+                    <label class="checkbox-container">
+                      <input
+                        type="checkbox"
+                        v-model="form.parental_consent"
+                        required
+                      />
+                      <span class="checkmark"></span>
+                      <span class="agreement-text">
+                        {{
+                          $t("application_form.steps.final.parental_consent.text")
+                        }}
+                      </span>
+                    </label>
+                  </div>
+                </Transition>
               </div>
 
               <div class="form-footer">
@@ -821,6 +869,7 @@ type EnglishLevel = "A1-A2" | "B1-B2" | "C1" | "C2" | "";
 interface AppForm {
   fullname: string;
   email: string;
+  birthdate: string;
   contact_type: ContactType;
   contact_value: string;
   english_level: EnglishLevel;
@@ -831,6 +880,7 @@ interface AppForm {
   other_interest: string;
   invite_token: string | null;
   agreed_to_terms: boolean;
+  parental_consent: boolean;
 }
 
 const router = useRouter();
@@ -847,6 +897,7 @@ const submitError = ref("");
 const form = reactive<AppForm>({
   fullname: "",
   email: "",
+  birthdate: "",
   contact_type: "",
   contact_value: "",
   english_level: "",
@@ -857,6 +908,7 @@ const form = reactive<AppForm>({
   other_interest: "",
   invite_token: null,
   agreed_to_terms: false,
+  parental_consent: false,
 });
 
 const contactTypes: Record<string, null> = {
@@ -941,6 +993,30 @@ const selectedInterests = computed(() =>
   interestAreas.filter((interest) => form.main_interest.includes(interest.id))
 );
 
+const minBirthdate = computed(() => {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - 100);
+  return d.toISOString().split('T')[0];
+});
+
+const maxBirthdate = computed(() => {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - 13);
+  return d.toISOString().split('T')[0];
+});
+
+const isMinor = computed(() => {
+  if (!form.birthdate) return false;
+  const birth = new Date(form.birthdate);
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+  return age < 18;
+});
+
 watch(
   () => form.main_interest,
   () => {
@@ -953,6 +1029,24 @@ watch(
 
 function handleNextStep() {
   stepError.value = "";
+
+  if (currentStep.value === 1) {
+    if (!form.birthdate) {
+      stepError.value = t("application_form.validation.birthdate_required");
+      return;
+    }
+    const birth = new Date(form.birthdate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    if (age < 13) {
+      stepError.value = t("application_form.validation.age_too_young");
+      return;
+    }
+  }
 
   if (currentStep.value === 2) {
     if (!form.main_interest.length) {
@@ -981,6 +1075,11 @@ const submitForm = async () => {
     return;
   }
 
+  if (isMinor.value && !form.parental_consent) {
+    stepError.value = t("application_form.validation.parental_consent_required");
+    return;
+  }
+
   if (!form.main_interest.length) {
     stepError.value = t("application_form.validation.select_main_interest");
     return;
@@ -997,20 +1096,36 @@ const submitForm = async () => {
   isSubmitting.value = true;
 
   try {
-    const { other_interest, ...rest } = form;
     const normalizedMainInterests = form.main_interest.includes("other")
       ? [
           ...form.main_interest.filter((interest) => interest !== "other"),
-          `other: ${other_interest.trim()}`,
+          `other: ${form.other_interest.trim()}`,
         ]
       : form.main_interest;
 
-    const payload = {
-      ...rest,
+    const payload: Record<string, any> = {
+      fullname: form.fullname,
+      email: form.email,
+      birthdate: form.birthdate,
+      contact_type: form.contact_type || null,
+      contact_value: form.contact_value || null,
+      english_level: form.english_level || null,
+      experience_level: form.experience_level || null,
+      reason: form.reason || null,
       main_interest: normalizedMainInterests,
+      sub_interest: form.sub_interest,
+      agreed_to_terms: form.agreed_to_terms,
     };
 
-    await publicService.submitApplication(payload); 
+    if (isMinor.value) {
+      payload.parental_consent = form.parental_consent;
+    }
+
+    if (form.invite_token) {
+      payload.invite_token = form.invite_token;
+    }
+
+    await publicService.submitApplication(payload);
     isSubmitted.value = true;
   } catch (err) {
     submitError.value =

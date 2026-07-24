@@ -151,6 +151,9 @@
             "linkedin": "LinkedIn",
             "telegram": "Telegram"
           }
+        },
+        "birthdate": {
+          "label": "Doğum Tarihi"
         }
       },
       "profile": {
@@ -189,12 +192,16 @@
         "section_title": "Son Detaylar",
         "agreement": {
           "link_tos": "Hizmet Şartları",
+          "link_prc": "Gizlilik Politikası",
           "link_coc": "Topluluk Kuralları",
-          "text": "{tos} ve {coc}'nı okudum, onaylıyorum."
+          "text": "{tos} ve {coc}'nı okudum, onaylıyorum. {prc}'yide kabul ediyorum"
         },
         "reason": {
           "label": "Axonode'a katılmakta sizi ne motive ediyor?",
           "placeholder": "Geçmişinizi %100 Yargılamayacağımıza %75 Eminiz..."
+        },
+        "parental_consent": {
+          "text": "Ebeveyn veya yasal vasirimin Axonode'a katılımımı gözden geçirip onayladığını teyit ediyorum."
         }
       }
     },
@@ -254,6 +261,9 @@
       "describe_interest": "İlgi alanınızı açıklayınız.",
       "select_main_interest": "Lütfen en az bir ana ilgi alanı seçiniz.",
       "select_sub_interest": "En az bir alt-ilgi alanı seçiniz.",
+      "birthdate_required": "Lütfen doğum tarihinizi giriniz.",
+      "age_too_young": "Başvuru yapabilmek için en az 15 yaşında olmalısınız.",
+      "parental_consent_required": "Ebeveyn veya yasal vasi onayı zorunludur.",
       "generic_error": "İkinci kuleye vurdular. Lütfen sonra tekrar deneyiniz.\nError: {error}"
     }
   },

@@ -151,6 +151,9 @@
             "linkedin": "LinkedIn",
             "telegram": "Telegram"
           }
+        },
+        "birthdate": {
+          "label": "Date of Birth"
         }
       },
       "profile": {
@@ -189,12 +192,16 @@
         "section_title": "Final Details",
         "agreement": {
           "link_tos": "Terms of Service",
+          "link_prc": "Privacy Policy",
           "link_coc": "Code of Conduct",
-          "text": "I have read and agree to the {tos} and {coc}."
+          "text": "I have read and agree to the {tos} and {coc}. I also acknowledge the {prc}"
         },
         "reason": {
           "label": "What motivates you to join Axonode?",
           "placeholder": "Tell us about your passion..."
+        },
+        "parental_consent": {
+          "text": "I confirm that my parent or legal guardian has reviewed and consented to my participation in Axonode."
         }
       }
     },
@@ -254,6 +261,9 @@
       "describe_interest": "Please describe your interest.",
       "select_main_interest": "Please select at least one main interest.",
       "select_sub_interest": "Please select at least one sub-interest.",
+      "birthdate_required": "Please enter your date of birth.",
+      "age_too_young": "You must be at least 15 years old to apply.",
+      "parental_consent_required": "Parental or legal guardian consent is required.",
       "generic_error": "Something went wrong. Please try again.\nError: {error}"
     }
   },
