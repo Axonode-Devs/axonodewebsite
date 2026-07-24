@@ -201,7 +201,8 @@
           "placeholder": "Tell us about your passion..."
         },
         "parental_consent": {
-          "text": "I confirm that my parent or legal guardian has reviewed and consented to my participation in Axonode."
+          "text": "I confirm that my parent or legal guardian has reviewed and consented to my participation in Axonode.",
+          "mail": "Please wrote the email that is address to your parents"
         }
       }
     },
@@ -264,6 +265,7 @@
       "birthdate_required": "Please enter your date of birth.",
       "age_too_young": "You must be at least 15 years old to apply.",
       "parental_consent_required": "Parental or legal guardian consent is required.",
+      "parental_email_required": "Please write your guardians contact email.",
       "generic_error": "Something went wrong. Please try again.\nError: {error}"
     }
   },

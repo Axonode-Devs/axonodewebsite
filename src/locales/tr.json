@@ -201,7 +201,8 @@
           "placeholder": "Geçmişinizi %100 Yargılamayacağımıza %75 Eminiz..."
         },
         "parental_consent": {
-          "text": "Ebeveyn veya yasal vasirimin Axonode'a katılımımı gözden geçirip onayladığını teyit ediyorum."
+          "text": "Ebeveyn veya yasal vasirimin Axonode'a katılımımı gözden geçirip onayladığını teyit ediyorum.",
+          "mail": "Ebeveyniniz epostasını yazınız."
         }
       }
     },
@@ -264,6 +265,7 @@
       "birthdate_required": "Lütfen doğum tarihinizi giriniz.",
       "age_too_young": "Başvuru yapabilmek için en az 15 yaşında olmalısınız.",
       "parental_consent_required": "Ebeveyn veya yasal vasi onayı zorunludur.",
+      "parental_email_required": "Ebeveyn'iniz Eposta adresini lütfen yazınız",
       "generic_error": "İkinci kuleye vurdular. Lütfen sonra tekrar deneyiniz.\nError: {error}"
     }
   },

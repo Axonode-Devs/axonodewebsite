@@ -378,20 +378,36 @@
                 </div>
 
                 <Transition name="fade-slide">
-                  <div v-if="isMinor" class="form-group agreement-group mt-input">
-                    <label class="checkbox-container">
+                  <div v-if="isMinor" class="form-row">
+                    <div class="form-group agreement-group mt-input parental-consent">
+                      <label class="checkbox-container">
+                        <input
+                          type="checkbox"
+                          v-model="form.parental_consent"
+                          required
+                        />
+                        <span class="checkmark"></span>
+                        <span class="agreement-text">
+                          {{
+                            $t("application_form.steps.final.parental_consent.text")
+                          }}
+                        </span>
+                      </label>
+                    </div>
+                    <div class="form-group mt-input">
+                      <label for="parent_mail">
+                        {{
+                          $t("application_form.steps.final.parental_consent.mail")
+                        }}
+                      </label>
                       <input
-                        type="checkbox"
-                        v-model="form.parental_consent"
+                        id="parent_mail"
+                        type="email"
+                        v-model="form.parent_mail"
+                        placeholder="mail@gmail.com"
                         required
                       />
-                      <span class="checkmark"></span>
-                      <span class="agreement-text">
-                        {{
-                          $t("application_form.steps.final.parental_consent.text")
-                        }}
-                      </span>
-                    </label>
+                    </div>
                   </div>
                 </Transition>
               </div>
@@ -456,27 +472,50 @@
 
 <style scoped>
 .agreement-group {
-  margin-top: 30px;
-  padding: 20px;
-  background: rgba(120, 222, 231, 0.05);
-  border-radius: 12px;
-  border: 1px dashed var(--accent-color);
+  margin-top: 18px;
+  padding: 12px;
+  background: rgba(120, 222, 231, 0.04);
+  border-radius: 10px;
+  border: 1px dashed rgba(120, 222, 231, 0.35);
+  font-size: 0.95rem;
 }
 
 .checkbox-container {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
+  font-weight: 600;
+  font-size: 0.92rem;
 }
 
 .checkbox-container input {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   cursor: pointer;
   accent-color: var(--accent-color);
+  border-radius: 4px;
+}
+
+/* Parental consent variant: smaller, more compact */
+.parental-consent {
+  padding: 8px 10px;
+  background: rgba(120, 222, 231, 0.025);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+.parental-consent .checkbox-container {
+  gap: 8px;
+  font-weight: 600;
+}
+.parental-consent .checkbox-container input {
+  width: 16px;
+  height: 16px;
+}
+/* make the parent email input match the compact look */
+.parental-consent + .form-group input#parent_mail {
+  padding: 10px 12px;
+  font-size: 0.92rem;
 }
 
 .legal-link {
@@ -881,6 +920,7 @@ interface AppForm {
   invite_token: string | null;
   agreed_to_terms: boolean;
   parental_consent: boolean;
+  parent_mail: string
 }
 
 const router = useRouter();
@@ -909,6 +949,7 @@ const form = reactive<AppForm>({
   invite_token: null,
   agreed_to_terms: false,
   parental_consent: false,
+  parent_mail: ""
 });
 
 const contactTypes: Record<string, null> = {
