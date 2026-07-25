@@ -41,14 +41,14 @@ const props = defineProps({
   content: "";
   flex: 1;
   height: 2px;
-  background: linear-gradient(to right, transparent, #929292);
+  background: linear-gradient(to right, transparent, #272727);
 }
 
 .divider::after {
   content: "";
   flex: 1;
   height: 2px;
-  background: linear-gradient(to left, transparent, #929292);
+  background: linear-gradient(to left, transparent, #272727);
 }
 
 .divider-content {
