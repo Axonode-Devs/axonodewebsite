@@ -8,7 +8,7 @@
       <ul class="nav-links desktop-links">
         <li v-for="item in menuItems" :key="item.label">
           <a
-            :href="item.target"
+            :href="item.target ?? (item.url ? item.url.toString() : '#')"
             class="nav-item"
             @click.prevent="handleNavClick(item)"
           >
@@ -51,7 +51,7 @@
       <ul class="mobile-nav-links">
         <li v-for="item in menuItems" :key="item.label">
           <a
-            :href="item.target"
+            :href="item.target ?? (item.url ? item.url.toString() : '#')"
             class="nav-item"
             @click.prevent="
               handleNavClick(item);
@@ -108,9 +108,14 @@ const router = useRouter();
 const route = useRoute();
 const authStore = useAuthStore();
 
-type NavItem =
-  | { label: string; i18nKey: string; scrollTo: string; target: string }
-  | { label: string; i18nKey: string; route: string; target?: string };
+type NavItem = {
+  label: string;
+  i18nKey: string;
+  scrollTo?: string;
+  target?: string;
+  route?: string;
+  url?: URL;
+};
 
 const menuItems: NavItem[] = [
   { label: "Home", i18nKey: "navbar.home", scrollTo: "hero", target: "#hero" },
@@ -133,6 +138,7 @@ const menuItems: NavItem[] = [
     target: "#support",
   },
   { label: "Projects", i18nKey: "navbar.projects", route: "/projects" },
+  { label: "Blog", i18nKey: "navbar.blog", url: new URL("https://blog.axonode.org") },
 ];
 
 const NAV_OFFSET = 90;
@@ -163,15 +169,17 @@ const scrollAfterNavigation = (id: string) => {
 };
 
 const handleNavClick = async (item: NavItem) => {
-  if ("scrollTo" in item) {
+  if (item.scrollTo) {
     if (route.path !== "/") {
       await router.push("/");
       scrollAfterNavigation(item.scrollTo);
     } else {
       scrollToSection(item.scrollTo);
     }
-  } else {
-    router.push(item.route);
+  } else if (item.route) {
+    await router.push(item.route);
+  } else if (item.url) {
+    window.open(item.url.toString(), "_blank", "noopener,noreferrer");
   }
 };
 
