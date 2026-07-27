@@ -16,7 +16,7 @@
             <div class="icon-box">
               <font-awesome-icon :icon="['far', 'envelope']" />
             </div>
-            <span>contact@contact.axonode.org</span>
+            <span>contact@axonode.org</span>
           </a>
         </div>
       </div>
