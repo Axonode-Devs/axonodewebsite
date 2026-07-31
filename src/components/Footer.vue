@@ -2,7 +2,7 @@
   <footer class="glass-footer">
 
     <div class="footer-left">
-      <img src="/titlenavbar.png" alt="Axonode Logoa">
+      <img src="/titlenavbar.svg" alt="Axonode Footer Logo">
       <span class="copyright">&copy; 2026</span>
     </div>
     

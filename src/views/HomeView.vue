@@ -4,6 +4,7 @@
     <HeroSection />
     <div class="orb-section">
       <WhatWeDo />
+      <BannerSection />
       <HDivider />
       <AboutUs />
       <ContactSection />

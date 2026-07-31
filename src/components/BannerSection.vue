@@ -1,7 +1,6 @@
 <template>
   <div class="banner-wrapper">
     <div class="white-banner" :style="{ backgroundImage: `url('${bannerImage}')` }">
-      <button class="banner-button">{{ $t('banner.button') }}</button>
     </div>
   </div>
 </template>
@@ -13,7 +12,7 @@ import { useI18n } from 'vue-i18n';
 const { locale } = useI18n();
 
 const bannerImage = computed(() => {
-  return locale.value === 'tr' ? '/bannertr.png' : '/banner.png';
+  return locale.value === 'tr' ? '/bannertr.png' : '/bannersurvey.png';
 });
 </script>
 

@@ -97,7 +97,7 @@ onUnmounted(() => {
   background-color: #141414;
   overflow: hidden;
   width: 100%;
-  min-height: 58vh; 
+  min-height: 53vh; 
 }
 
 .bottom-divider {
