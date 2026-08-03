@@ -208,7 +208,7 @@ const handleBack = () => {
         width: 100%;
         max-width: 120px;
         padding: 12px 24px;
-        background: #a59ce6;
+        background: #fe78b0;
         color: var(--text-color);
         font-size: 1rem;
         font-weight: 400;
@@ -223,11 +223,11 @@ const handleBack = () => {
         max-width: 120px;
         padding: 12px 24px;
         background: transparent;
-        color: #fe78b0;
+        color: #a59ce6;
         font-size: 1rem;
         font-weight: 400;
         font-family: "Poppins", sans-serif;
-        border: 1px solid #fe78b0;
+        border: 1px solid #a59ce6;
         border-radius: 9999px;
         transition: .25s ease;
         cursor: pointer;
