@@ -7,13 +7,13 @@
         <div class="slider-wrapper">
             <span class="label left-label">{{ leftLabel }}</span>
             <div class="slider-container">
+                <!-- Swapped to use v-model="sliderValue" -->
                 <input 
                     type="range" 
                     min="1" 
                     max="5" 
                     step="1" 
-                    :value="modelValue"
-                    @input="$emit('update:modelValue', Number($event.target.value))"
+                    v-model="sliderValue"
                     class="custom-slider"
                 >
             </div>
@@ -23,7 +23,9 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue';
+
+const props = defineProps({
     question: {
         type: String,
         required: true
@@ -38,12 +40,37 @@ defineProps({
     },
     modelValue: {
         type: Number,
-        default: 3
+        default: 12 // Default to 12 points (which equals slider position 3)
+    },
+    inverted: {
+        type: Boolean,
+        default: false // New prop to handle inversion
     }
 });
-defineEmits(['update:modelValue']);
+
+const emit = defineEmits(['update:modelValue']);
+
+// Writable computed property to handle the conversion math automatically
+const sliderValue = computed({
+    get() {
+        // Convert the points (4-20) back to a slider position (1-5) for the UI
+        if (props.inverted) {
+            return 6 - (props.modelValue / 4);
+        }
+        return props.modelValue / 4;
+    },
+    set(val) {
+        // Convert the new slider position (1-5) into points (4-20) for the Parent
+        const numericVal = Number(val);
+        const points = props.inverted ? (6 - numericVal) * 4 : numericVal * 4;
+        
+        emit('update:modelValue', points);
+    }
+});
 </script>
+
 <style scoped>
+
 .slider-question-container {
     width: 100%;
     max-width: 700px;
