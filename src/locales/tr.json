@@ -368,7 +368,7 @@
       "subtitle": "Hadi Hesabın için bir şifre hazırlayalım"
     },
     "form": {
-      "username":{
+      "username": {
         "label": "Kullanıcı Adınız",
         "placeholder": "Özgün bişey seç ya"
       },
@@ -452,5 +452,28 @@
       }
     },
     "does_not_have_account": "Hesabın yok mu? Yeni Kişilere Her zaman açığız, Bize Katılmak için Tıkla!"
+  },
+  "survey": {
+    "q1": "İletişim ve ikna becerilerinizin yüksek olduğunu söyleyebilir misiniz?",
+    "q2": "Sosyal bataryanız hızlı tükenir mi?",
+    "q3": "İnsanlar sizi kolaylıkla irite eder mi?",
+    "q4": "Başkalarıyla bağlantı kurmak sizin için kolay mıdır?",
+    "q5": "Tanımadığınız insanlarla hızlıca kaynaşabilir misiniz?",
+    "q6": "Sistemlerin arkaplanı/işleyişleri ilginizi çeker mi?",
+    "q7": "Optimizasyon ve tersine mühendislik terimleri ile aşina mısınız?",
+    "q8": "Sistemler ve fonksiyonlar sizi korkutuyor mu?",
+    "q9": "Çok katmanlı problemler sizi kolaylıkla sıkar mı?",
+    "q10": "Tekrar eden durumlar için pratik, otomatize çözümler oluşturmayı tercih eder misiniz/vakit ayırır mısınız?",
+    "q11": "Renklerin uyumu sizin için önemli midir?",
+    "q12": "Bir sitenin düzeni gözünüze takılır mı?",
+    "q13": "Uygulamaların arayüzünün ulaşılabilir kılınması sizin için önemli midir?",
+    "q14": "UI/UX ve Layout gibi terimler ile aranız iyi mi?",
+    "q15": "Sizce bir markanın görsel kimliği önemli midir?",
+    "a": "Hayır",
+    "b": "Evet",
+    "mail": "E-Postanızı Girin",
+    "button-keep": "İlerle",
+    "button-send": "Gönder",
+    "button-back": "Geri"
   }
 }

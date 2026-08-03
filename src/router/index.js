@@ -63,6 +63,10 @@ const routes = [
     component: LegalView,
     meta: { fileName: "privacy" },
   },
+  {
+    path: "/survey",
+    component: () => import("../views/Survey.vue"),
+  },
 ];
 
 const router = createRouter({
