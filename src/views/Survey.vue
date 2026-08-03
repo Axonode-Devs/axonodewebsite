@@ -259,97 +259,69 @@ const handleBack = () => {
 </script>
 
 <style scoped>
-.survey-section {
-  height: 100%;
-  padding-top: 6.2rem;
-  padding-bottom: 4rem;
-}
-.container {
-  max-width: 1213px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.button-container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-.submit-button {
-  width: 100%;
-  max-width: 120px;
-  padding: 12px 24px;
-  background: #a59ce6;
-  color: var(--text-color);
-  font-size: 1rem;
-  font-weight: 400;
-  font-family: "Poppins", sans-serif;
-  border: 1px solid transparent;
-  border-radius: 9999px;
-  transition: 0.25s ease;
-  cursor: pointer;
-}
-.back-button {
-  width: 100%;
-  max-width: 120px;
-  padding: 12px 24px;
-  background: transparent;
-  color: #fe78b0;
-  font-size: 1rem;
-  font-weight: 400;
-  font-family: "Poppins", sans-serif;
-  border: 1px solid #fe78b0;
-  border-radius: 9999px;
-  transition: 0.25s ease;
-  cursor: pointer;
-}
-.back-button:hover {
-  background: rgba(254, 120, 176, 0.1);
-}
-.survey-img {
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.divider-container {
-  width: 40%;
-  justify-content: center;
-  margin: 0 auto;
-  display: flex;
-}
-.questions-container {
-  padding: 0 1rem;
-}
-
-.results-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    text-align: center;
-    font-family: "Poppins", sans-serif;
-    color: var(--text-color);
-}
-
-.score-card {
-    margin: 1.5rem 0;
-    text-align: left;
-}
-
-.score-bar-bg {
-    width: 100%;
-    height: 20px;
-    background-color: #eee;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 0.5rem 0;
-}
-
-.score-bar-fill {
-    height: 100%;
-    background-color: #a59ce6; /* Matches your submit button */
-    transition: width 1s ease-in-out;
-}
+    .survey-section{
+        height: 100%;
+        padding-top: 6.2rem;
+        padding-bottom: 4rem;
+    }
+    .container{
+        max-width: 1213px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .button-container{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+    .submit-button{
+        width: 100%;
+        max-width: 120px;
+        padding: 12px 24px;
+        background: #fe78b0;
+        color: var(--text-color);
+        font-size: 1rem;
+        font-weight: 400;
+        font-family: "Poppins", sans-serif;
+        border: 1px solid transparent;
+        border-radius: 9999px;
+        transition: .25s ease;
+        cursor: pointer;
+    }
+    .back-button{
+        width: 100%;
+        max-width: 120px;
+        padding: 12px 24px;
+        background: transparent;
+        color: #a59ce6;
+        font-size: 1rem;
+        font-weight: 400;
+        font-family: "Poppins", sans-serif;
+        border: 1px solid #a59ce6;
+        border-radius: 9999px;
+        transition: .25s ease;
+        cursor: pointer;
+    }
+    .back-button:hover {
+        background: rgba(254, 120, 176, 0.1);
+    }
+    .survey-img{
+        width: 100%;
+        background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+    .divider-container{
+        width: 40%;
+        justify-content: center;
+        margin: 0 auto;
+        display: flex;
+    }
+    .questions-container {
+        padding: 0 1rem;
+    }
 </style>
