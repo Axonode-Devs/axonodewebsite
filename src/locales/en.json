@@ -444,7 +444,10 @@
     "does_not_have_account": "Don't have an account? "
   },
   "survey": {
-    "q1": "Would you say you have strong communication and persuasion skills?",
+    "questions":{
+      "title": "Questions",
+      "subtitle": "We got only a 25 questions for that are fairly easy, the results will be better if you are honest ;)",
+      "q1": "Would you say you have strong communication and persuasion skills?",
     "q2": "Does your social battery drain quickly?",
     "q3": "Do people easily irritate you?",
     "q4": "​Is it easy for you to connect with others?",
@@ -459,12 +462,27 @@
     "q12": "Do you notice the layout of a website?",
     "q13": "​Is making user interfaces accessible important to you?",
     "q14": "Are you familiar with terms like UI/UX and Layout?",
-    "q15": "Do you think a brand's visual identity is important?",
+    "q15": "Do you think a brand's visual identity is important?"
+    },
+    
     "a": "No",
     "b": "Yes",
-    "mail": "Please enter your email",
+    
     "button-keep": "Next",
     "button-send": "Send",
-    "button-back": "Back"
+    "button-back": "Back",
+
+    "welcome": {
+      "title": "Welcome to the {gr-name} Personality Survey",
+      "subtitle": "Lets find out what your personality tells about your career?",
+      "go": "Lets go!",
+      "acceptence": "By clicking {go} you accept the {survey-policy}",
+      "policyLinkText": "Survey Policy"
+    },
+    "email":{
+      "title": "Personal Information",
+      "subtitle": "We only ask for your e-mail",
+      "hint": "Please enter your email"
+    }
   }
 }
