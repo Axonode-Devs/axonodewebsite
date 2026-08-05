@@ -67,6 +67,10 @@ const routes = [
     path: "/survey",
     component: () => import("../views/Survey.vue"),
   },
+  {
+    path: "/survey-result",
+    component: () => import("../views/SurveyResult.vue"),
+  },
 ];
 
 const router = createRouter({

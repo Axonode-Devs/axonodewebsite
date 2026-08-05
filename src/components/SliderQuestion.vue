@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const props = defineProps({
     question: {
@@ -38,34 +38,48 @@ const props = defineProps({
         type: String,
         required: true
     },
+    traits: {
+        type: Array,
+        default: () => [] 
+    },
     modelValue: {
-        type: Number,
-        default: 12 // Default to 12 points (which equals slider position 3)
+        type: Object,
+        default: () => ({ value: 3, points: {} })
     },
     inverted: {
         type: Boolean,
-        default: false // New prop to handle inversion
+        default: false
     }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-// Writable computed property to handle the conversion math automatically
+const calculatePoints = (val) => {
+    const numericVal = Number(val);
+    const valueToUse = props.inverted ? (6 - numericVal) : numericVal;
+    const points = {};
+    
+    props.traits.forEach(t => {
+        points[t.name] = ((valueToUse - 1) / 4) * t.score;
+    });
+    
+    return points;
+};
+
 const sliderValue = computed({
     get() {
-        // Convert the points (4-20) back to a slider position (1-5) for the UI
-        if (props.inverted) {
-            return 6 - (props.modelValue / 4);
-        }
-        return props.modelValue / 4;
+        return props.modelValue.value;
     },
     set(val) {
-        // Convert the new slider position (1-5) into points (4-20) for the Parent
         const numericVal = Number(val);
-        const points = props.inverted ? (6 - numericVal) * 4 : numericVal * 4;
-        
-        emit('update:modelValue', points);
+        const points = calculatePoints(numericVal);
+        emit('update:modelValue', { value: numericVal, points });
     }
+});
+
+onMounted(() => {
+    const points = calculatePoints(props.modelValue.value);
+    emit('update:modelValue', { value: props.modelValue.value, points });
 });
 </script>
 
