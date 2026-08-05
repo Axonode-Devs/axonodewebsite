@@ -287,6 +287,7 @@
           </Transition>
         </div>
 
+        <p v-if="submitError" class="field-error">{{ submitError }}</p>
         <div class="button-container">
           <button
             class="back-button"
@@ -295,11 +296,17 @@
           >
             {{ $t("survey.button-back") }}
           </button>
-          <button class="submit-button" @click="handleNext">
+          <button
+            class="submit-button"
+            @click="handleNext"
+            :disabled="isSubmitting"
+          >
             {{
-              currentPage === 3
-                ? $t("survey.button-send")
-                : $t("survey.button-keep")
+              isSubmitting
+                ? "Submitting..."
+                : currentPage === 3
+                  ? $t("survey.button-send")
+                  : $t("survey.button-keep")
             }}
           </button>
         </div>
@@ -307,41 +314,11 @@
 
       <!-- RESULTS STAGE -->
       <div v-else key="results" class="results-container">
-        <h2>Your Best Match: {{ topProfession.name }}!</h2>
-        <p>Here is the breakdown of your personality scores:</p>
-
-        <div class="score-card">
-          <h3>Marketing</h3>
-          <div class="score-bar-bg">
-            <div
-              class="score-bar-fill"
-              :style="{ width: marketingScore + '%' }"
-            ></div>
-          </div>
-          <p>{{ marketingScore }} / 100</p>
-        </div>
-
-        <div class="score-card">
-          <h3>Software</h3>
-          <div class="score-bar-bg">
-            <div
-              class="score-bar-fill"
-              :style="{ width: softwareScore + '%' }"
-            ></div>
-          </div>
-          <p>{{ softwareScore }} / 100</p>
-        </div>
-
-        <div class="score-card">
-          <h3>Design / Art</h3>
-          <div class="score-bar-bg">
-            <div
-              class="score-bar-fill"
-              :style="{ width: designScore + '%' }"
-            ></div>
-          </div>
-          <p>{{ designScore }} / 100</p>
-        </div>
+        <SurveyResults
+          v-if="serverScores && serverTopProfession"
+          :scores="serverScores"
+          :topProfession="serverTopProfession"
+        />
       </div>
     </Transition>
   </section>
@@ -352,7 +329,11 @@ import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";
 import SliderQuestion from "../components/SliderQuestion.vue";
 import InputQuestion from "../components/InputQuestion.vue";
-
+import {
+  SurveyPayload,
+  SurveyResponse,
+  publicService,
+} from "../api/publicService.ts";
 const { locale } = useI18n();
 
 const surveyImage = computed(() => {
@@ -414,7 +395,10 @@ const touched = ref<TouchedState>({
   q14: false,
   q15: false,
 });
-
+const isSubmitting = ref(false);
+const submitError = ref("");
+const serverScores = ref<SurveyResponse["scores"] | null>(null);
+const serverTopProfession = ref<SurveyResponse["topProfession"] | null>(null);
 const markTouched = (key: keyof TouchedState) => {
   touched.value[key] = true;
 };
@@ -447,32 +431,6 @@ const q12 = ref(12);
 const q13 = ref(12);
 const q14 = ref(12);
 const q15 = ref(12);
-
-// PAGE 1: Marketing (Q1 - Q5) Max 100 points
-const marketingScore = computed(() => {
-  return q1.value + q2.value + q3.value + q4.value + q5.value;
-});
-
-// PAGE 2: Software (Q6 - Q10) Max 100 points
-const softwareScore = computed(() => {
-  return q6.value + q7.value + q8.value + q9.value + q10.value;
-});
-
-// PAGE 3: Design/Art (Q11 - Q15) Max 100 points
-const designScore = computed(() => {
-  return q11.value + q12.value + q13.value + q14.value + q15.value;
-});
-
-// Calculate the highest scoring profession
-const topProfession = computed(() => {
-  const scores = [
-    { id: "marketing", name: "Marketing", score: marketingScore.value },
-    { id: "software", name: "Software", score: softwareScore.value },
-    { id: "design", name: "Design / Art", score: designScore.value },
-  ];
-  scores.sort((a, b) => b.score - a.score);
-  return scores[0];
-});
 
 const page1Questions: (keyof TouchedState)[] = ["q1", "q2", "q3", "q4", "q5"];
 const page2Questions: (keyof TouchedState)[] = ["q6", "q7", "q8", "q9", "q10"];
@@ -647,8 +605,7 @@ const handleEmailContinue = () => {
   stage.value = Stage.Questions;
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
-
-const handleNext = () => {
+const handleNext = async () => {
   attemptedNext.value = true;
 
   if (currentPage.value === 1 && !page1Valid.value) return;
@@ -660,19 +617,33 @@ const handleNext = () => {
   if (currentPage.value < 3) {
     currentPage.value++;
     window.scrollTo({ top: 0, behavior: "smooth" });
-  } else {
+    return;
+  }
+
+  // Final page — submit to backend
+  isSubmitting.value = true;
+  submitError.value = "";
+
+  try {
+    const payload: SurveyPayload = {
+      email: email.value,
+      answers: getAllAnswers(),
+    };
+    const result = await publicService.submitSurvey(payload);
+
+    serverScores.value = result.scores;
+    serverTopProfession.value = result.topProfession;
+
     stage.value = Stage.Results;
     clearProgress();
-    console.log("Survey Submitted:", {
-      email: email.value,
-      scores: {
-        Marketing: marketingScore.value,
-        Software: softwareScore.value,
-        Design: designScore.value,
-      },
-      bestMatch: topProfession.value.name,
-    });
     window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (err) {
+    submitError.value =
+      err instanceof Error
+        ? err.message
+        : "Submission failed. Please try again.";
+  } finally {
+    isSubmitting.value = false;
   }
 };
 
