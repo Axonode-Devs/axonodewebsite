@@ -459,9 +459,27 @@
     "q13": "Do you believe visual communication is one of the most powerful ways to express an idea?",
     "q14": "Does the idea of making something ordinary more eye-catching or unique excite you?",
     "q15": "When creating a design, do you consider the experience and emotions people will have?",
+    "questions": {
+      "title": "Questions",
+      "subtitle": "We got only a 25 questions for that are fairly easy, the results will be better if you are honest ;)",
+      "q1": "Would you say you have strong communication and persuasion skills?",
+      "q2": "Does your social battery drain quickly?",
+      "q3": "Do people easily irritate you?",
+      "q4": "​Is it easy for you to connect with others?",
+      "q5": "Can you quickly hit it off with strangers?",
+      "q6": "Are you interested in the background/inner workings of systems?",
+      "q7": "Are you familiar with terms like optimization and reverse engineering?",
+      "q8": "Do systems and functions intimidate you?",
+      "q9": "Do multi-layered problems easily bore you?",
+      "q10": "Do you prefer/take the time to create practical, automated solutions for recurring situations?",
+      "q11": "Is color harmony important to you?",
+      "q12": "Do you notice the layout of a website?",
+      "q13": "​Is making user interfaces accessible important to you?",
+      "q14": "Are you familiar with terms like UI/UX and Layout?",
+      "q15": "Do you think a brand's visual identity is important?"
+    },
     "a": "No",
     "b": "Yes",
-    "mail": "Please enter your email",
     "button-keep": "Next",
     "button-send": "Send",
     "button-back": "Back",
@@ -507,6 +525,18 @@
       "artistic": "Artistic",
       "conventional": "Conventional",
       "realistic": "Realistic"
+    },
+    "welcome": {
+      "title": "Welcome to the {gr-name} Personality Survey",
+      "subtitle": "Lets find out what your personality tells about your career?",
+      "go": "Lets go!",
+      "acceptence": "By clicking {go} you accept the {survey-policy}",
+      "policyLinkText": "Survey Policy"
+    },
+    "email": {
+      "title": "Personal Information",
+      "subtitle": "We only ask for your e-mail",
+      "hint": "Please enter your email"
     }
   }
 }

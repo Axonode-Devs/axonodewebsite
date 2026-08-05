@@ -469,9 +469,27 @@
     "q13": "Bir fikri anlatmanın en güçlü yollarından birinin görsel anlatım olduğunu düşünür müsünüz?",
     "q14": "Sıradan bir şeyi daha göz alıcı veya farklı hale getirme fikri sizi heyecanlandırır mı?",
     "q15": "Bir tasarım yaparken insanların yaşayacağı deneyimi ve duyguyu düşünür müsünüz?",
+    "questions": {
+      "title": "Sorular",
+      "subtitle": "Toplamda 25 tane basit sorumuz var ne kadar dürüst cevaplarsan o kadar başarılı bir sonuç alırsın ;)",
+      "q1": "İletişim ve ikna becerilerinizin yüksek olduğunu söyleyebilir misiniz?",
+      "q2": "Sosyal bataryanız hızlı tükenir mi?",
+      "q3": "İnsanlar sizi kolaylıkla irite eder mi?",
+      "q4": "Başkalarıyla bağlantı kurmak sizin için kolay mıdır?",
+      "q5": "Tanımadığınız insanlarla hızlıca kaynaşabilir misiniz?",
+      "q6": "Sistemlerin arkaplanı/işleyişleri ilginizi çeker mi?",
+      "q7": "Optimizasyon ve tersine mühendislik terimleri ile aşina mısınız?",
+      "q8": "Sistemler ve fonksiyonlar sizi korkutuyor mu?",
+      "q9": "Çok katmanlı problemler sizi kolaylıkla sıkar mı?",
+      "q10": "Tekrar eden durumlar için pratik, otomatize çözümler oluşturmayı tercih eder misiniz/vakit ayırır mısınız?",
+      "q11": "Renklerin uyumu sizin için önemli midir?",
+      "q12": "Bir sitenin düzeni gözünüze takılır mı?",
+      "q13": "Uygulamaların arayüzünün ulaşılabilir kılınması sizin için önemli midir?",
+      "q14": "UI/UX ve Layout gibi terimler ile aranız iyi mi?",
+      "q15": "Sizce bir markanın görsel kimliği önemli midir?"
+    },
     "a": "Hayır",
     "b": "Evet",
-    "mail": "E-Postanızı Girin",
     "button-keep": "İlerle",
     "button-send": "Gönder",
     "button-back": "Geri",
@@ -517,6 +535,18 @@
       "artistic": "Sanatsal",
       "conventional": "Geleneksel",
       "realistic": "Gerçekçi"
+    },
+    "welcome": {
+      "title": "{gr-name}'un Kişilik Anketine Hoşgeldiniz!",
+      "subtitle": "Hadi Kişiliğin Kariyerin hakkında ne söylüyor bulalım!",
+      "go": "Hadi!",
+      "acceptence": "{go} tuşuna basarak {survey-policy}'nı Kabul etmiş olursunuz. ",
+      "policyLinkText": "Anket Gizlilik Politikası"
+    },
+    "email": {
+      "title": "Kişisel Bilgiler",
+      "subtitle": "Senden Sadece bir e-postanı rica edicez",
+      "hint": "E-Postanızı Girin"
     }
   }
 }
