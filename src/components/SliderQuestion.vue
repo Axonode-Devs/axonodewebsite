@@ -13,8 +13,7 @@
           max="5"
           step="1"
           v-model="sliderValue"
-          @change="emit('touched')"
-          :class="['custom-slider', { 'is-touched': touched }]"
+          :class="['custom-slider']"
         />
       </div>
       <span class="label right-label">{{ rightLabel }}</span>
@@ -45,10 +44,9 @@ const props = defineProps({
     type: Boolean,
     default: false, // New prop to handle inversion
   },
-  touched: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(["update:modelValue", "touched"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const sliderValue = computed({
   get() {
@@ -62,7 +60,7 @@ const sliderValue = computed({
     const points = props.inverted ? (6 - numericVal) * 4 : numericVal * 4;
 
     emit("update:modelValue", points);
-    emit("touched");
+    emit();
   },
 });
 </script>
@@ -147,14 +145,8 @@ const sliderValue = computed({
   border: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
-.custom-slider.is-touched::-webkit-slider-thumb {
-  box-shadow: 0 0 12px 3px rgba(96, 165, 250, 0.75); /* blue glow */
-  transition: box-shadow 0.25s ease;
-}
-.custom-slider.is-touched::-moz-range-thumb {
-  box-shadow: 0 0 12px 3px rgba(96, 165, 250, 0.75);
-  transition: box-shadow 0.25s ease;
-}
+
+
 @media (max-width: 480px) {
   .custom-slider::-webkit-slider-thumb {
     width: 28px;

@@ -37,7 +37,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { locale } = useI18n();
+const { locale } = useI18n({ useScope: 'global' });
 
 const languages = [
   { locale: 'en', code: 'EN', name: 'English', flag: 'US' },

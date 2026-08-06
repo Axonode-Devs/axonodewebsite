@@ -103,7 +103,7 @@ import LangSwitcher from "../components/LangSwitcher.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 
-const { t } = useI18n();
+const { t } = useI18n({ useScope: 'global' });
 const router = useRouter();
 const route = useRoute();
 const authStore = useAuthStore();
