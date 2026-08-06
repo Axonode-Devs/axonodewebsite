@@ -80,7 +80,6 @@
         </div>
       </div>
 
-      <!-- QUESTIONS STAGE -->
       <div
         v-else-if="stage === Stage.Questions"
         key="questions"
@@ -91,7 +90,6 @@
         <div class="questions-container">
           <Transition name="fade-slide" mode="out-in">
             <div :key="currentPage">
-              <!-- PAGE 1 -->
               <div v-if="currentPage === 1">
                 <SliderQuestion
                   v-model="q1"

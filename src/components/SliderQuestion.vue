@@ -7,7 +7,6 @@
     <div class="slider-wrapper">
       <span class="label left-label">{{ leftLabel }}</span>
       <div class="slider-container">
-        <!-- Swapped to use v-model="sliderValue" -->
         <input
           type="range"
           min="1"
@@ -42,11 +41,11 @@ const props = defineProps({
   },
   modelValue: {
     type: Number,
-    default: 12, // Default to 12 points (which equals slider position 3)
+    default: 12, 
   },
   inverted: {
     type: Boolean,
-    default: false, // New prop to handle inversion
+    default: false, 
   },
   touched: { type: Boolean, default: false },
 
