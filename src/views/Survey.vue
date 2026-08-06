@@ -519,10 +519,12 @@ const handleBack = () => {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 4.5rem; 
+    
   }
   .survey-card {
     padding: 1.75rem 1.25rem;
     border-radius: 18px;
+    width: 90%;
   }
   .card-title {
     font-size: 1.35rem;
