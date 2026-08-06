@@ -454,21 +454,6 @@
     "does_not_have_account": "Hesabın yok mu? Yeni Kişilere Her zaman açığız, Bize Katılmak için Tıkla!"
   },
   "survey": {
-    "q1": "İnsanların bir konu hakkındaki düşüncelerini değiştirmek veya onları ikna etmek size doğal gelen bir şey midir?",
-    "q2": "Bir fikri anlatırken, fikrin kendisinden çok insanların onu nasıl algılayacağını düşünür müsünüz?",
-    "q3": "Yeni insanlarla tanışmak ve farklı bakış açılarını keşfetmek size enerji verir mi?",
-    "q4": "Bir ürünün veya fikrin neden başarılı olduğunu analiz etmek, arkasındaki hikâyeyi anlamaya çalışmak ilginizi çeker mi?",
-    "q5": "Bir problemi çözerken, 'İnsanlar bunu nasıl karşılar?' sorusunu sık sık düşünür müsünüz?",
-    "q6": "Karşınıza çıkan karmaşık bir problemi parçalara ayırarak çözmeye çalışır mısınız?",
-    "q7": "Bir şeyin nasıl çalıştığını anlamadan kullanmak sizi rahatsız eder mi?",
-    "q8": "Daha önce kimsenin düşünmediği farklı bir çözüm yolu bulmak sizi heyecanlandırır mı?",
-    "q9": "Uzun süre tek bir konuya odaklanıp detaylarla uğraşmak size zor gelir mi?",
-    "q10": "Bir sistemdeki hatayı veya eksikliği fark etmek konusunda kendinize güvenir misiniz?",
-    "q11": "Bir şeyin sadece işlevsel olması değil, nasıl göründüğü ve hissettirdiği de sizin için önemli midir?",
-    "q12": "Günlük hayatta gördüğünüz nesnelerin veya ortamların neden öyle tasarlandığını hiç düşünür müsünüz?",
-    "q13": "Bir fikri anlatmanın en güçlü yollarından birinin görsel anlatım olduğunu düşünür müsünüz?",
-    "q14": "Sıradan bir şeyi daha göz alıcı veya farklı hale getirme fikri sizi heyecanlandırır mı?",
-    "q15": "Bir tasarım yaparken insanların yaşayacağı deneyimi ve duyguyu düşünür müsünüz?",
     "questions": {
       "title": "Sorular",
       "subtitle": "Toplamda 25 tane basit sorumuz var ne kadar dürüst cevaplarsan o kadar başarılı bir sonuç alırsın ;)",
@@ -488,6 +473,7 @@
       "q14": "UI/UX ve Layout gibi terimler ile aranız iyi mi?",
       "q15": "Sizce bir markanın görsel kimliği önemli midir?"
     },
+
     "a": "Hayır",
     "b": "Evet",
     "button-keep": "İlerle",
@@ -512,7 +498,19 @@
     "mcq5": "Axonode'u nereden duydunuz?",
     "mcq5_opt1": "Sosyal Medya",
     "mcq5_opt2": "Arkadaş",
-    "mcq5_opt3": "Diğer"
+    "mcq5_opt3": "Diğer",
+    "welcome": {
+      "title": "{gr-name}'un Kişilik Anketine Hoşgeldiniz!",
+      "subtitle": "Hadi Kişiliğin Kariyerin hakkında ne söylüyor bulalım!",
+      "go": "Hadi!",
+      "acceptence": "{go} tuşuna basarak {survey-policy}'nı Kabul etmiş olursunuz. ",
+      "policyLinkText": "Anket Gizlilik Politikası"
+    },
+    "email":{
+      "title": "Kişisel Bilgiler",
+      "subtitle": "Senden Sadece bir e-postanı rica edicez",
+      "hint": "E-Postanızı Girin"
+    }
   },
   "surveyResult": {
     "overallDistribution": "Rol Dağılım Oranı",

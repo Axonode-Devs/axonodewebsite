@@ -21,9 +21,7 @@
     </div>
   </div>
 </template>
-
 <script setup>
-
 import { computed } from "vue";
 
 const props = defineProps({
@@ -41,18 +39,16 @@ const props = defineProps({
   },
   modelValue: {
     type: Number,
-    default: 12, 
+    default: 12, // Default to 12 points (which equals slider position 3)
   },
   inverted: {
     type: Boolean,
-    default: false, 
+    default: false, // New prop to handle inversion
   },
   touched: { type: Boolean, default: false },
-
 });
 
 const emit = defineEmits(["update:modelValue", "touched"]);
-
 
 const sliderValue = computed({
   get() {
@@ -68,11 +64,6 @@ const sliderValue = computed({
     emit("update:modelValue", points);
     emit("touched");
   },
-});
-
-onMounted(() => {
-    const points = calculatePoints(props.modelValue.value);
-    emit('update:modelValue', { value: props.modelValue.value, points });
 });
 </script>
 
