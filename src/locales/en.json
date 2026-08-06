@@ -444,21 +444,6 @@
     "does_not_have_account": "Don't have an account? "
   },
   "survey": {
-    "q1": "Does changing people's opinions about a topic or persuading them feel natural to you?",
-    "q2": "When explaining an idea, do you think more about how people will perceive it rather than just the idea itself?",
-    "q3": "Does meeting new people and discovering different perspectives give you energy?",
-    "q4": "Are you interested in analyzing why a product or idea becomes successful and understanding the story behind it?",
-    "q5": "When solving a problem, do you often think, 'How will people react to this?'",
-    "q6": "When facing a complex problem, do you try to break it down into smaller parts to solve it?",
-    "q7": "Does it bother you to use something without understanding how it works?",
-    "q8": "Does finding a solution that nobody has thought of before excite you?",
-    "q9": "Do you enjoy focusing on a single topic for a long time and working with details?",
-    "q10": "Do you trust yourself in noticing errors or missing parts within a system?",
-    "q11": "Is it important to you that something is not only functional but also visually appealing and creates a certain feeling?",
-    "q12": "Do you ever think about why objects or environments around you are designed the way they are?",
-    "q13": "Do you believe visual communication is one of the most powerful ways to express an idea?",
-    "q14": "Does the idea of making something ordinary more eye-catching or unique excite you?",
-    "q15": "When creating a design, do you consider the experience and emotions people will have?",
     "questions": {
       "title": "Questions",
       "subtitle": "We got only a 25 questions for that are fairly easy, the results will be better if you are honest ;)",
@@ -502,7 +487,19 @@
     "mcq5": "Where did you hear about Axonode?",
     "mcq5_opt1": "Social Media",
     "mcq5_opt2": "Friend",
-    "mcq5_opt3": "Other"
+    "mcq5_opt3": "Other",
+    "welcome": {
+      "title": "Welcome to the {gr-name} Personality Survey",
+      "subtitle": "Lets find out what your personality tells about your career?",
+      "go": "Lets go!",
+      "acceptence": "By clicking {go} you accept the {survey-policy}",
+      "policyLinkText": "Survey Policy"
+    },
+    "email":{
+      "title": "Personal Information",
+      "subtitle": "We only ask for your e-mail",
+      "hint": "Please enter your email"
+    }
   },
   "surveyResult": {
     "overallDistribution": "Overall Distribution",

@@ -298,7 +298,8 @@ onUnmounted(() => {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
-
+  mask: linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 
@@ -367,6 +368,7 @@ onUnmounted(() => {
 
   background: linear-gradient(-45deg, var(--glow-color), var(--text-color));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
