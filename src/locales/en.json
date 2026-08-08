@@ -520,7 +520,7 @@
     "fullAnalysisDesc": "Sign up to unlock your complete personality profile, detailed trait breakdowns, and personalized career insights.",
     "addToProfile": "Add to Profile",
     "professions": {
-      "software": "Developer",
+      "developer": "Developer",
       "designer": "Designer",
       "marketing": "Marketing Specialist"
     },
