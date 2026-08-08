@@ -534,7 +534,11 @@ const handleNext = async () => {
 
     const result = await publicService.submitSurvey(payload);
 
-    router.push(`/survey-result/${result.id}`);
+    if (result.id) {
+      router.push(`/survey-result/${result.id}`);
+    } else {
+      submitError.value = "Server did not return a result ID. Please try again.";
+    }
   } catch (err) {
     submitError.value =
       err instanceof Error
