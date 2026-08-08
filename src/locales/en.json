@@ -519,6 +519,9 @@
     "fullAnalysisCta": "Join Us for the Full Analysis!",
     "fullAnalysisDesc": "Sign up to unlock your complete personality profile, detailed trait breakdowns, and personalized career insights.",
     "addToProfile": "Add to Profile",
+    "shareTitle": "Share your result",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link copied to clipboard!",
     "professions": {
       "developer": "Developer",
       "designer": "Designer",

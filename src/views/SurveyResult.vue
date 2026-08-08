@@ -70,6 +70,28 @@
           </div>
         </div>
 
+        <div class="share-card">
+          <h3 class="share-title">{{ $t("surveyResult.shareTitle") }}</h3>
+          <div class="share-buttons">
+            <a
+              v-for="share in shareOptions"
+              :key="share.id"
+              :href="getShareUrl(share.platform)"
+              :class="['share-btn', share.id]"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="share-icon">{{ share.icon }}</span>
+              <span class="share-label">{{ share.label }}</span>
+            </a>
+            <button class="share-btn copy" @click="copyLink">
+              <span class="share-icon">🔗</span>
+              <span class="share-label">{{ $t("surveyResult.copyLink") }}</span>
+            </button>
+          </div>
+          <p v-if="copied" class="copy-feedback">{{ $t("surveyResult.linkCopied") }}</p>
+        </div>
+
         <div class="traits-card traits-locked">
           <div class="traits-overlay">
             <h2 class="overlay-title">{{ $t("surveyResult.fullAnalysisCta") }}</h2>
@@ -207,6 +229,41 @@ const getProfColor = (name) => {
   if (name === "Software") return "#78dee7";
   if (name === "Designer") return "#fe78b0";
   return "#a59ce6";
+};
+
+const shareOptions = [
+  { id: "whatsapp", icon: "💬", label: "WhatsApp", platform: "whatsapp" },
+  { id: "instagram", icon: "📸", label: "Instagram", platform: "instagram" },
+  { id: "twitter", icon: "🐦", label: "Twitter", platform: "twitter" },
+];
+
+const copied = ref(false);
+
+const copyLink = async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    copied.value = true;
+    setTimeout(() => (copied.value = false), 3000);
+  } catch {
+    alert($t("surveyResult.linkCopied"));
+  }
+};
+
+const getShareUrl = (platform) => {
+  const url = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(`${profDisplayName.value} | Axonode Survey Result`);
+  const desc = encodeURIComponent(profDesc.value || "");
+
+  switch (platform) {
+    case "whatsapp":
+      return `https://api.whatsapp.com/send?text=${title} ${url}`;
+    case "instagram":
+      return `https://www.instagram.com/share?url=${url}`;
+    case "twitter":
+      return `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+    default:
+      return url;
+  }
 };
 </script>
 
@@ -458,6 +515,78 @@ const getProfColor = (name) => {
 
 .cta-button:hover {
   opacity: 0.85;
+}
+
+/* --- Share section --- */
+.share-card {
+  background: var(--sc-color);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.share-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.share-btn.whatsapp {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: white;
+}
+
+.share-btn.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+}
+
+.share-btn.twitter {
+  background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+  color: white;
+}
+
+.share-btn.copy {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.share-btn .share-icon {
+  font-size: 1.2rem;
+}
+
+.copy-feedback {
+  margin-top: 1rem;
+  color: #7ad5e4;
+  font-weight: 500;
 }
 
 .traits-grid {

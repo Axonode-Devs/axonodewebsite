@@ -527,6 +527,9 @@
     "fullAnalysisCta": "Tam Analiz İçin Bize Katıl!",
     "fullAnalysisDesc": "Kişilik profilini, detaylı özellik analizlerini ve sana özel kariyer önerilerini keşfetmek için üye ol.",
     "addToProfile": "Profiline Ekle",
+    "shareTitle": "Sonucunu paylaş",
+    "copyLink": "Bağlantıyı Kopyala",
+    "linkCopied": "Bağlantı kopyalandı!",
     "professions": {
       "developer": "Yazılımcı",
       "designer": "Tasarımcı",

@@ -57,9 +57,18 @@ $font_paths = [
     '/usr/share/fonts/TTF/DejaVuSans.ttf',
     '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
     '/usr/share/fonts/liberation-sans/LiberationSans-Regular.ttf',
+    // Fallback: a font bundled alongside this script, so the image
+    // never silently degrades to garbled imagestring() output.
+    __DIR__ . '/fonts/DejaVuSans-Bold.ttf',
 ];
 
 $font = find_font($font_paths);
+
+// If we truly can't find any TTF font, fail loudly instead of limping
+// along with imagestring() fallback text that won't match the design.
+if (!$font) {
+    error_log('og-image.php: no TTF font found in any configured path');
+}
 
 // --- Image setup ---
 $W = 1200;
@@ -95,7 +104,6 @@ for ($x = $bar_pad; $x < $bar_pad + $bar_w; $x++) {
         $g = (int)($spectrum[1][1] + ($spectrum[2][1] - $spectrum[1][1]) * $t2);
         $b = (int)($spectrum[1][2] + ($spectrum[2][2] - $spectrum[1][2]) * $t2);
     } else {
-        $t2 = ($t - 0.67) / 0.33;
         $r = (int)$spectrum[2][0];
         $g = (int)$spectrum[2][1];
         $b = (int)$spectrum[2][2];
@@ -115,7 +123,6 @@ $marker_x = (int)($bar_pad + $bar_w * $marker_t);
 $marker_c = imagecolorallocate($img, 255, 255, 255);
 $marker_r = 10;
 
-// Draw marker circle with glow
 for ($i = 0; $i < 3; $i++) {
     $glow_c = imagecolorallocatealpha($img, 255, 255, 255, 40 + $i * 20);
     imagefilledellipse($img, $marker_x, $bar_y + $bar_h / 2, ($marker_r + $i * 3) * 2, ($marker_r + $i * 3) * 2, $glow_c);
@@ -123,31 +130,42 @@ for ($i = 0; $i < 3; $i++) {
 imagefilledellipse($img, $marker_x, $bar_y + $bar_h / 2, $marker_r * 2, $marker_r * 2, $marker_c);
 
 // --- Helper: draw centered text ---
-function draw_centered($img, $text, $y, $font, $size, $color_rgb) {
+// FIX 1: takes $canvas_w explicitly instead of relying on the undefined
+//        global $W (function scope in PHP does NOT see outer $W).
+// FIX 2: the "no font" branch no longer calls imageftbbox()/imagettftext()
+//        with a null font (that call is invalid and was the source of the
+//        "Could not find/open font" warning). It now uses imagestring(),
+//        GD's built-in bitmap font, as a real fallback instead of a
+//        broken TTF call.
+function draw_centered($img, $text, $y, $font, $size, $color_rgb, $canvas_w) {
+    $color = imagecolorallocate($img, $color_rgb[0], $color_rgb[1], $color_rgb[2]);
+
     if (!$font) {
-        $bbox = imageftbbox($size, 0, null, $text);
-        $tw = $bbox[2] - $bbox[0];
-        $x = (int)(($W - $tw) / 2);
-        $color = imagecolorallocate($img, $color_rgb[0], $color_rgb[1], $color_rgb[2]);
-        imagestring($img, 5, $x, $y, $text, $color);
+        // Built-in bitmap font fallback — no TTF file available.
+        // GD font 5 is the largest built-in size (~9x15px per char);
+        // it won't match $size visually, but it will render correctly.
+        $gd_font = 5;
+        $tw = imagefontwidth($gd_font) * strlen($text);
+        $x = (int)(($canvas_w - $tw) / 2);
+        imagestring($img, $gd_font, $x, (int)$y, $text, $color);
         return;
     }
-    $color = imagecolorallocate($img, $color_rgb[0], $color_rgb[1], $color_rgb[2]);
+
     $bbox = imagettfbbox($size, 0, $font, $text);
     $tw = $bbox[2] - $bbox[0];
-    $x = (int)(($W - $tw) / 2);
+    $x = (int)(($canvas_w - $tw) / 2);
     imagettftext($img, $size, 0, $x, $y, $color, $font, $text);
 }
 
 // --- Branding ---
-draw_centered($img, 'AXONODE', 65, $font, 32, [255, 255, 255]);
-draw_centered($img, 'Personality Survey Result', 110, $font, 18, [139, 148, 158]);
+draw_centered($img, 'AXONODE', 65, $font, 32, [255, 255, 255], $W);
+draw_centered($img, 'Personality Survey Result', 110, $font, 18, [139, 148, 158], $W);
 
 // --- Main profession name ---
-draw_centered($img, $profession_name, 280, $font, 84, $color_rgb);
+draw_centered($img, $profession_name, 280, $font, 84, $color_rgb, $W);
 
 // --- Subtitle ---
-draw_centered($img, 'Your path leads to:', 330, $font, 20, [139, 148, 158]);
+draw_centered($img, 'Your path leads to:', 330, $font, 20, [139, 148, 158], $W);
 
 // --- Profession scores (3 columns) ---
 if (!empty($absolute) && count($absolute) >= 3) {
@@ -171,32 +189,38 @@ if (!empty($absolute) && count($absolute) >= 3) {
 
         $col_x = $start_x + $i * $col_w;
 
-        // Draw bar background
         $bar_bg = imagecolorallocate($img, 30, 35, 45);
         imagefilledroundedrectangle($img, $col_x + 20, $score_y, $col_x + $col_w - 20, $score_y + 24, 6, $bar_bg);
 
-        // Draw progress bar
         if ($is_top) {
             $bar_fill = imagecolorallocate($img, $pc[0], $pc[1], $pc[2]);
-            imagefilledroundedrectangle($img, $col_x + 22, $score_y + 2, $col_x + 22 + ($col_w - 44) * $pct / 100, $score_y + 22, 4, $bar_fill);
+            imagefilledroundedrectangle($img, $col_x + 22, $score_y + 2, (int)($col_x + 22 + ($col_w - 44) * $pct / 100), $score_y + 22, 4, $bar_fill);
         }
 
-        // Draw text
-        draw_centered($img, $label, $score_y - 25, $font, 16, $is_top ? $pc : [139, 148, 158]);
-        draw_centered($img, $pct . '%', $score_y + 18, $font, 20, $is_top ? [255, 255, 255] : [226, 232, 240]);
+        draw_centered($img, $label, $score_y - 25, $font, 16, $is_top ? $pc : [139, 148, 158], $W);
+        draw_centered($img, $pct . '%', $score_y + 18, $font, 20, $is_top ? [255, 255, 255] : [226, 232, 240], $W);
     }
 }
 
 // --- Footer ---
-draw_centered($img, 'Take the survey at axonode.org', $H - 30, $font, 14, [80, 90, 100]);
+draw_centered($img, 'Take the survey at axonode.org', $H - 30, $font, 14, [80, 90, 100], $W);
 
 // --- Output PNG ---
+// FIX 3: since no code above now emits stray output before this point
+// (the old code path threw warnings that got echoed to the response
+// body before headers were sent — that's the "headers already sent"
+// error you saw), header() will succeed here as long as error display
+// is off/warnings are gone. Belt-and-suspenders: buffer + clean.
+if (ob_get_level() > 0) {
+    ob_end_clean();
+}
 header('Content-Type: image/png');
 header('Cache-Control: public, max-age=86400');
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 86400) . ' GMT');
 
 imagepng($img);
 imagedestroy($img);
+exit;
 
 // --- Helper for rounded rectangle (GD doesn't have native function) ---
 function imagefilledroundedrectangle($img, $x1, $y1, $x2, $y2, $radius, $color) {
