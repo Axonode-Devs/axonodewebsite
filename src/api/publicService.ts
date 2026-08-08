@@ -42,7 +42,6 @@ export interface ProfessionScore {
 
 export interface SurveyResponse {
   id: string;
-  traitTotals: Record<TraitName, number>;
   professionScores: {
     absolute: ProfessionScore[];
     relative: ProfessionScore[];
