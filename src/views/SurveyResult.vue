@@ -2,163 +2,211 @@
   <Navbar />
   <section class="result-section">
     <div class="container">
-      <div class="video-container" v-if="dominantProf">
-        <video 
-          :src="videoSrc" 
-          autoplay 
-          muted 
-          playsinline 
-          class="result-video"
-        ></video>
-      </div>
-      
-      <div class="result-header" v-if="dominantProf">
-        <h1 class="title">
-          {{ $t('surveyResult.titlePrefix') }}
-          <span class="prof-text" :style="{ color: getProfColor(dominantProf.name) }">
-            {{ $t(`surveyResult.professions.${dominantProf.name.toLowerCase()}`) }}
-          </span>!
-        </h1>
-        <p class="subtitle">{{ $t(`surveyResult.desc_${dominantProf.name.toLowerCase()}`) }}</p>
-        
-        <a href="#" @click.prevent="addToProfile" class="add-profile-link" :style="{color: getProfColor(dominantProf.name)}">
-          {{ $t("surveyResult.addToProfile") }}
-        </a>
-      </div>
-      <div class="traits-card">
-        <div class="traits-grid">
-          <div class="trait-box" v-for="(score, trait) in scores" :key="trait">
-            <span class="trait-name">
-              {{ $t(`surveyResult.traits.${trait.toLowerCase()}`) }}
-            </span>
-            <span class="trait-value">{{ score.toFixed(1) }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="pie-chart-container">
-        <div class="pie-chart" :style="pieChartStyle"></div>
-
-        <div class="pie-legend">
-          <div class="legend-item" v-for="prof in relativeProfessions" :key="prof.name">
-            <span class="legend-color" :style="{ background: getProfColor(prof.name) }"></span>
-            <span class="legend-name">
-              {{ $t(`surveyResult.professions.${prof.name.toLowerCase()}`) }}
-            </span>
-            <span class="legend-percent">%{{ prof.percent }}</span>
-          </div>
-        </div>
+      <div v-if="loading" class="loading-state">
+        <p>{{ $t("surveyResult.loading") }}</p>
       </div>
 
-      <div class="professions-card">
-        <h2 class="card-title">{{ $t('surveyResult.professionsMatch') }}</h2>
-        <div class="score-list">
-          <div class="score-item" v-for="prof in professions" :key="prof.name">
-            <div class="score-header">
-              <span class="score-name">
-                {{ $t(`surveyResult.professions.${prof.name.toLowerCase()}`) }}
+      <div v-else-if="error" class="error-state">
+        <h2 class="title">{{ $t("surveyResult.notFound") }}</h2>
+        <p class="subtitle">{{ error }}</p>
+        <a href="/survey" class="cta-button">{{ $t("navbar.joinUs") }}</a>
+      </div>
+
+      <template v-else-if="result">
+        <div class="video-container" v-if="dominantProf">
+          <video
+            :src="videoSrc"
+            autoplay
+            muted
+            playsinline
+            class="result-video"
+          ></video>
+        </div>
+
+        <div class="result-header" v-if="dominantProf">
+          <h1 class="title">
+            {{ $t("surveyResult.titlePrefix") }}
+            <span class="prof-text" :style="{ color: getProfColor(dominantProf.name) }">
+              {{ profDisplayName }}
+            </span>!
+          </h1>
+          <p class="subtitle">{{ profDesc }}</p>
+        </div>
+
+        <div class="pie-chart-container">
+          <div class="pie-chart" :style="pieChartStyle"></div>
+          <div class="pie-legend">
+            <div class="legend-item" v-for="prof in relativeProfessions" :key="prof.name">
+              <span class="legend-color" :style="{ background: getProfColor(prof.name) }"></span>
+              <span class="legend-name">
+                {{ $t(`surveyResult.professions.${profKey(prof.name)}`) }}
               </span>
-              <span class="score-percent">%{{ prof.percent }}</span>
+              <span class="legend-percent">%{{ prof.percent }}</span>
             </div>
-            <div class="score-bar-bg">
-              <div 
-                class="score-bar-fill" 
-                :style="{ 
-                  width: prof.percent + '%',
-                  background: getBarGradient(prof.name)
-                }"
-              ></div>
-            </div>
-            <span class="score-details">{{ prof.sum.toFixed(1) }}</span>
           </div>
         </div>
-      </div>
+
+        <div class="professions-card">
+          <h2 class="card-title">{{ $t("surveyResult.professionsMatch") }}</h2>
+          <div class="score-list">
+            <div class="score-item" v-for="prof in absoluteProfessions" :key="prof.name">
+              <div class="score-header">
+                <span class="score-name">
+                  {{ $t(`surveyResult.professions.${profKey(prof.name)}`) }}
+                </span>
+                <span class="score-percent">%{{ prof.percent }}</span>
+              </div>
+              <div class="score-bar-bg">
+                <div
+                  class="score-bar-fill"
+                  :style="{
+                    width: prof.percent + '%',
+                    background: getBarGradient(prof.name),
+                  }"
+                ></div>
+              </div>
+              <span class="score-details">{{ prof.sum.toFixed(1) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="traits-card traits-locked">
+          <div class="traits-overlay">
+            <h2 class="overlay-title">{{ $t("surveyResult.fullAnalysisCta") }}</h2>
+            <p class="overlay-desc">{{ $t("surveyResult.fullAnalysisDesc") }}</p>
+            <a href="/join" class="cta-button">{{ $t("navbar.joinUs") }}</a>
+          </div>
+          <div class="traits-blurred">
+            <div class="traits-grid">
+              <div class="trait-box" v-for="(score, trait) in traitTotals" :key="trait">
+                <span class="trait-name">
+                  {{ $t(`surveyResult.traits.${String(trait).toLowerCase()}`) }}
+                </span>
+                <span class="trait-value">{{ Number(score).toFixed(1) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';
-import Navbar from '../components/Navbar.vue';
+import { ref, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { useHead } from "@vueuse/head";
+import Navbar from "../components/Navbar.vue";
+import { publicService } from "../api/publicService";
 
-const { t } = useI18n({ useScope: 'global' });
+const { t } = useI18n({ useScope: "global" });
+const route = useRoute();
 
-const scores = ref({
-  Enterprising: 0,
-  Social: 0,
-  Investigative: 0,
-  Artistic: 0,
-  Conventional: 0,
-  Realistic: 0
+const loading = ref(true);
+const error = ref("");
+const result = ref(null);
+
+const PROFESSION_NAME_MAP = {
+  Developer: "developer",
+  Designer: "designer",
+  Marketing: "marketing",
+};
+
+const profKey = (name) => PROFESSION_NAME_MAP[name] || name.toLowerCase();
+
+onMounted(async () => {
+  try {
+    const data = await publicService.getSurveyResult(route.params.id);
+    result.value = data;
+  } catch (err) {
+    error.value =
+      err?.response?.status === 404
+        ? "This result link is invalid or has expired."
+        : "Failed to load results. Please try again.";
+  } finally {
+    loading.value = false;
+  }
 });
 
-const professions = ref([]);
-const relativeProfessions = ref([]);
+const traitTotals = computed(() => result.value?.traitTotals ?? {});
+const absoluteProfessions = computed(
+  () => result.value?.professionScores?.absolute ?? [],
+);
+const relativeProfessions = computed(
+  () => result.value?.professionScores?.relative ?? [],
+);
 
-onMounted(() => {
-  const savedData = JSON.parse(localStorage.getItem('survey_results') || '{}');
-  if (savedData.scores) {
-    scores.value = savedData.scores;
-  }
-  if (savedData.professions) {
-    professions.value = savedData.professions;
-  }
-  if (savedData.relativeProfessions) {
-    relativeProfessions.value = savedData.relativeProfessions;
-  }
+const dominantProf = computed(() => absoluteProfessions.value[0] ?? null);
+
+const profDisplayName = computed(() => {
+  if (!dominantProf.value) return "";
+  return t(`surveyResult.professions.${profKey(dominantProf.value.name)}`);
 });
 
-const dominantProf = computed(() => {
-  if (!professions.value || professions.value.length === 0) return null;
-  return professions.value[0];
+const profDesc = computed(() => {
+  if (!dominantProf.value) return "";
+  return t(`surveyResult.desc_${profKey(dominantProf.value.name)}`);
 });
 
 const videoSrc = computed(() => {
-  if (!dominantProf.value) return '';
+  if (!dominantProf.value) return "";
   const name = dominantProf.value.name.toLowerCase();
   return `/${name}video.mp4`;
 });
 
 const pieChartStyle = computed(() => {
-  if (!relativeProfessions.value || relativeProfessions.value.length === 0) return {};
+  if (relativeProfessions.value.length === 0) return {};
 
   let currentPercent = 0;
-  const stops = relativeProfessions.value.map(prof => {
+  const stops = relativeProfessions.value.map((prof) => {
     const start = currentPercent;
     currentPercent += prof.percent;
-    const end = currentPercent;
-    const color = getProfColor(prof.name);
-    return `${color} ${start}% ${end}%`;
+    return `${getProfColor(prof.name)} ${start}% ${currentPercent}%`;
   });
 
-  return {
-    background: `conic-gradient(${stops.join(', ')})`
-  };
+  return { background: `conic-gradient(${stops.join(", ")})` };
 });
 
 const getBarGradient = (name) => {
-  if (name === 'Developer') {
-    return 'linear-gradient(90deg, #78dee7 0%, #46aeb8 100%)'; 
-  } else if (name === 'Designer') {
-    return 'linear-gradient(90deg, #fe78b0 0%, #9e4168 100%)'; 
-  } else {
-    return 'linear-gradient(90deg, #a59ce6 0%, #7068a3 100%)'; 
-  }
+  if (name === "Developer") return "linear-gradient(90deg, #78dee7 0%, #46aeb8 100%)";
+  if (name === "Designer") return "linear-gradient(90deg, #fe78b0 0%, #9e4168 100%)";
+  return "linear-gradient(90deg, #a59ce6 0%, #7068a3 100%)";
 };
+
+useHead({
+  title: computed(() => {
+    if (!profDisplayName.value) return "Axonode | Survey Result";
+    return `${profDisplayName.value} | Axonode Survey Result`;
+  }),
+  meta: [
+    {
+      name: "description",
+      content: computed(() => profDesc.value || "Take the Axonode personality survey to discover what suits you."),
+    },
+    {
+      property: "og:title",
+      content: computed(() =>
+        profDisplayName.value
+          ? `${profDisplayName.value} | Axonode Survey Result`
+          : "Axonode | Survey Result",
+      ),
+    },
+    {
+      property: "og:description",
+      content: computed(() => profDesc.value || "Take the Axonode personality survey to discover your career path."),
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+  ],
+});
 
 const getProfColor = (name) => {
-  if (name === 'Developer') {
-    return '#78dee7';
-  } else if (name === 'Designer') {
-    return '#fe78b0';
-  } else {
-    return '#a59ce6'; 
-  }
-};
-
-const addToProfile = () => {
-  console.log('Profiline eklendi!');
-  alert('Profilinize başarıyla eklendi!');
+  if (name === "Developer") return "#78dee7";
+  if (name === "Designer") return "#fe78b0";
+  return "#a59ce6";
 };
 </script>
 
@@ -168,7 +216,7 @@ const addToProfile = () => {
   padding: 8rem 2rem 4rem;
   background: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .container {
@@ -179,8 +227,15 @@ const addToProfile = () => {
   gap: 3rem;
 }
 
-.result-header {
+.loading-state,
+.error-state {
   text-align: center;
+  padding: 4rem 0;
+}
+
+.error-state .cta-button {
+  display: inline-block;
+  margin-top: 1.5rem;
 }
 
 .title {
@@ -203,19 +258,8 @@ const addToProfile = () => {
   line-height: 1.6;
 }
 
-.add-profile-link {
-  display: inline-block;
-  margin-top: 1.5rem;
-  font-size: 1rem;
-  font-weight: 300;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.add-profile-link:hover {
-  color: #a59ce6;
-  transform: translateY(-1px);
+.result-header {
+  text-align: center;
 }
 
 .video-container {
@@ -230,21 +274,6 @@ const addToProfile = () => {
   width: 100%;
   height: auto;
   display: block;
-}
-
-.professions-card {
-  background: var(--sc-color);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 2.5rem;
-}
-
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
-  text-align: center;
 }
 
 .pie-chart-container {
@@ -278,7 +307,7 @@ const addToProfile = () => {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: left;
+  align-items: flex-start;
   gap: 1.5rem 2rem;
 }
 
@@ -305,6 +334,21 @@ const addToProfile = () => {
   color: var(--text-color);
 }
 
+.professions-card {
+  background: var(--sc-color);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
 .score-list {
   display: flex;
   flex-direction: column;
@@ -321,7 +365,7 @@ const addToProfile = () => {
   display: flex;
   justify-content: space-between;
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .score-name {
@@ -331,7 +375,7 @@ const addToProfile = () => {
 
 .score-percent {
   color: var(--text-color);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .score-bar-bg {
@@ -354,6 +398,68 @@ const addToProfile = () => {
   text-align: right;
 }
 
+/* --- Locked traits section --- */
+.traits-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--sc-color);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.traits-blurred {
+  filter: blur(12px);
+  pointer-events: none;
+  user-select: none;
+  padding: 2.5rem;
+}
+
+.traits-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.overlay-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.overlay-desc {
+  font-size: 0.95rem;
+  font-weight: 300;
+  opacity: 0.85;
+  max-width: 420px;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(90deg, #7ad5e4 0%, #b29de4 50%, #f68cae 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.cta-button:hover {
+  opacity: 0.85;
+}
+
 .traits-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -361,7 +467,7 @@ const addToProfile = () => {
 }
 
 .trait-box {
-  background: var(--sc-color);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.03);
   padding: 1.5rem;
   border-radius: 12px;
@@ -369,12 +475,6 @@ const addToProfile = () => {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.2s ease;
-}
-
-.trait-box:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .trait-name {
@@ -387,5 +487,16 @@ const addToProfile = () => {
   font-size: 1.5rem;
   font-weight: 600;
   color: #e2e8f0;
+}
+
+@media (max-width: 600px) {
+  .pie-chart-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
 }
 </style>

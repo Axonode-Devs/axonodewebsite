@@ -516,12 +516,16 @@
   },
   "surveyResult": {
     "overallDistribution": "Rol Dağılım Oranı",
+    "loading": "Sonuçlar yükleniyor...",
+    "notFound": "Sonuç Bulunamadı",
     "titlePrefix": "Senin yolun: ",
     "desc_developer": "Mükemmel analitik yeteneklere ve problem çözme becerisine sahipsin. Sistemler yazmak, kod parçalarını birleştirmek ve yapısal planlamalar yapmak senin için çocuk oyuncağı.",
     "desc_designer": "Estetik, şekiller ve duygular konusunda doğal bir algın var. En iyi görsel yollarla iletişim kuruyor ve yapının insan deneyimini nasıl şekillendirdiğini iyi anlıyorsun.",
     "desc_marketing": "İnsanlarla etkileşim kurarken, eylemlerin arkasındaki motivasyonları anlarken ve insanları topluluğa çekerken adeta parlıyorsun. İkna etmek, sunmak ve tanıtmak senin doğanda var.",
     "professionsMatch": "Meslek Uyumun",
     "detailedTraits": "Detaylı Karakter Özellikleri Analizi",
+    "fullAnalysisCta": "Tam Analiz İçin Bize Katıl!",
+    "fullAnalysisDesc": "Kişilik profilini, detaylı özellik analizlerini ve sana özel kariyer önerilerini keşfetmek için üye ol.",
     "addToProfile": "Profiline Ekle",
     "professions": {
       "developer": "Yazılımcı",

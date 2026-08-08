@@ -508,12 +508,16 @@
   },
   "surveyResult": {
     "overallDistribution": "Overall Distribution",
+    "loading": "Loading results...",
+    "notFound": "Result Not Found",
     "titlePrefix": "Your path leads to: ",
     "desc_developer": "You possess excellent analytical capabilities and a talent for problem solving. Writing systems, figuring out how code fits together, and structural planning are second nature to you.",
     "desc_designer": "You have a natural appreciation for aesthetics, shapes, and feelings. You communicate best visually and understand how structure shapes the human experience.",
     "desc_marketing": "You thrive when interacting with people, understanding the motivations behind actions, and driving engagement. Persuading, selling, and marketing come naturally to you.",
     "professionsMatch": "Professions Match",
     "detailedTraits": "Detailed Traits Breakdown",
+    "fullAnalysisCta": "Join Us for the Full Analysis!",
+    "fullAnalysisDesc": "Sign up to unlock your complete personality profile, detailed trait breakdowns, and personalized career insights.",
     "addToProfile": "Add to Profile",
     "professions": {
       "developer": "Developer",

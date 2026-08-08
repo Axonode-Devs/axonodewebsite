@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { createPinia } from "pinia";
+import { createHead } from "@vueuse/head";
 import { i18n } from "./i18n.js";
 import { library, config } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -78,9 +79,11 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const pinia = createPinia();
+const head = createHead();
 const app = createApp(App);
 
 app.use(pinia);
+app.use(head);
 app.use(i18n);
 app.use(router);
 

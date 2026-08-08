@@ -334,17 +334,6 @@
             </button>
           </div>
         </div>
-
-        <div v-else key="results" class="results-container">
-          <SurveyResults
-            v-if="
-              serverProfessionScores && serverTopProfession && serverTraitTotals
-            "
-            :traitTotals="serverTraitTotals"
-            :professionScores="serverProfessionScores"
-            :topProfession="serverTopProfession"
-          />
-        </div>
       </Transition>
     </section>
     <Footer :style="{ backgroundColor: 'transparent' }" />
@@ -353,22 +342,22 @@
 
 <script setup lang="ts">
 import { ref, computed, Ref } from "vue";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";
 import SliderQuestion from "../components/SliderQuestion.vue";
 import InputQuestion from "../components/InputQuestion.vue";
 import McqQuestion from "../components/MultipleChoiceQuestion.vue";
-import SurveyResults from "../components/SurveyResults.vue";
 import HDivider from "../components/HDivider.vue";
 import Footer from "../components/Footer.vue";
 import type {
   SurveyPayload,
-  SurveyResponse,
   QuestionNumber,
 } from "../api/publicService";
 import { publicService } from "../api/publicService";
 
 const { locale, t } = useI18n({ useScope: "global" });
+const router = useRouter();
 
 const surveyImage = computed(() => {
   return locale.value === "tr" ? "/letsfindouttr.png" : "/letsfindout.png";
@@ -378,7 +367,6 @@ enum Stage {
   Welcome,
   Email,
   Questions,
-  Results,
 }
 
 const stage: Ref<Stage> = ref(Stage.Welcome);
@@ -390,11 +378,6 @@ const attemptedNext = ref(false);
 
 const isSubmitting = ref(false);
 const submitError = ref("");
-const serverTraitTotals = ref<SurveyResponse["traitTotals"] | null>(null);
-const serverProfessionScores = ref<SurveyResponse["professionScores"] | null>(
-  null,
-);
-const serverTopProfession = ref<SurveyResponse["topProfession"] | null>(null);
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -551,12 +534,7 @@ const handleNext = async () => {
 
     const result = await publicService.submitSurvey(payload);
 
-    serverTraitTotals.value = result.traitTotals;
-    serverProfessionScores.value = result.professionScores;
-    serverTopProfession.value = result.topProfession;
-
-    stage.value = Stage.Results;
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    router.push(`/survey-result/${result.id}`);
   } catch (err) {
     submitError.value =
       err instanceof Error

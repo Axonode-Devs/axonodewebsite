@@ -68,7 +68,7 @@ const routes = [
     component: () => import("../views/Survey.vue"),
   },
   {
-    path: "/survey-result",
+    path: "/survey-result/:id",
     component: () => import("../views/SurveyResult.vue"),
   },
 ];

@@ -25,6 +25,7 @@ export type TraitName =
   | "Artistic"
   | "Conventional"
   | "Realistic";
+
 export type GeneralAnswer = string | string[];
 export interface SurveyPayload {
   email: string;
@@ -40,6 +41,7 @@ export interface ProfessionScore {
 }
 
 export interface SurveyResponse {
+  id: string;
   traitTotals: Record<TraitName, number>;
   professionScores: {
     absolute: ProfessionScore[];
@@ -77,6 +79,13 @@ export const publicService = {
       payload,
     );
     return data;
+  },
+
+  async getSurveyResult(id: string): Promise<SurveyResponse> {
+    const { data } = await apiClient.get(
+      `/survey/results/${id}`,
+    );
+    return data.data ?? data
   },
 
   async submitContact(payload: ContactPayload): Promise<{ message: string }> {
