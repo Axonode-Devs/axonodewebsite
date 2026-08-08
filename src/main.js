@@ -38,7 +38,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // --- 3. BRANDS ICONS PACKAGE ---
-import { faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faInstagram, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 
 // --- 4. ADD EVERYTHING TO THE LIBRARY ---
 library.add(
@@ -50,6 +51,9 @@ library.add(
   faChevronRight,
   faGithub,
   faInstagram,
+  faTwitter,
+  faWhatsapp,
+  faLink,
   faGear,
   faCode,
   faBrush,

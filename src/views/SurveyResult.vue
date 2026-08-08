@@ -81,11 +81,11 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span class="share-icon">{{ share.icon }}</span>
+              <font-awesome-icon :icon="share.icon" class="share-icon" />
               <span class="share-label">{{ share.label }}</span>
             </a>
             <button class="share-btn copy" @click="copyLink">
-              <span class="share-icon">🔗</span>
+              <font-awesome-icon icon="fa-link" class="share-icon" />
               <span class="share-label">{{ $t("surveyResult.copyLink") }}</span>
             </button>
           </div>
@@ -120,6 +120,7 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useHead } from "@vueuse/head";
 import Navbar from "../components/Navbar.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { publicService } from "../api/publicService";
 
 const { t } = useI18n({ useScope: "global" });
@@ -232,9 +233,9 @@ const getProfColor = (name) => {
 };
 
 const shareOptions = [
-  { id: "whatsapp", icon: "💬", label: "WhatsApp", platform: "whatsapp" },
-  { id: "instagram", icon: "📸", label: "Instagram", platform: "instagram" },
-  { id: "twitter", icon: "🐦", label: "Twitter", platform: "twitter" },
+  { id: "whatsapp", icon: "fa-whatsapp", label: "WhatsApp", platform: "whatsapp" },
+  { id: "instagram", icon: "fa-instagram", label: "Instagram", platform: "instagram" },
+  { id: "twitter", icon: "fa-twitter", label: "Twitter", platform: "twitter" },
 ];
 
 const copied = ref(false);
@@ -252,13 +253,12 @@ const copyLink = async () => {
 const getShareUrl = (platform) => {
   const url = encodeURIComponent(window.location.href);
   const title = encodeURIComponent(`${profDisplayName.value} | Axonode Survey Result`);
-  const desc = encodeURIComponent(profDesc.value || "");
 
   switch (platform) {
     case "whatsapp":
       return `https://api.whatsapp.com/send?text=${title} ${url}`;
     case "instagram":
-      return `https://www.instagram.com/share?url=${url}`;
+      return `https://instagram.com/share?url=${url}`;
     case "twitter":
       return `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
     default:
@@ -580,7 +580,8 @@ const getShareUrl = (platform) => {
 }
 
 .share-btn .share-icon {
-  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .copy-feedback {
