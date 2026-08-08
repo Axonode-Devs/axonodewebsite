@@ -1,19 +1,18 @@
 <template>
   <div class="results-container">
-    <p class="results-eyebrow">Your result</p>
+    <p class="results-eyebrow">{{ $t("surveyResult.overallDistribution") }}</p>
     <h2 class="results-title">
-      You're built for <span class="profession-name">{{ topProfession.name }}</span>
+      {{ $t("surveyResult.titlePrefix")
+      }}<span class="profession-name">{{ professionDisplayName }}</span>
     </h2>
     <p class="results-subtitle">{{ professionBlurb }}</p>
 
     <div class="spectrum-rail" aria-hidden="true">
       <div class="spectrum-track"></div>
-      <div
-        class="spectrum-marker"
-        :style="{ left: markerPosition + '%' }"
-      ></div>
+      <div class="spectrum-marker" :style="{ left: markerPosition + '%' }"></div>
     </div>
 
+    <h3 class="section-title">{{ $t("surveyResult.professionsMatch") }}</h3>
     <div class="score-list">
       <div
         v-for="item in scoreItems"
@@ -37,10 +36,10 @@
     </div>
 
     <div class="trait-list">
-      <p class="trait-list-title">Your trait breakdown</p>
+      <h3 class="section-title">{{ $t("surveyResult.detailedTraits") }}</h3>
       <div class="trait-grid">
-        <div v-for="trait in traitItems" :key="trait.name" class="trait-chip">
-          <span class="trait-name">{{ trait.name }}</span>
+        <div v-for="trait in traitItems" :key="trait.id" class="trait-chip">
+          <span class="trait-name">{{ trait.label }}</span>
           <span class="trait-score">{{ trait.value }}</span>
         </div>
       </div>
@@ -50,6 +49,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import type { SurveyResponse, ProfessionId, TraitName } from "../api/publicService";
 
 const props = defineProps<{
@@ -57,6 +57,8 @@ const props = defineProps<{
   professionScores: SurveyResponse["professionScores"];
   topProfession: SurveyResponse["topProfession"];
 }>();
+
+const { t } = useI18n();
 
 // Same three-stop gradient used across sliders and the brand name elsewhere
 // in the survey — cyan / violet / pink — so each profession owns a fixed
@@ -67,50 +69,60 @@ const SPECTRUM: Record<ProfessionId, { color: string; position: number }> = {
   designer: { color: "#f68cae", position: 90 },
 };
 
-const BLURBS: Record<ProfessionId, string> = {
-  marketing:
-    "You read people before they finish a sentence, and you know how to make an idea land.",
-  software:
-    "You want to know how the thing actually works, and you'd rather build the fix than wait for one.",
-  designer:
-    "You notice what everyone else scrolls past, and you can't unsee a misaligned pixel.",
+// i18n's surveyResult.professions / desc_* keys use "developer", but the
+// backend's ProfessionId is "software" (see PROFESSION_TRAITS in public.py).
+// Mapped here rather than renaming the i18n keys, since those may be
+// referenced elsewhere already.
+const I18N_PROFESSION_KEY: Record<ProfessionId, string> = {
+  marketing: "marketing",
+  software: "developer",
+  designer: "designer",
 };
 
-const TRAIT_LABELS: Record<TraitName, string> = {
-  Enterprising: "Enterprising",
-  Social: "Social",
-  Investigative: "Investigative",
-  Artistic: "Artistic",
-  Conventional: "Conventional",
-  Realistic: "Realistic",
+const I18N_TRAIT_KEY: Record<TraitName, string> = {
+  Enterprising: "enterprising",
+  Social: "social",
+  Investigative: "investigative",
+  Artistic: "artistic",
+  Conventional: "conventional",
+  Realistic: "realistic",
 };
 
-// Use the "absolute" variant (each profession's own /25 -> /100 scale) for
-// the score bars — this answers "how strong are you in this profession",
-// independent of the other two. The pie/relative variant lives elsewhere
-// if a comparative view is needed later.
 const scoreItems = computed(() => {
-  return props.professionScores.absolute.map((p) => ({
-    id: p.id,
-    label: p.name,
-    percent: p.percent,
-    color: SPECTRUM[p.id]?.color ?? "#e2e8f0",
-  }));
+  return props.professionScores.absolute.map((p) => {
+    const i18nKey = I18N_PROFESSION_KEY[p.id];
+    return {
+      id: p.id,
+      label: t(`surveyResult.professions.${i18nKey}`),
+      percent: p.percent,
+      color: SPECTRUM[p.id]?.color ?? "#e2e8f0",
+    };
+  });
 });
 
 const traitItems = computed(() => {
-  return (Object.keys(props.traitTotals) as TraitName[]).map((trait) => ({
-    name: TRAIT_LABELS[trait] ?? trait,
-    value: props.traitTotals[trait],
-  }));
+  return (Object.keys(props.traitTotals) as TraitName[]).map((trait) => {
+    const i18nKey = I18N_TRAIT_KEY[trait];
+    return {
+      id: trait,
+      label: t(`surveyResult.traits.${i18nKey}`),
+      value: props.traitTotals[trait],
+    };
+  });
 });
 
 const markerPosition = computed(() => {
   return SPECTRUM[props.topProfession.id]?.position ?? 50;
 });
 
+const professionDisplayName = computed(() => {
+  const i18nKey = I18N_PROFESSION_KEY[props.topProfession.id];
+  return t(`surveyResult.professions.${i18nKey}`);
+});
+
 const professionBlurb = computed(() => {
-  return BLURBS[props.topProfession.id] ?? "";
+  const i18nKey = I18N_PROFESSION_KEY[props.topProfession.id];
+  return t(`surveyResult.desc_${i18nKey}`);
 });
 </script>
 
@@ -192,6 +204,17 @@ const professionBlurb = computed(() => {
   transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.section-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  text-align: left;
+  margin: 0 0 0.9rem;
+}
+
 .score-list {
   display: flex;
   flex-direction: column;
@@ -251,17 +274,6 @@ const professionBlurb = computed(() => {
   height: 100%;
   border-radius: 4px;
   transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.trait-list-title {
-  font-family: "Poppins", sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.5;
-  text-align: left;
-  margin: 0 0 0.9rem;
 }
 
 .trait-grid {
