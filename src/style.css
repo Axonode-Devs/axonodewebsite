@@ -25,6 +25,9 @@
   --main2-color: #a59ce6;
   --main3-color: #fe78b0;
   --error-color: #ff6b6b;
+   --accent-color: #78dee7;
+  --accent-secondary: #a59ce6;
+  --accent-tertiary: #fe78b0;
 }
 
 html.dark {
@@ -35,6 +38,10 @@ html.dark {
   --hover-bg: #2d3748;
   --accent-color: #78dee7;
   --accent-secondary: #fe78b2;
+  --error-color: #ff6b6b;
+  --accent-color: #78dee7;
+  --accent-secondary: #fe78b2;
+  --accent-tertiary: #fe78b0;  /* ADD */
   --error-color: #ff6b6b;
 }
 
