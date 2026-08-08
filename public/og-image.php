@@ -132,7 +132,7 @@ $marker_t   = $marker_positions[$profession_id] ?? 0.5;
 $marker_x   = (int)($bar_pad + $bar_w * $marker_t);
 $marker_c   = imagecolorallocate($img, 226, 232, 240); // #e2e8f0
 $marker_r   = 12;
-imagefilledcircle($img, $marker_x, $bar_y + (int)($bar_h / 2), $marker_r, $marker_c);
+imagefilledellipse($img, $marker_x, $bar_y + (int)($bar_h / 2), $marker_r * 2, $marker_r * 2, $marker_c);
 
 // --- Helper: draw centred text ---
 function draw_text_centered($img, $text, $y, $font_path, $size, $color_rgb, $alpha = 0)
