@@ -10,7 +10,6 @@
 
         <form @submit.prevent="handleLogin" class="login-form">
           <div class="form-group">
-            <label for="email">{{ $t('login.form.email.label') }}</label>
             <input 
               id="email"
               type="email" 
@@ -21,7 +20,6 @@
           </div>
 
           <div class="form-group">
-            <label for="password">{{ $t('login.form.password.label') }}</label>
             <input 
               id="password"
               type="password" 
@@ -107,12 +105,11 @@ const handleLogin = async () => {
 }
 
 .login-box {
-  background-color: var(--sc-color);
+  background-color: var(--bg-color);
   backdrop-filter: blur(10px);
-  border: 2px dashed var(--border-color);
+  border: 2px dashed var(--sc-color);
   border-radius: 26px;
   padding: 48px 40px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   animation: slideUp 0.6s ease-out;
 }
 
@@ -135,17 +132,20 @@ const handleLogin = async () => {
 .login-header h1 {
   font-size: 28px;
   font-weight: 700;
-  margin: 0 0 8px 0;
-  background: linear-gradient(to left, var(--accent-color), var(--accent-secondary));
+  margin: 0;
+  background: linear-gradient(to left, #fe78b0,#a59ce6, #78dee7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: 'Poppins', sans-serif;
 }
 
 .subtitle {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-color);
   margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
 }
 
 .login-form {
@@ -160,19 +160,11 @@ const handleLogin = async () => {
   gap: 8px;
 }
 
-.form-group label {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
 .form-group input {
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   color: #fff;
   font-size: 14px;
   transition: all 0.3s ease;
@@ -180,22 +172,22 @@ const handleLogin = async () => {
 }
 
 .form-group input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--border-color);
 }
 
 .form-group input:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.12);
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(120, 222, 231, 0.2);
+  border-color: var(--main1-color);
 }
 
 .login-btn {
+  width: 50%;
+  margin: 0 auto;
   padding: 14px 20px;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
-  color: #000;
+  background: #fe78b0;
+  color: var(--text-color);
   border: none;
-  border-radius: 8px;
+  border-radius: 9999px;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -211,17 +203,18 @@ const handleLogin = async () => {
 .join-link {
   display: block;
   text-align: center;
-  margin-top: 6px;
   font-size: 12px;
-  color: var(--accent-color);
-  text-decoration: none;
+  color: var(--main3-color);
+  text-decoration: underline;
   transition: color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  text-underline-position: under;
 }
 
 
 .login-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(120, 222, 231, 0.4);
 }
 
 .login-btn:active:not(:disabled) {

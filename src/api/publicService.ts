@@ -15,12 +15,17 @@ export type QuestionNumber =
   | 12
   | 13
   | 14
-  | 15;
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20;
 export type ProfessionId = "marketing" | "software" | "design";
 
 export interface SurveyPayload {
   email: string;
-  answers: Record<`q${QuestionNumber}`, number>;
+  answers: Record<`q${QuestionNumber}`, number | string>;
 }
 export interface SurveyResponse {
   scores: {

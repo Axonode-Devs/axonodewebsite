@@ -498,6 +498,9 @@
     "mcq5_opt1": "Sosyal Medya",
     "mcq5_opt2": "Arkadaş",
     "mcq5_opt3": "Diğer",
+    "mcq-no-answer-error": "Lütfen anketi göndermeden önce tüm çoktan seçmeli soruları yanıtlayın.",
+    "email-required-error": "E-posta adresi zorunludur.",
+    "email-invalid-error": "Lütfen geçerli bir e-posta adresi girin.",
     "welcome": {
       "title": "{gr-name}'un Kişilik Anketine Hoşgeldiniz!",
       "subtitle": "Hadi Kişiliğin Kariyerin hakkında ne söylüyor bulalım!",
@@ -507,7 +510,7 @@
     },
     "email": {
       "title": "Kişisel Bilgiler",
-      "subtitle": "Senden Sadece bir e-postanı rica edicez",
+      "subtitle": "Bu anket sizden sadece e-postanızı talep eder.",
       "hint": "E-Postanızı Girin"
     }
   },
@@ -542,7 +545,7 @@
     },
     "email": {
       "title": "Kişisel Bilgiler",
-      "subtitle": "Senden Sadece bir e-postanı rica edicez",
+      "subtitle": "Bu anket sizden sadece e-postanızı talep eder.",
       "hint": "E-Postanızı Girin"
     }
   }

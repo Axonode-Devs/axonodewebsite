@@ -36,7 +36,7 @@ const props = defineProps({
   },
   options: {
     type: Array,
-    required: true // e.g. [{ label: 'Evet', value: 'yes' }, { label: 'Nadiren', value: 'rarely' }, { label: 'Hayır', value: 'no' }]
+    required: true 
   },
   modelValue: {
     type: [String, Number, Boolean],
@@ -44,13 +44,12 @@ const props = defineProps({
   },
   name: {
     type: String,
-    required: true // Unique name for the radio group
+    required: true 
   }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-// Colors from the design: cyan, purple, pink
 const colors = ['#7ad5e4', '#b29de4', '#f68cae', '#f4d06f', '#9bdeac']; 
 </script>
 
@@ -62,7 +61,7 @@ const colors = ['#7ad5e4', '#b29de4', '#f68cae', '#f4d06f', '#9bdeac'];
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.2rem;
   color: #e2e8f0;
   font-family: 'Poppins', sans-serif;
   margin-bottom: 5rem;
@@ -91,6 +90,7 @@ const colors = ['#7ad5e4', '#b29de4', '#f68cae', '#f4d06f', '#9bdeac'];
   align-items: center;
   gap: 0.8rem;
   cursor: pointer;
+  
 }
 
 .hidden-radio {
@@ -126,6 +126,6 @@ const colors = ['#7ad5e4', '#b29de4', '#f68cae', '#f4d06f', '#9bdeac'];
 .option-text {
   font-size: 1rem;
   font-weight: 300;
-  color: #e2e8f0;
+  color: var(--text-color2);
 }
 </style>

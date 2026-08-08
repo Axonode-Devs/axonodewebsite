@@ -209,9 +209,9 @@ onUnmounted(() => {
   background: linear-gradient(
     90deg,
     transparent,
-    #fe78b0,
-    #a59ce6,
     #78dee7,
+    #a59ce6,
+    #fe78b0,
     transparent
   );
 

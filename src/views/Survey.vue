@@ -1,241 +1,280 @@
 <template>
   <div class="survey-page-wrapper">
     <Navbar />
-  <section class="survey-section">
-    <div class="container">
-      <img class="survey-img" :src="surveyImage" />
-    </div>
-
-    <HDivider style="padding-bottom: 40px; width:50%; margin: auto"/> 
-
-    <Transition name="fade-slide" mode="out-in">
-      <div
-        v-if="stage === Stage.Welcome"
-        key="welcome"
-        class="survey-card welcome-stage"
-      >
-        <h2 class="card-title">
-          <i18n-t keypath="survey.welcome.title" tag="span">
-            <template #gr-name>
-              <span class="brand-name">Axonode</span>
-            </template>
-          </i18n-t>
-        </h2>
-
-        <p class="card-subtitle">{{ $t("survey.welcome.subtitle") }}</p>
-
-        <div class="button-container">
-          <button class="submit-button" @click="handleWelcomeContinue">
-            {{ $t("survey.welcome.go") }}
-          </button>
-        </div>
-
-        <p class="welcome-acceptance">
-          <i18n-t keypath="survey.welcome.acceptence" tag="span">
-            <template #go>{{ $t("survey.welcome.go") }}</template>
-            <template #survey-policy>
-              <a
-                href="/privacy-policy"
-                target="_blank"
-                rel="noopener"
-                class="policy-link"
-              >
-                {{ $t("survey.welcome.policyLinkText") }}
-              </a>
-            </template>
-          </i18n-t>
-        </p>
+    <section class="survey-section">
+      <div class="container">
+        <img class="survey-img" :src="surveyImage" />
       </div>
 
-      <div v-else-if="stage === Stage.Email" key="email" class="survey-card">
-        <h2 class="card-title">{{ $t("survey.email.title") }}</h2>
-        <p class="card-subtitle">{{ $t("survey.email.subtitle") }}</p>
-        <InputQuestion
-          v-model:answer="email"
-          :placeholder="$t('survey.email.hint')"
-          @blur="validateEmail"
-        />
-        <p v-if="attemptedNext && emailError" class="field-error">
-          {{ emailError }}
-        </p>
-        <div class="button-container">
-          <button class="submit-button" @click="handleEmailContinue">
-            {{ $t("survey.button-keep") }}
-          </button>
+      <HDivider class="hdivider" style="padding-bottom: 40px; width:50%; margin: auto"/> 
+
+      <Transition name="fade-slide" mode="out-in">
+        <div
+          v-if="stage === Stage.Welcome"
+          key="welcome"
+          class="survey-card welcome-stage"
+        >
+          <h2 class="card-title">
+            <i18n-t keypath="survey.welcome.title" tag="span">
+              <template #gr-name>
+                <span class="brand-name">Axonode</span>
+              </template>
+            </i18n-t>
+          </h2>
+
+          <p class="card-subtitle">{{ $t("survey.welcome.subtitle") }}</p>
+
+          <div class="button-container">
+            <button class="submit-button" @click="handleWelcomeContinue">
+              {{ $t("survey.welcome.go") }}
+            </button>
+          </div>
+
+          <p class="welcome-acceptance">
+            <i18n-t keypath="survey.welcome.acceptence" tag="span">
+              <template #go>{{ $t("survey.welcome.go") }}</template>
+              <template #survey-policy>
+                <a
+                  href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener"
+                  class="policy-link"
+                >
+                  {{ $t("survey.welcome.policyLinkText") }}
+                </a>
+              </template>
+            </i18n-t>
+          </p>
         </div>
-      </div>
 
-      <div
-        v-else-if="stage === Stage.Questions"
-        key="questions"
-        class="survey-card"
-      >
-        <h2 class="card-title">{{ $t("survey.questions.title") }}</h2>
-        <p class="card-subtitle">{{ $t("survey.questions.subtitle") }}</p>
-        <div class="questions-container">
-          <Transition name="fade-slide" mode="out-in">
-            <div :key="currentPage">
-              <div v-if="currentPage === 1">
-                <SliderQuestion
-                  v-model="q1"
-                  :question="$t('survey.questions.q1')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
+        <div v-else-if="stage === Stage.Email" key="email" class="survey-card">
+          <h2 class="card-title">{{ $t("survey.email.title") }}</h2>
+          <p class="card-subtitle">{{ $t("survey.email.subtitle") }}</p>
+          <InputQuestion
+            v-model:answer="email"
+            :placeholder="$t('survey.email.hint')"
+            @blur="validateEmail"
+          />
+          <p v-if="attemptedNext && emailError" class="field-error">
+            {{ $t(emailError) }}
+          </p>
+          <div class="button-container">
+            <button class="submit-button" @click="handleEmailContinue">
+              {{ $t("survey.button-keep") }}
+            </button>
+          </div>
+        </div>
 
-                <SliderQuestion
-                  v-model="q2"
-                  :question="$t('survey.questions.q2')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                  inverted
-                />
+        <div
+          v-else-if="stage === Stage.Questions"
+          key="questions"
+          class="survey-card"
+        >
+          <h2 class="card-title">{{ $t("survey.questions.title") }}</h2>
+          <p class="card-subtitle">{{ $t("survey.questions.subtitle") }}</p>
+          <div class="questions-container">
+            <Transition name="fade-slide" mode="out-in">
+              <div :key="currentPage">
+                <div v-if="currentPage === 1">
+                  <SliderQuestion
+                    v-model="q1"
+                    :question="$t('survey.questions.q1')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
 
-                <SliderQuestion
-                  v-model="q3"
-                  :question="$t('survey.questions.q3')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                  inverted
-                />
+                  <SliderQuestion
+                    v-model="q2"
+                    :question="$t('survey.questions.q2')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                    inverted
+                  />
 
-                <SliderQuestion
-                  v-model="q4"
-                  :question="$t('survey.questions.q4')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
+                  <SliderQuestion
+                    v-model="q3"
+                    :question="$t('survey.questions.q3')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                    inverted
+                  />
 
-                <SliderQuestion
-                  v-model="q5"
-                  :question="$t('survey.questions.q5')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
+                  <SliderQuestion
+                    v-model="q4"
+                    :question="$t('survey.questions.q4')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+
+                  <SliderQuestion
+                    v-model="q5"
+                    :question="$t('survey.questions.q5')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+                </div>
+
+                <div v-else-if="currentPage === 2">
+                  <SliderQuestion
+                    v-model="q6"
+                    :question="$t('survey.questions.q6')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+
+                  <SliderQuestion
+                    v-model="q7"
+                    :question="$t('survey.questions.q7')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+
+                  <SliderQuestion
+                    v-model="q8"
+                    :question="$t('survey.questions.q8')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                    inverted
+                  />
+
+                  <SliderQuestion
+                    v-model="q9"
+                    :question="$t('survey.questions.q9')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                    inverted
+                  />
+
+                  <SliderQuestion
+                    v-model="q10"
+                    :question="$t('survey.questions.q10')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+                </div>
+
+                <div v-else-if="currentPage === 3">
+                  <SliderQuestion
+                    v-model="q11"
+                    :question="$t('survey.questions.q11')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+
+                  <SliderQuestion
+                    v-model="q12"
+                    :question="$t('survey.questions.q12')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+
+                  <SliderQuestion
+                    v-model="q13"
+                    :question="$t('survey.questions.q13')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+
+                  <SliderQuestion
+                    v-model="q14"
+                    :question="$t('survey.questions.q14')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+
+                  <SliderQuestion
+                    v-model="q15"
+                    :question="$t('survey.questions.q15')"
+                    :leftLabel="$t('survey.a')"
+                    :rightLabel="$t('survey.b')"
+                  />
+                </div>
+
+                <div v-else-if="currentPage === 4">
+                  <McqQuestion
+                    v-model="q16"
+                    :question="$t('survey.mcq1')"
+                    :options="mcqOptions1"
+                    name="q16"
+                  />
+
+                  <McqQuestion
+                    v-model="q17"
+                    :question="$t('survey.mcq2')"
+                    :options="mcqOptions2"
+                    name="q17"
+                  />
+
+                  <McqQuestion
+                    v-model="q18"
+                    :question="$t('survey.mcq3')"
+                    :options="mcqOptions3"
+                    name="q18"
+                  />
+
+                  <McqQuestion
+                    v-model="q19"
+                    :question="$t('survey.mcq4')"
+                    :options="mcqOptions4"
+                    name="q19"
+                  />
+
+                  <McqQuestion
+                    v-model="q20"
+                    :question="$t('survey.mcq5')"
+                    :options="mcqOptions5"
+                    name="q20"
+                  />
+                </div>
               </div>
+            </Transition>
+          </div>
 
-              <div v-else-if="currentPage === 2">
-                <SliderQuestion
-                  v-model="q6"
-                  :question="$t('survey.questions.q6')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-
-                <SliderQuestion
-                  v-model="q7"
-                  :question="$t('survey.questions.q7')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-
-                <SliderQuestion
-                  v-model="q8"
-                  :question="$t('survey.questions.q8')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                  inverted
-                />
-
-                <SliderQuestion
-                  v-model="q9"
-                  :question="$t('survey.questions.q9')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                  inverted
-                />
-
-                <SliderQuestion
-                  v-model="q10"
-                  :question="$t('survey.questions.q10')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-              </div>
-
-              <div v-else-if="currentPage === 3">
-                <SliderQuestion
-                  v-model="q11"
-                  :question="$t('survey.questions.q11')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-
-                <SliderQuestion
-                  v-model="q12"
-                  :question="$t('survey.questions.q12')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-
-                <SliderQuestion
-                  v-model="q13"
-                  :question="$t('survey.questions.q13')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-
-                <SliderQuestion
-                  v-model="q14"
-                  :question="$t('survey.questions.q14')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-
-                <SliderQuestion
-                  v-model="q15"
-                  :question="$t('survey.questions.q15')"
-                  :leftLabel="$t('survey.a')"
-                  :rightLabel="$t('survey.b')"
-                />
-              </div>
-            </div>
-          </Transition>
+          <p v-if="submitError" class="field-error">{{ $t(submitError) }}</p>
+          <div class="button-container">
+            <button
+              class="back-button"
+              @click="handleBack"
+              v-if="currentPage > 1"
+            >
+              {{ $t("survey.button-back") }}
+            </button>
+            <button
+              class="submit-button"
+              @click="handleNext"
+              :disabled="isSubmitting"
+            >
+              {{
+                isSubmitting
+                  ? "Submitting..."
+                  : currentPage === 4
+                    ? $t("survey.button-send")
+                    : $t("survey.button-keep")
+              }}
+            </button>
+          </div>
         </div>
 
-        <p v-if="submitError" class="field-error">{{ submitError }}</p>
-        <div class="button-container">
-          <button
-            class="back-button"
-            @click="handleBack"
-            v-if="currentPage > 1"
-          >
-            {{ $t("survey.button-back") }}
-          </button>
-          <button
-            class="submit-button"
-            @click="handleNext"
-            :disabled="isSubmitting"
-          >
-            {{
-              isSubmitting
-                ? "Submitting..."
-                : currentPage === 3
-                  ? $t("survey.button-send")
-                  : $t("survey.button-keep")
-            }}
-          </button>
+        <div v-else key="results" class="results-container">
+          <SurveyResults
+            v-if="serverScores && serverTopProfession"
+            :scores="serverScores"
+            :topProfession="serverTopProfession"
+          />
         </div>
-      </div>
-
-      <div v-else key="results" class="results-container">
-        <SurveyResults
-          v-if="serverScores && serverTopProfession"
-          :scores="serverScores"
-          :topProfession="serverTopProfession"
-        />
-      </div>
-    </Transition>
-  </section>
-  <Footer :style="{backgroundColor: 'transparent'}"/>
+      </Transition>
+    </section>
+    <Footer :style="{backgroundColor: 'transparent'}"/>
   </div>
 </template>
+
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, Ref } from "vue";
+import { ref, computed, Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";
 import SliderQuestion from "../components/SliderQuestion.vue";
 import InputQuestion from "../components/InputQuestion.vue";
+import McqQuestion from "../components/MultipleChoiceQuestion.vue";
 import SurveyResults from "../components/SurveyResults.vue";
 import HDivider from "../components/HDivider.vue";
 import Footer from "../components/Footer.vue";
@@ -244,7 +283,10 @@ import {
   SurveyResponse,
   publicService,
 } from "../api/publicService.ts";
+
 const { locale } = useI18n({ useScope: 'global' });
+
+const t = useI18n();
 
 const surveyImage = computed(() => {
   return locale.value === "tr" ? "/letsfindouttr.png" : "/letsfindout.png";
@@ -265,21 +307,7 @@ const emailError = ref("");
 const attemptedNext = ref(false);
 
 type QuestionNumber =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15;
+  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
 
 const isSubmitting = ref(false);
 const submitError = ref("");
@@ -290,9 +318,9 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const validateEmail = () => {
   if (!email.value.trim()) {
-    emailError.value = "Email is required.";
+    emailError.value = 'survey.email-required-error';
   } else if (!emailRegex.test(email.value.trim())) {
-    emailError.value = "Please enter a valid email address.";
+    emailError.value = 'survey.email-invalid-error';
   } else {
     emailError.value = "";
   }
@@ -315,9 +343,39 @@ const q13 = ref(12);
 const q14 = ref(12);
 const q15 = ref(12);
 
+const q16 = ref("");
+const q17 = ref("");
+const q18 = ref("");
+const q19 = ref("");
+const q20 = ref("");
 
+const mcqOptions1 = [
+  { label: t.t('survey.mcq1_opt1'), value: "A" },
+  { label: t.t('survey.mcq1_opt2'), value: "B" },
+  { label: t.t('survey.mcq1_opt3'), value: "C" },
+];
+const mcqOptions2 = [
+  { label: t.t('survey.mcq2_opt1'), value: "A" },
+  { label: t.t('survey.mcq2_opt2'), value: "B" },
+  { label: t.t('survey.mcq2_opt3'), value: "C" },
+];
+const mcqOptions3 = [
+  { label: t.t('survey.mcq3_opt1'), value: "A" },
+  { label: t.t('survey.mcq3_opt2'), value: "B" },
+  { label: t.t('survey.mcq3_opt3'), value: "C" },
+];
+const mcqOptions4 = [
+  { label: t.t('survey.mcq4_opt1'), value: "A" },
+  { label: t.t('survey.mcq4_opt2'), value: "B" },
+  { label: t.t('survey.mcq4_opt3'), value: "C" },
+];
+const mcqOptions5 = [
+  { label: t.t('survey.mcq5_opt1'), value: "A" },
+  { label: t.t('survey.mcq5_opt2'), value: "B" },
+  { label: t.t('survey.mcq5_opt3'), value: "C" },
+];
 
-const getAllAnswers = (): Record<`q${QuestionNumber}`, number> => ({
+const getAllAnswers = (): Record<`q${QuestionNumber}`, number | string> => ({
   q1: q1.value,
   q2: q2.value,
   q3: q3.value,
@@ -333,6 +391,11 @@ const getAllAnswers = (): Record<`q${QuestionNumber}`, number> => ({
   q13: q13.value,
   q14: q14.value,
   q15: q15.value,
+  q16: q16.value,
+  q17: q17.value,
+  q18: q18.value,
+  q19: q19.value,
+  q20: q20.value,
 });
 
 const handleWelcomeContinue = () => {
@@ -347,12 +410,20 @@ const handleEmailContinue = () => {
   stage.value = Stage.Questions;
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
+
 const handleNext = async () => {
   attemptedNext.value = true;
-
   attemptedNext.value = false;
+  submitError.value = "";
 
-  if (currentPage.value < 3) {
+  if (currentPage.value === 4) {
+    if (!q16.value || !q17.value || !q18.value || !q19.value || !q20.value) {
+      submitError.value = 'survey.mcq-no-answer-error';
+      return;
+    }
+  }
+
+  if (currentPage.value < 4) {
     currentPage.value++;
     window.scrollTo({ top: 0, behavior: "smooth" });
     return;
@@ -417,7 +488,6 @@ const handleBack = () => {
   justify-content: center;
   align-items: center;
   padding: 0;
-
   background: var(--bg-color);
   border-radius: 20px;
   overflow: hidden;
@@ -466,7 +536,6 @@ const handleBack = () => {
 .back-button:hover {
   background: rgba(254, 120, 176, 0.1);
 }
-
 .divider-container {
   width: 40%;
   justify-content: center;
@@ -497,20 +566,17 @@ const handleBack = () => {
   border-radius: 24px;
   text-align: center;
   background: var(--bg-color);
-
   border: 2px dashed #292929;
 }
 .survey-card.welcome-stage .card-subtitle{
   margin-bottom: 35px;
 }
-
 .survey-card.welcome-stage .card-title{
   margin: 0px auto;
   padding: 0px;
   width: 100%;
   margin-bottom: 5px;
 }
-
 .card-subtitle{
   margin: 0px;
 }
@@ -519,12 +585,18 @@ const handleBack = () => {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 4.5rem; 
-    
+  }
+  .hdivider{
+    display: none;
+  }
+  .container{
+    display: none;
   }
   .survey-card {
+    margin-top: 2rem;
     padding: 1.75rem 1.25rem;
     border-radius: 18px;
-    width: 90%;
+    width: 75%;
   }
   .card-title {
     font-size: 1.35rem;

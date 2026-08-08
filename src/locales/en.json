@@ -488,6 +488,9 @@
     "mcq5_opt1": "Social Media",
     "mcq5_opt2": "Friend",
     "mcq5_opt3": "Other",
+    "mcq-no-answer-error": "Please answer all multiple-choice questions before submitting the survey.",
+    "email-required-error": "Email is required.",
+    "email-invalid-error": "Please enter a valid email address.",
     "welcome": {
       "title": "Welcome to the {gr-name} Personality Survey",
       "subtitle": "Lets find out what your personality tells about your career?",
