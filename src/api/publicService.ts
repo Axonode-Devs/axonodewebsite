@@ -15,23 +15,35 @@ export type QuestionNumber =
   | 12
   | 13
   | 14
-  | 15
-  | 16
-  | 17
-  | 18
-  | 19
-  | 20;
-export type ProfessionId = "marketing" | "software" | "design";
+  | 15;
 
+export type ProfessionId = "marketing" | "designer" | "software";
+export type TraitName =
+  | "Enterprising"
+  | "Social"
+  | "Investigative"
+  | "Artistic"
+  | "Conventional"
+  | "Realistic";
+export type GeneralAnswer = string | string[];
 export interface SurveyPayload {
   email: string;
-  answers: Record<`q${QuestionNumber}`, number | string>;
+  answers: Record<`q${QuestionNumber}`, number>;
+  generalAnswers: Record<string, GeneralAnswer>;
 }
+
+export interface ProfessionScore {
+  id: ProfessionId;
+  name: string;
+  sum: number;
+  percent: number;
+}
+
 export interface SurveyResponse {
-  scores: {
-    marketing: number;
-    software: number;
-    design: number;
+  traitTotals: Record<TraitName, number>;
+  professionScores: {
+    absolute: ProfessionScore[];
+    relative: ProfessionScore[];
   };
   topProfession: { id: ProfessionId; name: string };
 }

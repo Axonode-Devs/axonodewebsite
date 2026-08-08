@@ -6,7 +6,10 @@
         <img class="survey-img" :src="surveyImage" />
       </div>
 
-      <HDivider class="hdivider" style="padding-bottom: 40px; width:50%; margin: auto"/> 
+      <HDivider
+        class="hdivider"
+        style="padding-bottom: 40px; width: 50%; margin: auto"
+      />
 
       <Transition name="fade-slide" mode="out-in">
         <div
@@ -75,155 +78,232 @@
           <div class="questions-container">
             <Transition name="fade-slide" mode="out-in">
               <div :key="currentPage">
+                <!-- PAGE 1 — RIASEC sliders -->
                 <div v-if="currentPage === 1">
                   <SliderQuestion
                     v-model="q1"
+                    :touched="touched.q1"
+                    @touched="markTouched('q1')"
                     :question="$t('survey.questions.q1')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q1" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q2"
+                    :touched="touched.q2"
+                    @touched="markTouched('q2')"
                     :question="$t('survey.questions.q2')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                     inverted
                   />
+                  <p v-if="attemptedNext && !touched.q2" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q3"
+                    :touched="touched.q3"
+                    @touched="markTouched('q3')"
                     :question="$t('survey.questions.q3')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                     inverted
                   />
+                  <p v-if="attemptedNext && !touched.q3" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q4"
+                    :touched="touched.q4"
+                    @touched="markTouched('q4')"
                     :question="$t('survey.questions.q4')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q4" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q5"
+                    :touched="touched.q5"
+                    @touched="markTouched('q5')"
                     :question="$t('survey.questions.q5')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q5" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
                 </div>
 
+                <!-- PAGE 2 — RIASEC sliders -->
                 <div v-else-if="currentPage === 2">
                   <SliderQuestion
                     v-model="q6"
+                    :touched="touched.q6"
+                    @touched="markTouched('q6')"
                     :question="$t('survey.questions.q6')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q6" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q7"
+                    :touched="touched.q7"
+                    @touched="markTouched('q7')"
                     :question="$t('survey.questions.q7')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q7" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q8"
+                    :touched="touched.q8"
+                    @touched="markTouched('q8')"
                     :question="$t('survey.questions.q8')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                     inverted
                   />
+                  <p v-if="attemptedNext && !touched.q8" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q9"
+                    :touched="touched.q9"
+                    @touched="markTouched('q9')"
                     :question="$t('survey.questions.q9')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                     inverted
                   />
+                  <p v-if="attemptedNext && !touched.q9" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q10"
+                    :touched="touched.q10"
+                    @touched="markTouched('q10')"
                     :question="$t('survey.questions.q10')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q10" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
                 </div>
 
+                <!-- PAGE 3 — RIASEC sliders -->
                 <div v-else-if="currentPage === 3">
                   <SliderQuestion
                     v-model="q11"
+                    :touched="touched.q11"
+                    @touched="markTouched('q11')"
                     :question="$t('survey.questions.q11')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q11" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q12"
+                    :touched="touched.q12"
+                    @touched="markTouched('q12')"
                     :question="$t('survey.questions.q12')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q12" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q13"
+                    :touched="touched.q13"
+                    @touched="markTouched('q13')"
                     :question="$t('survey.questions.q13')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q13" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q14"
+                    :touched="touched.q14"
+                    @touched="markTouched('q14')"
                     :question="$t('survey.questions.q14')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q14" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
 
                   <SliderQuestion
                     v-model="q15"
+                    :touched="touched.q15"
+                    @touched="markTouched('q15')"
                     :question="$t('survey.questions.q15')"
                     :leftLabel="$t('survey.a')"
                     :rightLabel="$t('survey.b')"
                   />
+                  <p v-if="attemptedNext && !touched.q15" class="field-error">
+                    {{ $t("survey.question-required-error") }}
+                  </p>
                 </div>
 
+                <!-- PAGE 4 — general/unscored MCQ questions -->
                 <div v-else-if="currentPage === 4">
                   <McqQuestion
-                    v-model="q16"
+                    v-model="g1"
                     :question="$t('survey.mcq1')"
                     :options="mcqOptions1"
-                    name="q16"
+                    name="g1"
                   />
 
                   <McqQuestion
-                    v-model="q17"
+                    v-model="g2"
                     :question="$t('survey.mcq2')"
                     :options="mcqOptions2"
-                    name="q17"
+                    name="g2"
                   />
 
                   <McqQuestion
-                    v-model="q18"
+                    v-model="g3"
                     :question="$t('survey.mcq3')"
                     :options="mcqOptions3"
-                    name="q18"
+                    name="g3"
                   />
 
-                  <McqQuestion
-                    v-model="q19"
+                  <InputQuestion
+                    v-model:answer="g4"
                     :question="$t('survey.mcq4')"
-                    :options="mcqOptions4"
-                    name="q19"
+                    :placeholder="$t('survey.mcq4_placeholder')"
                   />
 
-                  <McqQuestion
-                    v-model="q20"
+                  <InputQuestion
+                    v-model:answer="g5"
                     :question="$t('survey.mcq5')"
-                    :options="mcqOptions5"
-                    name="q20"
+                    :placeholder="$t('survey.mcq5_placeholder')"
                   />
                 </div>
               </div>
@@ -257,14 +337,17 @@
 
         <div v-else key="results" class="results-container">
           <SurveyResults
-            v-if="serverScores && serverTopProfession"
-            :scores="serverScores"
+            v-if="
+              serverProfessionScores && serverTopProfession && serverTraitTotals
+            "
+            :traitTotals="serverTraitTotals"
+            :professionScores="serverProfessionScores"
             :topProfession="serverTopProfession"
           />
         </div>
       </Transition>
     </section>
-    <Footer :style="{backgroundColor: 'transparent'}"/>
+    <Footer :style="{ backgroundColor: 'transparent' }" />
   </div>
 </template>
 
@@ -278,15 +361,14 @@ import McqQuestion from "../components/MultipleChoiceQuestion.vue";
 import SurveyResults from "../components/SurveyResults.vue";
 import HDivider from "../components/HDivider.vue";
 import Footer from "../components/Footer.vue";
-import {
+import type {
   SurveyPayload,
   SurveyResponse,
-  publicService,
-} from "../api/publicService.ts";
+  QuestionNumber,
+} from "../api/publicService";
+import { publicService } from "../api/publicService";
 
-const { locale } = useI18n({ useScope: 'global' });
-
-const t = useI18n();
+const { locale, t } = useI18n({ useScope: "global" });
 
 const surveyImage = computed(() => {
   return locale.value === "tr" ? "/letsfindouttr.png" : "/letsfindout.png";
@@ -306,21 +388,21 @@ const email = ref("");
 const emailError = ref("");
 const attemptedNext = ref(false);
 
-type QuestionNumber =
-  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
-
 const isSubmitting = ref(false);
 const submitError = ref("");
-const serverScores = ref<SurveyResponse["scores"] | null>(null);
+const serverTraitTotals = ref<SurveyResponse["traitTotals"] | null>(null);
+const serverProfessionScores = ref<SurveyResponse["professionScores"] | null>(
+  null,
+);
 const serverTopProfession = ref<SurveyResponse["topProfession"] | null>(null);
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const validateEmail = () => {
   if (!email.value.trim()) {
-    emailError.value = 'survey.email-required-error';
+    emailError.value = "survey.email-required-error";
   } else if (!emailRegex.test(email.value.trim())) {
-    emailError.value = 'survey.email-invalid-error';
+    emailError.value = "survey.email-invalid-error";
   } else {
     emailError.value = "";
   }
@@ -343,60 +425,66 @@ const q13 = ref(12);
 const q14 = ref(12);
 const q15 = ref(12);
 
-const q16 = ref("");
-const q17 = ref("");
-const q18 = ref("");
-const q19 = ref("");
-const q20 = ref("");
+type TouchedState = Record<`q${QuestionNumber}`, boolean>;
+
+const touched = ref<TouchedState>({
+  q1: false,
+  q2: false,
+  q3: false,
+  q4: false,
+  q5: false,
+  q6: false,
+  q7: false,
+  q8: false,
+  q9: false,
+  q10: false,
+  q11: false,
+  q12: false,
+  q13: false,
+  q14: false,
+  q15: false,
+});
+
+const markTouched = (key: keyof TouchedState) => {
+  touched.value[key] = true;
+};
+
+const page1Questions: (keyof TouchedState)[] = ["q1", "q2", "q3", "q4", "q5"];
+const page2Questions: (keyof TouchedState)[] = ["q6", "q7", "q8", "q9", "q10"];
+const page3Questions: (keyof TouchedState)[] = [
+  "q11",
+  "q12",
+  "q13",
+  "q14",
+  "q15",
+];
+
+const untouchedOnPage = (keys: (keyof TouchedState)[]) =>
+  keys.filter((k) => !touched.value[k]);
+
+// General/unscored MCQ answers — g1-g5, sent separately as `generalAnswers`,
+// never mixed into the RIASEC `answers` object the backend scores against.
+const g1 = ref("");
+const g2 = ref("");
+const g3 = ref("");
+const g4 = ref("");
+const g5 = ref("");
 
 const mcqOptions1 = [
-  { label: t.t('survey.mcq1_opt1'), value: "A" },
-  { label: t.t('survey.mcq1_opt2'), value: "B" },
-  { label: t.t('survey.mcq1_opt3'), value: "C" },
+  { label: t("survey.mcq1_opt1"), value: "A" },
+  { label: t("survey.mcq1_opt2"), value: "B" },
+  { label: t("survey.mcq1_opt3"), value: "C" },
 ];
 const mcqOptions2 = [
-  { label: t.t('survey.mcq2_opt1'), value: "A" },
-  { label: t.t('survey.mcq2_opt2'), value: "B" },
-  { label: t.t('survey.mcq2_opt3'), value: "C" },
+  { label: t("survey.mcq2_opt1"), value: "A" },
+  { label: t("survey.mcq2_opt2"), value: "B" },
+  { label: t("survey.mcq2_opt3"), value: "C" },
 ];
 const mcqOptions3 = [
-  { label: t.t('survey.mcq3_opt1'), value: "A" },
-  { label: t.t('survey.mcq3_opt2'), value: "B" },
-  { label: t.t('survey.mcq3_opt3'), value: "C" },
+  { label: t("survey.mcq3_opt1"), value: "A" },
+  { label: t("survey.mcq3_opt2"), value: "B" },
+  { label: t("survey.mcq3_opt3"), value: "C" },
 ];
-const mcqOptions4 = [
-  { label: t.t('survey.mcq4_opt1'), value: "A" },
-  { label: t.t('survey.mcq4_opt2'), value: "B" },
-  { label: t.t('survey.mcq4_opt3'), value: "C" },
-];
-const mcqOptions5 = [
-  { label: t.t('survey.mcq5_opt1'), value: "A" },
-  { label: t.t('survey.mcq5_opt2'), value: "B" },
-  { label: t.t('survey.mcq5_opt3'), value: "C" },
-];
-
-const getAllAnswers = (): Record<`q${QuestionNumber}`, number | string> => ({
-  q1: q1.value,
-  q2: q2.value,
-  q3: q3.value,
-  q4: q4.value,
-  q5: q5.value,
-  q6: q6.value,
-  q7: q7.value,
-  q8: q8.value,
-  q9: q9.value,
-  q10: q10.value,
-  q11: q11.value,
-  q12: q12.value,
-  q13: q13.value,
-  q14: q14.value,
-  q15: q15.value,
-  q16: q16.value,
-  q17: q17.value,
-  q18: q18.value,
-  q19: q19.value,
-  q20: q20.value,
-});
 
 const handleWelcomeContinue = () => {
   stage.value = Stage.Email;
@@ -413,15 +501,16 @@ const handleEmailContinue = () => {
 
 const handleNext = async () => {
   attemptedNext.value = true;
-  attemptedNext.value = false;
   submitError.value = "";
 
   if (currentPage.value === 4) {
-    if (!q16.value || !q17.value || !q18.value || !q19.value || !q20.value) {
-      submitError.value = 'survey.mcq-no-answer-error';
-      return;
-    }
+  if (!g1.value || !g2.value || !g3.value || !g4.value) {
+    submitError.value = "survey.mcq-no-answer-error";
+    return;
   }
+}
+
+  attemptedNext.value = false;
 
   if (currentPage.value < 4) {
     currentPage.value++;
@@ -430,16 +519,40 @@ const handleNext = async () => {
   }
 
   isSubmitting.value = true;
-  submitError.value = "";
 
   try {
     const payload: SurveyPayload = {
       email: email.value,
-      answers: getAllAnswers(),
+      answers: {
+        q1: q1.value,
+        q2: q2.value,
+        q3: q3.value,
+        q4: q4.value,
+        q5: q5.value,
+        q6: q6.value,
+        q7: q7.value,
+        q8: q8.value,
+        q9: q9.value,
+        q10: q10.value,
+        q11: q11.value,
+        q12: q12.value,
+        q13: q13.value,
+        q14: q14.value,
+        q15: q15.value,
+      },
+      generalAnswers: {
+        g1: g1.value,
+        g2: g2.value,
+        g3: g3.value,
+        g4: g4.value,
+        g5: g5.value,
+      },
     };
+
     const result = await publicService.submitSurvey(payload);
 
-    serverScores.value = result.scores;
+    serverTraitTotals.value = result.traitTotals;
+    serverProfessionScores.value = result.professionScores;
     serverTopProfession.value = result.topProfession;
 
     stage.value = Stage.Results;
@@ -493,8 +606,8 @@ const handleBack = () => {
   overflow: hidden;
 }
 .survey-img {
-  display: block;  
-  width: 100%;     
+  display: block;
+  width: 100%;
   height: auto;
 }
 .button-container {
@@ -518,6 +631,10 @@ const handleBack = () => {
   transition: 0.25s ease;
   cursor: pointer;
   text-align: center;
+}
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 .back-button {
   width: 100%;
@@ -568,28 +685,28 @@ const handleBack = () => {
   background: var(--bg-color);
   border: 2px dashed #292929;
 }
-.survey-card.welcome-stage .card-subtitle{
+.survey-card.welcome-stage .card-subtitle {
   margin-bottom: 35px;
 }
-.survey-card.welcome-stage .card-title{
+.survey-card.welcome-stage .card-title {
   margin: 0px auto;
   padding: 0px;
   width: 100%;
   margin-bottom: 5px;
 }
-.card-subtitle{
+.card-subtitle {
   margin: 0px;
 }
 @media (max-width: 480px) {
   .survey-section {
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 4.5rem; 
+    padding-top: 4.5rem;
   }
-  .hdivider{
+  .hdivider {
     display: none;
   }
-  .container{
+  .container {
     display: none;
   }
   .survey-card {
@@ -602,18 +719,18 @@ const handleBack = () => {
     font-size: 1.35rem;
   }
   .questions-container {
-    padding: 0; 
+    padding: 0;
   }
 }
 @media (max-width: 480px) {
   .button-container {
-    flex-direction: column-reverse; 
+    flex-direction: column-reverse;
     gap: 0.75rem;
   }
   .submit-button,
   .back-button {
     max-width: 100%;
-    padding: 14px 24px; 
+    padding: 14px 24px;
   }
 }
 .welcome-stage {
@@ -627,11 +744,6 @@ const handleBack = () => {
   margin-top: 0px;
   width: 70%;
   margin: 0 auto;
-}
-.card-subtitle {
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-  opacity: 0.8;
 }
 .brand-name {
   background: linear-gradient(90deg, #7ad5e4 0%, #b29de4 50%, #f68cae 100%);
