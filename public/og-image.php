@@ -14,7 +14,7 @@ if (empty($id) || !preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f
 }
 
 // --- Fetch result from API ---
-$api_url = 'http://127.0.0.1/api/v1/survey/results/' . rawurlencode($id);
+$api_url = 'https://axonode.org/api/v1/survey/results/' . rawurlencode($id);
 $ctx = stream_context_create(['http' => ['timeout' => 5, 'method' => 'GET']]);
 $response = @file_get_contents($api_url, false, $ctx);
 

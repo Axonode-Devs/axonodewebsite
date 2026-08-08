@@ -64,7 +64,7 @@ if (!is_bot($user_agent)) {
 // --- Bot detected — fetch result from the API and render OG tags ---
 
 // Internal API call (same server, no CORS needed)
-$api_url = 'http://127.0.0.1/api/v1/survey/results/' . rawurlencode($id);
+$api_url = 'https://axonode.org/api/v1/survey/results/' . rawurlencode($id);
 $ctx = stream_context_create([
     'http' => [
         'timeout' => 5,

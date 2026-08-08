@@ -108,7 +108,7 @@ const error = ref("");
 const result = ref(null);
 
 const PROFESSION_NAME_MAP = {
-  Developer: "developer",
+  Software: "developer",
   Designer: "designer",
   Marketing: "marketing",
 };
@@ -169,7 +169,7 @@ const pieChartStyle = computed(() => {
 });
 
 const getBarGradient = (name) => {
-  if (name === "Developer") return "linear-gradient(90deg, #78dee7 0%, #46aeb8 100%)";
+  if (name === "Software") return "linear-gradient(90deg, #78dee7 0%, #46aeb8 100%)";
   if (name === "Designer") return "linear-gradient(90deg, #fe78b0 0%, #9e4168 100%)";
   return "linear-gradient(90deg, #a59ce6 0%, #7068a3 100%)";
 };
@@ -204,7 +204,7 @@ useHead({
 });
 
 const getProfColor = (name) => {
-  if (name === "Developer") return "#78dee7";
+  if (name === "Software") return "#78dee7";
   if (name === "Designer") return "#fe78b0";
   return "#a59ce6";
 };
