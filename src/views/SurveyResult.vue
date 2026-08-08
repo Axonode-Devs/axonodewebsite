@@ -26,9 +26,12 @@
         <div class="result-header" v-if="dominantProf">
           <h1 class="title">
             {{ $t("surveyResult.titlePrefix") }}
-            <span class="prof-text" :style="{ color: getProfColor(dominantProf.name) }">
-              {{ profDisplayName }}
-            </span>!
+            <span
+              class="prof-text"
+              :style="{ color: getProfColor(dominantProf.name) }"
+            >
+              {{ profDisplayName }} </span
+            >!
           </h1>
           <p class="subtitle">{{ profDesc }}</p>
         </div>
@@ -36,8 +39,15 @@
         <div class="pie-chart-container">
           <div class="pie-chart" :style="pieChartStyle"></div>
           <div class="pie-legend">
-            <div class="legend-item" v-for="prof in relativeProfessions" :key="prof.name">
-              <span class="legend-color" :style="{ background: getProfColor(prof.name) }"></span>
+            <div
+              class="legend-item"
+              v-for="prof in relativeProfessions"
+              :key="prof.name"
+            >
+              <span
+                class="legend-color"
+                :style="{ background: getProfColor(prof.name) }"
+              ></span>
               <span class="legend-name">
                 {{ $t(`surveyResult.professions.${profKey(prof.name)}`) }}
               </span>
@@ -49,7 +59,11 @@
         <div class="professions-card">
           <h2 class="card-title">{{ $t("surveyResult.professionsMatch") }}</h2>
           <div class="score-list">
-            <div class="score-item" v-for="prof in absoluteProfessions" :key="prof.name">
+            <div
+              class="score-item"
+              v-for="prof in absoluteProfessions"
+              :key="prof.name"
+            >
               <div class="score-header">
                 <span class="score-name">
                   {{ $t(`surveyResult.professions.${profKey(prof.name)}`) }}
@@ -73,34 +87,43 @@
         <div class="share-card">
           <h3 class="share-title">{{ $t("surveyResult.shareTitle") }}</h3>
           <div class="share-buttons">
-            <a
+            <button
               v-for="share in shareOptions"
               :key="share.id"
-              :href="getShareUrl(share.platform)"
               :class="['share-btn', share.id]"
-              target="_blank"
-              rel="noopener noreferrer"
+              @click="handleShare(share.platform)"
             >
               <font-awesome-icon :icon="share.icon" class="share-icon" />
               <span class="share-label">{{ share.label }}</span>
-            </a>
+            </button>
+
             <button class="share-btn copy" @click="copyLink">
-              <font-awesome-icon icon="fa-link" class="share-icon" />
+              <font-awesome-icon :icon="['fas', 'link']" class="share-icon" />
               <span class="share-label">{{ $t("surveyResult.copyLink") }}</span>
             </button>
           </div>
-          <p v-if="copied" class="copy-feedback">{{ $t("surveyResult.linkCopied") }}</p>
+          <p v-if="copied" class="copy-feedback">
+            {{ $t("surveyResult.linkCopied") }}
+          </p>
         </div>
 
         <div class="traits-card traits-locked">
           <div class="traits-overlay">
-            <h2 class="overlay-title">{{ $t("surveyResult.fullAnalysisCta") }}</h2>
-            <p class="overlay-desc">{{ $t("surveyResult.fullAnalysisDesc") }}</p>
+            <h2 class="overlay-title">
+              {{ $t("surveyResult.fullAnalysisCta") }}
+            </h2>
+            <p class="overlay-desc">
+              {{ $t("surveyResult.fullAnalysisDesc") }}
+            </p>
             <a href="/join" class="cta-button">{{ $t("navbar.joinUs") }}</a>
           </div>
           <div class="traits-blurred">
             <div class="traits-grid">
-              <div class="trait-box" v-for="(score, trait) in traitTotals" :key="trait">
+              <div
+                class="trait-box"
+                v-for="(score, trait) in traitTotals"
+                :key="trait"
+              >
                 <span class="trait-name">
                   {{ $t(`surveyResult.traits.${String(trait).toLowerCase()}`) }}
                 </span>
@@ -192,8 +215,10 @@ const pieChartStyle = computed(() => {
 });
 
 const getBarGradient = (name) => {
-  if (name === "Software") return "linear-gradient(90deg, #78dee7 0%, #46aeb8 100%)";
-  if (name === "Designer") return "linear-gradient(90deg, #fe78b0 0%, #9e4168 100%)";
+  if (name === "Software")
+    return "linear-gradient(90deg, #78dee7 0%, #46aeb8 100%)";
+  if (name === "Designer")
+    return "linear-gradient(90deg, #fe78b0 0%, #9e4168 100%)";
   return "linear-gradient(90deg, #a59ce6 0%, #7068a3 100%)";
 };
 
@@ -205,7 +230,11 @@ useHead({
   meta: [
     {
       name: "description",
-      content: computed(() => profDesc.value || "Take the Axonode personality survey to discover what suits you."),
+      content: computed(
+        () =>
+          profDesc.value ||
+          "Take the Axonode personality survey to discover what suits you.",
+      ),
     },
     {
       property: "og:title",
@@ -217,7 +246,11 @@ useHead({
     },
     {
       property: "og:description",
-      content: computed(() => profDesc.value || "Take the Axonode personality survey to discover your career path."),
+      content: computed(
+        () =>
+          profDesc.value ||
+          "Take the Axonode personality survey to discover your career path.",
+      ),
     },
     {
       property: "og:type",
@@ -233,9 +266,25 @@ const getProfColor = (name) => {
 };
 
 const shareOptions = [
-  { id: "whatsapp", icon: "fa-whatsapp", label: "WhatsApp", platform: "whatsapp" },
-  { id: "instagram", icon: "fa-instagram", label: "Instagram", platform: "instagram" },
-  { id: "twitter", icon: "fa-twitter", label: "Twitter", platform: "twitter" },
+  // Use ['fab', '...'] for Brands (WhatsApp, Instagram, Twitter)
+  {
+    id: "whatsapp",
+    icon: ["fab", "whatsapp"],
+    label: "WhatsApp",
+    platform: "whatsapp",
+  },
+  {
+    id: "instagram",
+    icon: ["fab", "instagram"],
+    label: "Instagram",
+    platform: "instagram",
+  },
+  {
+    id: "twitter",
+    icon: ["fab", "twitter"],
+    label: "Twitter",
+    platform: "twitter",
+  },
 ];
 
 const copied = ref(false);
@@ -250,19 +299,47 @@ const copyLink = async () => {
   }
 };
 
-const getShareUrl = (platform) => {
-  const url = encodeURIComponent(window.location.href);
-  const title = encodeURIComponent(`${profDisplayName.value} | Axonode Survey Result`);
+const shareUrl = encodeURIComponent(window.location.href);
+const shareTitle = `${profDisplayName.value} | Axonode Survey Result`;
+const shareText = encodeURIComponent(shareTitle);
 
+const handleShare = async (platform) => {
   switch (platform) {
     case "whatsapp":
-      return `https://api.whatsapp.com/send?text=${title} ${url}`;
-    case "instagram":
-      return `https://instagram.com/share?url=${url}`;
+      window.open(
+        `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`,
+        "_blank",
+      );
+      break;
+
     case "twitter":
-      return `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-    default:
-      return url;
+      window.open(
+        `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`,
+        "_blank",
+      );
+      break;
+
+    case "instagram":
+      // Mobile native share (opens Instagram app options)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: shareTitle,
+            text: shareTitle,
+            url: window.location.href,
+          });
+          return;
+        } catch (err) {
+          // User closed share sheet, do nothing
+          return;
+        }
+      }
+
+      // Desktop fallback: copy link and notify user
+      await navigator.clipboard.writeText(window.location.href);
+      alert("Link copied! Paste it in an Instagram Direct Message or Story.");
+      window.open("https://instagram.com", "_blank");
+      break;
   }
 };
 </script>
@@ -550,7 +627,9 @@ const getShareUrl = (platform) => {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .share-btn:hover {
@@ -564,7 +643,14 @@ const getShareUrl = (platform) => {
 }
 
 .share-btn.instagram {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
   color: white;
 }
 
