@@ -208,7 +208,6 @@
                   </p>
                 </div>
 
-                <!-- PAGE 3 — RIASEC sliders -->
                 <div v-else-if="currentPage === 3">
                   <SliderQuestion
                     v-model="q11"
@@ -271,7 +270,6 @@
                   </p>
                 </div>
 
-                <!-- PAGE 4 — general/unscored MCQ questions -->
                 <div v-else-if="currentPage === 4">
                   <McqQuestion
                     v-model="g1"
@@ -294,16 +292,30 @@
                     name="g3"
                   />
 
-                  <InputQuestion
-                    v-model:answer="g4"
+                  <McqQuestion
+                    v-model="g4"
                     :question="$t('survey.mcq4')"
-                    :placeholder="$t('survey.mcq4_placeholder')"
+                    :options="mcqOptions4"
+                    name="g4"
+                  />
+
+                  <McqQuestion
+                    v-model="g5"
+                    :question="$t('survey.mcq5')"
+                    :options="mcqOptions5"
+                    name="g5"
                   />
 
                   <InputQuestion
-                    v-model:answer="g5"
-                    :question="$t('survey.mcq5')"
-                    :placeholder="$t('survey.mcq5_placeholder')"
+                    v-model:answer="g6"
+                    :question="$t('survey.inq1')"
+                    :placeholder="$t('survey.inq1_placeholder')"
+                  />
+
+                  <InputQuestion
+                    v-model:answer="g7"
+                    :question="$t('survey.inq2')"
+                    :placeholder="$t('survey.inq2_placeholder')"
                   />
                 </div>
               </div>
@@ -445,29 +457,40 @@ const page3Questions: (keyof TouchedState)[] = [
 const untouchedOnPage = (keys: (keyof TouchedState)[]) =>
   keys.filter((k) => !touched.value[k]);
 
-// General/unscored MCQ answers — g1-g5, sent separately as `generalAnswers`,
-// never mixed into the RIASEC `answers` object the backend scores against.
 const g1 = ref("");
 const g2 = ref("");
 const g3 = ref("");
 const g4 = ref("");
 const g5 = ref("");
+const g6 = ref("");
+const g7 = ref("");
 
-const mcqOptions1 = [
+const mcqOptions1 = computed(() => [
   { label: t("survey.mcq1_opt1"), value: "A" },
   { label: t("survey.mcq1_opt2"), value: "B" },
   { label: t("survey.mcq1_opt3"), value: "C" },
-];
-const mcqOptions2 = [
+]);
+const mcqOptions2 = computed(() => [
   { label: t("survey.mcq2_opt1"), value: "A" },
   { label: t("survey.mcq2_opt2"), value: "B" },
   { label: t("survey.mcq2_opt3"), value: "C" },
-];
-const mcqOptions3 = [
+]);
+const mcqOptions3 = computed(() => [
   { label: t("survey.mcq3_opt1"), value: "A" },
   { label: t("survey.mcq3_opt2"), value: "B" },
   { label: t("survey.mcq3_opt3"), value: "C" },
-];
+]);
+const mcqOptions4 = computed(() => [
+  { label: t("survey.mcq4_opt1"), value: "A" },
+  { label: t("survey.mcq4_opt2"), value: "B" },
+  { label: t("survey.mcq4_opt3"), value: "C" },
+]);
+const mcqOptions5 = computed(() => [
+  { label: t("survey.mcq5_opt1"), value: "A" },
+  { label: t("survey.mcq5_opt2"), value: "B" },
+  { label: t("survey.mcq5_opt3"), value: "C" },
+  { label: t("survey.mcq5_opt4"), value: "D" },
+]);
 
 const handleWelcomeContinue = () => {
   stage.value = Stage.Email;
@@ -487,7 +510,7 @@ const handleNext = async () => {
   submitError.value = "";
 
   if (currentPage.value === 4) {
-  if (!g1.value || !g2.value || !g3.value || !g4.value) {
+  if (!g1.value || !g2.value || !g3.value || !g4.value || !g5.value) {
     submitError.value = "survey.mcq-no-answer-error";
     return;
   }
@@ -529,6 +552,8 @@ const handleNext = async () => {
         g3: g3.value,
         g4: g4.value,
         g5: g5.value,
+        g6: g6.value,
+        g7: g7.value,
       },
     };
 

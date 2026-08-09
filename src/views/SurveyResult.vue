@@ -93,7 +93,16 @@
               :class="['share-btn', share.id]"
               @click="handleShare(share.platform)"
             >
-              <font-awesome-icon :icon="share.icon" class="share-icon" />
+              <font-awesome-icon
+                v-if="share.id === 'x'"
+                :icon="['fab', 'x-twitter']"
+                class="share-icon"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="share.icon"
+                class="share-icon"
+              />
               <span class="share-label">{{ share.label }}</span>
             </button>
 
@@ -274,15 +283,15 @@ const shareOptions = [
   },
   {
     id: "instagram",
-    icon: ["fab", "instagram"],
+    icon: "fa-brands fa-instagram",
     label: "Instagram",
     platform: "instagram",
   },
   {
-    id: "twitter",
-    icon: ["fab", "twitter"],
-    label: "Twitter",
-    platform: "twitter",
+    id: "x",
+    icon: "fa-brands fa-x-twitter",
+    label: "X",
+    platform: "x",
   },
 ];
 
@@ -319,7 +328,6 @@ const handleShare = async (platform) => {
       break;
 
     case "instagram":
-      // Mobile native share (opens Instagram app options)
       if (navigator.share) {
         try {
           await navigator.share({
@@ -329,12 +337,9 @@ const handleShare = async (platform) => {
           });
           return;
         } catch (err) {
-          // User closed share sheet, do nothing
           return;
         }
       }
-
-      // Desktop fallback: copy link and notify user
       await navigator.clipboard.writeText(window.location.href);
       alert("Link copied! Paste it in an Instagram Direct Message or Story.");
       window.open("https://instagram.com", "_blank");
@@ -531,7 +536,6 @@ const handleShare = async (platform) => {
   text-align: right;
 }
 
-/* --- Locked traits section --- */
 .traits-card {
   position: relative;
   border-radius: 20px;
@@ -593,7 +597,6 @@ const handleShare = async (platform) => {
   opacity: 0.85;
 }
 
-/* --- Share section --- */
 .share-card {
   background: var(--sc-color);
   backdrop-filter: blur(12px);
@@ -629,6 +632,7 @@ const handleShare = async (platform) => {
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
+  font-family: "Poppins", sans-serif;
 }
 
 .share-btn:hover {
@@ -644,17 +648,16 @@ const handleShare = async (platform) => {
 .share-btn.instagram {
   background: linear-gradient(
     45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
+    #ffdf9e 0%,
+    #ffc273 25%,
+    #e56969 50%,
+    #c1558b 75%,
+    #8a49a1 100%
   );
-  color: white;
 }
 
 .share-btn.twitter {
-  background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+  background: linear-gradient(135deg, #000000 0%, #000000 100%);
   color: white;
 }
 
