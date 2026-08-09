@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "./views/HomeView.vue";
 
-import NotFound from "../views/NotFound.vue";
-import SetPassword from "../views/SetPassword.vue";
-import LegalView from "../views/LegalView.vue";
-import { useAuthStore } from "../stores/auth.ts";
+import NotFound from "./views/NotFound.vue";
+import SetPassword from "./views/SetPassword.vue";
+import LegalView from "./views/LegalView.vue";
+import { useAuthStore } from "./stores/auth.ts";
 
 const routes = [
   {
@@ -15,16 +15,16 @@ const routes = [
   {
     path: "/join",
     name: "ApplicationForm",
-    component: () => import("../views/ApplicationForm.vue"),
+    component: () => import("./views/ApplicationForm.vue"),
   },
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/LoginView.vue"),
+    component: () => import("./views/LoginView.vue"),
   },
   {
     path: "/profile",
-    component: () => import("../views/ProfileView.vue"),
+    component: () => import("./views/ProfileView.vue"),
     meta: { requiresAuth: true },
   },
   {
@@ -36,12 +36,12 @@ const routes = [
   {
     path: "/invited",
     name: "Invited",
-    component: () => import("../views/InvitedView.vue"),
+    component: () => import("./views/InvitedView.vue"),
   },
   {
     path: "/projects",
     name: "ProjectsView",
-    component: () => import("../views/ComingSoon.vue"),
+    component: () => import("./views/ComingSoon.vue"),
   },
   {
     path: "/:pathMatch(.*)*",
@@ -75,11 +75,11 @@ const routes = [
   },
   {
     path: "/survey",
-    component: () => import("../views/Survey.vue"),
+    component: () => import("./views/Survey.vue"),
   },
   {
     path: "/survey-result/:id",
-    component: () => import("../views/SurveyResult.vue"),
+    component: () => import("./views/SurveyResult.vue"),
   },
 ];
 
