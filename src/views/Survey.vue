@@ -306,13 +306,13 @@
                     name="g5"
                   />
 
-                  <InputQuestion
+                  <TextareaQuestion
                     v-model:answer="g6"
                     :question="$t('survey.inq1')"
                     :placeholder="$t('survey.inq1_placeholder')"
                   />
 
-                  <InputQuestion
+                  <TextareaQuestion
                     v-model:answer="g7"
                     :question="$t('survey.inq2')"
                     :placeholder="$t('survey.inq2_placeholder')"
@@ -359,6 +359,7 @@ import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";
 import SliderQuestion from "../components/SliderQuestion.vue";
 import InputQuestion from "../components/InputQuestion.vue";
+import TextareaQuestion from "../components/TextareaQuestion.vue";
 import McqQuestion from "../components/MultipleChoiceQuestion.vue";
 import HDivider from "../components/HDivider.vue";
 import Footer from "../components/Footer.vue";
@@ -444,18 +445,6 @@ const markTouched = (key: keyof TouchedState) => {
   touched.value[key] = true;
 };
 
-const page1Questions: (keyof TouchedState)[] = ["q1", "q2", "q3", "q4", "q5"];
-const page2Questions: (keyof TouchedState)[] = ["q6", "q7", "q8", "q9", "q10"];
-const page3Questions: (keyof TouchedState)[] = [
-  "q11",
-  "q12",
-  "q13",
-  "q14",
-  "q15",
-];
-
-const untouchedOnPage = (keys: (keyof TouchedState)[]) =>
-  keys.filter((k) => !touched.value[k]);
 
 const g1 = ref("");
 const g2 = ref("");
@@ -718,9 +707,9 @@ const handleBack = () => {
   }
   .survey-card {
     margin-top: 2rem;
-    padding: 1.75rem 1.25rem;
+    padding: 1.25rem 1rem;
     border-radius: 18px;
-    width: 75%;
+    width: 90%;
   }
   .card-title {
     font-size: 1.35rem;

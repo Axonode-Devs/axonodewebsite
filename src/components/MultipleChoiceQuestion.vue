@@ -128,4 +128,25 @@ const colors = ['#7ad5e4', '#b29de4', '#f68cae', '#f4d06f', '#9bdeac'];
   font-weight: 300;
   color: var(--text-color2);
 }
+
+@media (max-width: 480px) {
+  .mcq-container {
+    margin: 1.5rem auto;
+    margin-bottom: 2.5rem;
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+  }
+
+  .options-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .option-text {
+    font-size: 0.9rem;
+  }
+}
 </style>

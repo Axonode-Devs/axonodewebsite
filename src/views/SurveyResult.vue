@@ -94,12 +94,6 @@
               @click="handleShare(share.platform)"
             >
               <font-awesome-icon
-                v-if="share.id === 'x'"
-                :icon="['fab', 'x-twitter']"
-                class="share-icon"
-              />
-              <font-awesome-icon
-                v-else
                 :icon="share.icon"
                 class="share-icon"
               />
@@ -715,6 +709,53 @@ const handleShare = async (platform) => {
   }
   .title {
     font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-section {
+    padding: 6rem 1rem 2rem;
+  }
+  .container {
+    gap: 2rem;
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+  .pie-chart {
+    width: 140px;
+    height: 140px;
+  }
+  .professions-card {
+    padding: 1.5rem;
+  }
+  .score-list {
+    gap: 1.25rem;
+  }
+  .share-card {
+    padding: 1.5rem;
+  }
+  .share-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+  .traits-blurred {
+    padding: 1.5rem;
+  }
+  .overlay-title {
+    font-size: 1.3rem;
+  }
+  .overlay-desc {
+    font-size: 0.85rem;
+  }
+  .traits-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+  .trait-box {
+    padding: 1rem;
+  }
+  .trait-value {
+    font-size: 1.2rem;
   }
 }
 </style>
