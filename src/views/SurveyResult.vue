@@ -266,7 +266,6 @@ const getProfColor = (name) => {
 };
 
 const shareOptions = [
-  // Use ['fab', '...'] for Brands (WhatsApp, Instagram, Twitter)
   {
     id: "whatsapp",
     icon: ["fab", "whatsapp"],
