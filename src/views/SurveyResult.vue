@@ -300,7 +300,7 @@ const copyLink = async () => {
 };
 
 const shareUrl = encodeURIComponent(window.location.href);
-const shareTitle = `${profDisplayName.value} | Axonode Survey Result`;
+const shareTitle = `I am ${profDisplayName.value} | Axonode Survey Result`;
 const shareText = encodeURIComponent(shareTitle);
 
 const handleShare = async (platform) => {
@@ -324,7 +324,7 @@ const handleShare = async (platform) => {
       if (navigator.share) {
         try {
           await navigator.share({
-            title: shareTitle,
+            title: "Axonode Survey",
             text: shareTitle,
             url: window.location.href,
           });
