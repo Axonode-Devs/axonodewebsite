@@ -36,7 +36,7 @@
       <div class="visual-column">
         <div class="video-container">
           <video
-            src="/video.mp4"
+            src="../assets/video.mp4"
             class="hero-video"
             autoplay
             loop
@@ -57,7 +57,6 @@
 import { ref, onMounted } from 'vue';
 import TeamMarquee from './TeamMarquee.vue';
 import { useRouter } from 'vue-router';
-
 const router = useRouter();
 const NAV_OFFSET = 80;
 const textRevealed = ref(false);
