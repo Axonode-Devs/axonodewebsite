@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Sitemap from 'vite-plugin-sitemap'
-
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   server:{
@@ -12,6 +12,11 @@ export default defineConfig({
         secure: true,
       },
     },
+  },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
   },
   plugins: [
     vue(),

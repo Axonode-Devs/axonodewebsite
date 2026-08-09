@@ -36,7 +36,7 @@
       <div class="visual-column">
         <div class="video-container">
           <video
-            src="../assets/video.mp4"
+            src="@/assets/video.mp4"
             class="hero-video"
             autoplay
             loop
