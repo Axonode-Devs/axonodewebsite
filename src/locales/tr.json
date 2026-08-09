@@ -510,8 +510,9 @@
       "title": "{gr-name}'un Kişilik Anketine Hoşgeldiniz!",
       "subtitle": "Hadi Kişiliğin Kariyerin hakkında ne söylüyor bulalım!",
       "go": "Hadi!",
-      "acceptence": "{go} tuşuna basarak {survey-policy}'nı Kabul etmiş olursunuz. ",
-      "policyLinkText": "Anket Gizlilik Politikası"
+      "acceptence": "{survey-policy}'i okudum ve kabul ediyorum, bu şartlar altında verilerin işlenmesine açık rıza veriyorum",
+      
+      "policyLinkText": "Anket Aydınlatma Metni"
     },
     "email": {
       "title": "Kişisel Bilgiler",

@@ -500,7 +500,7 @@
       "title": "Welcome to the {gr-name} Personality Survey",
       "subtitle": "Lets find out what your personality tells about your career?",
       "go": "Lets go!",
-      "acceptence": "By clicking {go} you accept the {survey-policy}",
+      "acceptence": "I have read and agree to the {survey-policy}",
       "policyLinkText": "Survey Policy"
     },
     "email": {

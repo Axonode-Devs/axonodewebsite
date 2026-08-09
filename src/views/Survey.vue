@@ -28,26 +28,28 @@
           <p class="card-subtitle">{{ $t("survey.welcome.subtitle") }}</p>
 
           <div class="button-container">
-            <button class="submit-button" @click="handleWelcomeContinue">
+            <button class="submit-button" @click="handleWelcomeContinue" :disabled="!consentGiven">
               {{ $t("survey.welcome.go") }}
             </button>
           </div>
 
-          <p class="welcome-acceptance">
-            <i18n-t keypath="survey.welcome.acceptence" tag="span">
-              <template #go>{{ $t("survey.welcome.go") }}</template>
-              <template #survey-policy>
-                <a
-                  href="/privacy-policy"
-                  target="_blank"
-                  rel="noopener"
-                  class="policy-link"
-                >
-                  {{ $t("survey.welcome.policyLinkText") }}
+          <label class="consent-checkbox">
+            <input type="checkbox" v-model="consentGiven" class="hidden-checkbox" />
+            <span class="custom-checkbox"></span>
+            <span class="consent-text">
+              <i18n-t keypath="survey.welcome.acceptence" tag="span">
+                <template #go>{{ $t("survey.welcome.go") }}</template>
+                <template #survey-policy>
+                  <a
+                    @click="goToPrivacy"
+                    class="policy-link"
+                  >
+                    {{ $t("survey.welcome.policyLinkText") }}
                 </a>
-              </template>
-            </i18n-t>
-          </p>
+                </template>
+              </i18n-t>
+            </span>
+          </label>
         </div>
 
         <div v-else-if="stage === Stage.Email" key="email" class="survey-card">
@@ -372,6 +374,14 @@ import { publicService } from "../api/publicService";
 const { locale, t } = useI18n({ useScope: "global" });
 const router = useRouter();
 
+const goToPrivacy = ()  =>{
+  if (locale.value == "en") {
+    router.push("/privacy-survey-en")
+  } else if (locale.value == "tr") {
+    router.push("/privacy-survey-tr")
+  }
+}
+
 const surveyImage = computed(() => {
   return locale.value === "tr" ? "/letsfindouttr.png" : "/letsfindout.png";
 });
@@ -384,6 +394,7 @@ enum Stage {
 
 const stage: Ref<Stage> = ref(Stage.Welcome);
 const currentPage = ref(1);
+const consentGiven = ref(false);
 
 const email = ref("");
 const emailError = ref("");
@@ -748,10 +759,49 @@ const handleBack = () => {
   -webkit-text-fill-color: transparent;
   font-weight: 600;
 }
-.welcome-acceptance {
+.consent-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  cursor: pointer;
+  text-align: left;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hidden-checkbox {
+  display: none;
+}
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 2px solid #a59ce6;
+  border-radius: 4px;
+  background: transparent;
+  transition: all 0.2s ease;
+  position: relative;
+  margin-top: 2px;
+}
+.hidden-checkbox:checked + .custom-checkbox {
+  background: #a59ce6;
+}
+.hidden-checkbox:checked + .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.consent-text {
   font-size: 0.8rem;
   opacity: 0.7;
-  margin-top: 1rem;
+  line-height: 1.4;
 }
 .policy-link {
   color: #a59ce6;

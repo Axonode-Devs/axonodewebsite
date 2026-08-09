@@ -64,6 +64,16 @@ const routes = [
     meta: { fileName: "privacy" },
   },
   {
+    path: "/privacy-survey-tr",
+    component: LegalView,
+    meta: { fileName: "survey-privacy-tr" },
+  },
+  {
+    path: "/privacy-survey-en",
+    component: LegalView,
+    meta: { fileName: "survey-privacy-en" },
+  },
+  {
     path: "/survey",
     component: () => import("../views/Survey.vue"),
   },
