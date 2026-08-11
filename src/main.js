@@ -35,6 +35,8 @@ import {
   faUser,        
   faPhone,        
   faArrowRight,   
+  faBolt,
+  faStar
 } from "@fortawesome/free-solid-svg-icons";
 
 // --- 3. BRANDS ICONS PACKAGE ---
@@ -74,6 +76,8 @@ library.add(
   faPaperPlane,
   faTriangleExclamation,
   faCircleXmark,
+  faBolt,
+  faStar,
 );
 
 import "./style.css";

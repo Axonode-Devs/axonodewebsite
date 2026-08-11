@@ -444,6 +444,11 @@
     "does_not_have_account": "Don't have an account? "
   },
   "survey": {
+    "banner":{
+      "title": "Take Our Survey!",
+    "subtitle": "We'd love to hear your thoughts"
+    },
+
     "questions": {
       "title": "Questions",
       "subtitle": "We got only a 20 questions for that are fairly easy, the results will be better if you are honest ;)",

@@ -454,6 +454,11 @@
     "does_not_have_account": "Hesabın yok mu? Yeni Kişilere Her zaman açığız, Bize Katılmak için Tıkla!"
   },
   "survey": {
+    "banner": {
+      "title": "Anketimize Katılın!",
+      "subtitle": "Düşüncelerinizi duymayı çok isteriz"
+    },
+
     "questions": {
       "title": "Sorular",
       "subtitle": "Toplamda 20 tane basit sorumuz var ne kadar dürüst cevaplarsan o kadar başarılı bir sonuç alırsın ;)",
@@ -511,7 +516,7 @@
       "subtitle": "Hadi Kişiliğin Kariyerin hakkında ne söylüyor bulalım!",
       "go": "Hadi!",
       "acceptence": "{survey-policy}'i okudum ve kabul ediyorum, bu şartlar altında verilerin işlenmesine açık rıza veriyorum",
-      
+
       "policyLinkText": "Anket Aydınlatma Metni"
     },
     "email": {
