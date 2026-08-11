@@ -105,9 +105,9 @@ const handleLogin = async () => {
 }
 
 .login-box {
-  background-color: var(--bg-color);
+  background-color: var(--sc-color);
   backdrop-filter: blur(10px);
-  border: 2px dashed var(--sc-color);
+  border: 2px dashed var(--border-color);
   border-radius: 26px;
   padding: 48px 40px;
   animation: slideUp 0.6s ease-out;

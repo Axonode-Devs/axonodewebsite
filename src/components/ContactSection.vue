@@ -18,6 +18,12 @@
             </div>
             <span>contact@axonode.org</span>
           </a>
+          <a href="https://www.instagram.com/axonode_org/" class="link-item">
+            <div class="icon-box">
+              <font-awesome-icon :icon="['fab', 'instagram']" />
+            </div>
+            <span>DM Us</span>
+          </a>
         </div>
       </div>
     </div>
