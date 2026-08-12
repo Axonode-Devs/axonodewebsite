@@ -37,6 +37,11 @@
       "and": "&",
       "team_members": "Takım Üyeleri"
     },
+    "bios": {
+      "yaser_durubi": "Ya direk lafa giriyorum dürüst olmam gerekirse, birlikte proje geliştirecek doğru insanları bulmak benim için her zaman büyük bir sorundu. Hem tasarımcı hem de geliştirici olarak iki şapka birden takınca, kendimi hep iki taraf tarafından çekiliyormuş gibi hisserdim! Biri sosyal medyayla ilgilenmem gerektiğini söyler, diğeri ise 'bırakın web sitesini o yapsın' derdi ve sonunda her şey durma noktasına gelirdi. İşte bu yüzden kafa dengi insanlarla bağ kurabilmek için tam da her zaman arzuladığımız o alanı yaratmak adına arkadaşlarımla Axonode'u kurduk. Tasarım yazılımlarını kurcalamadığım veya kod yazmadığım zamanlarda, beni büyük ihtimalle robotik yarışmalarında donanımlarla uğraşırken bulabilirsiniz. Axonode'a hoş geldiniz, burada olmanız bir onur!",
+      "bersis_sevimli": "Selamlar, ben Bersis! Yazılım geliştirici, bilgisayar mühendisi ve birkaç açık kaynaklı projenin aktif geliştiricisi ve yazarıyım. Büyürken çevremdeki her türlü teknoloji ilgimi çekerdi ve zamanımın çoğunu şeylerin nasıl çalıştığını araştırmakla geçirirdim. Büyüyüncede pek bir şey değişmedi, sadece artık onları kendim inşa edip yeteneklerimi kullanarak yarışmalarda ödüller kazanıyorum! Yine de tek başına bir şeyler inşa etmek yorucu olabilmenin yanısıra çoğu yarışma ve etkinlik bir takım talep ediyor. İşte tam da bu yüzden Axonode'u kurduk benzer fikirli insanları birbiri ile bağlayıp üretmeye teşvik etmek. Lider Yöneticimiz olarak, burada her zaman samimiyetle karşılanacağınızın sözünü veriyorum!",
+      "kaan_uygun": "Merhaba, ben Kaan! Axonode'da Halkla İlişkiler Lideriyim. Ekip arkadaşlarımın aksine, teknoloji konusunda hiçbir zaman doğuştan yetenekli olmadım. Ancak gerçekten iyi olduğum şey; düşünmek, anlamak ve inanılmaz derecede zor kavramları küçük bir çocuğa bile anlatabilmek halk diyişiyle dilim döner yani. Muhtemelen 'Başarılı olmak için yetenekli olmanıza gerek yok' sözünün en açık örneğiyim. Arkadaşlarımın da söylediği gibi, Axonode'a hoş geldiniz! Yapacak çok işimiz var :)"
+    },
     "accessibility": {
       "view_github": "Github Profilini Görüntüle"
     },

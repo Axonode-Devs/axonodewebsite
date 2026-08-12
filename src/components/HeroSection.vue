@@ -46,16 +46,12 @@
         </div>
       </div>
     </div>
-    
-    <div class="marquee-wrapper">
-      <TeamMarquee />
-    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import TeamMarquee from './TeamMarquee.vue';
+import TeamMembers from './TeamMembers.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const NAV_OFFSET = 80;
@@ -90,7 +86,7 @@ onMounted(() => {
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 80px 40px;
+  padding: 50px 20px;
   font-family: 'Inter', sans-serif;
   color: #fff;
 }
@@ -132,7 +128,7 @@ onMounted(() => {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 250px;
+  height: 30px;
   background: linear-gradient(to top, #fe78b00a 0%, #141414 80%, transparent 100%);
   z-index: 15;
   pointer-events: none;
@@ -148,7 +144,6 @@ onMounted(() => {
   gap: 80px;
   z-index: 10;
   position: relative;
-  margin-bottom: 6rem;
 }
 
 .hero-content {
