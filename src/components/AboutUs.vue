@@ -49,12 +49,15 @@
       </div>
 
     </div>
+    <TeamMembers class="about-team" />
+    
     <div class="bottom-divider" aria-hidden="true"></div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
+import TeamMembers from './TeamMembers.vue';
 
 const triggerRef = ref<HTMLElement | null>(null);
 const cardsVisible = ref(false);

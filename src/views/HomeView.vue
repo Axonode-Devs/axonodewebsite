@@ -7,6 +7,7 @@
       <BannerSection />
       <HDivider />
       <AboutUs />
+      
       <ContactSection />
     </div>
     
@@ -22,7 +23,6 @@ import Navbar from '../components/Navbar.vue';
 import HDivider from '../components/HDivider.vue'
 import ContactSection from '../components/ContactSection.vue';
 import Footer from '../components/Footer.vue'
-import BannerSection from '../components/BannerSection.vue'
 
 </script>
 
