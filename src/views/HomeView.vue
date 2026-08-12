@@ -4,8 +4,7 @@
     <HeroSection />
     <div class="orb-section">
       <WhatWeDo />
-      <SurveyBanner />
-
+      <BannerSection />
       <HDivider />
       <AboutUs />
       <ContactSection />
@@ -24,7 +23,6 @@ import HDivider from '../components/HDivider.vue'
 import ContactSection from '../components/ContactSection.vue';
 import Footer from '../components/Footer.vue'
 import BannerSection from '../components/BannerSection.vue'
-import SurveyBanner from '../components/SurveyBanner.vue'
 
 </script>
 
