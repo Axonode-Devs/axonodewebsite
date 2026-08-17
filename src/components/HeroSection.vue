@@ -81,7 +81,7 @@ onMounted(() => {
 
 .hero-container {
   background-color: #141414;
-  min-height: 85vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   position: relative;
@@ -93,7 +93,7 @@ onMounted(() => {
 
 .grid-text-bg {
   position: absolute;
-  top: 10%;
+  top: 20%;
   left: -23rem;
   width: 90%;
   height: 65%;
@@ -123,17 +123,6 @@ onMounted(() => {
   pointer-events: none;
 }*/
 
-.bottom-gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  background: linear-gradient(to top, #fe78b00a 0%, #141414 80%, transparent 100%);
-  z-index: 15;
-  pointer-events: none;
-}
-
 .content-wrapper {
   max-width: 1400px;
   margin: 0 auto;
@@ -162,8 +151,8 @@ onMounted(() => {
   border-radius: 50%;
 }
 .dot-cyan { background-color: #78dee7; }
-.dot-lavender { background-color: #9d8df1; }
-.dot-pink { background-color: #ff7ab8; }
+.dot-lavender { background-color: #a59ce6; }
+.dot-pink { background-color: #fe78b0; }
 
 .reveal-line {
   display: inline-block;
@@ -262,7 +251,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background: linear-gradient(45deg, #fe78b0, #fe78e1);
+  background-color: #fe78b0;
   color: var(--text-color);
   padding: 10px 30px;
   border-radius: 15px;

@@ -2,9 +2,10 @@
   <div class="home-container">
     <Navbar />
     <HeroSection />
-    <div class="orb-section">
+    <HDivider />
       <WhatWeDo />
       <BannerSection />
+
       <HDivider />
       <AboutUs />
       
@@ -12,7 +13,6 @@
     </div>
     
     <Footer></Footer>
-  </div>
 </template>
 
 <script setup lang="ts">

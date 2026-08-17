@@ -49,7 +49,6 @@
       >
         <button class="modal-close" @click="closeModal" aria-label="Close">✕</button>
 
-        <!-- IDENTITY HEADER -->
         <div class="modal-id-header">
           <div class="modal-avatar-wrap">
             <img
@@ -233,7 +232,7 @@ onUnmounted(() => {
   color: var(--text-color2);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   width: 100%;
   flex-wrap: wrap;
 }
@@ -249,29 +248,11 @@ onUnmounted(() => {
   margin-left: 8px;
 }
 
-/* No flanking divider lines here — about-section already closes with
-   its own bottom-divider a little further down; a second full-width
-   line this close would read as a stutter rather than a section end. */
-.middle-title {
-  font-size: clamp(0.8rem, 5vw, 1.5rem);
-  font-weight: 800;
-  color: var(--text-color);
-  margin: 0;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  word-break: break-word;
-  font-family: 'Poppins', sans-serif;
-}
-.founders-text {
-  color: var(--main3-color);
-}
-
-
 .team-content {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 30px;
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
@@ -286,7 +267,6 @@ onUnmounted(() => {
   border: 1.2px solid var(--border-color);
   border-radius: 55px;
   cursor: pointer;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
   -webkit-tap-highlight-color: transparent;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -328,16 +308,16 @@ onUnmounted(() => {
 
 .name {
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-color);
-  margin: 0 0 3px 0;
+  margin: 0 0 0px 0;
   white-space: nowrap;
   letter-spacing: -0.01em;
 }
 
 .role {
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -350,12 +330,7 @@ onUnmounted(() => {
     transform: translateY(-8px) scale(1.04);
     z-index: 10;
     border-color: var(--member-color);
-    box-shadow: 0 20px 40px -8px var(--member-color), 0 4px 12px rgba(0, 0, 0, 0.4);
     background: var(--trd-color);
-  }
-
-  .team-card:hover .name {
-    color: var(--member-color);
   }
 
   .modal-close:hover {

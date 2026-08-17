@@ -148,7 +148,6 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   height: 120px;
-  background: linear-gradient(to bottom, #fe78b00a 0%, transparent 100%);
   z-index: 0;
   pointer-events: none;
 }
