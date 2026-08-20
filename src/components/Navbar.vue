@@ -241,7 +241,7 @@ const goToHome = () => {
   align-items: center;
   justify-content: space-between;
   pointer-events: auto;
-  background: #1f1f1f;
+  background: var(--bg-color);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;

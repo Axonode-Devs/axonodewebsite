@@ -3,13 +3,14 @@
     <Navbar />
     <HeroSection />
     <HDivider />
-      <WhatWeDo />
-      <BannerSection />
+    <AboutDetails />
+      <!--<WhatWeDo />-->
+      <!--<BannerSection />-->
 
-      <HDivider />
-      <AboutUs />
+      <!--<HDivider />-->
+      <!--<AboutUs />-->
       
-      <ContactSection />
+      <!--<ContactSection />-->
     </div>
     
     <Footer></Footer>
@@ -17,12 +18,14 @@
 
 <script setup lang="ts">
 import WhatWeDo from '../components/WhatWeDo.vue';
+import AboutDetails from '../components/AboutDetails.vue';
 import AboutUs from '../components/AboutUs.vue';
 import HeroSection from '../components/HeroSection.vue';
 import Navbar from '../components/Navbar.vue';
 import HDivider from '../components/HDivider.vue'
 import ContactSection from '../components/ContactSection.vue';
 import Footer from '../components/Footer.vue'
+import BannerSection from '../components/BannerSection.vue';
 
 </script>
 

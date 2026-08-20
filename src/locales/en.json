@@ -1,22 +1,36 @@
 {
   "hero": {
-    "welcome": "Welcome to Axonode!",
-    "background_title": "CREATE",
-    "headline": {
-      "main": "Meet With",
-      "brand": "Axonode"
-    },
+    "title-1": "Connect through projects,",
+    "title-2": "grow <span class=\"highlight\">through</span> people.",
     "subtext": "We are a welcoming community uniting our skills to share knowledge, create projects, and have fun together. Join us to connect with like-minded individuals!",
-    "badge": "Welcome to Axonode",
     "buttons": {
       "learn": "Learn More",
       "about": "Get Started"
     },
-    "video_controls": {
-      "play": "Play",
-      "pause": "Pause",
-      "mute": "Mute",
-      "unmute": "Unmute"
+    "ticker": {
+      "item1": "UI/UX Design",
+      "item2": "Web Development",
+      "item3": "Open Source",
+      "item4": "Community Projects",
+      "item5": "Knowledge Sharing"
+    },
+    "cards": {
+      "reply": "reply",
+      "card1": {
+        "name": "Kerem Poyraz Sarıay",
+        "role": "UI/UX Designer",
+        "description": "I’ve spent three weeks perfecting the user flow. The users are fine… now where the hell am I supposed to find a frontend dev?"
+      },
+      "card2": {
+        "name": "Ayşe Beyköylü",
+        "role": "Graphic Designer",
+        "description": "Bro, I’m a graphic designer. I’m not assembling the Avengers. Why is finding one decent developer a Dark Souls boss fight?"
+      },
+      "card3": {
+        "name": "Orhan Ekrem Güney",
+        "role": "Full-Stack Dev",
+        "description": "I can do the frontend. I can do the backend. I can even fix the database at 3 AM. But can someone PLEASE make this thing look good? I’m losing my mind in Figma."
+      }
     }
   },
   "navbar": {
@@ -53,6 +67,10 @@
       "head_media": "Head of Media",
       "head_pr": "Head of Public Relations"
     }
+  },
+  "about_section": {
+    "title": "What We Do;",
+    "sub-text": "Axonode is a <span class=\"italic-hg\">project and networking platform</span> that makes it easier for people to <span class=\"bold-hg\">turn their ideas into projects</span> and connect those projects with the right people. Anyone working on their own project can share their idea and needs through Axonode and reach <span class=\"bold-hg\">developers, designers, entrepreneurs</span>, or people from other fields who can contribute to their project. Likewise, users can discover projects that interest them, join teams, develop their skills through <span class=\"italic-hg\">real-world projects</span>, and build <span class=\"bold-hg\">meaningful professional connections</span>. Axonode aims to transform networking from simply adding people into a natural process built around <span class=\"italic-hg\">shared ideas, projects, and creation</span>. In this way, we aim to help <span class=\"bold-hg\">good ideas reach the right people</span>, create real opportunities for people to showcase their skills, and build a <span class=\"bold-hg\">global project ecosystem</span> that grows through collaboration."
   },
   "what_we_do": {
     "title": {
@@ -449,11 +467,10 @@
     "does_not_have_account": "Don't have an account? "
   },
   "survey": {
-    "banner":{
+    "banner": {
       "title": "Take Our Survey!",
-    "subtitle": "We'd love to hear your thoughts"
+      "subtitle": "We'd love to hear your thoughts"
     },
-
     "questions": {
       "title": "Questions",
       "subtitle": "We got only a 20 questions for that are fairly easy, the results will be better if you are honest ;)",

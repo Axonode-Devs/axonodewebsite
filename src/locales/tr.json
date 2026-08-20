@@ -1,22 +1,36 @@
 {
   "hero": {
-    "welcome": "Axonode'a Hoş Geldiniz!",
-    "background_title": "OLUŞTUR",
-    "headline": {
-      "main": "Axonode ile",
-      "brand": "Tanışın"
-    },
-    "subtext": "Bilgilerimizi paylaşmak, projeler üretmek ve birlikte eğlenmek için becerilerimizi birleştiren misafirperver bir topluluğuz. Benzer düşüncelerde bireyler ile bağlantı kurmak için bize katıl!",
-    "badge": "Axonode'a Hoş Geldiniz",
+    "title-1": "Projelerle bağlantı kur,",
+    "title-2": "<span class=\"highlight\">insanlarla</span> büyü.",
+    "subtext": "Becerilerimizi paylaşmak, projeler üretmek ve birlikte eğlenmek için bir araya gelen samimi bir topluluğuz. Benzer düşünen insanlarla bağlantı kurmak için bize katıl!",
     "buttons": {
-      "learn": "Daha Fazla",
-      "about": "Hemen Başla"
+      "learn": "Daha Fazla Bilgi",
+      "about": "Şimdi Başla"
     },
-    "video_controls": {
-      "play": "Oynat",
-      "pause": "Durdur",
-      "mute": "Sustur",
-      "unmute": "Sesi aç"
+    "ticker": {
+      "item1": "UI/UX Tasarım",
+      "item2": "Web Geliştirme",
+      "item3": "Açık Kaynak",
+      "item4": "Topluluk Projeleri",
+      "item5": "Bilgi Paylaşımı"
+    },
+    "cards": {
+      "reply": "yanıt",
+      "card1": {
+        "name": "Alex Morgan",
+        "role": "UI/UX Designer",
+        "description": "3 haftadır kullanıcı akışını optimize ediyorum. Kullanıcı tamam da… şu akışta bir tane frontend developer nereden bulacağım?"
+      },
+      "card2": {
+        "name": "Elena Rostova",
+        "role": "Graphic Designer",
+        "description": "Abi ben grafik tasarımcıyım, NASA'ya astronot aramıyorum. Bir tane düzgün developer bulmak neden Dark Souls boss fight?"
+      },
+      "card3": {
+        "name": "Kerem Yılmaz",
+        "role": "Full-Stack Dev",
+        "description": "Frontend’i de yaparım, backend’i de. Veritabanını da kurarım. Ama biri şu tasarıma bir baksa fena olmaz… çünkü şu an Figma dosyasını açınca ruhum çıkıyor."
+      }
     }
   },
   "navbar": {
@@ -38,7 +52,7 @@
       "team_members": "Takım Üyeleri"
     },
     "bios": {
-      "yaser_durubi": "Ya direk lafa giriyorum dürüst olmam gerekirse, birlikte proje geliştirecek doğru insanları bulmak benim için her zaman büyük bir sorundu. Hem tasarımcı hem de geliştirici olarak iki şapka birden takınca, kendimi hep iki taraf tarafından çekiliyormuş gibi hisserdim! Biri sosyal medyayla ilgilenmem gerektiğini söyler, diğeri ise 'bırakın web sitesini o yapsın' derdi ve sonunda her şey durma noktasına gelirdi. İşte bu yüzden kafa dengi insanlarla bağ kurabilmek için tam da her zaman arzuladığımız o alanı yaratmak adına arkadaşlarımla Axonode'u kurduk. Tasarım yazılımlarını kurcalamadığım veya kod yazmadığım zamanlarda, beni büyük ihtimalle robotik yarışmalarında donanımlarla uğraşırken bulabilirsiniz. Axonode'a hoş geldiniz, burada olmanız bir onur!",
+      "yaser_durubi": "Ya direkt lafa giriyorum dürüst olmam gerekirse, birlikte proje geliştirecek doğru insanları bulmak benim için her zaman büyük bir sorundu. Hem tasarımcı hem de geliştirici olarak iki şapka birden takınca, kendimi hep iki taraf tarafından çekiliyormuş gibi hisserdim! Biri sosyal medyayla ilgilenmem gerektiğini söyler, diğeri ise 'bırakın web sitesini o yapsın' derdi ve sonunda her şey durma noktasına gelirdi. İşte bu yüzden kafa dengi insanlarla bağ kurabilmek için tam da her zaman arzuladığımız o alanı yaratmak adına arkadaşlarımla Axonode'u kurduk. Tasarım yazılımlarını kurcalamadığım veya kod yazmadığım zamanlarda, beni büyük ihtimalle robotik yarışmalarında donanımlarla uğraşırken bulabilirsiniz. Axonode'a hoş geldiniz, burada olmanız bir onur!",
       "bersis_sevimli": "Selamlar, ben Bersis! Yazılım geliştirici, bilgisayar mühendisi ve birkaç açık kaynaklı projenin aktif geliştiricisi ve yazarıyım. Büyürken çevremdeki her türlü teknoloji ilgimi çekerdi ve zamanımın çoğunu şeylerin nasıl çalıştığını araştırmakla geçirirdim. Büyüyüncede pek bir şey değişmedi, sadece artık onları kendim inşa edip yeteneklerimi kullanarak yarışmalarda ödüller kazanıyorum! Yine de tek başına bir şeyler inşa etmek yorucu olabilmenin yanısıra çoğu yarışma ve etkinlik bir takım talep ediyor. İşte tam da bu yüzden Axonode'u kurduk benzer fikirli insanları birbiri ile bağlayıp üretmeye teşvik etmek. Lider Yöneticimiz olarak, burada her zaman samimiyetle karşılanacağınızın sözünü veriyorum!",
       "kaan_uygun": "Merhaba, ben Kaan! Axonode'da Halkla İlişkiler Lideriyim. Ekip arkadaşlarımın aksine, teknoloji konusunda hiçbir zaman doğuştan yetenekli olmadım. Ancak gerçekten iyi olduğum şey; düşünmek, anlamak ve inanılmaz derecede zor kavramları küçük bir çocuğa bile anlatabilmek halk diyişiyle dilim döner yani. Muhtemelen 'Başarılı olmak için yetenekli olmanıza gerek yok' sözünün en açık örneğiyim. Arkadaşlarımın da söylediği gibi, Axonode'a hoş geldiniz! Yapacak çok işimiz var :)"
     },
@@ -53,6 +67,10 @@
       "head_media": "Medya Direktörü",
       "head_pr": "Halkla İlişkiler Başkanı"
     }
+  },
+  "about_section": {
+    "title": "Neler Yapıyoruz;",
+    "sub-text": "Axonode, insanların <span class=\"bold-hg\">fikirlerini projelere dönüştürmesini</span> ve doğru insanlarla buluşturmasını sağlayan bir <span class=\"italic-hg\">proje ve networking platformudur</span>. Kullanıcılar projelerini ve ihtiyaçlarını paylaşarak <span class=\"bold-hg\">yazılımcı, tasarımcı, girişimci</span> ve farklı alanlardan insanlara ulaşabilir; projeler keşfedip ekiplere katılarak yeteneklerini <span class=\"italic-hg\">gerçek projelerde</span> geliştirebilir. Axonode, networking'i insan eklemekten çıkarıp <span class=\"bold-hg\">ortak fikirler ve üretim</span> üzerinden doğal bir sürece dönüştürmeyi ve <span class=\"bold-hg\">global bir proje ekosistemi</span> oluşturmayı hedefler."
   },
   "what_we_do": {
     "title": {
@@ -463,7 +481,6 @@
       "title": "Anketimize Katılın!",
       "subtitle": "Düşüncelerinizi duymayı çok isteriz"
     },
-
     "questions": {
       "title": "Sorular",
       "subtitle": "Toplamda 20 tane basit sorumuz var ne kadar dürüst cevaplarsan o kadar başarılı bir sonuç alırsın ;)",
@@ -521,7 +538,6 @@
       "subtitle": "Hadi Kişiliğin Kariyerin hakkında ne söylüyor bulalım!",
       "go": "Hadi!",
       "acceptence": "{survey-policy}'i okudum ve kabul ediyorum, bu şartlar altında verilerin işlenmesine açık rıza veriyorum",
-
       "policyLinkText": "Anket Aydınlatma Metni"
     },
     "email": {
