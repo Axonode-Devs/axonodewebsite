@@ -55,7 +55,7 @@ export default {
 
 <style scoped>
 .hero-container {
-  height: 90vh;
+  height: 95vh;
   width: 100%;
   display: flex;
   justify-content: center;
