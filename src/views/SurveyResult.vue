@@ -538,12 +538,12 @@ const handleShare = async (platform) => {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/*.traits-blurred {
+.traits-blurred {
   filter: blur(12px);
   pointer-events: none;
   user-select: none;
   padding: 2.5rem;
-}*/
+}
 
 .traits-overlay {
   position: absolute;
