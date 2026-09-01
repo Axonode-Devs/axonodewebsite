@@ -4,41 +4,41 @@
     <img src="/sunburst.svg" alt="" class="sunburst top-right" aria-hidden="true" />
     
     <div class="content-container">
-      <h1 class="title1">{{ $t('hero.title-1') }}</h1>
-      <h1 class="title2" v-html="$t('hero.title-2')"></h1>
+      <h1 class="title1">{{ t('hero.title-1') }}</h1>
+      <h1 class="title2" v-html="t('hero.title-2')"></h1>
       <p class="description">
-        {{ $t('hero.subtext') }}
+        {{ t('hero.subtext') }}
       </p>
       
       <div class="button-container">
-        <button class="start-btn">{{ $t('hero.buttons.about') }}</button>
-        <button class="learn-btn">{{ $t('hero.buttons.learn') }}</button>
+        <button class="start-btn">{{ t('hero.buttons.about') }}</button>
+        <button class="learn-btn">{{ t('hero.buttons.learn') }}</button>
       </div>
 
       <div class="ticker-wrapper">
         <div class="ticker-track">
           <div class="ticker-content">
-            <span>{{ $t('hero.ticker.item1') }}</span>
+            <span>{{ t('hero.ticker.item1') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item2') }}</span>
+            <span>{{ t('hero.ticker.item2') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item3') }}</span>
+            <span>{{ t('hero.ticker.item3') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item4') }}</span>
+            <span>{{ t('hero.ticker.item4') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item5') }}</span>
+            <span>{{ t('hero.ticker.item5') }}</span>
             <span class="dot">•</span>
           </div>
           <div class="ticker-content" aria-hidden="true">
-            <span>{{ $t('hero.ticker.item1') }}</span>
+            <span>{{ t('hero.ticker.item1') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item2') }}</span>
+            <span>{{ t('hero.ticker.item2') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item3') }}</span>
+            <span>{{ t('hero.ticker.item3') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item4') }}</span>
+            <span>{{ t('hero.ticker.item4') }}</span>
             <span class="dot">•</span>
-            <span>{{ $t('hero.ticker.item5') }}</span>
+            <span>{{ t('hero.ticker.item5') }}</span>
             <span class="dot">•</span>
           </div>
         </div>
@@ -47,20 +47,24 @@
   </section>
 </template>
 
-<script>
-export default {
+<script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+defineOptions({
   name: 'HeroSection'
-}
+})
 </script>
 
 <style scoped>
 .hero-container {
-  height: 95vh;
+  min-height: 95vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 2rem;
+  padding: 2rem 1.5rem;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
@@ -95,6 +99,7 @@ export default {
   position: relative;
   z-index: 1;
   max-width: 800px;
+  width: 100%;
 }
 
 .title1 {
@@ -126,6 +131,7 @@ export default {
   justify-content: center;
   gap: 10px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 :deep(.highlight) {
@@ -204,6 +210,74 @@ export default {
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .sunburst {
+    max-width: 55vw;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .title1 {
+    font-size: 1.9rem;
+  }
+
+  .title2 {
+    font-size: 2.4rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .start-btn {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .learn-btn {
+    width: 100%;
+    max-width: 260px;
+    height: 40px;
+  }
+
+  .sunburst {
+    max-width: 70vw;
+    opacity: 0.6;
+  }
+
+  .ticker-content {
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 400px) {
+  .title1 {
+    font-size: 1.6rem;
+  }
+
+  .title2 {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
   }
 }
 </style>
