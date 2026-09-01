@@ -102,9 +102,7 @@
   },
   "about_us": {
     "header": {
-      "title_start": "Bizim",
-      "title_end": "",
-      "subtitle": "Hakkımızda Daha Fazlası"
+      "title": "Hakkımızda"
     },
     "vision": {
       "title": "Vizyonumuz",
