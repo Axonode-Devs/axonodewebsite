@@ -711,8 +711,9 @@ onUnmounted(() => {
     .card {
         width: 100%;
         max-width: 360px;
-        height: auto;
-        min-height: 140px;
+        /* fixed height so long bios get truncated with the fade mask
+           instead of stretching the card down the page */
+        height: 150px;
         padding: 16px 16px;
         gap: 12px;
     }

@@ -51,6 +51,8 @@
 .container {
   width: 100%;
   max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .join-card {
@@ -190,9 +192,29 @@
   }
 
   .join-btn {
-    width: 100%;
-    max-width: 320px;
+    width: auto;
+    min-width: 200px;
     justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .join-card {
+    padding: 32px 16px;
+    border-radius: 20px;
+  }
+
+  .title {
+    font-size: 1.45rem;
+  }
+
+  .description {
+    font-size: 0.88rem;
+  }
+
+  .join-btn {
+    height: 48px;
+    font-size: 0.95rem;
   }
 }
 </style>

@@ -479,5 +479,18 @@
       "q6": "Axonode hangi alanları kapsıyor?",
       "a6": "Yazılım, tasarım, iş ve yaratıcı alanlar — üretilebilen her şey buraya aittir."
     }
+  },
+  "projects_page": {
+    "eyebrow": "İşlerimiz",
+    "title": "Axonode’da geliştirilen",
+    "title_gradient": "projeler",
+    "subtitle": "Gerçek projeler, topluluğumuz tarafından geliştirildi. Ekiplerimizin üzerinde çalıştığı şeyleri keşfedin.",
+    "loading": "Projeler yükleniyor…",
+    "error": "Projeler yüklenemedi. Lütfen daha sonra tekrar deneyin.",
+    "empty": "Henüz gösterilecek proje yok — yakında tekrar kontrol edin.",
+    "visit": "Ziyaret et",
+    "source": "Kaynak",
+    "cta_text": "Projenizin burada yer almasını ister misiniz?",
+    "cta_button": "Axonode’a katıl"
   }
 }

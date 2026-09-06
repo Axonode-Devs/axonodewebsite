@@ -479,5 +479,18 @@
       "q6": "Which areas does Axonode cover?",
       "a6": "Software, design, business, and creative fields — if it can be built, it belongs here."
     }
+  },
+  "projects_page": {
+    "eyebrow": "Our Work",
+    "title": "Projects built",
+    "title_gradient": "at Axonode",
+    "subtitle": "Real projects, built by our community. Explore what our teams are working on.",
+    "loading": "Loading projects…",
+    "error": "Projects could not be loaded. Please try again later.",
+    "empty": "No projects to show yet — check back soon.",
+    "visit": "Visit",
+    "source": "Source",
+    "cta_text": "Want your project featured here?",
+    "cta_button": "Join Axonode"
   }
 }

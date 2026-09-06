@@ -83,6 +83,7 @@ const toggle = (index: number) => {
   width: 100%;
   max-width: 760px;
   margin: 0 auto;
+  padding: 0;
   text-align: center;
 }
 
@@ -217,6 +218,26 @@ const toggle = (index: number) => {
   .faq-answer-inner p {
     padding: 0 16px 16px;
     font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .title {
+    font-size: 1.45rem;
+  }
+
+  .subtitle {
+    font-size: 0.88rem;
+  }
+
+  .faq-question {
+    font-size: 0.9rem;
+    padding: 12px 14px;
+  }
+
+  .faq-answer-inner p {
+    padding: 0 14px 14px;
+    font-size: 0.85rem;
   }
 }
 </style>
