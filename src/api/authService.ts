@@ -54,16 +54,23 @@ export const authService = {
   },
 
   async fetchSession(): Promise<UserAccount | null> {
+    let refreshRes;
     try {
-      const refreshRes = await apiClient.post('/auth/tokens');
-      const accessToken = refreshRes.data.data.access_token;
-      setAccessToken(accessToken);
-
-      const userRes = await apiClient.get('/auth/me');
-      return userRes.data.data.user;
-    } catch {
-      clearAccessToken();
-      return null;
+      refreshRes = await apiClient.post('/auth/tokens');
+    } catch (err: any) {
+      // Only treat an explicit 401 as "logged out". Network/server errors
+      // should not destroy the session (user gets kicked to /login).
+      if (err?.response?.status === 401) {
+        clearAccessToken();
+        return null;
+      }
+      throw err;
     }
+
+    const accessToken = refreshRes.data.data.access_token;
+    setAccessToken(accessToken);
+
+    const userRes = await apiClient.get('/auth/me');
+    return userRes.data.data.user;
   }
 };

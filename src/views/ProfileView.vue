@@ -57,8 +57,8 @@ import Navbar from '../components/Navbar.vue'
 const router = useRouter()
 const authStore = useAuthStore()
 
-const handleSignOut = () => {
-  authStore.logout()
+const handleSignOut = async () => {
+  await authStore.logout()
   router.push('/')
 }
 </script>

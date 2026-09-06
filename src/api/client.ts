@@ -25,7 +25,10 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = accessToken;
-  if (token) {
+  // The refresh endpoint is cookie-authenticated; never attach a stale
+  // access token to it (it used to be sent without Authorization).
+  const isRefreshRequest = config.url?.includes('/auth/tokens');
+  if (token && !isRefreshRequest) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
@@ -72,11 +75,9 @@ apiClient.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const { data } = await axios.post(
-        `${apiClient.defaults.baseURL}/auth/tokens`,
-        {},
-        { withCredentials: true }
-      );
+      // Use the shared instance (not raw axios) so the request goes through
+      // the configured interceptors and stays consistent with baseURL handling.
+      const { data } = await apiClient.post('/auth/tokens', {});
 
       const newToken = data.data.access_token;
       setAccessToken(newToken);

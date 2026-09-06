@@ -22,15 +22,28 @@ export const useAuthStore = defineStore('auth', () => {
 
   function init(): Promise<void> {
     if (!initPromise) {
-      initPromise = authService.fetchSession().then(u => {
-        if (u) user.value = u;
-      });
+      initPromise = authService
+        .fetchSession()
+        .then(u => {
+          if (u) user.value = u;
+        })
+        .catch(err => {
+          // Transient backend/network errors: treat as logged-out for this
+          // navigation but allow a fresh attempt on the next one.
+          console.warn('[auth] session init failed:', err?.message || err);
+          initPromise = null;
+        });
     }
     return initPromise;
   }
 
-  window.addEventListener('axonode:session-expired', () => {
+  window.addEventListener('axonode:session-expired', async () => {
     user.value = null;
+    if (window.location.pathname !== '/login') {
+      // Lazy import avoids a circular dependency with the router module.
+      const { default: router } = await import('../router');
+      router.push('/login');
+    }
   });
 
   return {

@@ -450,7 +450,10 @@
       "artistic": "Sanatsal",
       "conventional": "Geleneksel",
       "realistic": "Gerçekçi"
-    }
+    },
+    "desc_developer": "Mükemmel analitik yeteneklere ve problem çözme becerisine sahipsin. Sistemler yazmak, kod parçalarını birleştirmek ve yapısal planlamalar yapmak senin için çocuk oyuncağı.",
+    "desc_designer": "Estetik, şekiller ve duygular konusunda doğal bir algın var. En iyi görsel yollarla iletişim kuruyor ve yapının insan deneyimini nasıl şekillendirdiğini iyi anlıyorsun.",
+    "desc_marketing": "İnsanlarla etkileşim kurarken, eylemlerin arkasındaki motivasyonları anlarken ve insanları topluluğa çekerken adeta parlıyorsun. İkna etmek, sunmak ve tanıtmak senin doğanda var."
   },
   "join_us": {
     "eyebrow": "Beğendiysen Bize Katıl",

@@ -450,7 +450,10 @@
       "artistic": "Artistic",
       "conventional": "Conventional",
       "realistic": "Realistic"
-    }
+    },
+    "desc_developer": "You possess excellent analytical capabilities and a talent for problem solving. Writing systems, figuring out how code fits together, and structural planning are second nature to you.",
+    "desc_designer": "You have a natural appreciation for aesthetics, shapes, and feelings. You communicate best visually and understand how structure shapes the human experience.",
+    "desc_marketing": "You thrive when interacting with people, understanding the motivations behind actions, and driving engagement. Persuading, selling, and marketing come naturally to you."
   },
   "join_us": {
     "eyebrow": "Like What we are doing? Join Us",
