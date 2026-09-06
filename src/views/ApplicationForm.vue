@@ -570,7 +570,7 @@
 
 .application-section {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding-top: 120px;
   padding-bottom: 80px;
   display: flex;
@@ -727,7 +727,7 @@ textarea {
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: rgba(36, 36, 36, 0.6);
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--text-color);
   transition: all 0.2s;
   box-sizing: border-box;
@@ -881,6 +881,12 @@ textarea:focus {
   .back-btn {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .grid-options {
+    grid-template-columns: 1fr;
   }
 }
 </style>

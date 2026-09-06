@@ -400,7 +400,7 @@ const goToHome = () => {
   top: 0;
   right: -100%;
   width: min(320px, 80vw);
-  height: 100vh;
+  height: 100dvh;
   background: var(--bg-color);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);

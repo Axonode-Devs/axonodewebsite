@@ -5,14 +5,16 @@
     
     <div class="content-container">
       <h1 class="title1">{{ t('hero.title-1') }}</h1>
-      <h1 class="title2" v-html="t('hero.title-2')"></h1>
+      <i18n-t keypath="hero.title-2" tag="h1" class="title2" scope="global">
+        <template #hl><span class="highlight">{{ t('hero.title_highlight') }}</span></template>
+      </i18n-t>
       <p class="description">
         {{ t('hero.subtext') }}
       </p>
       
       <div class="button-container">
-        <button class="start-btn">{{ t('hero.buttons.about') }}</button>
-        <button class="learn-btn">{{ t('hero.buttons.learn') }}</button>
+        <button class="start-btn" @click="scrollToSection('about-details')">{{ t('hero.buttons.about') }}</button>
+        <button class="learn-btn" @click="scrollToSection('whatwedo')">{{ t('hero.buttons.learn') }}</button>
       </div>
 
       <div class="ticker-wrapper">
@@ -55,6 +57,13 @@ const { t } = useI18n()
 defineOptions({
   name: 'HeroSection'
 })
+
+const scrollToSection = (id) => {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+  }
+}
 </script>
 
 <style scoped>
@@ -84,7 +93,7 @@ defineOptions({
 }
 
 .top-right {
-  bottom: 60%;
+  top: -5%;
   right: -20%;
   transform: rotate(180deg);
 }
@@ -223,7 +232,8 @@ defineOptions({
 /* Mobile */
 @media (max-width: 768px) {
   .hero-container {
-    padding: 1.5rem 1rem;
+    min-height: auto;
+    padding: 6rem 1rem 3rem;
   }
 
   .title1 {
@@ -256,8 +266,7 @@ defineOptions({
   }
 
   .sunburst {
-    max-width: 70vw;
-    opacity: 0.6;
+    display: none;
   }
 
   .ticker-content {

@@ -64,7 +64,7 @@ const handleSignOut = () => {
 </script>
 <style scoped>
 .profile-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--bg-color);
   overflow: hidden;
   position: relative;
@@ -327,7 +327,7 @@ const handleSignOut = () => {
   border: 0.5px solid var(--border-color);
   background: var(--hover-bg);
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 16px;
   font-family: inherit;
   outline: none;
   transition: border-color 0.18s;

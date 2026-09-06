@@ -33,7 +33,7 @@ import Navbar from '../components/Navbar.vue'
 
 <style scoped>
 .coming-soon-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--bg-color);
   overflow: hidden;
   position: relative;
@@ -43,7 +43,7 @@ import Navbar from '../components/Navbar.vue'
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;

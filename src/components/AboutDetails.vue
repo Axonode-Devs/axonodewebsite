@@ -14,7 +14,53 @@
                 </div>
                 <div class="text-section">
                     <p class="text-header">{{ $t("about_section.title") }}</p>
-                    <p class="text" v-html="$t('about_section.sub-text')"></p>
+                    <i18n-t
+                        keypath="about_section.sub-text"
+                        tag="p"
+                        class="text"
+                        scope="global"
+                    >
+                        <template #i1
+                            ><span class="italic-hg">{{
+                                $t("about_section.sub.i1")
+                            }}</span></template
+                        >
+                        <template #b1
+                            ><span class="bold-hg">{{
+                                $t("about_section.sub.b1")
+                            }}</span></template
+                        >
+                        <template #b2
+                            ><span class="bold-hg">{{
+                                $t("about_section.sub.b2")
+                            }}</span></template
+                        >
+                        <template #i2
+                            ><span class="italic-hg">{{
+                                $t("about_section.sub.i2")
+                            }}</span></template
+                        >
+                        <template #b3
+                            ><span class="bold-hg">{{
+                                $t("about_section.sub.b3")
+                            }}</span></template
+                        >
+                        <template #i3
+                            ><span class="italic-hg">{{
+                                $t("about_section.sub.i3")
+                            }}</span></template
+                        >
+                        <template #b4
+                            ><span class="bold-hg">{{
+                                $t("about_section.sub.b4")
+                            }}</span></template
+                        >
+                        <template #b5
+                            ><span class="bold-hg">{{
+                                $t("about_section.sub.b5")
+                            }}</span></template
+                        >
+                    </i18n-t>
                 </div>
             </div>
             <div class="mini-divider"></div>
@@ -130,7 +176,17 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 
-const baseTeam = [
+interface TeamMember {
+    name: string;
+    role: string;
+    username: string;
+    color: string;
+    bio_key: string;
+    links: { label: string; url: string }[];
+    avatarUrl?: string;
+}
+
+const baseTeam: TeamMember[] = [
     {
         name: "Yaser Durubi",
         role: "team.roles.head_productions",
@@ -167,10 +223,16 @@ const baseTeam = [
     },
 ];
 
-const teamMembers = ref([...baseTeam]);
-const selectedMember = ref<any>(null);
+// teamMembers holds the actual reactive objects the template renders.
+// We mutate these in place once avatars are fetched, instead of swapping
+// in a brand-new array/objects — that's what was breaking avatarUrl:
+// the modal held a reference to the OLD object from baseTeam, so if you
+// opened it before the fetch resolved, selectedMember never picked up
+// the fetched avatarUrl even after teamMembers.value was replaced.
+const teamMembers = ref<TeamMember[]>(baseTeam.map((m) => ({ ...m })));
+const selectedMember = ref<TeamMember | null>(null);
 
-const openModal = (member: any) => {
+const openModal = (member: TeamMember) => {
     selectedMember.value = member;
     document.body.style.overflow = "hidden";
 };
@@ -181,26 +243,24 @@ const closeModal = () => {
 };
 
 const fetchTeam = async () => {
-    const fetched = await Promise.all(
-        baseTeam.map(async (member) => {
+    await Promise.all(
+        teamMembers.value.map(async (member) => {
             try {
                 const res = await fetch(
                     `https://api.github.com/users/${member.username}`,
                 );
-                if (!res.ok) return member;
+                if (!res.ok) return;
                 const data = await res.json();
-                return {
-                    ...member,
-                    avatarUrl:
-                        data.avatar_url ||
-                        `https://github.com/${member.username}.png`,
-                };
+                // Mutate the existing object in place so any reference
+                // held elsewhere (like selectedMember) updates too.
+                member.avatarUrl =
+                    data.avatar_url ||
+                    `https://github.com/${member.username}.png`;
             } catch {
-                return member;
+                // keep fallback (github.com/<user>.png) already used in template
             }
         }),
     );
-    teamMembers.value = fetched;
 };
 
 const onKeydown = (e: KeyboardEvent) => {
@@ -608,7 +668,7 @@ onUnmounted(() => {
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.6rem;
     }
 
     .top-container {
@@ -616,9 +676,13 @@ onUnmounted(() => {
         gap: 24px;
     }
 
-    .video-section,
     .text-section {
         width: 100%;
+    }
+
+    /* Video removed on mobile/tablet-down layouts */
+    .video-section {
+        display: none;
     }
 
     .text-section {
@@ -627,11 +691,11 @@ onUnmounted(() => {
     }
 
     .text-header {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .text-section .text {
-        font-size: 0.95rem;
+        font-size: 0.88rem;
     }
 
     .mini-divider {
@@ -641,14 +705,33 @@ onUnmounted(() => {
     }
 
     .founders-section {
-        gap: 16px;
+        gap: 12px;
     }
 
     .card {
         width: 100%;
-        max-width: 400px;
+        max-width: 360px;
         height: auto;
-        min-height: 180px;
+        min-height: 140px;
+        padding: 16px 16px;
+        gap: 12px;
+    }
+
+    .card-top {
+        gap: 12px;
+    }
+
+    .card-top .profile-picture {
+        width: 44px;
+        height: 44px;
+    }
+
+    .card-top .name {
+        font-size: 0.95rem;
+    }
+
+    .card-bottom .description {
+        font-size: 0.8rem;
     }
 
     .modal-card {
@@ -669,16 +752,20 @@ onUnmounted(() => {
 /* Small mobile */
 @media (max-width: 420px) {
     .section-title {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
     }
 
     .card-top .profile-picture {
-        width: 46px;
-        height: 46px;
+        width: 42px;
+        height: 42px;
     }
 
     .card-top .name {
-        font-size: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .card-bottom .description {
+        font-size: 0.78rem;
     }
 
     .modal-overlay {

@@ -1,7 +1,7 @@
 {
   "hero": {
     "title-1": "Connect through projects,",
-    "title-2": "grow <span class=\"highlight\">through</span> people.",
+    "title-2": "grow {hl} people.",
     "subtext": "We are a welcoming community uniting our skills to share knowledge, create projects, and have fun together. Join us to connect with like-minded individuals!",
     "buttons": {
       "learn": "Learn More",
@@ -14,24 +14,7 @@
       "item4": "Community Projects",
       "item5": "Knowledge Sharing"
     },
-    "cards": {
-      "reply": "reply",
-      "card1": {
-        "name": "Kerem Poyraz Sarıay",
-        "role": "UI/UX Designer",
-        "description": "I’ve spent three weeks perfecting the user flow. The users are fine… now where the hell am I supposed to find a frontend dev?"
-      },
-      "card2": {
-        "name": "Ayşe Beyköylü",
-        "role": "Graphic Designer",
-        "description": "Bro, I’m a graphic designer. I’m not assembling the Avengers. Why is finding one decent developer a Dark Souls boss fight?"
-      },
-      "card3": {
-        "name": "Orhan Ekrem Güney",
-        "role": "Full-Stack Dev",
-        "description": "I can do the frontend. I can do the backend. I can even fix the database at 3 AM. But can someone PLEASE make this thing look good? I’m losing my mind in Figma."
-      }
-    }
+    "title_highlight": "through"
   },
   "navbar": {
     "home": "Home",
@@ -39,38 +22,35 @@
     "groups": "Groups",
     "support": "Reach Us",
     "login": "Login",
-    "events": "Events",
     "blog": "Blog",
     "projects": "Projects",
-    "joinUs": "Join Us",
-    "startnow": "Start Now"
+    "joinUs": "Join Us"
   },
   "team": {
-    "label": {
-      "founders": "Founders",
-      "and": "&",
-      "team_members": "Team Members"
-    },
     "bios": {
       "yaser_durubi": "Honestly, finding the right people to build projects with was always a massive hassle for me. Wearing two hats as both a designer and developer, I often felt caught between two worlds! Someone would tell me I should handle the social media and the other would say let him make the website and the whole thing would grind to a halt. That’s why my friends and I founded Axonode to create the space we always wished we had for connecting with like-minded people. When I’m not tweaking design software or writing code, you’ll probably find me tinkering with hardware at robotics tournaments. Welcome to Axonode I'm so glad you're here!",
       "bersis_sevimli": "Hi there, I'm Bersis! I am a software developer, computer engineer, and an active maintainer and author of several open-source projects. Growing up, all kinds of technology around me would pique my interest, and I spent most of my time researching how things worked. Not much has changed, except now I build them on my own! However, building alone can get overwhelming quickly. That's exactly why we founded Axonode. As our Lead Executive, I promise you will always feel welcome here!",
       "kaan_uygun": "Hi everyone, I’m Kaan! As Head of Public Relations at Axonode, my main focus is taking incredibly complex technical concepts and making them simple, intuitive, and clear for anyone to understand. I’ve always believed that great communication isn't about using the biggest buzzwords it’s about making ideas accessible. Thrilled to be here and ready to hit the ground running with the team!"
     },
-    "accessibility": {
-      "view_github": "View Github Profile"
-    },
     "roles": {
-      "head_community": "Head Community Director",
       "head_executive": "Head Executive",
-      "deputy_community": "Deputy Community Director",
       "head_productions": "Head of Productions",
-      "head_media": "Head of Media",
       "head_pr": "Head of Public Relations"
     }
   },
   "about_section": {
     "title": "What We Do;",
-    "sub-text": "Axonode is a <span class=\"italic-hg\">project and networking platform</span> that makes it easier for people to <span class=\"bold-hg\">turn their ideas into projects</span> and connect those projects with the right people. Anyone working on their own project can share their idea and needs through Axonode and reach <span class=\"bold-hg\">developers, designers, entrepreneurs</span>, or people from other fields who can contribute to their project. Likewise, users can discover projects that interest them, join teams, develop their skills through <span class=\"italic-hg\">real-world projects</span>, and build <span class=\"bold-hg\">meaningful professional connections</span>. Axonode aims to transform networking from simply adding people into a natural process built around <span class=\"italic-hg\">shared ideas, projects, and creation</span>. In this way, we aim to help <span class=\"bold-hg\">good ideas reach the right people</span>, create real opportunities for people to showcase their skills, and build a <span class=\"bold-hg\">global project ecosystem</span> that grows through collaboration."
+    "sub-text": "Axonode is a {i1} that makes it easier for people to {b1} and connect those projects with the right people. Anyone working on their own project can share their idea and needs through Axonode and reach {b2}, or people from other fields who can contribute to their project. Likewise, users can discover projects that interest them, join teams, develop their skills through {i2}, and build {b3}. Axonode aims to transform networking from simply adding people into a natural process built around {i3}. In this way, we aim to help {b4}, create real opportunities for people to showcase their skills, and build a {b5} that grows through collaboration.",
+    "sub": {
+      "i1": "project and networking platform",
+      "b1": "turn their ideas into projects",
+      "b2": "developers, designers, entrepreneurs",
+      "i2": "real-world projects",
+      "b3": "meaningful professional connections",
+      "i3": "shared ideas, projects, and creation",
+      "b4": "good ideas reach the right people",
+      "b5": "global project ecosystem"
+    }
   },
   "what_we_do": {
     "title": {
@@ -97,20 +77,9 @@
       }
     }
   },
-  "banner": {
-    "button": "Dive In"
-  },
   "about_us": {
     "header": {
       "title": "About Us"
-    },
-    "vision": {
-      "title": "Vision",
-      "description": "To redefine the architecture of multi-participant projects and professional networking. We envision a future where the weight of \"finding the right team\" is put away. Our goal is to create a high-efficiency environment with collective power of a hyper-connected community."
-    },
-    "mission": {
-      "title": "Mission",
-      "description": "To enhance professional growth by simplifying the way people connect. At Axonode, we connect the subjects of career and giving the people a network they don't have to worry about, making business networking intuitive and accessible. By creating a global ecosystem for voluntary project participation, we give every developer, designer, and entrepreneur a platform to contribute their skills and build their portfolio."
     }
   },
   "contact": {
@@ -119,21 +88,6 @@
       "title": "Let’s build something",
       "gradient": "meaningful together",
       "description": "Whether you have an idea, a question, or just want to say hello, we’d love to hear from you. You can contact us about anything projects, collaboration, feedback, or even a casual conversation."
-    },
-    "cta": {
-      "title": "We’re here for it.",
-      "text": "Big ideas, bold questions, even a simple hello your message matters to us."
-    },
-    "success": {
-      "sent": "Message Sent!",
-      "thanks": "Thanks for reaching out. We'll get back to you soon.",
-      "another": "Send Another?"
-    },
-    "buttons": {
-      "name": "Name",
-      "message": "Message",
-      "send": "Send Message",
-      "sending": "Sending.."
     }
   },
   "application_form": {
@@ -287,7 +241,6 @@
       "birthdate_required": "Please enter your date of birth.",
       "age_too_young": "You must be at least 15 years old to apply.",
       "parental_consent_required": "Parental or legal guardian consent is required.",
-      "parental_email_required": "Please write your guardians contact email.",
       "generic_error": "Something went wrong. Please try again.\nError: {error}"
     }
   },
@@ -340,37 +293,10 @@
     "back": "Go Back"
   },
   "projects": {
-    "section_title_main": "Things",
-    "section_title_gradient": "We Do",
-    "wavefy": {
-      "title": "Wavefy App",
-      "subtitle": "A user-friendly music app",
-      "tag": "Wavefy",
-      "leftTitle": "Wavefy\nMusic App",
-      "leftDesc": "A user friendly music app developed by Axonode Team.",
-      "badge": "BETA"
-    },
-    "voltx": {
-      "title": "VoltX Robotics",
-      "subtitle": "First Robotics Competition Team",
-      "tag": "Robotics",
-      "leftTitle": "VoltX\nRobotics",
-      "leftDesc": "A Turkiye located FRC team powered by Axonode Team.",
-      "badge": "FRC"
-    },
-    "intent": {
-      "title": "Intent",
-      "subtitle": "A Productivity app that does not get in your way",
-      "tag": "Intent",
-      "badge": "Waitlist!"
-    },
     "soon": {
       "title": "Coming Soon!",
-      "subtitle": "Next project is under development",
       "tag": "Not yet here",
-      "leftTitle": "In\nDevelopment",
-      "leftDesc": "Axonode is cooking up something goood :)",
-      "badge": "SOON"
+      "leftDesc": "Axonode is cooking up something goood :)"
     }
   },
   "set_password": {
@@ -410,39 +336,13 @@
     "actions": {
       "sign_out": "Sign Out"
     },
-    "tabs": {
-      "account": "Account Settings",
-      "security": "Security Settings"
-    },
     "account": {
       "title": "Account Information",
       "subtitle": "Basic configuration data matching your database record.",
       "email_label": "Registered Email Address",
-      "email_hint": "Email changes must currently be handled via administrative support.",
       "role_label": "Access Role Privilege",
       "role_default": "Standard User",
-      "role_admin": "Admin Access",
-      "status": "Active member",
-      "hero_eyebrow": "Your account hub",
-      "hero_title": "Manage your profile with clarity",
-      "hero_text": "Review your account details, update access credentials, and keep your privacy settings organized in one place.",
-      "connected": "Protected session"
-    },
-    "security": {
-      "title": "Security Configurations",
-      "subtitle": "Keep your account secure by periodically updating your credentials.",
-      "current_password": "Current Password",
-      "new_password": "New Password",
-      "confirm_password": "Confirm New Password",
-      "password_placeholder": "••••••••",
-      "new_password_placeholder": "Minimum 8 characters",
-      "confirm_password_placeholder": "Match your new password",
-      "save": "Save Changes",
-      "saving": "Updating...",
-      "success": "Your password has been securely updated successfully.",
-      "error_mismatch": "Your new password and confirmation password do not match.",
-      "error_too_short": "Your new password must be at least 8 characters long.",
-      "error_generic": "Could not communicate update to the server. Try again later."
+      "role_admin": "Admin Access"
     }
   },
   "login": {
@@ -450,11 +350,9 @@
     "subtitle": "Let's get you logged in!",
     "form": {
       "email": {
-        "label": "Email",
         "placeholder": "Enter your email"
       },
       "password": {
-        "label": "Password",
         "placeholder": "Enter your password"
       },
       "submit": {
@@ -465,10 +363,6 @@
     "does_not_have_account": "Don't have an account? "
   },
   "survey": {
-    "banner": {
-      "title": "Take Our Survey!",
-      "subtitle": "We'd love to hear your thoughts"
-    },
     "questions": {
       "title": "Questions",
       "subtitle": "We got only a 20 questions for that are fairly easy, the results will be better if you are honest ;)",
@@ -535,18 +429,12 @@
     }
   },
   "surveyResult": {
-    "overallDistribution": "Overall Distribution",
     "loading": "Loading results...",
     "notFound": "Result Not Found",
     "titlePrefix": "Your path leads to: ",
-    "desc_developer": "You possess excellent analytical capabilities and a talent for problem solving. Writing systems, figuring out how code fits together, and structural planning are second nature to you.",
-    "desc_designer": "You have a natural appreciation for aesthetics, shapes, and feelings. You communicate best visually and understand how structure shapes the human experience.",
-    "desc_marketing": "You thrive when interacting with people, understanding the motivations behind actions, and driving engagement. Persuading, selling, and marketing come naturally to you.",
     "professionsMatch": "Professions Match",
-    "detailedTraits": "Detailed Traits Breakdown",
     "fullAnalysisCta": "Join Us for the Full Analysis!",
     "fullAnalysisDesc": "Sign up to unlock your complete personality profile, detailed trait breakdowns, and personalized career insights.",
-    "addToProfile": "Add to Profile",
     "shareTitle": "Share your result",
     "copyLink": "Copy Link",
     "linkCopied": "Link copied to clipboard!",
@@ -562,18 +450,34 @@
       "artistic": "Artistic",
       "conventional": "Conventional",
       "realistic": "Realistic"
-    },
-    "welcome": {
-      "title": "Welcome to the {gr-name} Personality Survey",
-      "subtitle": "Lets find out what your personality tells about your career?",
-      "go": "Lets go!",
-      "acceptence": "By clicking {go} you accept the {survey-policy}",
-      "policyLinkText": "Survey Policy"
-    },
-    "email": {
-      "title": "Personal Information",
-      "subtitle": "We only ask for your e-mail",
-      "hint": "Please enter your email"
+    }
+  },
+  "join_us": {
+    "eyebrow": "Like What we are doing? Join Us",
+    "title": "Ready to turn your idea",
+    "title_gradient": "into reality?",
+    "description": "If you are building something or want to contribute to a project, apply and tell us about your work and skills.",
+    "button": "Apply Now",
+    "note": "Open to developers, designers, and other builders."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked",
+    "title_gradient": "questions",
+    "subtitle": "Everything you might want to know before applying.",
+    "items": {
+      "q1": "Is Axonode free to join?",
+      "a1": "Yes. Applying and being part of the community is completely free — no fees, no hidden costs.",
+      "q2": "Who can join Axonode?",
+      "a2": "Developers, designers, and anyone who builds or wants to contribute to projects — regardless of experience level.",
+      "q3": "Do I need to have my own project to apply?",
+      "a3": "No. You can join with just your skills and get involved in projects that are looking for contributors.",
+      "q4": "What happens after I apply?",
+      "a4": "Our team reviews your application and gets back to you about the next steps, usually within a few days.",
+      "q5": "Can I bring my own project?",
+      "a5": "Absolutely. Share your idea on Axonode and find the right people to build it with you.",
+      "q6": "Which areas does Axonode cover?",
+      "a6": "Software, design, business, and creative fields — if it can be built, it belongs here."
     }
   }
 }

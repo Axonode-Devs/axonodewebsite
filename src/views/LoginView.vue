@@ -91,7 +91,7 @@ const handleLogin = async () => {
 
 <style scoped>
 .login-container {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,7 +166,7 @@ const handleLogin = async () => {
   border: 1px solid var(--border-color);
   border-radius: 999px;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 0.3s ease;
   font-family: inherit;
 }

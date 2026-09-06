@@ -144,7 +144,7 @@ const handleSetup = async () => {
 
 <style scoped>
 .login-container {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +233,7 @@ const handleSetup = async () => {
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 0.3s ease;
   font-family: inherit;
 }

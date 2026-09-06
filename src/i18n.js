@@ -13,4 +13,12 @@ export const i18n = createI18n({
   locale: savedLocale || detectedLocale,
   fallbackLocale: 'en',
   messages: { en, tr },
+  missingWarn: true,
+  fallbackWarn: true,
+  warnHtmlMessage: true,
+  escapeParameterHtml: false,
+  missing: (locale, key) => {
+    console.warn(`[i18n] Missing translation: "${key}" (locale: "${locale}")`)
+    return key
+  },
 })

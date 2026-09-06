@@ -344,7 +344,7 @@ const handleShare = async (platform) => {
 
 <style scoped>
 .result-section {
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 8rem 2rem 4rem;
   background: var(--bg-color);
   color: var(--text-color);

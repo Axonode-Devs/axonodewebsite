@@ -1,7 +1,7 @@
 {
   "hero": {
     "title-1": "Projelerle bağlantı kur,",
-    "title-2": "<span class=\"highlight\">insanlarla</span> büyü.",
+    "title-2": "{hl} büyü.",
     "subtext": "Becerilerimizi paylaşmak, projeler üretmek ve birlikte eğlenmek için bir araya gelen samimi bir topluluğuz. Benzer düşünen insanlarla bağlantı kurmak için bize katıl!",
     "buttons": {
       "learn": "Daha Fazla Bilgi",
@@ -14,24 +14,7 @@
       "item4": "Topluluk Projeleri",
       "item5": "Bilgi Paylaşımı"
     },
-    "cards": {
-      "reply": "yanıt",
-      "card1": {
-        "name": "Alex Morgan",
-        "role": "UI/UX Designer",
-        "description": "3 haftadır kullanıcı akışını optimize ediyorum. Kullanıcı tamam da… şu akışta bir tane frontend developer nereden bulacağım?"
-      },
-      "card2": {
-        "name": "Elena Rostova",
-        "role": "Graphic Designer",
-        "description": "Abi ben grafik tasarımcıyım, NASA'ya astronot aramıyorum. Bir tane düzgün developer bulmak neden Dark Souls boss fight?"
-      },
-      "card3": {
-        "name": "Kerem Yılmaz",
-        "role": "Full-Stack Dev",
-        "description": "Frontend’i de yaparım, backend’i de. Veritabanını da kurarım. Ama biri şu tasarıma bir baksa fena olmaz… çünkü şu an Figma dosyasını açınca ruhum çıkıyor."
-      }
-    }
+    "title_highlight": "insanlarla"
   },
   "navbar": {
     "home": "Anasayfa",
@@ -39,38 +22,35 @@
     "groups": "Gruplar",
     "support": "Bize Ulaşın",
     "login": "Giriş Yap",
-    "events": "Etkinlikler",
     "blog": "Blog",
     "projects": "Projeler",
-    "joinUs": "Bize Katıl",
-    "startnow": "Başla"
+    "joinUs": "Bize Katıl"
   },
   "team": {
-    "label": {
-      "founders": "Kurucular",
-      "and": "&",
-      "team_members": "Takım Üyeleri"
-    },
     "bios": {
       "yaser_durubi": "Ya direkt lafa giriyorum dürüst olmam gerekirse, birlikte proje geliştirecek doğru insanları bulmak benim için her zaman büyük bir sorundu. Hem tasarımcı hem de geliştirici olarak iki şapka birden takınca, kendimi hep iki taraf tarafından çekiliyormuş gibi hisserdim! Biri sosyal medyayla ilgilenmem gerektiğini söyler, diğeri ise 'bırakın web sitesini o yapsın' derdi ve sonunda her şey durma noktasına gelirdi. İşte bu yüzden kafa dengi insanlarla bağ kurabilmek için tam da her zaman arzuladığımız o alanı yaratmak adına arkadaşlarımla Axonode'u kurduk. Tasarım yazılımlarını kurcalamadığım veya kod yazmadığım zamanlarda, beni büyük ihtimalle robotik yarışmalarında donanımlarla uğraşırken bulabilirsiniz. Axonode'a hoş geldiniz, burada olmanız bir onur!",
       "bersis_sevimli": "Selamlar, ben Bersis! Yazılım geliştirici, bilgisayar mühendisi ve birkaç açık kaynaklı projenin aktif geliştiricisi ve yazarıyım. Büyürken çevremdeki her türlü teknoloji ilgimi çekerdi ve zamanımın çoğunu şeylerin nasıl çalıştığını araştırmakla geçirirdim. Büyüyüncede pek bir şey değişmedi, sadece artık onları kendim inşa edip yeteneklerimi kullanarak yarışmalarda ödüller kazanıyorum! Yine de tek başına bir şeyler inşa etmek yorucu olabilmenin yanısıra çoğu yarışma ve etkinlik bir takım talep ediyor. İşte tam da bu yüzden Axonode'u kurduk benzer fikirli insanları birbiri ile bağlayıp üretmeye teşvik etmek. Lider Yöneticimiz olarak, burada her zaman samimiyetle karşılanacağınızın sözünü veriyorum!",
-      "kaan_uygun": "Merhaba, ben Kaan! Axonode'da Halkla İlişkiler Lideri olarak görev yapıyorum. Benim temel odak noktam; en karmaşık teknolojik kavramları bile herkesin kolayca anlayabileceği, net ve ilgi çekici bir dile dönüştürmek. İyi bir iletişimin derin teknik detayları basitleştirmekten geçtiğine inanıyorum. Ekibe katılmaktan heyecan duyuyorum, yapacak çok işimiz var!"    
-    },
-    "accessibility": {
-      "view_github": "Github Profilini Görüntüle"
+      "kaan_uygun": "Merhaba, ben Kaan! Axonode'da Halkla İlişkiler Lideri olarak görev yapıyorum. Benim temel odak noktam; en karmaşık teknolojik kavramları bile herkesin kolayca anlayabileceği, net ve ilgi çekici bir dile dönüştürmek. İyi bir iletişimin derin teknik detayları basitleştirmekten geçtiğine inanıyorum. Ekibe katılmaktan heyecan duyuyorum, yapacak çok işimiz var!"
     },
     "roles": {
-      "head_community": "Topluluk Direktörü",
       "head_executive": "Yönetim Kurulu Başkanı",
-      "deputy_community": "Topluluk Direktör Yardımcısı",
       "head_productions": "Prodüksüyon Başkanı",
-      "head_media": "Medya Direktörü",
       "head_pr": "Halkla İlişkiler Başkanı"
     }
   },
   "about_section": {
     "title": "Neler Yapıyoruz;",
-    "sub-text": "Axonode, insanların <span class=\"bold-hg\">fikirlerini projelere dönüştürmesini</span> ve doğru insanlarla buluşturmasını sağlayan bir <span class=\"italic-hg\">proje ve networking platformudur</span>. Kullanıcılar projelerini ve ihtiyaçlarını paylaşarak <span class=\"bold-hg\">yazılımcı, tasarımcı, girişimci</span> ve farklı alanlardan insanlara ulaşabilir; projeler keşfedip ekiplere katılarak yeteneklerini <span class=\"italic-hg\">gerçek projelerde</span> geliştirebilir. Axonode, networking'i insan eklemekten çıkarıp <span class=\"bold-hg\">ortak fikirler ve üretim</span> üzerinden doğal bir sürece dönüştürmeyi ve <span class=\"bold-hg\">global bir proje ekosistemi</span> oluşturmayı hedefler."
+    "sub-text": "Axonode, insanların {b1} ve doğru insanlarla buluşturmasını sağlayan bir {i1}. Kullanıcılar projelerini ve ihtiyaçlarını paylaşarak {b2} ve farklı alanlardan insanlara ulaşabilir; projeler keşfedip ekiplere katılarak yeteneklerini {i2} geliştirebilir. Axonode, networking'i insan eklemekten çıkarıp {b3} üzerinden doğal bir sürece dönüştürmeyi ve {b4} oluşturmayı hedefler.",
+    "sub": {
+      "i1": "proje ve networking platformudur",
+      "b1": "fikirlerini projelere dönüştürmesini",
+      "b2": "yazılımcı, tasarımcı, girişimci",
+      "i2": "gerçek projelerde",
+      "b3": "ortak fikirler ve üretim",
+      "b4": "global bir proje ekosistemi",
+      "i3": "paylaşılan fikirler, projeler ve yaratım",
+      "b5": "küresel proje ekosistemi"
+    }
   },
   "what_we_do": {
     "title": {
@@ -97,20 +77,9 @@
       }
     }
   },
-  "banner": {
-    "button": "Keşfet"
-  },
   "about_us": {
     "header": {
       "title": "Hakkımızda"
-    },
-    "vision": {
-      "title": "Vizyonumuz",
-      "description": "Çoklu projelerin ve profesyonel bağlantılar kurmanın yapısını yeniden şekillendirmek. 'Doğru ekibi bulma' zorluğunun ortadan kalktığı bir gelecek hayal ediyoruz. Hedefimiz yüksek verimlilik sahibi kolektif gücü ile birbirine bağlı bir komünite oluşturmak."
-    },
-    "mission": {
-      "title": "Misyonumuz",
-      "description": "Profesyonel gelişimi desteklemek ve insanların bağlantı kurmasını basitleştirmek. Biz, Axonode'da, kariyer ve insanlara üzerine uğraşmaları gerekmeyen bir network verme konseptlerini birleştiriyoruz; kariyer bağlantıları kurmayı daha erişilebilir bir hale getiriyoruz. Gönüllü proje katılımları ile global bir ekosistem oluşturarak her yazılımcı, tasarımcı ve girişimciye becerilerini paylaşabileceği ve portfolyolarını büyütebilecekleri bir platform sunuyoruz."
     }
   },
   "contact": {
@@ -119,21 +88,6 @@
       "title": "Birlikte anlamlı bir şey",
       "gradient": "inşa edelim",
       "description": "Bir fikrin, sorunun ya da sadece merhaba demek istediğin bir şey varsa, duymaktan mutluluk duyarız. Projeler, iş birliği, geri bildirim ya da sadece kısa bir sohbet için bize ulaşabilirsin."
-    },
-    "cta": {
-      "title": "Biz buradayız.",
-      "text": "Büyük fikirler, cesur sorular ya da basit bir merhaba mesajın bizim için değerli."
-    },
-    "success": {
-      "sent": "Mesaj Gönderildi!",
-      "thanks": "Bize ulaştığınız için teşekkür ederiz, En kısa sürede geri dönüş yapacağız.",
-      "another": "Başka Bir Mesaj Gönder?"
-    },
-    "buttons": {
-      "name": "İsim",
-      "message": "Mesaj",
-      "send": "Mesaj Gönder",
-      "sending": "Gönderiliyor.."
     }
   },
   "application_form": {
@@ -287,7 +241,6 @@
       "birthdate_required": "Lütfen doğum tarihinizi giriniz.",
       "age_too_young": "Başvuru yapabilmek için en az 15 yaşında olmalısınız.",
       "parental_consent_required": "Ebeveyn veya yasal vasi onayı zorunludur.",
-      "parental_email_required": "Ebeveyn'iniz Eposta adresini lütfen yazınız",
       "generic_error": "İkinci kuleye vurdular. Lütfen sonra tekrar deneyiniz.\nError: {error}"
     }
   },
@@ -340,47 +293,10 @@
     "back": "Anasayfaya Geri Dön"
   },
   "projects": {
-    "section_title_main": "Yaptığımız",
-    "section_title_gradient": "Çalışmalar",
-    "wavefy": {
-      "title": "Wavefy App",
-      "subtitle": "Kullanıcı dostu müzik uygulaması",
-      "tag": "Wavefy",
-      "leftTitle": "Wavefy\nMüzik Uygulaması",
-      "leftDesc": "Axonode Ekibi tarafından geliştirilen kullanıcı dostu bir müzik uygulaması.",
-      "stats": {
-        "users": "Kullanıcı",
-        "consistency": "Arama Tutarlılığı",
-        "uptime": "Çalışma Süresi"
-      },
-      "badge": "BETA"
-    },
-    "voltx": {
-      "title": "VoltX Robotics",
-      "subtitle": "First Robotics Competition Takımı",
-      "tag": "Robotik",
-      "leftTitle": "VoltX\nRobotik",
-      "leftDesc": "Türkiye merkezli, Axonode Ekibi tarafından desteklenen bir FRC takımı.",
-      "stats": {
-        "season": "Sezon",
-        "members": "Üye",
-        "companies": "Şirket"
-      },
-      "badge": "FRC"
-    },
-    "intent": {
-      "title": "Intent",
-      "subtitle": "A Productivity app that does not get in your way",
-      "tag": "Intent",
-      "badge": "Waitlist!"
-    },
     "soon": {
       "title": "Çok Yakında!",
-      "subtitle": "Sıradaki proje geliştirilmektedir",
       "tag": "YAKINDA SİZLERLE",
-      "leftTitle": "Geliştirme\nAşamasında",
-      "leftDesc": "Güzel şeyler hazırlıyoruz :)",
-      "badge": "YAKINDA"
+      "leftDesc": "Güzel şeyler hazırlıyoruz :)"
     }
   },
   "set_password": {
@@ -420,39 +336,13 @@
     "actions": {
       "sign_out": "Çıkış Yap"
     },
-    "tabs": {
-      "account": "Hesap Bilgileri",
-      "security": "Güvenlik Ayarları"
-    },
     "account": {
       "title": "Hesap Bilgileri",
       "subtitle": "Veritabanı kaydınızla eşleşen temel yapılandırma verileri.",
       "email_label": "Kayıtlı E-Posta Adresi",
-      "email_hint": "E-Posta Değişikleri için yetkililerle iletişime geçin.",
       "role_label": "Erişim Rolü İzinleri",
       "role_default": "Standart Kullanıcı",
-      "role_admin": "Yönetici Erişimi",
-      "status": "Aktif üye",
-      "hero_eyebrow": "Hesap merkeziniz",
-      "hero_title": "Profilinizi daha net yönetin",
-      "hero_text": "Hesap bilgilerinizi inceleyin, güvenlik ayarlarınızı güncelleyin ve her şeyi tek bir yerde organize edin.",
-      "connected": "Korunmuş oturum"
-    },
-    "security": {
-      "title": "Güvenlik Yapılandırmaları",
-      "subtitle": "Hesabınızı güvenli tutmak için kimlik bilgilerinizi periyodik olarak güncelleyin.",
-      "current_password": "Mevcut Şifre",
-      "new_password": "Yeni Şifre",
-      "confirm_password": "Yeni Şifreyi Onayla",
-      "password_placeholder": "••••••••",
-      "new_password_placeholder": "En az 8 karakter",
-      "confirm_password_placeholder": "Yeni şifreni tekrar gir",
-      "save": "Değişiklikleri Kaydet",
-      "saving": "Güncelleniyor...",
-      "success": "Şifreniz başarıyla güvenli bir şekilde güncellenmiştir.",
-      "error_mismatch": "Yeni şifreniz ve onay şifreniz uyuşmuyor.",
-      "error_too_short": "Yeni şifreniz en az 8 karakter uzunluğunda olmalıdır.",
-      "error_generic": "Sunucuya güncelleme gönderilemedi. Daha sonra tekrar deneyin."
+      "role_admin": "Yönetici Erişimi"
     }
   },
   "login": {
@@ -460,11 +350,9 @@
     "subtitle": "Hesabına giriş yapalım!",
     "form": {
       "email": {
-        "label": "E-Posta",
         "placeholder": "E-Postanı gir"
       },
       "password": {
-        "label": "Şifre",
         "placeholder": "Şifreni gir"
       },
       "submit": {
@@ -475,10 +363,6 @@
     "does_not_have_account": "Hesabın yok mu? Yeni Kişilere Her zaman açığız, Bize Katılmak için Tıkla!"
   },
   "survey": {
-    "banner": {
-      "title": "Anketimize Katılın!",
-      "subtitle": "Düşüncelerinizi duymayı çok isteriz"
-    },
     "questions": {
       "title": "Sorular",
       "subtitle": "Toplamda 20 tane basit sorumuz var ne kadar dürüst cevaplarsan o kadar başarılı bir sonuç alırsın ;)",
@@ -545,18 +429,12 @@
     }
   },
   "surveyResult": {
-    "overallDistribution": "Rol Dağılım Oranı",
     "loading": "Sonuçlar yükleniyor...",
     "notFound": "Sonuç Bulunamadı",
     "titlePrefix": "Senin yolun: ",
-    "desc_developer": "Mükemmel analitik yeteneklere ve problem çözme becerisine sahipsin. Sistemler yazmak, kod parçalarını birleştirmek ve yapısal planlamalar yapmak senin için çocuk oyuncağı.",
-    "desc_designer": "Estetik, şekiller ve duygular konusunda doğal bir algın var. En iyi görsel yollarla iletişim kuruyor ve yapının insan deneyimini nasıl şekillendirdiğini iyi anlıyorsun.",
-    "desc_marketing": "İnsanlarla etkileşim kurarken, eylemlerin arkasındaki motivasyonları anlarken ve insanları topluluğa çekerken adeta parlıyorsun. İkna etmek, sunmak ve tanıtmak senin doğanda var.",
     "professionsMatch": "Meslek Uyumun",
-    "detailedTraits": "Detaylı Karakter Özellikleri Analizi",
     "fullAnalysisCta": "Tam Analiz İçin Bize Katıl!",
     "fullAnalysisDesc": "Kişilik profilini, detaylı özellik analizlerini ve sana özel kariyer önerilerini keşfetmek için üye ol.",
-    "addToProfile": "Profiline Ekle",
     "shareTitle": "Sonucunu paylaş",
     "copyLink": "Bağlantıyı Kopyala",
     "linkCopied": "Bağlantı kopyalandı!",
@@ -572,18 +450,34 @@
       "artistic": "Sanatsal",
       "conventional": "Geleneksel",
       "realistic": "Gerçekçi"
-    },
-    "welcome": {
-      "title": "{gr-name}'un Kişilik Anketine Hoşgeldiniz!",
-      "subtitle": "Hadi Kişiliğin Kariyerin hakkında ne söylüyor bulalım!",
-      "go": "Hadi!",
-      "acceptence": "{go} tuşuna basarak {survey-policy}'nı Kabul etmiş olursunuz. ",
-      "policyLinkText": "Anket Gizlilik Politikası"
-    },
-    "email": {
-      "title": "Kişisel Bilgiler",
-      "subtitle": "Bu anket sizden sadece e-postanızı talep eder.",
-      "hint": "E-Postanızı Girin"
+    }
+  },
+  "join_us": {
+    "eyebrow": "Beğendiysen Bize Katıl",
+    "title": "Fikrini gerçeğe",
+    "title_gradient": "dönüştürmeye hazır mısın?",
+    "description": "Bir şey inşa ediyorsanız veya bir projeye katkı sağlamak istiyorsanız, başvurun ve bize çalışmanızı ve yeteneklerinizi anlatın.",
+    "button": "Hemen Başvur",
+    "note": "Yazılımcılar, tasarımcılar ve diğer üreticilere açığız!"
+  },
+  "faq": {
+    "eyebrow": "SSS",
+    "title": "Sıkça sorulan",
+    "title_gradient": "sorular",
+    "subtitle": "Başvurmadan önce bilmek isteyebileceğiniz her şey.",
+    "items": {
+      "q1": "Axonode’a katılım ücretli mi?",
+      "a1": "Hayır. Başvurmak ve topluluğun bir parçası olmak tamamen ücretsizdir — sürpriz maliyet yoktur.",
+      "q2": "Kimler Axonode’a katılabilir?",
+      "a2": "Yazılımcılar, tasarımcılar ve proje üreten ya da projelere katkı sunmak isteyen herkes — deneyim seviyesinden bağımsız olarak.",
+      "q3": "Başvurmak için kendi projem olmalı mı?",
+      "a3": "Hayır. Sadece yeteneklerinizle katılabilir ve katkı arayan projelerde yer alabilirsiniz.",
+      "q4": "Başvurduktan sonra ne oluyor?",
+      "a4": "Ekibimiz başvurunuzu inceleyip genellikle birkaç gün içinde sizinle iletişime geçerek sonraki adımları anlatır.",
+      "q5": "Kendi projemi getirebilir miyim?",
+      "a5": "Kesinlikle. Fikrinizi Axonode’da paylaşın ve birlikte inşa edecek doğru insanları bulun.",
+      "q6": "Axonode hangi alanları kapsıyor?",
+      "a6": "Yazılım, tasarım, iş ve yaratıcı alanlar — üretilebilen her şey buraya aittir."
     }
   }
 }

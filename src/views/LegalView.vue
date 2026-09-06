@@ -43,7 +43,7 @@ onMounted(loadMarkdown);
 <style scoped>
 /* Main Wrapper */
 .legal-wrapper {
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: var(--bg-color);
   color: var(--text-color);
   position: relative;

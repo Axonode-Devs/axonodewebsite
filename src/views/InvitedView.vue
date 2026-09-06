@@ -8,15 +8,15 @@
           <span class="gradient-text">{{ $t('invited.title_highlight_invited') }}</span>
           {{ $t('invited.title_highlight_to') }} <span class="gradient-text">{{ $t('invited.title_brand') }}</span>
         </h1>
-        <p class="subtitle" v-html="$t('invited.subtitle', { userName: `<strong>${userName}</strong>` })"></p>
+        <p class="subtitle" v-html="$t('invited.subtitle', { userName: `<strong>${safeUserName}</strong>` })"></p>
       </div>
 
       <div class="description-section">
         <h2>{{ $t('invited.why_section.title', { userName }) }}</h2>
         <div class="description-content">
-          <p v-html="$t('invited.why_section.paragraph_1', { userName: `<strong>${userName}</strong>` })"></p>
+          <p v-html="$t('invited.why_section.paragraph_1', { userName: `<strong>${safeUserName}</strong>` })"></p>
           <p v-html="$t('invited.why_section.paragraph_2', { invited: `<strong>${$t('invited.why_section.paragraph_2_invited')}</strong>` })"></p>
-          <p v-html="$t('invited.why_section.paragraph_3', { userName: `<strong>${userName}</strong>` })"></p>
+          <p v-html="$t('invited.why_section.paragraph_3', { userName: `<strong>${safeUserName}</strong>` })"></p>
         </div>
       </div>
 
@@ -44,7 +44,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { publicService } from "../api/publicService";
 
@@ -55,6 +55,18 @@ const inviteToken = ref(null);
 const isValid = ref(false);
 const userName = ref("You");
 const loading = ref(true);
+
+// inviteData.note comes from the API, so it must never be injected as raw HTML
+const escapeHtml = (value) =>
+  String(value).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[c]);
+
+const safeUserName = computed(() => escapeHtml(userName.value));
 
 onMounted(async () => {
   inviteToken.value = route.query.invite;

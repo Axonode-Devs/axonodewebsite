@@ -1,78 +1,87 @@
 <template>
-  <div class="home-container">
-    <Navbar />
-    <HeroSection />
-    <HDivider />
-    <AboutDetails />
-      <<WhatWeDo />
-      <!--<BannerSection />-->
+    <div class="home-container">
+        <Navbar />
+        <HeroSection />
+        <HDivider />
+        <AboutDetails />
+        <WhatWeDo />
+        <JoinUsSection />
 
-      <HDivider />
-      <!--<AboutUs />-->
-      
-      <ContactSection />
+        <HDivider />
+
+        <ContactSection />
+        <FaqSection />
     </div>
-    
     <Footer></Footer>
 </template>
 
 <script setup lang="ts">
-import WhatWeDo from '../components/WhatWeDo.vue';
-import AboutDetails from '../components/AboutDetails.vue';
-import HeroSection from '../components/HeroSection.vue';
-import Navbar from '../components/Navbar.vue';
-import HDivider from '../components/HDivider.vue'
-import ContactSection from '../components/ContactSection.vue';
-import Footer from '../components/Footer.vue'
+import WhatWeDo from "../components/WhatWeDo.vue";
+import AboutDetails from "../components/AboutDetails.vue";
+import HeroSection from "../components/HeroSection.vue";
+import Navbar from "../components/Navbar.vue";
+import HDivider from "../components/HDivider.vue";
+import ContactSection from "../components/ContactSection.vue";
+import JoinUsSection from "../components/JoinUsSection.vue";
+import FaqSection from "../components/FaqSection.vue";
+import Footer from "../components/Footer.vue";
 </script>
 
 <style scoped>
 .canvas-container {
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: 100dvh;
 }
 canvas {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 .orb-section {
-  position: relative;
+    position: relative;
 }
 
 .shared-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(110px);
-  opacity: 0.18;
-  pointer-events: none;
-  z-index: 0;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .orb-teal {
-  width: 600px;
-  height: 600px;
-  background: #78dee7;
-  top: 5%;
-  left: -180px;
-  animation: driftA 16s ease-in-out infinite alternate;
+    width: 600px;
+    height: 600px;
+    background: #78dee7;
+    top: 5%;
+    left: -180px;
+    animation: driftA 16s ease-in-out infinite alternate;
 }
 
 .orb-pink {
-  width: 500px;
-  height: 500px;
-  background: #fe78b2;
-  bottom: 8%;
-  right: -140px;
-  animation: driftB 20s ease-in-out infinite alternate-reverse;
+    width: 500px;
+    height: 500px;
+    background: #fe78b2;
+    bottom: 8%;
+    right: -140px;
+    animation: driftB 20s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes driftA {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(40px, 30px) scale(1.08); }
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+    to {
+        transform: translate(40px, 30px) scale(1.08);
+    }
 }
 
 @keyframes driftB {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(-30px, -25px) scale(1.06); }
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+    to {
+        transform: translate(-30px, -25px) scale(1.06);
+    }
 }
 </style>
