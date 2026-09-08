@@ -1,4 +1,4 @@
-import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, type InternalAxiosRequestConfig, type AxiosResponse } from 'axios';
 import { ApiError } from './error';
 
 let accessToken: string | null = null;

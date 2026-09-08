@@ -311,16 +311,26 @@
       },
       "password": {
         "label": "Şifre",
-        "placeholder": "En az 8 karakter"
+        "placeholder": "En az 8 karakter",
+        "show": "Şifreyi göster",
+        "hide": "Şifreyi gizle",
+        "strength": {
+          "weak": "Zayıf",
+          "fair": "Orta",
+          "good": "İyi",
+          "strong": "Güçlü"
+        }
       },
       "confirm_password": {
         "label": "Şifreni Onayla",
-        "placeholder": "Şifreni Tekrar yaz"
+        "placeholder": "Şifreni Tekrar yaz",
+        "match": "Şifreler uyuşuyor"
       }
     },
     "buttons": {
       "submit": "Hesabı Tamamla",
-      "submitting": "Kaydediliyor..."
+      "submitting": "Kaydediliyor...",
+      "done": "Aramıza Hoş Geldin!"
     },
     "errors": {
       "invalid_link": "Aktivasyon linki hatalı, yeniden yönlendiriliyor",
@@ -373,6 +383,33 @@
         "senior": "Senior"
       }
     }
+  },
+  "welcome": {
+    "badge": "Hesabın Aktif",
+    "title": "Axonode'a Hoş Geldin,",
+    "subtitle": "Hesabın hazır. Artık fikirleri gerçek projelere dönüştüren bir üreticiler, tasarımcılar ve geliştiriciler topluluğunun parçasısın.",
+    "dashboard": {
+      "title": "Hadi Başlayalım",
+      "done": "Tamamlandı",
+      "progress": "adım tamamlandı neredeyse hazırsın!",
+      "progress_all": "tüm adımlar tamam içeride görüşürüz!",
+      "whatsapp": {
+        "title": "WhatsApp Topluluğumuza Katıl",
+        "desc": "Genel buluşma noktamız duyurular, proje ekipleri ve günlük sohbetler.",
+        "cta": "Katıl",
+        "soon": "Davet bağlantısı kısa süre içinde seninle paylaşılacak."
+      },
+      "profile": {
+        "title": "Profilini Tamamla",
+        "desc": "İlgi alanlarını ve yeteneklerini ekle, ekipler seni bulabilsin.",
+        "desc_done": "Profilin dolu — harika iş."
+      },
+      "projects": {
+        "title": "Projeleri Keşfet",
+        "desc": "Ekiplerimizin neler yaptığına bak ve kendine yer bul."
+      }
+    },
+    "note": "İpucu: Profil detaylarını tamamla ki ekipler sana ihtiyaç duyduğunda seni bulabilsin."
   },
   "login": {
     "title": "Tekrar Hoş Geldin!",

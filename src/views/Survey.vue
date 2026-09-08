@@ -355,7 +355,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, Ref } from "vue";
+import { ref, computed, type Ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Navbar from "../components/Navbar.vue";

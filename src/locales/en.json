@@ -311,16 +311,26 @@
       },
       "password": {
         "label": "Password",
-        "placeholder": "Min 8 characters"
+        "placeholder": "Min 8 characters",
+        "show": "Show password",
+        "hide": "Hide password",
+        "strength": {
+          "weak": "Weak",
+          "fair": "Fair",
+          "good": "Good",
+          "strong": "Strong"
+        }
       },
       "confirm_password": {
         "label": "Confirm Password",
-        "placeholder": "Repeat your password"
+        "placeholder": "Repeat your password",
+        "match": "Passwords match"
       }
     },
     "buttons": {
       "submit": "Activate Account",
-      "submitting": "Activating account..."
+      "submitting": "Activating account...",
+      "done": "You're in!"
     },
     "errors": {
       "invalid_link": "Invalid or missing activation link. Redirecting to home...",
@@ -373,6 +383,33 @@
         "senior": "Senior"
       }
     }
+  },
+  "welcome": {
+    "badge": "Account Activated",
+    "title": "Welcome to Axonode,",
+    "subtitle": "Your account is ready. You're now part of a community of builders, designers, and creators turning ideas into real projects.",
+    "dashboard": {
+      "title": "Get Started",
+      "done": "Done",
+      "progress": "steps done — you're almost set up!",
+      "progress_all": "all steps done — see you inside!",
+      "whatsapp": {
+        "title": "Join our WhatsApp Community",
+        "desc": "Our general hangout — announcements, project teams, and everyday conversations.",
+        "cta": "Join",
+        "soon": "The invite link will be shared with you shortly."
+      },
+      "profile": {
+        "title": "Complete Your Profile",
+        "desc": "Add your interests and skills so teams can find you.",
+        "desc_done": "Your profile is filled in — nice work."
+      },
+      "projects": {
+        "title": "Explore Projects",
+        "desc": "See what our teams are building and find your place in it."
+      }
+    },
+    "note": "Tip: complete your profile details so teams can find you when they need your skills."
   },
   "login": {
     "title": "Welcome Back!",

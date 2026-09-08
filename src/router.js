@@ -34,6 +34,12 @@ const routes = [
     meta: { requiresGuest: true },
   },
   {
+    path: "/welcome",
+    name: "Welcome",
+    component: () => import("./views/WelcomeView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
     path: "/invited",
     name: "Invited",
     component: () => import("./views/InvitedView.vue"),
