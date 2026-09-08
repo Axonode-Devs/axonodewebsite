@@ -109,7 +109,9 @@
                     {{
                       $t("application_form.steps.personal_info.contact.label")
                     }}
+                    <span class="req">*</span>
                   </label>
+                  
                   <div class="form-group-row">
                     <input
                       type="text"
@@ -121,8 +123,10 @@
                         )
                       "
                       class="contact-input"
+                      required
                     />
-                    <select v-model="form.contact_type" class="contact-select">
+                    
+                    <select v-model="form.contact_type" class="contact-select" required>
                       <option value="" disabled>
                         {{
                           $t(
