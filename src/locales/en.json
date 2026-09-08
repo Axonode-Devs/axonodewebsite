@@ -426,7 +426,8 @@
         "submitting": "Logging in..."
       }
     },
-    "does_not_have_account": "Don't have an account? "
+    "does_not_have_account": "Don't have an account? ",
+    "still_logged_in": "You are still signed in. If you just tried to log out, the session couldn't be fully terminated — please try again or contact us if it persists."
   },
   "survey": {
     "questions": {

@@ -42,6 +42,12 @@
         </form>
 
         <Transition name="fade">
+          <p v-if="stillLoggedIn" class="notice-message">
+            <font-awesome-icon :icon="['fas', 'circle-exclamation']" /> {{ $t('login.still_logged_in') }}
+          </p>
+        </Transition>
+
+        <Transition name="fade">
           <p v-if="errorMsg" class="error-message">
             <font-awesome-icon :icon="['fas', 'circle-exclamation']" /> {{ errorMsg }}
           </p>
@@ -53,15 +59,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import { ApiError } from '../api/error';
 import Navbar from '../components/Navbar.vue';
 
+const route = useRoute();
 const email = ref('');
 const password = ref('');
 const loading = ref(false);
 const errorMsg = ref('');
+const stillLoggedIn = ref(route.query.stillLoggedIn === '1');
 const router = useRouter();
 const authStore = useAuthStore();
 
@@ -254,6 +262,21 @@ const handleLogin = async () => {
   background: rgba(255, 107, 107, 0.1);
   border-radius: 6px;
   border-left: 3px solid var(--error-color);
+}
+
+.notice-message {
+  color: var(--text-color2);
+  font-size: 13px;
+  text-align: center;
+  margin: 16px 0 0;
+  padding: 12px;
+  background: color-mix(in srgb, var(--accent-color) 8%, transparent);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent-color);
+}
+
+.notice-message svg {
+  color: var(--accent-color);
 }
 
 .divider {

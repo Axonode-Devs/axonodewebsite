@@ -106,7 +106,9 @@ router.beforeEach(async (to, _from, next) => {
   }
 
   if (requiresGuest && auth.isAuthenticated) {
-    return next("/");
+    // Send to login with an explicit message instead of silently
+    // bouncing home — the silent bounce hid the zombie-cookie bug.
+    return next({ path: "/login", query: { stillLoggedIn: "1" } });
   }
 
   next();

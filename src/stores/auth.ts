@@ -10,15 +10,31 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!user.value);
   const isAdmin = computed(() => user.value?.role === 'admin');
 
+  /**
+   * True when a logout was attempted but the server-side refresh cookie
+   * is still alive (e.g. backend failed to expire it). Surfaced so the
+   * UI can warn the user their session may still be active.
+   */
+  const sessionStuck = ref(false);
+
   async function login(email: string, password: string): Promise<UserAccount> {
     const data = await authService.signIn(email, password);
     user.value = data.user;
+    sessionStuck.value = false;
     return data.user;
   }
 
   async function logout(): Promise<void> {
-    await authService.signOut();
-    user.value = null;
+    try {
+      await authService.signOut();
+    } finally {
+      user.value = null;
+      initPromise = null;
+    }
+
+    // Detect the zombie-cookie case: if the refresh endpoint still
+    // succeeds, the server session survived logout.
+    sessionStuck.value = await authService.isSessionAlive();
   }
 
   function init(): Promise<void> {
@@ -40,6 +56,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   window.addEventListener('axonode:session-expired', async () => {
     user.value = null;
+    initPromise = null;
     if (window.location.pathname !== '/login') {
       // Lazy import avoids a circular dependency with the router module.
       const { default: router } = await import('../router');
@@ -51,6 +68,7 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     isAuthenticated,
     isAdmin,
+    sessionStuck,
     login,
     logout,
     init,

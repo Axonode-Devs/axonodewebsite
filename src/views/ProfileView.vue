@@ -133,6 +133,10 @@ const authStore = useAuthStore()
 
 const handleSignOut = async () => {
   await authStore.logout()
+  if (authStore.sessionStuck) {
+    router.push({ path: '/login', query: { stillLoggedIn: '1' } })
+    return
+  }
   router.push('/')
 }
 

@@ -47,10 +47,27 @@ export const authService = {
   async signOut(): Promise<void> {
     try {
       await apiClient.post('/auth/logout');
-    } catch {
-      // clear local state regardless of server response
+    } catch (err: any) {
+      // Local state is cleared regardless, but the server-side refresh
+      // cookie may still be alive — surface it instead of swallowing.
+      console.warn('[auth] logout request failed:', err?.message || err);
+      throw err;
     }
     clearAccessToken();
+  },
+
+  /**
+   * Probes the refresh endpoint. Resolves `true` when the refresh cookie
+   * is still alive (i.e. logout failed to kill the server session),
+   * `false` when the session is really gone.
+   */
+  async isSessionAlive(): Promise<boolean> {
+    try {
+      await apiClient.post('/auth/tokens');
+      return true;
+    } catch {
+      return false;
+    }
   },
 
   async fetchSession(): Promise<UserAccount | null> {

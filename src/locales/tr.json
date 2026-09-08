@@ -426,7 +426,8 @@
         "submitting": "Giriş Yapılıyor..."
       }
     },
-    "does_not_have_account": "Hesabın yok mu? Yeni Kişilere Her zaman açığız, Bize Katılmak için Tıkla!"
+    "does_not_have_account": "Hesabın yok mu? Yeni Kişilere Her zaman açığız, Bize Katılmak için Tıkla!",
+    "still_logged_in": "Hâlâ giriş yapmış görünüyorsun. Az önce çıkış yapmayı denediysen oturum tamamen kapatılamamış olabilir — tekrar dene, devam ederse bize ulaş."
   },
   "survey": {
     "questions": {
