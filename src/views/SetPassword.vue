@@ -72,10 +72,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
 import { authService } from "../api/authService";
 import { ApiError } from "../api/error";
-import { useAuthStore } from "../stores/auth"; 
 
 import Navbar from "../components/Navbar.vue";
 import { useI18n } from 'vue-i18n'; 

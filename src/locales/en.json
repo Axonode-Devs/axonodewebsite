@@ -339,10 +339,39 @@
     "account": {
       "title": "Account Information",
       "subtitle": "Basic configuration data matching your database record.",
+      "id_label": "User ID",
+      "username_label": "Username",
       "email_label": "Registered Email Address",
       "role_label": "Access Role Privilege",
+      "status_label": "Account Status",
+      "status_active": "Active",
+      "status_inactive": "Inactive",
+      "created_label": "Member Since",
       "role_default": "Standard User",
       "role_admin": "Admin Access"
+    },
+    "profile": {
+      "title": "Profile Details",
+      "subtitle": "Information collected from your application form.",
+      "fullname_label": "Full Name",
+      "english_label": "English Proficiency",
+      "experience_label": "Experience Level",
+      "main_interest_label": "Primary Areas of Interest",
+      "sub_interest_label": "Sub-Interests",
+      "not_provided": "Not provided",
+      "empty": "No profile details have been submitted yet.",
+      "english_levels": {
+        "a1_a2": "Beginner (A1-A2)",
+        "b1_b2": "Intermediate (B1-B2)",
+        "c1": "Advanced (C1)",
+        "c2": "Fluent / Native (C2)"
+      },
+      "experience_levels": {
+        "newbie": "Beginner",
+        "junior": "Junior",
+        "mid": "Mid-Level",
+        "senior": "Senior"
+      }
     }
   },
   "login": {

@@ -32,6 +32,14 @@
 
             <div class="detail-card">
               <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.id_label') }}</span>
+                <span class="detail-value">{{ authStore.user.id }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.username_label') }}</span>
+                <span class="detail-value">{{ authStore.user.username }}</span>
+              </div>
+              <div class="detail-row">
                 <span class="detail-label">{{ $t('profile.account.email_label') }}</span>
                 <span class="detail-value">{{ authStore.user.email }}</span>
               </div>
@@ -41,7 +49,71 @@
                   {{ authStore.user.role === 'admin' ? $t('profile.account.role_admin') : $t('profile.account.role_default') }}
                 </span>
               </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.status_label') }}</span>
+                <span class="detail-value">
+                  <span class="status-pill" :class="{ 'status-inactive': !authStore.user.is_active }">
+                    {{ authStore.user.is_active ? $t('profile.account.status_active') : $t('profile.account.status_inactive') }}
+                  </span>
+                </span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.account.created_label') }}</span>
+                <span class="detail-value">{{ formatDate(authStore.user.created_at) }}</span>
+              </div>
             </div>
+          </section>
+
+          <section class="section">
+            <div class="section-header">
+              <h2>{{ $t('profile.profile.title') }}</h2>
+              <p class="section-sub">{{ $t('profile.profile.subtitle') }}</p>
+            </div>
+
+            <div class="detail-card" v-if="authStore.user.profile">
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.profile.fullname_label') }}</span>
+                <span class="detail-value">{{ authStore.user.profile.fullname }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.profile.english_label') }}</span>
+                <span class="detail-value">
+                  {{ authStore.user.profile.english_level
+                    ? $t(`profile.profile.english_levels.${authStore.user.profile.english_level}`)
+                    : $t('profile.profile.not_provided') }}
+                </span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.profile.experience_label') }}</span>
+                <span class="detail-value">
+                  {{ authStore.user.profile.experience_level
+                    ? $t(`profile.profile.experience_levels.${authStore.user.profile.experience_level}`)
+                    : $t('profile.profile.not_provided') }}
+                </span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.profile.main_interest_label') }}</span>
+                <span class="detail-value">
+                  {{ authStore.user.profile.main_interest
+                    ? $t(`application_form.interest_areas.${authStore.user.profile.main_interest}.label`)
+                    : $t('profile.profile.not_provided') }}
+                </span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">{{ $t('profile.profile.sub_interest_label') }}</span>
+                <span class="detail-value tag-list" v-if="authStore.user.profile.sub_interest?.length">
+                  <span
+                    v-for="interest in authStore.user.profile.sub_interest"
+                    :key="interest"
+                    class="status-pill"
+                  >
+                    {{ interestSubLabel(interest) }}
+                  </span>
+                </span>
+                <span class="detail-value" v-else>{{ $t('profile.profile.not_provided') }}</span>
+              </div>
+            </div>
+            <p class="empty-profile" v-else>{{ $t('profile.profile.empty') }}</p>
           </section>
         </main>
       </div>
@@ -51,15 +123,32 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
 import Navbar from '../components/Navbar.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 const authStore = useAuthStore()
 
 const handleSignOut = async () => {
   await authStore.logout()
   router.push('/')
+}
+
+const formatDate = (value: string) => {
+  const date = new Date(value)
+  return isNaN(date.getTime()) ? value : date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
+const interestAreas = ['technology', 'design', 'business', 'creative']
+
+const interestSubLabel = (key: string) => {
+  for (const area of interestAreas) {
+    const path = `application_form.interest_areas.${area}.sub.${key}`
+    if (t(path) !== path) return t(path)
+  }
+  return key
 }
 </script>
 <style scoped>
@@ -304,6 +393,26 @@ const handleSignOut = async () => {
   background: rgba(255, 255, 255, 0.04);
   border: 0.5px solid rgba(255, 255, 255, 0.08);
   opacity: 0.95;
+}
+
+.status-inactive {
+  color: var(--error-color);
+  background: rgba(255, 107, 107, 0.08);
+  border-color: rgba(255, 107, 107, 0.28);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.empty-profile {
+  font-size: 13.5px;
+  color: var(--text-color);
+  opacity: 0.45;
+  margin: 0;
 }
 
 /* ── Form ─────────────────────────────────────────────────────────────────── */

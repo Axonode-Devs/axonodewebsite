@@ -339,10 +339,39 @@
     "account": {
       "title": "Hesap Bilgileri",
       "subtitle": "Veritabanı kaydınızla eşleşen temel yapılandırma verileri.",
+      "id_label": "Kullanıcı ID",
+      "username_label": "Kullanıcı Adı",
       "email_label": "Kayıtlı E-Posta Adresi",
       "role_label": "Erişim Rolü İzinleri",
+      "status_label": "Hesap Durumu",
+      "status_active": "Aktif",
+      "status_inactive": "Aktif Değil",
+      "created_label": "Üyelik Tarihi",
       "role_default": "Standart Kullanıcı",
       "role_admin": "Yönetici Erişimi"
+    },
+    "profile": {
+      "title": "Profil Detayları",
+      "subtitle": "Başvuru formunuzdan toplanan bilgiler.",
+      "fullname_label": "Ad Soyad",
+      "english_label": "İngilizce Seviyesi",
+      "experience_label": "Deneyim Seviyesi",
+      "main_interest_label": "Ana İlgi Alanları",
+      "sub_interest_label": "Alt İlgi Alanları",
+      "not_provided": "Girilmemiş",
+      "empty": "Henüz profil detayı gönderilmemiş.",
+      "english_levels": {
+        "a1_a2": "Başlangıç (A1-A2)",
+        "b1_b2": "Orta (B1-B2)",
+        "c1": "İleri (C1)",
+        "c2": "Akıcı / Ana Dil (C2)"
+      },
+      "experience_levels": {
+        "newbie": "Başlangıç",
+        "junior": "Junior",
+        "mid": "Mid-Level",
+        "senior": "Senior"
+      }
     }
   },
   "login": {
