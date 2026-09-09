@@ -537,17 +537,17 @@
     "subtitle": "Başvurmadan önce bilmek isteyebileceğiniz her şey.",
     "items": {
       "q1": "Axonode’a katılım ücretli mi?",
-      "a1": "Hayır. Başvurmak ve topluluğun bir parçası olmak tamamen ücretsizdir — sürpriz maliyet yoktur.",
+      "a1": "Hayır. Başvurmak ve topluluğun bir parçası olmak tamamen ücretsizdir sürpriz maliyet yoktur.",
       "q2": "Kimler Axonode’a katılabilir?",
-      "a2": "Yazılımcılar, tasarımcılar ve proje üreten ya da projelere katkı sunmak isteyen herkes — deneyim seviyesinden bağımsız olarak.",
+      "a2": "Yazılımcılar, tasarımcılar ve proje üreten ya da projelere katkı sunmak isteyen herkes deneyim seviyesinden bağımsız olarak.",
       "q3": "Başvurmak için kendi projem olmalı mı?",
-      "a3": "Hayır. Sadece yeteneklerinizle katılabilir ve katkı arayan projelerde yer alabilirsiniz.",
+      "a3": "Hayır. Sadece yeteneklerinizle katılabilir ve sohbetler içinde yer alıp inovatif kişiler ile tanışabilirsiniz..",
       "q4": "Başvurduktan sonra ne oluyor?",
       "a4": "Ekibimiz başvurunuzu inceleyip genellikle birkaç gün içinde sizinle iletişime geçerek sonraki adımları anlatır.",
       "q5": "Kendi projemi getirebilir miyim?",
       "a5": "Kesinlikle. Fikrinizi Axonode’da paylaşın ve birlikte inşa edecek doğru insanları bulun.",
       "q6": "Axonode hangi alanları kapsıyor?",
-      "a6": "Yazılım, tasarım, iş ve yaratıcı alanlar — üretilebilen her şey buraya aittir."
+      "a6": "Yazılım, tasarım, iş ve yaratıcı alanlar üretilebilen her şey buraya aittir."
     }
   },
   "projects_page": {

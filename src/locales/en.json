@@ -537,17 +537,17 @@
     "subtitle": "Everything you might want to know before applying.",
     "items": {
       "q1": "Is Axonode free to join?",
-      "a1": "Yes. Applying and being part of the community is completely free — no fees, no hidden costs.",
+      "a1": "Yes. Applying and being part of the community is completely free!",
       "q2": "Who can join Axonode?",
-      "a2": "Developers, designers, and anyone who builds or wants to contribute to projects — regardless of experience level.",
+      "a2": "Developers, designers, and anyone who builds or wants to contribute to projects regardless of experience level.",
       "q3": "Do I need to have my own project to apply?",
-      "a3": "No. You can join with just your skills and get involved in projects that are looking for contributors.",
+      "a3": "No. You can join with just your skills and get involved in discussions and find right people to build your dreams!",
       "q4": "What happens after I apply?",
       "a4": "Our team reviews your application and gets back to you about the next steps, usually within a few days.",
       "q5": "Can I bring my own project?",
       "a5": "Absolutely. Share your idea on Axonode and find the right people to build it with you.",
       "q6": "Which areas does Axonode cover?",
-      "a6": "Software, design, business, and creative fields — if it can be built, it belongs here."
+      "a6": "Software, design, business, and creative fields if it can be built, it belongs here."
     }
   },
   "projects_page": {
