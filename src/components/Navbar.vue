@@ -42,7 +42,8 @@
           @click="toggleMenu"
           aria-label="Toggle menu"
         >
-          <i :class="isMenuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+            <font-awesome-icon :icon="isMenuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'" />
+          
         </button>
       </div>
     </div>

@@ -12,6 +12,7 @@ config.autoAddCss = false;
 import {
   faEnvelope as faRegularEnvelope,
   faIdCard,
+  faCircleXmark,
 } from "@fortawesome/free-regular-svg-icons";
 import { faLightbulb as faRegularLightbulb } from "@fortawesome/free-regular-svg-icons";
 
@@ -36,7 +37,11 @@ import {
   faPhone,        
   faArrowRight,   
   faBolt,
-  faStar
+  faStar,
+  faBars,
+  faPaperPlane,
+  faLaptopCode,
+  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
 // --- 3. BRANDS ICONS PACKAGE ---
@@ -61,6 +66,7 @@ library.add(
   faBrush,
   faPeopleGroup,
   faXmark,
+  faBars,
   faUsers,
   faUserCheck,
   faRocket,
@@ -78,13 +84,11 @@ library.add(
   faCircleXmark,
   faBolt,
   faStar,
+  faPaperPlane,
 );
 
 import "./style.css";
-import { faLaptopCode } from "@fortawesome/free-solid-svg-icons";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+
 
 const pinia = createPinia();
 const head = createHead();
