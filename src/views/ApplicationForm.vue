@@ -1170,6 +1170,7 @@ const submitForm = async () => {
 
     if (isMinor.value) {
       payload.parental_consent = form.parental_consent;
+      payload.parent_mail = form.parent_mail;
     }
 
     if (form.invite_token) {
