@@ -18,27 +18,28 @@ const CSS_COLORS = [
   styles.getPropertyValue('--main3-color').trim() || '#fe78b0'
 ]
 const LINE_COLOR = 'rgba(255, 255, 255, 1)'
+const MOUSE_DIST = 160
 
 let ctx = null
 let animationId = 0
+let running = false
+let isVisible = true
+let isTabVisible = true
+let linkDist = 130
+let linkDistSq = linkDist * linkDist
+let nodeCountFn = () => 60
 let resizeObserver = null
+let interactionObserver = null
 let nodes = []
 let width = 0
 let height = 0
 let dpr = 1
+let mouseDist = MOUSE_DIST
+let mouseDistSq = mouseDist * mouseDist
 const mouse = { x: -9999, y: -9999 }
-
-const LINK_DIST = 130
-const MOUSE_DIST = 160
 
 const reducedMotion = () =>
 window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-const nodeCount = () => {
-  if (width < 640) return 25
-  if (width < 1024) return 40
-  return Math.min(65, Math.floor(width / 22))
-}
 
 const resize = () => {
   const canvas = canvasRef.value
@@ -46,7 +47,18 @@ const resize = () => {
   const rect = canvas.parentElement.getBoundingClientRect()
   width = rect.width
   height = rect.height
-  dpr = Math.min(window.devicePixelRatio || 1, 2)
+  const isMobile = width < 640
+  linkDist = isMobile ? 110 : 130
+  linkDistSq = linkDist * linkDist
+  mouseDist = isMobile ? MOUSE_DIST * 0.85 : MOUSE_DIST
+  mouseDistSq = mouseDist * mouseDist
+  nodeCountFn = () => {
+    if (width < 640) return 25
+    if (width < 1024) return 40
+    return Math.min(65, Math.floor(width / 22))
+  }
+  // Mobile: cap DPR to 1 — fillRate is the main mobile cost
+  dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2)
   canvas.width = width * dpr
   canvas.height = height * dpr
   canvas.style.width = `${width}px`
@@ -57,7 +69,7 @@ const resize = () => {
 }
 
 const createNodes = () => {
-  const count = nodeCount()
+  const count = nodeCountFn()
   nodes = Array.from({ length: count }, (_, i) => ({
     x: Math.random() * width,
     y: Math.random() * height,
@@ -72,9 +84,10 @@ const update = () => {
   for (const n of nodes) {
     const dx = mouse.x - n.x
     const dy = mouse.y - n.y
-    const dist = Math.hypot(dx, dy)
-    if (dist < MOUSE_DIST && dist > 0.01) {
-      const force = ((MOUSE_DIST - dist) / MOUSE_DIST) * 0.06
+    const dRefSq = dx * dx + dy * dy
+    if (dRefSq < mouseDistSq && dRefSq > 0.0001) {
+      const dist = Math.sqrt(dRefSq)
+      const force = ((mouseDist - dist) / mouseDist) * 0.06
       n.vx += (dx / dist) * force
       n.vy += (dy / dist) * force
     }
@@ -103,9 +116,10 @@ const draw = () => {
       const b = nodes[j]
       const dx = a.x - b.x
       const dy = a.y - b.y
-      const dist = Math.hypot(dx, dy)
-      if (dist < LINK_DIST) {
-        ctx.globalAlpha = 1 - dist / LINK_DIST
+      const dRefSq = dx * dx + dy * dy
+      if (dRefSq < linkDistSq) {
+        const dist = Math.sqrt(dRefSq)
+        ctx.globalAlpha = 1 - dist / linkDist
         ctx.strokeStyle = LINE_COLOR
         ctx.lineWidth = 0.6
         ctx.beginPath()
@@ -131,41 +145,92 @@ const loop = () => {
   animationId = requestAnimationFrame(loop)
 }
 
+const start = () => {
+  if (running) return
+  running = true
+  animationId = requestAnimationFrame(loop)
+}
+
+const stop = () => {
+  if (!running) return
+  running = false
+  cancelAnimationFrame(animationId)
+}
+
+const syncAnimation = () => {
+  const isActive = isVisible && isTabVisible
+  if (isActive) start()
+  else stop()
+}
+
 const drawStatic = () => {
   update()
   draw()
 }
 
-const onMouseMove = (e) => {
+const onPointerMove = (e) => {
+  if (e.pointerType !== 'mouse' && e.buttons === 0) return
   const rect = canvasRef.value?.getBoundingClientRect()
   if (!rect) return
   mouse.x = e.clientX - rect.left
   mouse.y = e.clientY - rect.top
 }
 
-const onMouseLeave = () => {
-  mouse.x = -9999
-  mouse.y = -9999
+const onPointerLeave = (e) => {
+  if (e.pointerType === 'mouse' || e.pointerType === 'pen') {
+    mouse.x = -9999
+    mouse.y = -9999
+  }
+}
+
+const onPointerUp = (e) => {
+  if (e.pointerType === 'touch') {
+    mouse.x = -9999
+    mouse.y = -9999
+  }
+}
+
+const onVisibility = () => {
+  isTabVisible = !document.hidden
+  syncAnimation()
 }
 
 onMounted(() => {
   resize()
   resizeObserver = new ResizeObserver(resize)
   resizeObserver.observe(canvasRef.value.parentElement)
+
+  interactionObserver = new IntersectionObserver(
+    (entries) => {
+      isVisible = entries[0]?.isIntersecting ?? true
+      syncAnimation()
+    },
+    { threshold: 0.05 }
+  )
+  interactionObserver.observe(canvasRef.value.parentElement)
+
   if (reducedMotion()) {
     drawStatic()
   } else {
-    animationId = requestAnimationFrame(loop)
-    window.addEventListener('mousemove', onMouseMove, { passive: true })
-    document.addEventListener('mouseleave', onMouseLeave)
+    start()
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
+    document.addEventListener('pointerleave', onPointerLeave)
+    window.addEventListener('pointerup', onPointerUp, { passive: true })
+    window.addEventListener('pointercancel', onPointerUp, { passive: true })
   }
+
+  document.addEventListener('visibilitychange', onVisibility)
 })
 
 onUnmounted(() => {
-  cancelAnimationFrame(animationId)
+  stop()
   if (resizeObserver) resizeObserver.disconnect()
-  window.removeEventListener('mousemove', onMouseMove)
-  document.removeEventListener('mouseleave', onMouseLeave)
+  if (interactionObserver) interactionObserver.disconnect()
+  document.removeEventListener('visibilitychange', onVisibility)
+  window.removeEventListener('pointermove', onPointerMove)
+  document.removeEventListener('pointerleave', onPointerLeave)
+  window.removeEventListener('pointerup', onPointerUp)
+  window.removeEventListener('pointercancel', onPointerUp)
 })
 </script>
 
