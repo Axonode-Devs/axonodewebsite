@@ -1,5 +1,6 @@
 <template>
   <section id="hero" class="hero-container">
+    <NodeHeroBackground />
     <img src="/sunburst.svg" alt="" class="sunburst bottom-left" aria-hidden="true" />
     <img src="/sunburst.svg" alt="" class="sunburst top-right" aria-hidden="true" />
     
@@ -13,8 +14,8 @@
       </p>
       
       <div class="button-container">
-        <button class="start-btn" @click="scrollToSection('about-details')">{{ t('hero.buttons.about') }}</button>
-        <button class="learn-btn" @click="scrollToSection('whatwedo')">{{ t('hero.buttons.learn') }}</button>
+        <button class="start-btn" @click="scrollToSection('about')">{{ t('hero.buttons.about') }}</button>
+        <button class="learn-btn" @click="scrollToSection('join')">{{ t('hero.buttons.learn') }}</button>
       </div>
 
       <div class="ticker-wrapper">
@@ -51,6 +52,7 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n'
+import NodeHeroBackground from './NodeHeroBackground.vue'
 
 const { t } = useI18n()
 
@@ -148,8 +150,10 @@ const scrollToSection = (id) => {
 }
 
 .start-btn {
-  height: 50px;
-  width: 150px;
+  min-height: 50px;
+  min-width: 150px;
+  padding: 0.7em 1.6em;
+  white-space: nowrap;
   background-color: var(--main3-color);
   color: var(--text-color);
   font-family: 'Poppins', sans-serif;
@@ -169,6 +173,8 @@ const scrollToSection = (id) => {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   font-size: 0.9rem;
+  padding: 0.7em 1.2em;
+  white-space: nowrap;
   background-color: transparent;
   border-radius: 9999px;
   cursor: pointer;

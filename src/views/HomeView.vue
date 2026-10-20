@@ -2,6 +2,7 @@
     <div class="home-container">
         <Navbar />
         <HeroSection />
+        <WhatIsAxonode />
         <HDivider />
         <AboutDetails />
         <WhatWeDo />
@@ -19,6 +20,7 @@
 import WhatWeDo from "../components/WhatWeDo.vue";
 import AboutDetails from "../components/AboutDetails.vue";
 import HeroSection from "../components/HeroSection.vue";
+import WhatIsAxonode from "../components/WhatIsAxonode.vue";
 import Navbar from "../components/Navbar.vue";
 import HDivider from "../components/HDivider.vue";
 import ContactSection from "../components/ContactSection.vue";

@@ -1,11 +1,11 @@
 {
   "hero": {
-    "title-1": "Projelerle bağlantı kur,",
-    "title-2": "{hl} büyü.",
-    "subtext": "Becerilerimizi paylaşmak, projeler üretmek ve birlikte eğlenmek için bir araya gelen samimi bir topluluğuz. Benzer düşünen insanlarla bağlantı kurmak için bize katıl!",
+    "title-1": "Fikrin var, ama takımın mı yok?",
+    "title-2": "Tam da bu yüzden {hl} burada.",
+    "subtext": "Axonode; benzer fikirli yazılımcılar, tasarımcılar ve üreticileri projeler etrafında buluşturan bir topluluk. Fikrini paylaş, ekibini kur, birlikte inşa edin.",
     "buttons": {
-      "learn": "Daha Fazla Bilgi",
-      "about": "Şimdi Başla"
+      "learn": "Bize Katıl",
+      "about": "Komüniteyi Tanı"
     },
     "ticker": {
       "item1": "UI/UX Tasarım",
@@ -14,7 +14,19 @@
       "item4": "Topluluk Projeleri",
       "item5": "Bilgi Paylaşımı"
     },
-    "title_highlight": "insanlarla"
+    "title_highlight": "Axonode"
+  },
+  "what_is": {
+    "eyebrow": "Axonode nedir?",
+    "part1": "Axon",
+    "part2": "Node",
+    "defs": {
+      "axon_term": "Axon",
+      "axon": "sinir sinyalini taşıyan ince kablo;",
+      "node_term": "node",
+      "node": "temasta buluşan nokta."
+    },
+    "rest": "Aklında bir proje var ama yapacak kimse yok mu? Ya da elin işliyor ama ne yapacağını bilmiyor musun? Tam bunun için buradayız: burada biri başlatır, diğeri katılır; kimse tek başına uğraşmıyor."
   },
   "navbar": {
     "home": "Anasayfa",
@@ -60,20 +72,20 @@
     },
     "cards": {
       "software": {
-        "title": "Yazılım",
-        "text": " Acemilerden Uzmanlara herkesi, deneyimlerini ve bilgilerini paylaşmaları ve iş birliği için herkesi açık kollarla karşılıyoruz!"
+        "title": "Fikrin mi var?",
+        "text": "Fikrini paylaş, yazılımcı ekibini topla ve projenin temellerini birlikte atın!"
       },
       "designers": {
-        "title": "Tasarım",
-        "text": "İllüstratörlerden 3D'ye; becerilerini ve fikirlerini paylaşmaları, İş birliklerinde bulunmaları için tüm tasarımcıları bekliyoruz!"
+        "title": "Yeteneğin mi var?",
+        "text": "Sana ihtiyaç duyan bir projeye katıl; yeteneğinle gerçek bir ürüne iz bırak!"
       },
       "entrepreneurs": {
-        "title": "Girişimciler",
-        "text": "Komünitemizde aynı fikirdeki insanlar ile tanışıp anlamlı bağlantılar kurun ve inovatif projelere imza atın!"
+        "title": "Kafa dengi mi arıyorsun?",
+        "text": "Seni anlayan ve birlikte üreten insanlarla çevrilmek için doğru yerdesin!"
       },
       "other": {
         "title": "Kim Bilir Başka Neler?",
-        "text": "Ne hakkında tutkuluysan, bize katıl ve yaratıcı ruhlardan oluşan komünitemize kendi rengini kat!"
+        "text": "Ne hakkında tutkuluysan, aynı ruhta üreten komünitemize kendi rengini kat!"
       }
     }
   },
@@ -526,7 +538,7 @@
     "eyebrow": "Beğendiysen Bize Katıl",
     "title": "Fikrini gerçeğe",
     "title_gradient": "dönüştürmeye hazır mısın?",
-    "description": "Bir şey inşa ediyorsanız veya bir projeye katkı sağlamak istiyorsanız, başvurun ve bize çalışmanızı ve yeteneklerinizi anlatın.",
+    "description": "Bir fikri mi inşa ediyorsun, yoksa bir projeye mi katkı sağlamak istiyorsun? Başvur, yeteneklerini anlat; doğru yeri birlikte bulalım.",
     "button": "Hemen Başvur",
     "note": "Yazılımcılar, tasarımcılar ve diğer üreticilere açığız!"
   },

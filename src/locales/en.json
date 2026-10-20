@@ -1,11 +1,11 @@
 {
   "hero": {
-    "title-1": "Connect through projects,",
-    "title-2": "grow {hl} people.",
-    "subtext": "We are a welcoming community uniting our skills to share knowledge, create projects, and have fun together. Join us to connect with like-minded individuals!",
+    "title-1": "Got an idea, but no team?",
+    "title-2": "That's exactly why {hl} is here.",
+    "subtext": "Axonode is a community that brings together like-minded developers, designers, and creators around projects. Share your idea, form your team, build together.",
     "buttons": {
-      "learn": "Learn More",
-      "about": "Get Started"
+      "learn": "Join Us",
+      "about": "Meet the Community"
     },
     "ticker": {
       "item1": "UI/UX Design",
@@ -14,7 +14,19 @@
       "item4": "Community Projects",
       "item5": "Knowledge Sharing"
     },
-    "title_highlight": "through"
+    "title_highlight": "Axonode"
+  },
+  "what_is": {
+    "eyebrow": "What is Axonode?",
+    "part1": "Axon",
+    "part2": "Node",
+    "defs": {
+      "axon_term": "An axon",
+      "axon": "is the fiber that carries the signal;",
+      "node_term": "a node",
+      "node": "is the point where connections meet."
+    },
+    "rest": "Got a project in your head but no one to build it with? Or hands that can build, but nothing to point them at? That's exactly why we're here: one person starts, another joins — no one builds alone."
   },
   "navbar": {
     "home": "Home",
@@ -60,20 +72,20 @@
     },
     "cards": {
       "software": {
-        "title": "Software",
-        "text": "We welcome all developers, from beginners to experts, to collaborate and share their knowledge and experiences!"
+        "title": "Got an idea?",
+        "text": "Share it, assemble your dev team, and lay the foundations of your project together!"
       },
       "designers": {
-        "title": "Designers",
-        "text": "We welcome all designers, from illustrators to 3D artists, to collaborate and share their art and ideas!"
+        "title": "Got skills?",
+        "text": "Join a project that needs you and leave your mark on a real product!"
       },
       "entrepreneurs": {
-        "title": "Entrepreneurs",
-        "text": "Meet with like-minded people and build meaningful connections within our community!"
+        "title": "Looking for your people?",
+        "text": "You're in the right place to surround yourself with people who get it and build with you!"
       },
       "other": {
         "title": "And What Else?",
-        "text": "Whatever you're passionate about, join us in building a vibrant community of creators and innovators!"
+        "text": "Whatever you're passionate about, bring your own color to a community that creates with the same spirit!"
       }
     }
   },
@@ -526,7 +538,7 @@
     "eyebrow": "Like What we are doing? Join Us",
     "title": "Ready to turn your idea",
     "title_gradient": "into reality?",
-    "description": "If you are building something or want to contribute to a project, apply and tell us about your work and skills.",
+    "description": "Building an idea, or want to contribute to one? Apply, tell us about your skills, and we'll find the right fit together.",
     "button": "Apply Now",
     "note": "Open to developers, designers, and other builders."
   },
